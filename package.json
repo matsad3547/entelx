@@ -12,10 +12,11 @@
     "rxjs": "^5.5.3"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1"
+    "concurrently": "^3.5.1",
+    "jest": "^21.2.1"
   },
   "scripts": {
-    "start": "concurrently \"yarn start server\" \"yarn start client\"",
+    "start": "concurrently \"yarn run server\" \"yarn run client\"",
     "server": "node server.js",
     "client": "node start-client.js"
   }
