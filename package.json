@@ -1,0 +1,22 @@
+{
+  "name": "energy-storage-marketplace",
+  "version": "0.0.1",
+  "description": "marketplace platform",
+  "main": "client/src/index.js",
+  "repository": "https://github.com/matsad3547/energy-storage-marketplace",
+  "author": "matsad",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.16.2",
+    "rxjs": "^5.5.3"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1"
+  },
+  "scripts": {
+    "start": "concurrently \"yarn start server\" \"yarn start client\"",
+    "server": "node server.js",
+    "client": "node start-client.js"
+  }
+}
