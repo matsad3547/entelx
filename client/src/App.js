@@ -6,9 +6,10 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
+      res: '',
       loading: false,
       loaded: false,
-      currentUser: null,
+      // currentUser: null,
     }
     this.fetchUser = this.fetchUser.bind(this)
   }
@@ -16,7 +17,31 @@ class App extends Component {
     this.setState({
       loading: true,
     })
-    this.fetchUser()
+    this.fireQuery()
+    // this.fetchUser()
+  }
+
+  fireQuery(){
+    fetch('api')
+    .then( res => {
+      console.log('res:',
+      res,
+      '\njson:',
+      res.json()
+      // JSON.parse(res.files)
+    );
+      // this.setState({
+      //   loading: false,
+      //   res,
+      // })
+    })
+    .catch( error => {
+      console.error('There was an error loading user data:', error)
+      this.setState({
+        error,
+        loading: false,
+      })
+    })
   }
 
   fetchUser(){

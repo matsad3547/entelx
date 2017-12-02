@@ -2,10 +2,16 @@ const express = require('express')
 const app = express()
 const Rx = require('rxjs/Rx')
 
-app.get('/', (req, res) => {
-  res.send('Hello world!')
+app.set('port', process.env.PORT || 3001)
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static("client/build"))
+}
+
+app.get('/api', (req, res) => {
+  res.json({words: "Hello world!"})
 })
 
-app.listen(3001, () => {
-  console.log('example app listening on port 3001!');
+app.listen(app.get('port'), () => {
+  console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
