@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get('/api', (req, res) => {
   //TODO: This is where the database goes
-  res.json({stuff: 'poop'})
+  res.json({stuff: 'things'})
 })
 
 app.listen(app.get('port'), () => {
