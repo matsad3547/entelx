@@ -21,14 +21,31 @@ class App extends Component {
     // this.fetchUser()
   }
 
+  checkStatus(res){
+    if (res.status >= 200 && res.status < 300) {
+      return res
+    }
+    const error = new Error(`HTTP Error ${res.statusText}`)
+    error.status = res.statusText;
+    error.response = res
+    console.log(error) // eslint-disable-line no-console
+    throw error
+  }
+
+  parseResponse(res){
+    return res.json()
+  }
+
   fireQuery(){
     fetch('api')
+    .then(this.checkStatus)
+    .then(this.parseResponse)
     .then( res => {
       console.log('res:',
       res,
       '\njson:',
-      res.json()
-      // JSON.parse(res.files)
+      // res.json()
+      // JSON.parse(res)
     );
       // this.setState({
       //   loading: false,

@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/api', (req, res) => {
-  res.json({words: "Hello world!"})
+  res.json({stuff: 'poop'})
 })
 
 app.listen(app.get('port'), () => {

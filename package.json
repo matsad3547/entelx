@@ -13,11 +13,12 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
-    "jest": "^21.2.1"
+    "jest": "^21.2.1",
+    "nodemon": "^1.12.1"
   },
   "scripts": {
     "start": "concurrently \"yarn run server\" \"yarn run client\"",
-    "server": "node server.js",
+    "server": "nodemon server.js",
     "client": "node start-client.js"
   }
 }
