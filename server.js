@@ -1,6 +1,7 @@
 const express = require('express')
-const app = express()
 const Rx = require('rxjs/Rx')
+
+const app = express()
 
 app.set('port', process.env.PORT || 3001)
 
@@ -9,6 +10,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/api', (req, res) => {
+  //TODO: This is where the database goes
   res.json({stuff: 'poop'})
 })
 
