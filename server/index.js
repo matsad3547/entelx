@@ -1,9 +1,8 @@
 const express = require('express')
-const Rx = require('rxjs/Rx')
 
 const app = express()
 const dotenv = require('dotenv').config()
-const eiaKey = process.env.EIA_API_KEY
+const eiaRequest = require('./app/eiaRequest')
 
 app.set('port', process.env.PORT || 3001)
 
@@ -15,8 +14,8 @@ app.get('/api', (req, res) => {
   //TODO: This is where the database goes
   res.json({
     stuff: 'things',
-    cheese: 'puffs',
-    key: eiaKey,
+    cheese: 'poofs',
+    eia: eiaRequest,
   })
 })
 
@@ -24,5 +23,5 @@ app.listen(app.get('port'), err => {
   if (err) {
     console.error('An error occured:', err)
   }
-  console.log(`Find the server at: http://localhost:${app.get('port')}, api key is ${eiaKey}`)
+  console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
