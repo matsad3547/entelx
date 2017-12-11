@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import './App.css'
 import fetch from 'isomorphic-fetch'
+import { Link, Route } from 'react-router-dom'
+
+import CreateProfile from './containers/CreateProfile'
 
 class App extends Component {
   constructor() {
@@ -87,13 +90,19 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
+        <div>
+          <nav>
+            <Link to="/create_user">Sign Up</Link>
+          </nav>
+        </div>
         <p className="App-intro">
           Words and things!
           {this.state.res ? `\n${this.state.res.stuff}` : '...waiting'}
         </p>
+        <div>
+          <Route path="/create_user" component={CreateProfile} />
+        </div>
+
       </div>
     );
   }

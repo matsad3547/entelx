@@ -14,14 +14,22 @@ const options = {
 
 let eiaRequest = {}
 
-// request(options)
-//   .then( res => {
-//     console.log('success!');
-//     eiaRequest = res
+
+// const req = Rx.Observable.fromEvent(
+//   app.get('/api')
+// )
+// .flatMap( n =>
+//   Rx.Observable.fromPromise(
+//     fetch(url)
+//   )
+//   .catch( res => {
+//     console.error('Something went wrong:', res.statusText)
+//     return Rx.Observable.empty()
 //   })
-//   .catch( err => {
-//     console.error('There was an error with the request to EIA:', err)
-//   })
+// )
+// .subscribe( res => console.log(res) )
+
+
 
 fetch(url)
   .then( res => {
