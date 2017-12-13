@@ -39,7 +39,7 @@ fetch(url)
     return res.json()
   })
   .then( res => {
-    console.log('data:', res.series[0].data)
+    // console.log('data:', res.series[0].data)
     eiaRequest.data = res.series[0].data
   })
 

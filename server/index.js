@@ -3,6 +3,7 @@ const app = express()
 const dotenv = require('dotenv').config()
 const eiaRequest = require('./app/eiaRequest')
 const createUser = require('./user/createUser')
+const bodyParser = require('body-parser')
 
 app.set('port', process.env.PORT || 3001)
 
@@ -12,6 +13,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // const apiCall = app.get('/api')
 
+app.use(bodyParser.json())
 app.get('/api', (req, res) => {
   //TODO: This is where the database goes
   res.json({

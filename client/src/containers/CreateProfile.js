@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 
-import { fieldOnchange, singleRequest } from '../utils/'
+import {
+  fieldOnchange,
+  singlePostRequest,
+  setError,
+} from '../utils/'
 
 class CreateProfile extends Component {
   constructor() {
@@ -9,14 +13,33 @@ class CreateProfile extends Component {
       username: '',
       password: '',
       verifyPassword: '',
-      location: '',
+      location: [],
+      loading: false,
+      error: '',
     }
     this.fieldOnchange = fieldOnchange.bind(this)
+    this.setError = setError.bind(this)
     this.createUser = this.createUser.bind(this)
   }
 
   createUser() {
     console.log('creating user');
+    const body = JSON.stringify({
+      username: this.state.username,
+      password: this.state.password,
+    })
+    const request = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body,
+    }
+    this.setState({
+      loading: true,
+    })
+    singlePostRequest('/createUser/', request, res => console.log('success!', res.status), this.setError)
   }
 
   render() {
@@ -29,8 +52,8 @@ class CreateProfile extends Component {
     return (
       <form className="createUser">
         <h1>Create your user profile</h1>
-        <input type="text" className="username"  id="username" placeholder="username" value={username} onChange={this.fieldOnchange}/>
-        <input type="text" className="password"  id="password" placeholder="password" value={password} onChange={this.fieldOnchange}/>
+        <input type="text" id="username" placeholder="username" value={username} onChange={this.fieldOnchange}/>
+        <input type="password" id="password" placeholder="password" value={password} onChange={this.fieldOnchange}/>
         <input type="button" value="Create your profile" onClick={this.createUser}/>
       </form>
     )

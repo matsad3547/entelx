@@ -1,10 +1,10 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const store = require('../store')
 
 const app = express()
 app.use(express.static('publick'))
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
 
 // app.post('/createUser', (req, res) => {
 //   store
@@ -16,11 +16,13 @@ app.use(bodyParser.json())
 // })
 
 const createUser = (req, res) => {
+
   store
     .createUser({
       username: req.body.username,
       password: req.body.password,
     })
+    // .then( (res, req) => console.log("request:", req, '\nresponse:', res) )
     .then( () => res.sendStatus(200))
 }
 

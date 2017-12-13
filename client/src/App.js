@@ -3,7 +3,11 @@ import './App.css'
 import { Link, Route } from 'react-router-dom'
 
 import CreateProfile from './containers/CreateProfile'
-import { singleRequest } from './utils/'
+
+import {
+  singleGetRequest,
+  setError,
+} from './utils/'
 
 class App extends Component {
   constructor() {
@@ -14,28 +18,20 @@ class App extends Component {
       error: '',
     }
     this.setApiData = this.setApiData.bind(this)
-    this.setError = this.setError.bind(this)
+    this.setError = setError.bind(this)
   }
 
   componentWillMount(){
     this.setState({
       loading: true,
     })
-    singleRequest('/api', {}, this.setApiData, this.setError)
+    singleGetRequest('/api/', {}, this.setApiData, this.setError)
   }
 
   setApiData(data) {
     this.setState({
       loading: false,
       data,
-    })
-  }
-
-  setError(error) {
-    console.error(error)
-    this.setState({
-      loading: false,
-      error,
     })
   }
 
