@@ -1,108 +1,62 @@
 import React, { Component } from 'react'
 import './App.css'
-import fetch from 'isomorphic-fetch'
 import { Link, Route } from 'react-router-dom'
 
 import CreateProfile from './containers/CreateProfile'
+import { singleRequest } from './utils/'
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      res: '',
+      data: null,
       loading: false,
-      loaded: false,
-      // currentUser: null,
+      error: '',
     }
-    this.fireQuery = this.fireQuery.bind(this)
+    this.setApiData = this.setApiData.bind(this)
+    this.setError = this.setError.bind(this)
   }
+
   componentWillMount(){
     this.setState({
       loading: true,
     })
-    this.fireQuery()
-    // this.fetchUser()
+    singleRequest('/api', {}, this.setApiData, this.setError)
   }
 
-  checkStatus(res){
-    if (res.status >= 200 && res.status < 300) {
-      return res
-    }
-    const error = new Error(`HTTP Error ${res.statusText}`)
-    error.status = res.statusText;
-    error.response = res
-    console.log(error)
-    throw error
-  }
-
-  parseResponse(res){
-    return res.json()
-  }
-
-  fireQuery(){
-    fetch('/api')
-    .then(this.checkStatus)
-    .then(this.parseResponse)
-    .then( res => {
-      console.log('res:',
-      res,
-      '\njson:',
-      // res.json()
-      // JSON.parse(res)
-    );
-      this.setState({
-        loading: false,
-        res,
-      })
-    })
-    .catch( error => {
-      // console.error('There was an error loading query data:', error)
-      this.setState({
-        error,
-        loading: false,
-      })
+  setApiData(data) {
+    this.setState({
+      loading: false,
+      data,
     })
   }
 
-  // fetchUser(){
-  //   fetch('https://api.github.com/gists/3f9676cf0438778fab39a8235fff6f2d')
-  //   .then( res => res.json() )
-  //   .then( res => {
-  //      const currentUser = JSON.parse(res.files['Charteco-Demo-User'].content)
-  //      this.setState({
-  //        loading: false,
-  //        loaded: true,
-  //        currentUser,
-  //      })
-  //   })
-  //   .catch( error => {
-  //     console.error('There was an error loading user data:', error)
-  //     this.setState({
-  //       error,
-  //       loading: false,
-  //       loaded: false,
-  //     })
-  //   })
-  // }
+  setError(error) {
+    console.error(error)
+    this.setState({
+      loading: false,
+      error,
+    })
+  }
 
   render() {
-
 
     return (
       <div className="App">
         <div>
           <nav>
+            <Link to="/">Home</Link>
             <Link to="/create_user">Sign Up</Link>
           </nav>
         </div>
         <p className="App-intro">
           Words and things!
-          {this.state.res ? `\n${this.state.res.stuff}` : '...waiting'}
+          {this.state.data ? `\n${Object.keys(this.state.data)
+                .map( k => `${k}: ${this.state.data[k]}`)}` : '...waiting'}
         </p>
         <div>
           <Route path="/create_user" component={CreateProfile} />
         </div>
-
       </div>
     );
   }
