@@ -20,6 +20,15 @@ class CreateProfile extends Component {
     this.fieldOnchange = fieldOnchange.bind(this)
     this.setError = setError.bind(this)
     this.createUser = this.createUser.bind(this)
+    this.handleResponse = this.handleResponse.bind(this)
+  }
+
+  handleResponse(res) {
+    console.log('success!', res.status)
+    this.setState({
+      username: '',
+      password: '',
+    })
   }
 
   createUser() {
@@ -39,7 +48,7 @@ class CreateProfile extends Component {
     this.setState({
       loading: true,
     })
-    singlePostRequest('/createUser/', request, res => console.log('success!', res.status), this.setError)
+    singlePostRequest('/createUser/', request, this.handleResponse, this.setError)
   }
 
   render() {
