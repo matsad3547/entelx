@@ -8,10 +8,10 @@ export function fieldOnchange(e){
 }
 
 export function setError(error) {
-  console.error(error)
   this.setState({
     loading: false,
-    error,
+    showError: true,
+    error: error.message,
   })
 }
 

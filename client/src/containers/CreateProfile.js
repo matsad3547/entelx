@@ -16,6 +16,7 @@ class CreateProfile extends Component {
       location: [],
       loading: false,
       error: '',
+      showError: false,
     }
     this.fieldOnchange = fieldOnchange.bind(this)
     this.setError = setError.bind(this)
@@ -28,27 +29,43 @@ class CreateProfile extends Component {
     this.setState({
       username: '',
       password: '',
+      verifyPassword: '',
     })
   }
 
   createUser() {
-    console.log('creating user');
-    const body = JSON.stringify({
-      username: this.state.username,
-      password: this.state.password,
-    })
-    const request = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body,
+
+    const {
+      username,
+      password,
+      verifyPassword,
+    } = this.state
+
+    if (password && password === verifyPassword) {
+      console.log('creating user');
+      const body = JSON.stringify({
+        username,
+        password,
+      })
+      const request = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body,
+      }
+      this.setState({
+        loading: true,
+      })
+      singlePostRequest('/createUser/', request, this.handleResponse, this.setError)
     }
-    this.setState({
-      loading: true,
-    })
-    singlePostRequest('/createUser/', request, this.handleResponse, this.setError)
+    else {
+      this.setState({
+        showError: true,
+        error: 'Please verify password',
+      })
+    }
   }
 
   render() {
@@ -56,15 +73,23 @@ class CreateProfile extends Component {
     const {
       username,
       password,
+      verifyPassword,
+      showError,
+      error,
     } = this.state
 
     return (
-      <form className="createUser">
-        <h1>Create your user profile</h1>
-        <input type="text" id="username" placeholder="username" value={username} onChange={this.fieldOnchange}/>
-        <input type="password" id="password" placeholder="password" value={password} onChange={this.fieldOnchange}/>
-        <input type="button" value="Create your profile" onClick={this.createUser}/>
-      </form>
+      <div>
+        <form className="createUser">
+          <h1>Create your user profile</h1>
+          <input type="text" id="username" placeholder="username" value={username} onChange={this.fieldOnchange}/>
+          <input type="password" id="password" placeholder="password" value={password} onChange={this.fieldOnchange}/>
+          <input type="password" id="verifyPassword" placeholder="verify" value={verifyPassword} onChange={this.fieldOnchange}/>
+          <input type="button" value="Create your profile" onClick={this.createUser}/>
+        </form>
+
+        <p style={ showError ? { display: 'block'} : {display: 'none'}}>{error}</p>
+      </div>
     )
   }
 }

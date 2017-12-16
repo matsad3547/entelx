@@ -3,6 +3,7 @@ import './App.css'
 import { Link, Route } from 'react-router-dom'
 
 import CreateProfile from './containers/CreateProfile'
+import Login from './containers/Login'
 
 import {
   singleGetRequest,
@@ -43,6 +44,7 @@ class App extends Component {
           <nav>
             <Link to="/">Home</Link>
             <Link to="/create_user">Sign Up</Link>
+            <Link to="/login">Login</Link>
           </nav>
         </div>
         <p className="App-intro">
@@ -52,6 +54,7 @@ class App extends Component {
         </p>
         <div>
           <Route path="/create_user" component={CreateProfile} />
+          <Route path="/login" component={Login} />
         </div>
       </div>
     );
