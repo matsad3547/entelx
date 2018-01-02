@@ -12,7 +12,7 @@ const options = {
   json: true,
 }
 
-let eiaRequest = {}
+const eiaRequest = {}
 
 
 // const req = Rx.Observable.fromEvent(
@@ -36,11 +36,20 @@ fetch(url)
     if (res.status >= 400) {
         throw new Error("Bad response from server");
     }
-    return res.json()
+    else {
+      return res.json()
+    }
   })
   .then( res => {
-    // console.log('data:', res.series[0].data)
-    eiaRequest.data = res.series[0].data
+    if (res.data && res.data.error) {
+      console.error('There was an error getting eia data:', res.data.error)
+      eiaRequest.error = res.data.error
+      eiaRequest.data = null
+    }
+    else {
+      eiaRequest.data = res.series[0].data
+    }
   })
+  .catch( err => console.error('There was an error in the eiaModule:', err) )
 
 module.exports = eiaRequest

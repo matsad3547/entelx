@@ -23,6 +23,7 @@ class App extends Component {
   }
 
   componentWillMount(){
+    // console.log('process.env:', process.env.NODE_ENV );
     this.setState({
       loading: true,
     })
@@ -37,6 +38,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('data:', this.state.data);
 
     return (
       <div className="App">

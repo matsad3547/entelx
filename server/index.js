@@ -4,7 +4,6 @@ const dotenv = require('dotenv').config()
 const eiaRequest = require('./app/eiaRequest')
 const bodyParser = require('body-parser')
 
-
 const {
   createUser,
   login,
@@ -25,7 +24,6 @@ app.get('/api', (req, res) => {
     cheese: 'poofs',
     eia: eiaRequest,
   })
-  // .catch( err => console.error(err) )
 })
 
 app.post('/createUser', createUser)

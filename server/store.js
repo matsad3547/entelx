@@ -45,6 +45,7 @@ const authenticate = ({ username, password }) => {
                                   password,
                                   salt: user.salt,
                                 })
+              //TODO add fixed time comparison
               return {
                 success: hash === user.encrypted_password,
               }
