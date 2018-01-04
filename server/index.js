@@ -4,6 +4,8 @@ const dotenv = require('dotenv').config()
 const eiaRequest = require('./app/eiaRequest')
 const bodyParser = require('body-parser')
 
+const processes = require('./processes/')
+
 const {
   createUser,
   login,

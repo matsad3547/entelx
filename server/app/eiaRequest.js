@@ -52,4 +52,6 @@ fetch(url)
   })
   .catch( err => console.error('There was an error in the eiaModule:', err) )
 
+  
+
 module.exports = eiaRequest
