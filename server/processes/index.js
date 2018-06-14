@@ -11,3 +11,8 @@ py.stdout.on('end', () => console.log(`Sum of numbers: ${dataString}`) )
 py.stdin.write(JSON.stringify(dataArr))
 
 py.stdin.end()
+
+//at Pro/open-source-projects/pyiso/pyiso
+// $ python
+// >>> ercot = client_factory('ERCOT')
+// >>> ercot.get_generation(latest='true')
