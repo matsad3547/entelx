@@ -32,7 +32,10 @@ class App extends Component {
     this.setState({
       loading: true,
     })
-    singleGetRequest('/api/', {}, this.setApiData, this.setError)
+    singleGetRequest('/api/', {})
+      .then(this.setApiData)
+      .catch(this.setError)
+    // singleGetRequest('/api/', {}, this.setApiData, this.setError)
   }
 
   setApiData = data =>  this.setState({

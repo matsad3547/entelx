@@ -42,7 +42,10 @@ class Login extends Component {
     this.setState({
       loading: true,
     })
-    singlePostRequest('/login/', request, this.handleResponse, this.setError)
+    singlePostRequest('/login/', request)
+      .then(this.handleResponse)
+      .then(this.setError)
+    // singlePostRequest('/login/', request, this.handleResponse, this.setError)
   }
 
   render() {

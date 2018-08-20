@@ -7,21 +7,11 @@ export function fieldOnchange(e){
   })
 }
 
-export const handleError = (self, err) => {
-  self.setState({
-    loading: false,
-    showError: true,
-    error: err.message,
-  })
-}
-
-export const setError = err => {
-  this.setState({
-    loading: false,
-    showError: true,
-    error: err.message,
-  })
-}
+export const handleError = (self, err) => self.setState({
+  loading: false,
+  showError: true,
+  error: err.message,
+})
 
 export const parseResponse = res => res.json()
 
@@ -35,29 +25,15 @@ export const checkStatus = res => {
   throw error
 }
 
-export const singleGetRequest = ( path,
-                                  options,
-                                  cb,
-                                  errCb
-                                ) =>
-  fetch(path, options)
-  .then(checkStatus)
-  .then(parseResponse)
-  .then( res => cb(res) )
-  .catch( err => errCb(err) )
+export const singleGetRequest = (path, options) => new Promise( (resolve, reject) => fetch(path, options)
+    .then(checkStatus)
+    .then(parseResponse)
+    .then(resolve)
+    .catch(reject)
+  )
 
-// export const singleGetRequest = (path, options) => new Promise( (resolve, reject) => fetch(path, options)
-//     .then(checkStatus)
-//     .then(parseResponse)
-//     .then( res => cb(res) )
-//     .catch( err => errCb(err) )
-
-export const singlePostRequest = ( path,
-                                  options,
-                                  cb,
-                                  errCb
-                                ) =>
-  fetch(path, options)
-  .then(checkStatus)
-  .then( res => cb(res) )
-  .catch( err => errCb(err) )
+export const singlePostRequest = ( path, options) => new Promise( (resolve, reject) => fetch(path, options)
+    .then(checkStatus)
+    .then(resolve)
+    .catch(reject)
+  )

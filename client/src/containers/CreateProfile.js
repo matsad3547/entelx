@@ -54,7 +54,9 @@ class CreateProfile extends Component {
       this.setState({
         loading: true,
       })
-      singlePostRequest('/createUser/', request, this.handleResponse, this.setError)
+      singlePostRequest('/createUser/', request)
+        .then(this.handleResponse)
+        .catch(this.setError)
     }
     else {
       this.setState({
