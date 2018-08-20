@@ -7,11 +7,19 @@ export function fieldOnchange(e){
   })
 }
 
-export function setError(error) {
+export const handleError = (self, err) => {
+  self.setState({
+    loading: false,
+    showError: true,
+    error: err.message,
+  })
+}
+
+export const setError = err => {
   this.setState({
     loading: false,
     showError: true,
-    error: error.message,
+    error: err.message,
   })
 }
 
@@ -37,6 +45,12 @@ export const singleGetRequest = ( path,
   .then(parseResponse)
   .then( res => cb(res) )
   .catch( err => errCb(err) )
+
+// export const singleGetRequest = (path, options) => new Promise( (resolve, reject) => fetch(path, options)
+//     .then(checkStatus)
+//     .then(parseResponse)
+//     .then( res => cb(res) )
+//     .catch( err => errCb(err) )
 
 export const singlePostRequest = ( path,
                                   options,

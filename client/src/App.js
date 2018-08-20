@@ -7,20 +7,25 @@ import Login from './containers/Login'
 
 import {
   singleGetRequest,
-  setError,
+  handleError,
 } from './utils/'
 
 class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      data: null,
-      loading: false,
-      error: '',
-    }
-    this.setApiData = this.setApiData.bind(this)
-    this.setError = setError.bind(this)
+  state = {
+    data: null,
+    loading: false,
+    error: '',
   }
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     data: null,
+  //     loading: false,
+  //     error: '',
+  //   }
+  //   this.setApiData = this.setApiData.bind(this)
+    // this.setError = setError.bind(this)
+  // }
 
   componentWillMount(){
     // console.log('process.env:', process.env.NODE_ENV );
@@ -30,12 +35,18 @@ class App extends Component {
     singleGetRequest('/api/', {}, this.setApiData, this.setError)
   }
 
-  setApiData(data) {
-    this.setState({
-      loading: false,
-      data,
-    })
-  }
+  setApiData = data =>  this.setState({
+    loading: false,
+    data,
+  })
+
+  setError = err => handleError(this, err)
+  //
+  // setError = error => this.setState({
+  //   loading: false,
+  //   showError: true,
+  //   error: error.message,
+  // })
 
   render() {
     console.log('data:', this.state.data);

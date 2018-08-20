@@ -3,28 +3,22 @@ import React, { Component } from 'react'
 import {
   fieldOnchange,
   singlePostRequest,
-  setError,
+  handleError,
 } from '../utils/'
 
 class CreateProfile extends Component {
-  constructor() {
-    super()
-    this.state = {
-      username: '',
-      password: '',
-      verifyPassword: '',
-      location: [],
-      loading: false,
-      error: '',
-      showError: false,
-    }
-    this.fieldOnchange = fieldOnchange.bind(this)
-    this.setError = setError.bind(this)
-    this.createUser = this.createUser.bind(this)
-    this.handleResponse = this.handleResponse.bind(this)
+
+  state = {
+    username: '',
+    password: '',
+    verifyPassword: '',
+    location: [],
+    loading: false,
+    error: '',
+    showError: false,
   }
 
-  handleResponse(res) {
+  handleResponse = res => {
     console.log('success!', res.status)
     this.setState({
       username: '',
@@ -33,7 +27,9 @@ class CreateProfile extends Component {
     })
   }
 
-  createUser() {
+  setError = err => handleError(this, err)
+
+  createUser = () => {
 
     const {
       username,
@@ -82,9 +78,9 @@ class CreateProfile extends Component {
       <div>
         <form className="createUser">
           <h1>Create your user profile</h1>
-          <input type="text" id="username" placeholder="username" value={username} onChange={this.fieldOnchange}/>
-          <input type="password" id="password" placeholder="password" value={password} onChange={this.fieldOnchange}/>
-          <input type="password" id="verifyPassword" placeholder="verify" value={verifyPassword} onChange={this.fieldOnchange}/>
+          <input type="text" id="username" placeholder="username" value={username} onChange={fieldOnchange.bind(this)}/>
+          <input type="password" id="password" placeholder="password" value={password} onChange={fieldOnchange.bind(this)}/>
+          <input type="password" id="verifyPassword" placeholder="verify" value={verifyPassword} onChange={fieldOnchange.bind(this)}/>
           <input type="button" value="Create your profile" onClick={this.createUser}/>
         </form>
 
