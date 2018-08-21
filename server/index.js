@@ -5,6 +5,7 @@ const eiaRequest = require('./app/eiaRequest')
 const bodyParser = require('body-parser')
 
 const processes = require('./processes/')
+const getLmp = require('./processes/getLmp')
 
 const {
   createUser,
@@ -37,3 +38,5 @@ app.listen(app.get('port'), err => {
   }
   console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
+
+console.log('get lmp at index:', getLmp);

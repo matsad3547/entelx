@@ -9,6 +9,8 @@ def read_in():
 def main():
     lines = read_in()
 
+    # print(lines)
+
     np_lines = np.array(lines)
 
     lines_sum = np.sum(np_lines)
