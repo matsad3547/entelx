@@ -1,4 +1,4 @@
-# compute_input.py
+# was compute_input.py
 
 import sys, json, numpy as np
 

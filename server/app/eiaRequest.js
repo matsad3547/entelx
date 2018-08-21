@@ -1,4 +1,3 @@
-// const request = require('request-promise')
 const Rx = require('rxjs/Rx')
 const eiaKey = process.env.EIA_API_KEY
 require('es6-promise').polyfill()
@@ -12,7 +11,7 @@ const options = {
   json: true,
 }
 
-const eiaRequest = {}
+let eia = {}
 
 
 // const req = Rx.Observable.fromEvent(
@@ -43,13 +42,13 @@ fetch(url)
   .then( res => {
     if (res.data && res.data.error) {
       console.error('There was an error getting eia data:', res.data.error)
-      eiaRequest.error = res.data.error
-      eiaRequest.data = null
+      eia.error = res.data.error
+      eia.data = null
     }
     else {
-      eiaRequest.data = res.series[0].data
+      eia.data = res.series[0].data
     }
   })
   .catch( err => console.error('There was an error in the eiaModule:', err) )
 
-module.exports = eiaRequest
+module.exports = eia

@@ -1,22 +1,18 @@
 const spawn = require('child_process').spawn
-const py = spawn('python', ['server/processes/get_lmp.py'])
+const py = spawn('python', ['server/processes/python/get_lmp.py'])
 
-const today = Date.now()
 
-const end = new Date(today).toString()
+const getLmp = (startDate, endDate) => new Promise((resolve, reject) => {
 
-const start = new Date(today - 24 * 60 * 60 * 1000).toString()
+  let dataArr = []
 
-// console.log('end:', end, '\nstart:', start);
+  py.stdin.write(JSON.stringify({startDate, endDate}))
 
-let dataArr = []
+  py.stdout.on('data', data => dataArr = [...dataArr, data.toString('utf8')] )
 
-py.stdout.on('data', data => dataArr = [...dataArr, data.toString('utf8')] )
+  py.stdout.on('end', () => resolve(dataArr))
 
-py.stdout.on('end', () => console.log(`Locational marginal prices from CAISO: ${dataArr}`) )
+  py.stdin.end()
+})
 
-py.stdin.write(JSON.stringify({start, end}))
-
-py.stdin.end()
-
-return dataArr
+module.exports = getLmp

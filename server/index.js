@@ -1,11 +1,10 @@
 const express = require('express')
 const app = express()
 const dotenv = require('dotenv').config()
-const eiaRequest = require('./app/eiaRequest')
+const eia = require('./app/eiaRequest')
 const bodyParser = require('body-parser')
 
 const processes = require('./processes/')
-const getLmp = require('./processes/getLmp')
 
 const {
   createUser,
@@ -25,7 +24,8 @@ app.get('/api', (req, res) => {
   res.json({
     stuff: 'things',
     cheese: 'poofs',
-    eia: eiaRequest,
+    eia,
+    lmp: processes.lmp,
   })
 })
 
@@ -38,5 +38,3 @@ app.listen(app.get('port'), err => {
   }
   console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
-
-console.log('get lmp at index:', getLmp);
