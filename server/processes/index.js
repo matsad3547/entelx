@@ -1,4 +1,5 @@
 const getLmp = require('./getLmp')
+const demoProcess = require('./demoProcess')
 
 const today = Date.now()
 
@@ -10,26 +11,18 @@ let lmp = {}
 
 getLmp(startDate, endDate)
   .then( res => {
+    console.log('res:', res);
     lmp.data = res
   })
-  .catch( err => console.error('something happened:', err) )
+  .catch( err => console.error('Error getting lmp data:', err) )
+
+demoProcess({startDate, endDate})
+  .then( res => {
+    console.log('demo data:', res);
+  })
+  .catch( err => console.error('Error getting demo data:', err) )
 
 module.exports = {
   lmp,
+  demoProcess,
 }
-
-//demo python process
-
-// const spawn = require('child_process').spawn
-// const py = spawn('python', ['server/processes/demo_process.py'])
-
-// const dataArr = [2, 2, 3, 4, 5, 6, 7, 8, 9]
-// let dataString = ''
-//
-// py.stdout.on('data', data => dataString += data.toString('utf8'))
-//
-// py.stdout.on('end', () => console.log(`Sum of numbers: ${dataString}`) )
-//
-// py.stdin.write(JSON.stringify(dataArr))
-//
-// py.stdin.end()
