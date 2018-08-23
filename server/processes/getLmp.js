@@ -1,19 +1,29 @@
 const spawn = require('child_process').spawn
 
+const parseCAISOResponse = dataStr => {
+  const hasThrottleMessage = dataStr.includes('CAISO: retrying in 5 seconds')
+
+  const goodStr = hasThrottleMessage ? dataStr.split('}}')[1] : dataStr
+
+  return JSON.parse(goodStr)
+}
+
 const getLmp = (startDate, endDate) => new Promise((resolve, reject) => {
   const py = spawn('python', ['server/processes/python/get_lmp.py'])
 
-  let dataArr = []
+  console.time('lmp data')
+  let dataStr = ''
 
-  console.time('lmp data');
-
-  py.stdout.on('data', data => dataArr = [...dataArr, data.toString('utf8')] )
+  py.stdout.on('data', data => dataStr += data.toString('utf8'))
 
   py.stderr.on('data', err => reject(err.toString('utf8')))
 
   py.stdout.on('end', () => {
-    console.timeEnd('lmp data');
-    resolve(dataArr)
+    console.timeEnd('lmp data')
+    // console.log('data at getLmp:', dataStr )
+
+    const parsedData = parseCAISOResponse(dataStr)
+    resolve(parsedData)
   })
 
   py.stdin.write(JSON.stringify({startDate, endDate}))
@@ -21,4 +31,7 @@ const getLmp = (startDate, endDate) => new Promise((resolve, reject) => {
   py.stdin.end()
 })
 
-module.exports = getLmp
+module.exports = {
+  getLmp,
+  parseCAISOResponse,
+}
