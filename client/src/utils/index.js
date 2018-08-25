@@ -34,6 +34,7 @@ export const singleGetRequest = (path, options) => new Promise( (resolve, reject
 
 export const singlePostRequest = ( path, options) => new Promise( (resolve, reject) => fetch(path, options)
     .then(checkStatus)
+    .then(parseResponse)
     .then(resolve)
     .catch(reject)
   )

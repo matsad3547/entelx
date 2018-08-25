@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 import {
   fieldOnchange,
@@ -6,7 +6,7 @@ import {
   handleError,
 } from '../utils/'
 
-class Login extends Component {
+class Login extends PureComponent {
 
   state = {
     username: '',

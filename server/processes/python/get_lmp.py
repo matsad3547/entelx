@@ -14,8 +14,9 @@ def get_unix_seconds(date_time):
     return int(time.mktime(date_time.timetuple()) * 1000)
 
 def parse_timestamp(dict_with_timestamp):
-    dict_with_timestamp["timestamp"] = get_unix_seconds(dict_with_timestamp["timestamp"])
-    return dict_with_timestamp
+    dict_with_millis = dict_with_timestamp
+    dict_with_millis["timestamp"] = get_unix_seconds(dict_with_timestamp["timestamp"])
+    return dict_with_millis
 
 def main():
     dates = read_in()
@@ -30,7 +31,7 @@ def main():
     parsed_result = list(map(parse_timestamp, caiso_result))
 
     json_result = json.dumps(parsed_result)
-    
+
     print(json_result)
 
 if __name__ == '__main__':

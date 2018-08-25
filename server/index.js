@@ -4,30 +4,34 @@ const dotenv = require('dotenv').config()
 const eia = require('./app/eiaRequest')
 const bodyParser = require('body-parser')
 
-const processes = require('./processes/')
-
 const {
   createUser,
   login,
 } = require('./user/')
+
+const { getCaiso } = require('./product')
 
 app.set('port', process.env.PORT || 3001)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static("client/build"))
 }
+
 app.use(express.static('publick'))
 
 app.use(bodyParser.json())
+
+app.post('/caiso', getCaiso)
+
 app.get('/api', (req, res) => {
   //TODO: This is where the database goes
   res.json({
     stuff: 'things',
     cheese: 'poofs',
     eia,
-    lmp: processes.lmp,
   })
 })
+
 
 app.post('/createUser', createUser)
 app.post('/login', login)
