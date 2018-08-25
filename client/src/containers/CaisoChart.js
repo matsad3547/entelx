@@ -1,6 +1,16 @@
 import React, { PureComponent } from 'react'
 
 import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts'
+
+import {
   singlePostRequest,
   handleError,
 } from '../utils/'
@@ -42,21 +52,34 @@ class CaisoChart extends PureComponent {
       .catch(this.setError)
   }
 
-  setData = data => {
-    console.log('data at caiso:', data)
-
-    this.setState({
+  setData = res => this.setState({
       loading: false,
-      data,
+      data: res.data,
     })
-  }
+
 
   setError = err => handleError(this, err)
 
   render() {
+
     return (
       <div>
         <h1>CAISO Locational Marginal Prices</h1>
+        {
+          this.state.data &&
+          <LineChart
+            width={800}
+            height={500}
+            data={this.state.data}
+            margin={{top: 15, right: 30, left: 60, bottom: 5}}>
+            <XAxis dataKey="timestamp"/>
+            <YAxis/>
+            <CartesianGrid strokeDasharray="3 3"/>
+            <Tooltip/>
+            <Legend />
+            <Line type="monotone" dataKey="lmp" stroke="#8884d8" activeDot={{r: 8}}/>
+          </LineChart>
+        }
       </div>
     )
   }
