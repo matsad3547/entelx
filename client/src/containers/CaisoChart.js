@@ -22,22 +22,27 @@ class CaisoChart extends PureComponent {
     data: null,
     loading: false,
     error: '',
+    startDate: null,
+    endDate: null,
   }
 
   componentWillMount(){
 
-    this.setState({
-      loading: true,
-    })
     const now = new Date()
 
-    const endDate = getDateWithOffsetAndTZ(now).toISOString()
+    const endDate = getDateWithOffsetAndTZ(now)
 
-    const startDate = getDateWithOffsetAndTZ(now, 24 * 60 * 60 * 1000).toISOString()
+    const startDate = getDateWithOffsetAndTZ(now, 24 * 60 * 60 * 1000)
 
-    const body = JSON.stringify({
+    this.setState({
+      loading: true,
       startDate,
       endDate,
+    })
+
+    const body = JSON.stringify({
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
     })
 
     const request = {
@@ -67,6 +72,16 @@ class CaisoChart extends PureComponent {
     return (
       <div>
         <h1>CAISO Locational Marginal Prices</h1>
+        <div style={styles.dates}>
+          <div>
+            <h3>Start Date:</h3>
+            {millisToDate(this.state.startDate)}
+          </div>
+          <div>
+            <h3>End Date:</h3>
+            {millisToDate(this.state.endDate)}
+          </div>
+        </div>
         {
           this.state.data &&
           <LineChart
@@ -88,6 +103,14 @@ class CaisoChart extends PureComponent {
       </div>
     )
   }
+}
+
+const styles = {
+  dates: {
+    display: 'inline-flex',
+    justifyContent: 'space-evenly',
+    width: '100%',
+  },
 }
 
 export default CaisoChart
