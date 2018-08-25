@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react'
 
+import format from 'date-fns/format'
+import subDays from 'date-fns/sub_days'
+
 import {
   LineChart,
   Line,
@@ -17,6 +20,8 @@ import {
   getDateWithOffsetAndTZ,
 } from '../utils/'
 
+const formatIso = date => format(date, 'YYYY-MM-DDTHH:mm:ss.sssZ')
+
 class CaisoChart extends PureComponent {
   state = {
     data: null,
@@ -30,9 +35,19 @@ class CaisoChart extends PureComponent {
 
     const now = new Date()
 
-    const endDate = getDateWithOffsetAndTZ(now)
+    const endDate = now
 
-    const startDate = getDateWithOffsetAndTZ(now, 24 * 60 * 60 * 1000)
+    const startDate = subDays(now, 1)
+
+// 2018-08-25T15:26:10.267Z
+
+    console.log(
+      'now:', now,
+    '\nnow millis:', endDate.getTime(),
+    '\nstart date:', formatIso(startDate),
+    '\nend date:', formatIso(endDate),
+    '\ntz offset:', now.getTimezoneOffset()
+  );
 
     this.setState({
       loading: true,
@@ -41,8 +56,8 @@ class CaisoChart extends PureComponent {
     })
 
     const body = JSON.stringify({
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
+      startDate: formatIso(startDate),
+      endDate: formatIso(endDate),
     })
 
     const request = {
@@ -68,6 +83,14 @@ class CaisoChart extends PureComponent {
   setError = err => handleError(this, err)
 
   render() {
+
+    if(this.state.data) {
+      const now = new Date()
+      const nowMillis = now.getTime()
+      const latestTS = this.state.data[this.state.data.length- 1].timestamp
+
+      console.log('time stamp difference:', (latestTS - nowMillis) / (60*60*1000));
+    }
 
     return (
       <div>
