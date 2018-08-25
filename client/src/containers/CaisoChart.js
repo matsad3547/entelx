@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 
 import format from 'date-fns/format'
 import subDays from 'date-fns/sub_days'
+import subHours from 'date-fns/sub_hours'
 
 import {
   LineChart,
@@ -20,7 +21,7 @@ import {
   getDateWithOffsetAndTZ,
 } from '../utils/'
 
-const formatIso = date => format(date, 'YYYY-MM-DDTHH:mm:ss.sssZ')
+const formatIso = date => format(date, 'YYYY-MM-DDTHH:mm:ss.sss[Z]')
 
 class CaisoChart extends PureComponent {
   state = {
@@ -35,9 +36,9 @@ class CaisoChart extends PureComponent {
 
     const now = new Date()
 
-    const endDate = now
+    const endDate = subHours(now, 1) //CA time
 
-    const startDate = subDays(now, 1)
+    const startDate = subDays(endDate, 1)
 
 // 2018-08-25T15:26:10.267Z
 
