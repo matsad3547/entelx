@@ -38,3 +38,7 @@ export const singlePostRequest = ( path, options) => new Promise( (resolve, reje
     .then(resolve)
     .catch(reject)
   )
+
+export const millisToDate = millis => new Date(millis).toLocaleString('en-US')
+
+export const getDateWithOffsetAndTZ = (dateObj, offset = 0) => new Date(dateObj.getTime() - offset - (dateObj.getTimezoneOffset() * 60 * 1000))

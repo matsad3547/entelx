@@ -13,6 +13,8 @@ import {
 import {
   singlePostRequest,
   handleError,
+  millisToDate,
+  getDateWithOffsetAndTZ,
 } from '../utils/'
 
 class CaisoChart extends PureComponent {
@@ -27,11 +29,11 @@ class CaisoChart extends PureComponent {
     this.setState({
       loading: true,
     })
-    const today = Date.now()
+    const now = new Date()
 
-    const endDate = new Date(today).toISOString()
+    const endDate = getDateWithOffsetAndTZ(now).toISOString()
 
-    const startDate = new Date(today - 24 * 60 * 60 * 1000).toISOString()
+    const startDate = getDateWithOffsetAndTZ(now, 24 * 60 * 60 * 1000).toISOString()
 
     const body = JSON.stringify({
       startDate,
@@ -72,12 +74,15 @@ class CaisoChart extends PureComponent {
             height={500}
             data={this.state.data}
             margin={{top: 15, right: 30, left: 60, bottom: 5}}>
-            <XAxis dataKey="timestamp"/>
+            <XAxis
+              dataKey="timestamp"
+              tickFormatter={millisToDate}
+            />
             <YAxis/>
             <CartesianGrid strokeDasharray="3 3"/>
             <Tooltip/>
             <Legend />
-            <Line type="monotone" dataKey="lmp" stroke="#8884d8" activeDot={{r: 8}}/>
+            <Line type="monotone" dataKey="lmp" stroke="#8884d8" activeDot={{r: 4}}/>
           </LineChart>
         }
       </div>
