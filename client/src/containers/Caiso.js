@@ -4,26 +4,19 @@ import format from 'date-fns/format'
 import subDays from 'date-fns/sub_days'
 import subHours from 'date-fns/sub_hours'
 
+import LineChartLmp from '../components/LineChartLmp'
+
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from 'recharts'
+  utcFormat,
+  dayMonthYearTimeFormat,
+} from '../config/'
 
 import {
   singlePostRequest,
   handleError,
-  millisToDate,
-  getDateWithOffsetAndTZ,
 } from '../utils/'
 
-const formatIso = date => format(date, 'YYYY-MM-DDTHH:mm:ss.sss[Z]')
-
-class CaisoChart extends PureComponent {
+class Caiso extends PureComponent {
   state = {
     data: null,
     loading: false,
@@ -36,19 +29,9 @@ class CaisoChart extends PureComponent {
 
     const now = new Date()
 
+    // TODO figure out a better way to get the current time in CA
     const endDate = subHours(now, 1) //CA time
-
     const startDate = subDays(endDate, 1)
-
-// 2018-08-25T15:26:10.267Z
-
-    console.log(
-      'now:', now,
-    '\nnow millis:', endDate.getTime(),
-    '\nstart date:', formatIso(startDate),
-    '\nend date:', formatIso(endDate),
-    '\ntz offset:', now.getTimezoneOffset()
-  );
 
     this.setState({
       loading: true,
@@ -56,9 +39,14 @@ class CaisoChart extends PureComponent {
       endDate,
     })
 
+    this.getData(startDate, endDate)
+  }
+
+  getData = (startDate, endDate) => {
+
     const body = JSON.stringify({
-      startDate: formatIso(startDate),
-      endDate: formatIso(endDate),
+      startDate: format(startDate, utcFormat),
+      endDate: format(endDate, utcFormat),
     })
 
     const request = {
@@ -80,18 +68,9 @@ class CaisoChart extends PureComponent {
       data: res.data,
     })
 
-
   setError = err => handleError(this, err)
 
   render() {
-
-    if(this.state.data) {
-      const now = new Date()
-      const nowMillis = now.getTime()
-      const latestTS = this.state.data[this.state.data.length- 1].timestamp
-
-      console.log('time stamp difference:', (latestTS - nowMillis) / (60*60*1000));
-    }
 
     return (
       <div>
@@ -99,30 +78,19 @@ class CaisoChart extends PureComponent {
         <div style={styles.dates}>
           <div>
             <h3>Start Date:</h3>
-            {millisToDate(this.state.startDate)}
+            {format(this.state.startDate, dayMonthYearTimeFormat)}
           </div>
           <div>
             <h3>End Date:</h3>
-            {millisToDate(this.state.endDate)}
+            {format(this.state.endDate, dayMonthYearTimeFormat)}
           </div>
         </div>
         {
           this.state.data &&
-          <LineChart
-            width={800}
-            height={500}
+          <LineChartLmp
             data={this.state.data}
-            margin={{top: 15, right: 30, left: 60, bottom: 5}}>
-            <XAxis
-              dataKey="timestamp"
-              tickFormatter={millisToDate}
-            />
-            <YAxis/>
-            <CartesianGrid strokeDasharray="3 3"/>
-            <Tooltip/>
-            <Legend />
-            <Line type="monotone" dataKey="lmp" stroke="#8884d8" activeDot={{r: 4}}/>
-          </LineChart>
+            tz={'America/Los_Angeles'}
+          />
         }
       </div>
     )
@@ -137,4 +105,4 @@ const styles = {
   },
 }
 
-export default CaisoChart
+export default Caiso

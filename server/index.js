@@ -11,6 +11,9 @@ const {
 
 const { getCaiso } = require('./product')
 
+//for testing python
+// const { demoProcess } = require('./processes/')
+
 app.set('port', process.env.PORT || 3001)
 
 if (process.env.NODE_ENV === 'production') {
@@ -31,7 +34,6 @@ app.get('/api', (req, res) => {
     eia,
   })
 })
-
 
 app.post('/createUser', createUser)
 app.post('/login', login)

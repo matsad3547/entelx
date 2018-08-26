@@ -7,19 +7,20 @@ def read_in():
     return json.loads(lines[0])
 
 def main():
-    dates = read_in()
-
-    start = dates['startDate']
-    end = dates['endDate']
-
-    print(start + ' ' + end)
+    lines = read_in()
+    # dates = read_in()
+    #
+    # start = dates['startDate']
+    # end = dates['endDate']
+    #
+    # print(start + ' ' + end)
     # print(lines)
 
-    # np_lines = np.array(lines)
-    #
-    # lines_sum = np.sum(np_lines)
-    #
-    # print(lines_sum)
+    np_lines = np.array(lines)
+
+    lines_sum = np.sum(np_lines)
+
+    print(lines_sum)
 
 if __name__ == '__main__':
     main()

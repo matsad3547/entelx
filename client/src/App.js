@@ -4,7 +4,7 @@ import { Link, Route } from 'react-router-dom'
 
 import CreateProfile from './containers/CreateProfile'
 import Login from './containers/Login'
-import CaisoChart from './containers/CaisoChart'
+import Caiso from './containers/Caiso'
 
 import Home from './components/Home'
 import Button from './components/Button'
@@ -46,7 +46,7 @@ class App extends Component {
           />
           <Route
             path="/caiso"
-            component={CaisoChart}
+            component={Caiso}
           />
           <Route
             path="/create_user" component={CreateProfile}

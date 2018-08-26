@@ -1,5 +1,6 @@
 const spawn = require('child_process').spawn
 
+// TODO this is a super lame way of parsing the response
 const parseCAISOResponse = dataStr => {
   const hasThrottleMessage = dataStr.includes('CAISO: retrying in 5 seconds')
 
