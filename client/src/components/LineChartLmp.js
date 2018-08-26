@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import format from 'date-fns/format'
 
@@ -39,6 +40,11 @@ const LineChartLmp = ({data, tz}) => {
       <Line type="monotone" dataKey="lmp" stroke="#8884d8" activeDot={{r: 4}}/>
     </LineChart>
   )
+}
+
+LineChartLmp.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tz: PropTypes.string.isRequired,
 }
 
 export default LineChartLmp

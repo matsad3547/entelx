@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import format from 'date-fns/format'
 
@@ -10,7 +11,7 @@ const DateControl = ({
   date,
   title,
   onIncrement,
-  onDecrement
+  onDecrement,
 }) => (
 
   <div>
@@ -43,6 +44,13 @@ const styles = {
     flexDirection: 'column',
     width: '4em',
   },
+}
+
+DateControl.propTypes = {
+  date: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  onIncrement: PropTypes.func.isRequired,
+  onDecrement: PropTypes.func.isRequired,
 }
 
 export default DateControl
