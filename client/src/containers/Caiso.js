@@ -3,13 +3,12 @@ import React, { PureComponent } from 'react'
 import format from 'date-fns/format'
 import subDays from 'date-fns/sub_days'
 import subHours from 'date-fns/sub_hours'
+import addHours from 'date-fns/add_hours'
 
 import LineChartLmp from '../components/LineChartLmp'
+import DateControl from '../components/DateControl'
 
-import {
-  utcFormat,
-  dayMonthYearTimeFormat,
-} from '../config/'
+import { utcFormat } from '../config/'
 
 import {
   singlePostRequest,
@@ -68,27 +67,51 @@ class Caiso extends PureComponent {
       data: res.data,
     })
 
+  incrementDate = date => addHours(date, 1)
+
+  decrementDate = date => subHours(date, 1)
+
+  onIncrement = date => {
+    const incremented = this.incrementDate(this.state[date])
+    this.setState({ [date]: incremented })
+  }
+
+  onDecrement = date => {
+    const decremented = this.decrementDate(this.state[date])
+    this.setState({ [date]: decremented })
+  }
+
   setError = err => handleError(this, err)
 
   render() {
+
+    const {
+      startDate,
+      endDate,
+      data,
+    } = this.state
 
     return (
       <div>
         <h1>CAISO Locational Marginal Prices</h1>
         <div style={styles.dates}>
-          <div>
-            <h3>Start Date:</h3>
-            {format(this.state.startDate, dayMonthYearTimeFormat)}
-          </div>
-          <div>
-            <h3>End Date:</h3>
-            {format(this.state.endDate, dayMonthYearTimeFormat)}
-          </div>
+          <DateControl
+            date={startDate}
+            title="Start Date"
+            onIncrement={() => this.onIncrement('startDate')}
+            onDecrement={() => this.onDecrement('startDate')}
+          />
+          <DateControl
+            date={endDate}
+            title="End Date"
+            onIncrement={() => this.onIncrement('endDate')}
+            onDecrement={() => this.onDecrement('endDate')}
+          />
         </div>
         {
-          this.state.data &&
+          data &&
           <LineChartLmp
-            data={this.state.data}
+            data={data}
             tz={'America/Los_Angeles'}
           />
         }
@@ -103,6 +126,34 @@ const styles = {
     justifyContent: 'space-evenly',
     width: '100%',
   },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '4em',
+  },
+  interface: {
+    display: 'inline-flex',
+    width: '18em',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
 }
 
 export default Caiso
+
+// <div>
+//   <h3>Start Date:</h3>
+//   <div style={styles.interface}>
+//     {format(startDate, dayMonthYearTimeFormat)}
+//     <div style={styles.buttons}>
+//       <Button
+//         name="+ Hour"
+//         onClick={() => this.onIncrement('startDate')}
+//       />
+//       <Button
+//         name="- Hour"
+//         onClick={() => this.onDecrement('startDate')}
+//       />
+//     </div>
+//   </div>
+// </div>
