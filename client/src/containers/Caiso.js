@@ -7,6 +7,8 @@ import addHours from 'date-fns/add_hours'
 
 import LineChartLmp from '../components/LineChartLmp'
 import DateControl from '../components/DateControl'
+import Loading from '../components/loading/'
+
 
 import { utcFormat } from '../config/'
 
@@ -88,6 +90,7 @@ class Caiso extends PureComponent {
     const {
       startDate,
       endDate,
+      loading,
       data,
     } = this.state
 
@@ -108,6 +111,12 @@ class Caiso extends PureComponent {
             onDecrement={() => this.onDecrement('endDate')}
           />
         </div>
+        {
+          loading &&
+          <Loading
+            message={'CAISO data is loading...'}
+          />
+        }
         {
           data &&
           <LineChartLmp
