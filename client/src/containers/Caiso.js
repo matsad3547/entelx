@@ -7,6 +7,8 @@ import addHours from 'date-fns/add_hours'
 
 import LineChartLmp from '../components/LineChartLmp'
 import DateControl from '../components/DateControl'
+import Button from '../components/Button'
+
 import Loading from '../components/loading/'
 
 
@@ -35,7 +37,6 @@ class Caiso extends PureComponent {
     const startDate = subDays(endDate, 1)
 
     this.setState({
-      loading: true,
       startDate,
       endDate,
     })
@@ -44,6 +45,8 @@ class Caiso extends PureComponent {
   }
 
   getData = (startDate, endDate) => {
+
+    this.setState({ loading: true, })
 
     const body = JSON.stringify({
       startDate: format(startDate, utcFormat),
@@ -62,6 +65,16 @@ class Caiso extends PureComponent {
     singlePostRequest('/caiso', request)
       .then(this.setData)
       .catch(this.setError)
+  }
+
+  refreshData = () => {
+
+    const {
+      startDate,
+      endDate,
+    } = this.state
+
+    this.getData(startDate, endDate)
   }
 
   setData = res => this.setState({
@@ -101,14 +114,21 @@ class Caiso extends PureComponent {
           <DateControl
             date={startDate}
             title="Start Date"
+            disabled={loading}
             onIncrement={() => this.onIncrement('startDate')}
             onDecrement={() => this.onDecrement('startDate')}
           />
           <DateControl
             date={endDate}
             title="End Date"
+            disabled={loading}
             onIncrement={() => this.onIncrement('endDate')}
             onDecrement={() => this.onDecrement('endDate')}
+          />
+          <Button
+            name="Refresh Data"
+            disabled={loading}
+            onClick={this.refreshData}
           />
         </div>
         {
@@ -133,6 +153,7 @@ const styles = {
   dates: {
     display: 'inline-flex',
     justifyContent: 'space-evenly',
+    alignItems: 'center',
     width: '100%',
   },
   buttons: {

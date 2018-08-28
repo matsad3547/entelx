@@ -10,6 +10,7 @@ import { dayMonthYearTimeFormat } from '../config/'
 const DateControl = ({
   date,
   title,
+  disabled = false,
   onIncrement,
   onDecrement,
 }) => (
@@ -21,10 +22,12 @@ const DateControl = ({
       <div style={styles.buttons}>
         <Button
           name="+ Hour"
+          disabled={disabled}
           onClick={onIncrement}
         />
         <Button
           name="- Hour"
+          disabled={disabled}
           onClick={onDecrement}
         />
       </div>
@@ -49,6 +52,7 @@ const styles = {
 DateControl.propTypes = {
   date: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
 }
