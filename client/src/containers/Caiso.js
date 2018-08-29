@@ -46,7 +46,10 @@ class Caiso extends PureComponent {
 
   getData = (startDate, endDate) => {
 
-    this.setState({ loading: true, })
+    this.setState({
+      loading: true,
+      data: null,
+    })
 
     const body = JSON.stringify({
       startDate: format(startDate, utcFormat),
