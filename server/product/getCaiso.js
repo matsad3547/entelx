@@ -9,10 +9,10 @@ const getCaiso = (req, res) => {
   } = req.body
 
   const lat = 38.5816
-  const lng = 121.4944
+  const lng = -121.4944
 
   getWeather(startDate, lat, lng)
-    .then( res => console.log('weather data a CAISO:', res))
+    .then( res => console.log('weather data at CAISO:', res))
     .catch( err => console.error('Error getting weather data:', err) )
 
   getLmp(startDate, endDate)

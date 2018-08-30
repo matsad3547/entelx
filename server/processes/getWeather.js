@@ -4,7 +4,10 @@ require('isomorphic-fetch')
 
 const getWeather = (startDate, lat, lng) => new Promise( (resolve, reject) => {
 
-  const url = `          https://api.darksky.net/forecast/${weatherKey}/${lat},${lng},${startDate}`
+  // const url = `          https://api.darksky.net/forecast/${weatherKey}/${lat},${lng},${startDate}`
+  const url = `https://api.darksky.net/forecast/6a9cbffd5f83537fcdeefa64abc43023/37.8267,-122.4233`
+
+  console.log('url:', url);
 
   console.time('weather data')
 
@@ -19,17 +22,10 @@ const getWeather = (startDate, lat, lng) => new Promise( (resolve, reject) => {
       }
     })
     .then( res => {
-      if (res && res.ok) {
-        console.timeEnd('lmp data')
-        resolve(res)
-      }
-      else {
-        console.error('There was an error getting weather data')
-
-        reject()
-      }
+      console.timeEnd('weather data')
+      resolve(res)
     })
-    .catch( err => console.error('There was an error in the weather module:', err) )
+    .catch(reject)
 })
 
 module.exports = {
