@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './App.css'
 import { Link, Route } from 'react-router-dom'
 
 import CreateProfile from './containers/CreateProfile'
@@ -14,7 +13,7 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App">
+      <div style={styles.root}>
         <div>
           <nav>
             <Link to="/">
@@ -59,6 +58,15 @@ class App extends Component {
       </div>
     );
   }
+}
+
+const styles = {
+  root: {
+    fontSize: 16,
+    margin: 0,
+    padding: 0,
+    textAlign: 'center',
+  },
 }
 
 export default App;

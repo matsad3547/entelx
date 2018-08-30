@@ -111,7 +111,7 @@ class Caiso extends PureComponent {
     } = this.state
 
     return (
-      <div>
+      <div style={styles.root}>
         <h1>CAISO Locational Marginal Prices</h1>
         <div style={styles.dates}>
           <DateControl
@@ -153,11 +153,17 @@ class Caiso extends PureComponent {
 }
 
 const styles = {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   dates: {
     display: 'inline-flex',
     justifyContent: 'space-evenly',
     alignItems: 'center',
     width: '100%',
+    marginBottom: '1em',
   },
   buttons: {
     display: 'flex',

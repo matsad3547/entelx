@@ -26,9 +26,9 @@ const LineChartLmp = ({data, tz}) => {
 
     <LineChart
       width={800}
-      height={500}
+      height={450}
       data={data}
-      margin={{top: 15, right: 30, left: 60, bottom: 5}}>
+      margin={{top: 0, right: 0, left: 0, bottom: 0}}>
       <XAxis
         dataKey="timestamp"
         tickFormatter={formatXDate}
