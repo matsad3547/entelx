@@ -1,9 +1,8 @@
 const express = require('express')
-const app = express()
 const dotenv = require('dotenv').config()
-const eia = require('./app/eiaRequest')
 const bodyParser = require('body-parser')
 
+const eia = require('./app/eiaRequest')
 const {
   createUser,
   login,
@@ -13,6 +12,8 @@ const { getCaiso } = require('./product')
 
 //for testing python
 // const { demoProcess } = require('./processes/')
+
+const app = express()
 
 app.set('port', process.env.PORT || 3001)
 
