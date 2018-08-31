@@ -11,17 +11,19 @@ const getCaiso = (req, res) => {
   const lat = 38.5816
   const lng = -121.4944
 
+  let caiso = {}
+
   getWeather(startDate, lat, lng)
-    .then( res => console.log('weather data at CAISO:', res))
+    .then( weather => caiso.weather = weather.hourly.data)
     .catch( err => console.error('Error getting weather data:', err) )
 
   getLmp(startDate, endDate)
     .then( data => {
-      res.json({
-        data,
-      })
+      caiso.data = data
     })
     .catch( err => console.error('Error getting CAISO data:', err) )
+
+    res.json(caiso)
 }
 
 module.exports = getCaiso

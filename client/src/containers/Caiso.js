@@ -80,10 +80,13 @@ class Caiso extends PureComponent {
     this.getData(startDate, endDate)
   }
 
-  setData = res => this.setState({
+  setData = res => {
+    console.log('response:', res);
+    this.setState({
       loading: false,
       data: res.data,
     })
+  }
 
   incrementDate = date => addHours(date, 1)
 
