@@ -6,24 +6,26 @@ const getCaiso = (req, res) => {
   const {
     startDate,
     endDate,
+    // TODO bring in lat lng from front end
   } = req.body
 
   const lat = 38.5816
   const lng = -121.4944
 
-  let caiso = {}
+  Promise.all([
+    getWeather(startDate, endDate, lat, lng),
+    getLmp(startDate, endDate)
+  ])
+  .then( data => res.json(
+    data)
+  )
+  // .then( data => res.json(
+  //   data.reduce( (agr, arr) => [...agr, ...arr])
+  //
+  //   )
+  // )
+  .catch( err => console.error('Error getting CAISO data:', err) )
 
-  getWeather(startDate, lat, lng)
-    .then( weather => caiso.weather = weather.hourly.data)
-    .catch( err => console.error('Error getting weather data:', err) )
-
-  getLmp(startDate, endDate)
-    .then( data => {
-      caiso.data = data
-    })
-    .catch( err => console.error('Error getting CAISO data:', err) )
-
-    res.json(caiso)
 }
 
 module.exports = getCaiso

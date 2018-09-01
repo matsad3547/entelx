@@ -1,20 +1,40 @@
 const weatherKey = process.env.DARK_SKY_KEY
 
-const { convertMillisToSeconds } = require('../utils/')
+const {
+  convertMillisToSeconds,
+  convertSecondsToMillis,
+} = require('../utils/')
 
-const getWeather = (startDate, lat, lng) => new Promise( (resolve, reject) => {
+const parseHourlyWeatherData = (hourlyWeatherObj, ...keys) => {
 
-  const date = new Date(startDate)
+  const otherVals = keys.reduce( (obj, key) => ({
+    ...obj,
+    [key]: hourlyWeatherObj[key],
+  }), {})
 
-  const tsMillis = date.getTime()
+  return {
+    timestamp: convertSecondsToMillis(hourlyWeatherObj.time),
+    ...otherVals,
+  }
+}
 
-  const tsSeconds = convertMillisToSeconds(tsMillis)
+const getWeather = (startDate, endDate, lat, lng) => new Promise( (resolve, reject) => {
+
+  const endDate = new Date(endDate)
+  const startDate = new Date(endDate)
+
+  const endMillis = endDate.getTime()
+  const startMillis = startDate.getTime()
+
+  const tsSeconds = convertMillisToSeconds(endMillis)
 
   const url = `          https://api.darksky.net/forecast/${weatherKey}/${lat},${lng},${tsSeconds}?exclude=currently,flags`
 
   console.log('url:', url);
 
   console.time('weather data')
+
+  const keys = ['temperature']
 
   fetch(url)
     .then( res => {
@@ -28,11 +48,15 @@ const getWeather = (startDate, lat, lng) => new Promise( (resolve, reject) => {
     })
     .then( res => {
       console.timeEnd('weather data')
-      resolve(res)
+      resolve(
+        res.hourly.data.map( d => parseHourlyWeatherData(d, ...keys) )
+          .filter( d => d.timestamp > startMillis )
+      )
     })
     .catch(reject)
 })
 
 module.exports = {
   getWeather,
+  parseHourlyWeatherData,
 }
