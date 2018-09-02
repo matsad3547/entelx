@@ -22,17 +22,12 @@ const millisToTzDate = (dateOrMillis, tz) => new Date(dateOrMillis).toLocaleStri
 
 const getWeather = (start, end, lat, lng) => new Promise( (resolve, reject) => {
 
-  console.log('start date at getWeather:', start, '\end date at getWeather:', end)
-
   const endDate = new Date(end)
   const startDate = new Date(start)
 
   const endMillis = endDate.getTime()
   const startMillis = startDate.getTime()
 
-  // const now = new Date()
-  // const tsSeconds = convertMillisToSeconds(now.getTime())
-  // const tsSeconds = convertMillisToSeconds(startMillis)
   const tsSeconds = convertMillisToSeconds(endMillis)
 
   const url = `          https://api.darksky.net/forecast/${weatherKey}/${lat},${lng},${tsSeconds}?exclude=currently,flags`
@@ -60,15 +55,6 @@ const getWeather = (start, end, lat, lng) => new Promise( (resolve, reject) => {
       const tz = res.timezone
       const times = res.hourly.data.map( d => millisToTzDate(convertSecondsToMillis(d.time))
       )
-      // resolve(
-      //   {
-      //     ...res,
-      //     times,
-      //   }
-      // )
-      // resolve(
-      //   res
-      // )
       resolve(
         res.hourly.data.map( d => parseHourlyWeatherData(d, ...keys) )
           // .filter( d => d.timestamp > startMillis )

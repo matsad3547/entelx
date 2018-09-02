@@ -5,12 +5,10 @@ import subDays from 'date-fns/sub_days'
 import subHours from 'date-fns/sub_hours'
 import addHours from 'date-fns/add_hours'
 
-import LineChartLmp from '../components/LineChartLmp'
+import LineChartLmp from '../components/charts/LineChartLmp'
 import DateControl from '../components/DateControl'
 import Button from '../components/Button'
-
 import Loading from '../components/loading/'
-
 
 import { utcFormat } from '../config/'
 

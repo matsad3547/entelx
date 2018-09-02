@@ -13,9 +13,11 @@ import {
   Legend,
 } from 'recharts'
 
-import { millisToTzDate } from '../utils/'
+import CustomTooltip from './CustomTooltip'
 
-import { monthDayTimeFormat } from '../config/'
+import { millisToTzDate } from '../../utils/'
+
+import { monthDayTimeFormat } from '../../config/'
 
 
 const LineChartLmp = ({data, tz}) => {
@@ -35,7 +37,12 @@ const LineChartLmp = ({data, tz}) => {
         />
       <YAxis/>
       <CartesianGrid strokeDasharray="3 3"/>
-      <Tooltip/>
+      <Tooltip
+        content={
+          <CustomTooltip
+            tz={tz}
+          />
+        }/>
       <Legend />
       <Line type="monotone" dataKey="lmp" stroke="#8884d8" activeDot={{r: 4}}/>
       <Line type="monotone" dataKey="temperature" stroke="#82ca9d" activeDot={{r: 4}}/>
