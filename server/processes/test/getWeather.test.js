@@ -31,7 +31,7 @@ describe('parseHourlyWeatherData', () => {
   test('should return an object with a timestamp in millis by default', () => {
     const actual = parseHourlyWeatherData(hourlyWeatherObj)
     const expected = {
-      timestamp: 1530792000000,
+      timestamp: 25513200000,
     }
     expect(actual).toEqual(expected)
   })
@@ -44,7 +44,7 @@ describe('parseHourlyWeatherData', () => {
       'temperature',
     )
     const expected = {
-      timestamp: 1530792000000,
+      timestamp: 25513200000,
       cloudCover: 1,
       precipIntensity: 0.0063,
       temperature: 58.62,

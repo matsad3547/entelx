@@ -38,6 +38,7 @@ const LineChartLmp = ({data, tz}) => {
       <Tooltip/>
       <Legend />
       <Line type="monotone" dataKey="lmp" stroke="#8884d8" activeDot={{r: 4}}/>
+      <Line type="monotone" dataKey="temperature" stroke="#82ca9d" activeDot={{r: 4}}/>
     </LineChart>
   )
 }

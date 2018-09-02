@@ -84,7 +84,8 @@ class Caiso extends PureComponent {
     console.log('response:', res);
     this.setState({
       loading: false,
-      data: res.data,
+      data: res,
+      // data: res[1],
     })
   }
 
