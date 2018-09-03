@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import format from 'date-fns/format'
-
 import Button from './Button'
 
 import { dayMonthYearTimeFormat } from '../config/'
+
+import { getDateStringByTZ } from '../utils/'
 
 const DateControl = ({
   date,
@@ -13,12 +13,13 @@ const DateControl = ({
   disabled = false,
   onIncrement,
   onDecrement,
+  tz,
 }) => (
 
   <div>
     <h3>{title}:</h3>
     <div style={styles.interface}>
-      {format(date, dayMonthYearTimeFormat)}
+      {getDateStringByTZ(date, tz, dayMonthYearTimeFormat)}
       <div style={styles.buttons}>
         <Button
           name="+ Hour"
@@ -53,6 +54,7 @@ DateControl.propTypes = {
   date: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
+  tz: PropTypes.string.isRequired, //timeZone
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
 }

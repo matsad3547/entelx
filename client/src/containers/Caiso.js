@@ -1,16 +1,11 @@
 import React, { PureComponent } from 'react'
-
-import format from 'date-fns/format'
-import subDays from 'date-fns/sub_days'
-import subHours from 'date-fns/sub_hours'
-import addHours from 'date-fns/add_hours'
+import moment from 'moment-timezone'
+// import moment
 
 import LineChartLmp from '../components/charts/LineChartLmp'
 import DateControl from '../components/DateControl'
 import Button from '../components/Button'
 import Loading from '../components/loading/'
-
-import { utcFormat } from '../config/'
 
 import {
   singlePostRequest,
@@ -18,6 +13,9 @@ import {
 } from '../utils/'
 
 class Caiso extends PureComponent {
+
+  timeZone = 'America/Los_Angeles'
+
   state = {
     data: null,
     loading: false,
@@ -28,11 +26,13 @@ class Caiso extends PureComponent {
 
   componentWillMount(){
 
-    const now = new Date()
+    const now = moment().tz(this.timeZone)
 
-    // TODO figure out a better way to get the current time in CA
-    const endDate = subHours(now, 1) //CA time
-    const startDate = subDays(endDate, 1)
+    // const endDate = subHours(now, 1)
+    const endDate = now
+    const startDate = now.clone().subtract(1, 'hour')
+    // const startDate = subHours(endDate, 1)
+    // const startDate = subDays(endDate, 1)
 
     this.setState({
       startDate,
@@ -50,8 +50,8 @@ class Caiso extends PureComponent {
     })
 
     const body = JSON.stringify({
-      startDate: format(startDate, utcFormat),
-      endDate: format(endDate, utcFormat),
+      startDate: startDate.getTime(),
+      endDate: endDate.getTime(),
     })
 
     const request = {
@@ -83,7 +83,6 @@ class Caiso extends PureComponent {
     this.setState({
       loading: false,
       data: res,
-      // data: res[1],
     })
   }
 
@@ -120,6 +119,7 @@ class Caiso extends PureComponent {
             date={startDate}
             title="Start Date"
             disabled={loading}
+            tz={this.timeZone}
             onIncrement={() => this.onIncrement('startDate')}
             onDecrement={() => this.onDecrement('startDate')}
           />
@@ -127,6 +127,7 @@ class Caiso extends PureComponent {
             date={endDate}
             title="End Date"
             disabled={loading}
+            tz={this.timeZone}
             onIncrement={() => this.onIncrement('endDate')}
             onDecrement={() => this.onDecrement('endDate')}
           />
@@ -146,7 +147,7 @@ class Caiso extends PureComponent {
           data &&
           <LineChartLmp
             data={data}
-            tz={'America/Los_Angeles'}
+            tz={this.timeZone}
           />
         }
       </div>
@@ -181,20 +182,3 @@ const styles = {
 }
 
 export default Caiso
-
-// <div>
-//   <h3>Start Date:</h3>
-//   <div style={styles.interface}>
-//     {format(startDate, dayMonthYearTimeFormat)}
-//     <div style={styles.buttons}>
-//       <Button
-//         name="+ Hour"
-//         onClick={() => this.onIncrement('startDate')}
-//       />
-//       <Button
-//         name="- Hour"
-//         onClick={() => this.onDecrement('startDate')}
-//       />
-//     </div>
-//   </div>
-// </div>

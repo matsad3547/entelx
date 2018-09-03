@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+import format from 'date-fns/format'
 
 export function fieldOnchange(e){
   e.preventDefault()
@@ -40,3 +40,9 @@ export const singlePostRequest = ( path, options) => new Promise( (resolve, reje
   )
 
 export const millisToTzDate = (dateOrMillis, tz) => new Date(dateOrMillis).toLocaleString('en-US', {timeZone: tz})
+
+export const getDateStringByTZ = (date, tz, dateFormat) => {
+
+  const tzDate = new Date(date.toLocaleString('en-US', {timeZone: tz}))
+  return format(tzDate, dateFormat)
+}

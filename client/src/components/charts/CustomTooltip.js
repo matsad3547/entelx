@@ -14,8 +14,6 @@ const CustomTooltip = ({
   active,
   tz,
  }) => {
-//
-// console.log('type:', type, '\npayload:', payload, '\nlabel:', label, '\nactive:', active)
 
   const formatXDate = millis => format(millisToTzDate(millis, tz), monthDayTimeFormat)
 
@@ -36,8 +34,8 @@ const CustomTooltip = ({
             key={`value-${i}`}
             >
               {
-              `${dataLabels[obj.name].label}:  ${dataLabels[obj.name].format(obj.value)}${dataLabels[obj.name].unit}`
-            }
+                `${dataLabels[obj.name].label}:  ${dataLabels[obj.name].format(obj.value)}${dataLabels[obj.name].unit}`
+              }
            </p>
         )}
       </div> : null

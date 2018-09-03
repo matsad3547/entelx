@@ -31,7 +31,6 @@ def main():
     parsed_result = list(map(parse_timestamp, caiso_result))
 
     json_result = json.dumps(parsed_result)
-
     print(json_result)
 
 if __name__ == '__main__':

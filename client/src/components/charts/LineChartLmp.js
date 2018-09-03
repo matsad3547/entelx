@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import format from 'date-fns/format'
-
 import {
   LineChart,
   Line,
@@ -15,14 +13,17 @@ import {
 
 import CustomTooltip from './CustomTooltip'
 
-import { millisToTzDate } from '../../utils/'
+import { getDateStringByTZ } from '../../utils/'
 
 import { monthDayTimeFormat } from '../../config/'
 
-
 const LineChartLmp = ({data, tz}) => {
 
-  const formatXDate = millis => format(millisToTzDate(millis, tz), monthDayTimeFormat)
+  // const formatXDate = millis => {
+  //   const date = new Date(millis)
+  //   // console.log('date:', date.toLocaleString( 'en-US', {timeZone: tz}));
+  //   return getDateStringByTZ(date, tz, monthDayTimeFormat)
+  // }
 
   return (
 
@@ -34,7 +35,7 @@ const LineChartLmp = ({data, tz}) => {
       <XAxis
         dataKey="timestamp"
         tickFormatter={formatXDate}
-        />
+      />
       <YAxis/>
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip
