@@ -5,8 +5,6 @@ import Button from './Button'
 
 import { dayMonthYearTimeFormat } from '../config/'
 
-import { getDateStringByTZ } from '../utils/'
-
 const DateControl = ({
   date,
   title,
@@ -19,7 +17,7 @@ const DateControl = ({
   <div>
     <h3>{title}:</h3>
     <div style={styles.interface}>
-      {getDateStringByTZ(date, tz, dayMonthYearTimeFormat)}
+      {date.format(dayMonthYearTimeFormat)}
       <div style={styles.buttons}>
         <Button
           name="+ Hour"

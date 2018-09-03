@@ -1,4 +1,4 @@
-import format from 'date-fns/format'
+import moment from 'moment-timezone'
 
 export function fieldOnchange(e){
   e.preventDefault()
@@ -39,10 +39,4 @@ export const singlePostRequest = ( path, options) => new Promise( (resolve, reje
     .catch(reject)
   )
 
-export const millisToTzDate = (dateOrMillis, tz) => new Date(dateOrMillis).toLocaleString('en-US', {timeZone: tz})
-
-export const getDateStringByTZ = (date, tz, dateFormat) => {
-
-  const tzDate = new Date(date.toLocaleString('en-US', {timeZone: tz}))
-  return format(tzDate, dateFormat)
-}
+export const formatMillis = (millis, tz, format) => moment.tz(millis, tz).format(format)

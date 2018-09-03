@@ -1,11 +1,11 @@
 import React from 'react'
-import format from 'date-fns/format'
+
 import {
   monthDayTimeFormat,
   dataLabels,
 } from '../../config/'
 
-import { millisToTzDate } from '../../utils/'
+import { formatMillis } from '../../utils/'
 
 const CustomTooltip = ({
   type,
@@ -13,34 +13,30 @@ const CustomTooltip = ({
   label,
   active,
   tz,
- }) => {
+ }) => (
 
-  const formatXDate = millis => format(millisToTzDate(millis, tz), monthDayTimeFormat)
-
-  return (
-    active ?
-      <div style={styles.root}>
-        <p style={styles.date}>
-          {formatXDate(label)}
-        </p>
-        { payload.map( (obj, i) =>
-          <p
-            style={
-              {
-                color: obj.color,
-                padding: 5,
-              }
+  active ?
+    <div style={styles.root}>
+      <p style={styles.date}>
+        {formatMillis(label, tz, monthDayTimeFormat)}
+      </p>
+      { payload.map( (obj, i) =>
+        <p
+          style={
+            {
+              color: obj.color,
+              padding: 5,
             }
-            key={`value-${i}`}
-            >
-              {
-                `${dataLabels[obj.name].label}:  ${dataLabels[obj.name].format(obj.value)}${dataLabels[obj.name].unit}`
-              }
-           </p>
-        )}
-      </div> : null
-  )
-}
+          }
+          key={`value-${i}`}
+          >
+            {
+              `${dataLabels[obj.name].label}:  ${dataLabels[obj.name].format(obj.value)}${dataLabels[obj.name].unit}`
+            }
+         </p>
+      )}
+    </div> : null
+)
 
 const styles = {
   root: {

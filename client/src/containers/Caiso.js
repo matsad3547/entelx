@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import moment from 'moment-timezone'
-// import moment
 
 import LineChartLmp from '../components/charts/LineChartLmp'
 import DateControl from '../components/DateControl'
@@ -28,11 +27,8 @@ class Caiso extends PureComponent {
 
     const now = moment().tz(this.timeZone)
 
-    // const endDate = subHours(now, 1)
     const endDate = now
     const startDate = now.clone().subtract(1, 'hour')
-    // const startDate = subHours(endDate, 1)
-    // const startDate = subDays(endDate, 1)
 
     this.setState({
       startDate,
@@ -50,8 +46,9 @@ class Caiso extends PureComponent {
     })
 
     const body = JSON.stringify({
-      startDate: startDate.getTime(),
-      endDate: endDate.getTime(),
+      startDate: startDate.valueOf(),
+      endDate: endDate.valueOf(),
+      timeZone: this.timeZone,
     })
 
     const request = {
@@ -86,9 +83,13 @@ class Caiso extends PureComponent {
     })
   }
 
-  incrementDate = date => addHours(date, 1)
+  incrementDate = date => date
+                            .clone()
+                            .add(1, 'hours')
 
-  decrementDate = date => subHours(date, 1)
+  decrementDate = date => date
+                            .clone()
+                            .subtract(1, 'hours')
 
   onIncrement = date => {
     const incremented = this.incrementDate(this.state[date])

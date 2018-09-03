@@ -1,4 +1,4 @@
-const format = require('date-fns/format')
+const moment = require('moment-timezone')
 const { getLmp } = require('../processes/getLmp')
 const { getWeather } = require('../processes/getWeather')
 const { utcFormat } = require('../config/')
@@ -8,25 +8,23 @@ const getCaiso = (req, res) => {
   const {
     startDate,
     endDate,
+    timeZone,
     // TODO bring in lat lng from front end
   } = req.body
 
-  const start = new Date(startDate)
-  const end = new Date(endDate)
+  const start = moment(startDate).tz(timeZone)
+  const end = moment(endDate).tz(timeZone)
 
-  // const startUTC = format(start, utcFormat)
-  // const endUTC = format(end, utcFormat)
+  const startUTC = start.format(utcFormat)
+  const endUTC = end.format(utcFormat)
 
-  const startUTC = start.toISOString()
-  const endUTC = end.toISOString()
-
-  console.log('start time at getCaiso:', startUTC, '\nend:', endUTC);
+  console.log(start, end, '\nstart time at getCaiso:', startUTC, '\nend:', endUTC);
 
   const lat = 38.5816
   const lng = -121.4944
 
   Promise.all([
-    // getWeather(startDate, endDate, lat, lng),
+    getWeather(startDate, endDate, lat, lng),
     getLmp(startUTC, endUTC)
   ])
   .then( data => res.json(
@@ -35,7 +33,6 @@ const getCaiso = (req, res) => {
     )
   )
   .catch( err => console.error('Error getting CAISO data:', err) )
-
 }
 
 module.exports = getCaiso
