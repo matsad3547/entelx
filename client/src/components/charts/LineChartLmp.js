@@ -13,9 +13,14 @@ import {
 
 import CustomTooltip from './CustomTooltip'
 
-import { monthDayTimeFormat } from '../../config/'
+import {
+  monthDayTimeFormat,
+  dataFormat,
+} from '../../config/'
 
 import { formatMillis } from '../../utils'
+
+const dataTypes = Object.keys(dataFormat)
 
 const LineChartLmp = ({data, tz}) => (
 
@@ -37,8 +42,18 @@ const LineChartLmp = ({data, tz}) => (
         />
       }/>
     <Legend />
-    <Line type="monotone" dataKey="lmp" stroke="#8884d8" activeDot={{r: 4}}/>
-    <Line type="monotone" dataKey="temperature" stroke="#82ca9d" activeDot={{r: 4}}/>
+    {
+      dataTypes.map( t =>
+        <Line
+          key={`${t}-line`}
+          type="monotone"
+          dataKey={t}
+          connectNulls={true}
+          stroke={dataFormat[t].color}
+          activeDot={{r: 4}}
+        />
+      )
+    }
   </LineChart>
 )
 

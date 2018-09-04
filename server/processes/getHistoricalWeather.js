@@ -42,7 +42,12 @@ const getHistoricalWeather = (start, end, lat, lng) => new Promise( (resolve, re
 
   console.time('weather data')
 
-  const keys = ['temperature']
+  const keys = [
+    'temperature',
+    'windSpeed',
+    'windBearing',
+    'cloudCover',
+  ]
 
   Promise.all(times.map( time => getHistoricalWeatherByDay(time, lat, lng)))
     .then(res => {
@@ -63,7 +68,7 @@ const getHistoricalWeatherByDay = (time, lat, lng) => new Promise( (resolve, rej
 
   const tsSeconds = convertMillisToSeconds(time)
 
-  const url = `          https://api.darksky.net/forecast/${weatherKey}/${lat},${lng},${tsSeconds}?exclude=currently,flags`
+  const url = `          https://api.darksky.net/forecast/${weatherKey}/${lat},${lng},${tsSeconds}?exclude=currently,flags,units=si`
 
   fetch(url)
     .then( res => {

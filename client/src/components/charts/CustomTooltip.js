@@ -2,7 +2,7 @@ import React from 'react'
 
 import {
   monthDayTimeFormat,
-  dataLabels,
+  dataFormat,
 } from '../../config/'
 
 import { formatMillis } from '../../utils/'
@@ -31,7 +31,7 @@ const CustomTooltip = ({
           key={`value-${i}`}
           >
             {
-              `${dataLabels[obj.name].label}:  ${dataLabels[obj.name].format(obj.value)}${dataLabels[obj.name].unit}`
+              `${dataFormat[obj.name].label}:  ${dataFormat[obj.name].format(obj.value)}${dataFormat[obj.name].unit}`
             }
          </p>
       )}
