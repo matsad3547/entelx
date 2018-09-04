@@ -28,7 +28,7 @@ class Caiso extends PureComponent {
     const now = moment().tz(this.timeZone)
 
     const endDate = now
-    const startDate = now.clone().subtract(1, 'hour')
+    const startDate = now.clone().subtract(1, 'day')
 
     this.setState({
       startDate,

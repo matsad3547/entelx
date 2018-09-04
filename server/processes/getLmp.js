@@ -1,4 +1,5 @@
 const spawn = require('child_process').spawn
+const { utcFormat } = require('../config/')
 
 // TODO this is a super lame way of parsing the response
 const parseCAISOResponse = dataStr => {
@@ -9,7 +10,11 @@ const parseCAISOResponse = dataStr => {
   return JSON.parse(goodStr)
 }
 
-const getLmp = (startDate, endDate) => new Promise((resolve, reject) => {
+const getLmp = (start, end) => new Promise((resolve, reject) => {
+
+  const startDate = start.format(utcFormat)
+  const endDate = end.format(utcFormat)
+
   const py = spawn('python', ['server/processes/python/get_lmp.py'])
 
   console.time('lmp data')
@@ -27,7 +32,11 @@ const getLmp = (startDate, endDate) => new Promise((resolve, reject) => {
     resolve(parsedData)
   })
 
-  py.stdin.write(JSON.stringify({startDate, endDate}))
+  py.stdin.write(JSON.stringify({
+      startDate,
+      endDate,
+    })
+  )
 
   py.stdin.end()
 })

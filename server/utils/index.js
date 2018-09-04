@@ -1,8 +1,7 @@
-const convertMillisToSeconds = millis => Math.round(millis / 1000)
+const moment = require('moment-timezone')
 
-const convertSecondsToMillis = seconds => seconds * 1000
+const convertMillisToSeconds = millis => Math.round(millis / 1000)
 
 module.exports = {
   convertMillisToSeconds,
-  convertSecondsToMillis,
 }

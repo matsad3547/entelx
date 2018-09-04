@@ -11,7 +11,6 @@
     "dotenv": "^4.0.0",
     "es6-promise": "^4.1.1",
     "isomorphic-fetch": "^2.2.1",
-    "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "prop-types": "^15.6.2"
   },

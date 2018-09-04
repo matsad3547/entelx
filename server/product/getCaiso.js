@@ -1,7 +1,6 @@
 const moment = require('moment-timezone')
 const { getLmp } = require('../processes/getLmp')
-const { getWeather } = require('../processes/getWeather')
-const { utcFormat } = require('../config/')
+const { getHistoricalWeather } = require('../processes/getHistoricalWeather')
 
 const getCaiso = (req, res) => {
 
@@ -12,20 +11,15 @@ const getCaiso = (req, res) => {
     // TODO bring in lat lng from front end
   } = req.body
 
-  const start = moment(startDate).tz(timeZone)
-  const end = moment(endDate).tz(timeZone)
-
-  const startUTC = start.format(utcFormat)
-  const endUTC = end.format(utcFormat)
-
-  console.log(start, end, '\nstart time at getCaiso:', startUTC, '\nend:', endUTC);
+  const start = moment.tz(startDate, timeZone)
+  const end = moment.tz(endDate, timeZone)
 
   const lat = 38.5816
   const lng = -121.4944
 
   Promise.all([
-    getWeather(startDate, endDate, lat, lng),
-    getLmp(startUTC, endUTC)
+    getHistoricalWeather(start, end, lat, lng),
+    getLmp(start, end)
   ])
   .then( data => res.json(
     data.reduce( (agr, arr) => [...agr, ...arr] )
