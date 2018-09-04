@@ -19,16 +19,17 @@ def parse_timestamp(dict_with_timestamp):
     return dict_with_millis
 
 def main():
-    dates = read_in()
+    params = read_in()
 
-    start_at = dates['startDate']
-    end_at = dates['endDate']
+    start_at = params['startDate']
+    end_at = params['endDate']
+    base_name = params['baseName']
 
-    caiso = client_factory('CAISO')
+    factory = client_factory(base_name)
 
-    caiso_result = caiso.get_lmp(start_at=start_at, end_at=end_at)
+    lmp_result = factory.get_lmp(start_at=start_at, end_at=end_at)
 
-    parsed_result = list(map(parse_timestamp, caiso_result))
+    parsed_result = list(map(parse_timestamp, lmp_result))
 
     json_result = json.dumps(parsed_result)
     print(json_result)

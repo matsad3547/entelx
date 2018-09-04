@@ -10,7 +10,17 @@ const parseCAISOResponse = dataStr => {
   return JSON.parse(goodStr)
 }
 
-const getLmp = (start, end) => new Promise((resolve, reject) => {
+const parseData = (baseName, dataStr) => {
+  switch (baseName) {
+    case 'CAISO':
+      return parseCAISOResponse(dataStr)
+
+    default:
+      return {}
+  }
+}
+
+const getLmp = (start, end, baseName) => new Promise( (resolve, reject) => {
 
   const startDate = start.format(utcFormat)
   const endDate = end.format(utcFormat)
@@ -27,14 +37,14 @@ const getLmp = (start, end) => new Promise((resolve, reject) => {
   py.stdout.on('end', () => {
     console.timeEnd('lmp data')
     // console.log('data at getLmp:', dataStr )
-
-    const parsedData = parseCAISOResponse(dataStr)
+    const parsedData = parseData(baseName, dataStr)
     resolve(parsedData)
   })
 
   py.stdin.write(JSON.stringify({
       startDate,
       endDate,
+      baseName,
     })
   )
 
