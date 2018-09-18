@@ -1,4 +1,5 @@
 const express = require('express')
+require('isomorphic-fetch')
 const dotenv = require('dotenv').config()
 const bodyParser = require('body-parser')
 
@@ -10,10 +11,16 @@ const {
 
 const { getCaiso } = require('./product')
 
+const { caisoEndpoint } = require('./processes/caisoEndpoint')
+
 //for testing python
 // const { demoProcess } = require('./processes/')
 
 const app = express()
+
+caisoEndpoint()
+  .then(d => console.log('caiso endpoint:', d))
+  .catch( err => console.error('Caiso endpoint reject error:', err))
 
 app.set('port', process.env.PORT || 5000)
 

@@ -43,6 +43,7 @@ const styles = {
     backgroundColor: '#fff',
     border: '1px solid #a8a2aa',
     borderRadius: 5,
+    textAlign: 'left',
   },
   date: {
     padding: 5,

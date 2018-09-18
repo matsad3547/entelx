@@ -4,6 +4,7 @@ import { Link, Route } from 'react-router-dom'
 import CreateProfile from './containers/CreateProfile'
 import Login from './containers/Login'
 import Caiso from './containers/Caiso'
+import Test from './containers/Test'
 
 import Home from './components/Home'
 import Button from './components/Button'
@@ -54,6 +55,11 @@ class App extends Component {
             path="/login"
             component={Login}
           />
+          <Route
+            path="/test"
+            component={Test}
+          />
+
         </div>
       </div>
     );

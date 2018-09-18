@@ -21,12 +21,11 @@ const getCaiso = (req, res) => {
     getHistoricalWeather(start, end, lat, lng),
     getLmp(start, end, 'CAISO')
   ])
-  .then( data => res.json(
-    data.reduce( (agr, arr) => [...agr, ...arr] )
-      .sort( (a, b) => a.timestamp - b.timestamp )
-      // TODO add reduce step to combine like timestamps
-    )
+  .then( data => data.reduce( (agr, arr) => [...agr, ...arr] )
+    .sort( (a, b) => a.timestamp - b.timestamp )
+      // TODO add reduce step to combine data with the same timestamp
   )
+  .then( parsed => res.json(parsed) )
   .catch( err => console.error('Error getting CAISO data:', err) )
 }
 

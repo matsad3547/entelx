@@ -9,7 +9,6 @@
   "private": false,
   "dependencies": {
     "dotenv": "^4.0.0",
-    "es6-promise": "^4.1.1",
     "isomorphic-fetch": "^2.2.1",
     "moment-timezone": "^0.5.21",
     "prop-types": "^15.6.2"
