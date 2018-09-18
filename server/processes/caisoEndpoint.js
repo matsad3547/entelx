@@ -10,15 +10,37 @@ const { checkStatus } = require('../utils/')
 
 const caisoEndpoint = () => new Promise( (resolve, reject) => {
 
+  const dir = 'server/processes/downloads/'
+
   const url = `http://oasis.caiso.com/oasisapi/SingleZip?queryname=SLD_REN_FCST&market_run_id=DAM&startdatetime=20180819T07:00-0000&enddatetime=20180820T07:00-0000&version=1`
   const stream = request(url)
 
-  resolve(stream)
+  // resolve(stream)
+  const fileName = 'test.zip'
+  const file = fs.createWriteStream(dir + fileName)
 
-  // fetch(url)
-  //   .then(res => res.body)
-  //   .then(resolve)
-  //   .catch(reject)
+  stream.on('data', data => file.write(data) )
+    .on('end', () => {
+      file.end()
+      const xml = fs.createReadStream(dir + fileName)
+        .pipe(unzipper.Extract({path: 'server/processes/output'}))
+      // xml.buffer()
+      // .then( buffer => buffer.toString() )
+      // .then( str => convert.xml2json(str,
+      //   {
+      //     compact: false,
+      //     spaces: 2
+      //   })
+      // )
+      // .then(resolve)
+      resolve('success:', xml)
+    })
+    .on('error', reject)
+
+
+
+
+
 
 
   // Demo stuff that works
