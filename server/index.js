@@ -2,6 +2,7 @@ const express = require('express')
 require('isomorphic-fetch')
 const dotenv = require('dotenv').config()
 const bodyParser = require('body-parser')
+const moment = require('moment-timezone')
 
 const eia = require('./app/eiaRequest')
 const {
@@ -18,7 +19,10 @@ const { caisoEndpoint } = require('./processes/caisoEndpoint')
 
 const app = express()
 
-caisoEndpoint()
+const start = moment.tz(1537282770441, 'America/Los_Angeles')
+const end = moment.tz(1537369170441, 'America/Los_Angeles')
+
+caisoEndpoint(start, end)
   .then(d => console.log('caiso endpoint:', d))
   .catch( err => console.error('Caiso endpoint reject error:', err))
 

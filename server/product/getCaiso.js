@@ -11,6 +11,8 @@ const getCaiso = (req, res) => {
     // TODO bring in lat lng from front end
   } = req.body
 
+  console.log('start: ', startDate, ', end: ', endDate)
+
   const start = moment.tz(startDate, timeZone)
   const end = moment.tz(endDate, timeZone)
 

@@ -1,16 +1,42 @@
-// const xmldoc = require('xmldoc')
 const convert = require('xml-js')
 const unzipper = require('unzipper')
 const fs = require('fs')
 const request = require('request')
 
-const { checkStatus } = require('../utils/')
+const { caisoFormat } = require('../config/')
 
-// reference: https://stackoverflow.com/questions/44013020/using-promises-with-streams-in-node-js
+const caisoQueries = {
+  '5minuteLmp': 'PRC_INTVL_LMP'
+}
 
-const caisoEndpoint = () => new Promise( (resolve, reject) => {
+const getDateString = (start, end) => {
+  const startDate = start.format(caisoFormat)
+  const endDate = end.format(caisoFormat)
+  return `&startdatetime=${startDate}&enddatetime=${endDate}`
+}
 
-  const url = `http://oasis.caiso.com/oasisapi/SingleZip?queryname=SLD_REN_FCST&market_run_id=DAM&startdatetime=20180819T07:00-0000&enddatetime=20180820T07:00-0000&version=1`
+const getUrl = (
+  start,
+  end,
+  queryName,
+  marketType = 'RTM',
+  node = 'LAPLMG1_7_B2',
+) => {
+  const baseUrl =  'http://oasis.caiso.com/oasisapi/SingleZip'
+  return `${baseUrl}?queryname=${queryName}${getDateString(start, end)}&version=1&market_run_id=${marketType}&node=${node}`
+}
+
+const caisoEndpoint = (
+  start,
+  end,
+  query,
+  marketType,
+  node,
+) => new Promise( (resolve, reject) => {
+
+  const url = getUrl(start, end, 'PRC_INTVL_LMP')
+
+  // const url = `http://oasis.caiso.com/oasisapi/SingleZip?queryname=SLD_REN_FCST&market_run_id=DAM&startdatetime=20180819T07:00-0000&enddatetime=20180820T07:00-0000&version=1`
 
   const stream = request(url)
 
@@ -43,4 +69,5 @@ const caisoEndpoint = () => new Promise( (resolve, reject) => {
 
 module.exports = {
   caisoEndpoint,
+  getUrl,
 }
