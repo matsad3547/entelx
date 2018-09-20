@@ -34,20 +34,21 @@ const parseCaisoData = (query, data) => {
 
     const timeStamps = dataGroup.map( d => d.INTERVAL_START_GMT._text )
 
-    arr = arr.length === 0 ? timeStamps.map( ts => ({
+    const keyObj = caisoReportKeys[query][k]
+
+    return arr.length === 0 ? timeStamps.map( ts => ({
         timestamp: ts,
-        [caisoReportKeys[query][k].output]: dataGroup.find( d => d.INTERVAL_START_GMT._text === ts ).VALUE._text,
+        [keyObj.output]: dataGroup.find( d => d.INTERVAL_START_GMT._text === ts ).VALUE._text,
       })
     ) : arr.map(obj => ({
         ...obj,
-        [caisoReportKeys[query][k].output]: dataGroup.find( d => d.INTERVAL_START_GMT._text === obj.timestamp ).VALUE._text,
+        [keyObj.output]: dataGroup.find( d => d.INTERVAL_START_GMT._text === obj.timestamp ).VALUE._text,
       })
     )
-
-    return arr
   }, [])
   console.log('parsed:', parsed);
   //TODO convert time stamps to millis
+  //TODO coerce string numbers to float
   return parsed
 }
 
