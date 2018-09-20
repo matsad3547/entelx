@@ -12,7 +12,7 @@ const getCaiso = (req, res) => {
     // TODO bring in lat lng from front end
   } = req.body
 
-  caisoEndpoint(startDate, endDate)
+  caisoEndpoint(startDate, endDate, 'PRC_INTVL_LMP')
     .then(d => console.log('caiso endpoint:', d))
     .catch( err => console.error('Caiso endpoint reject error:', err))
 

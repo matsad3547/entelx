@@ -4,7 +4,7 @@ const {
   getUrl,
   parseCaisoData,
 } = require('../caisoEndpoint')
-const lmp = require('../../utils/mocks/lmp.json')
+const lmp1Hour = require('../../utils/mocks/lmp1Hour.json')
 
 describe('caisoUrlBuilder()', () => {
 
@@ -52,7 +52,7 @@ describe('parseCaisoData()', () => {
 
   test('should return an array', () => {
     const query = 'PRC_INTVL_LMP'
-    const data = lmp
+    const data = lmp1Hour
     const expected = true
     const actual = Array.isArray(parseCaisoData(query, data))
     expect(actual).toEqual(expected)
@@ -60,7 +60,7 @@ describe('parseCaisoData()', () => {
 
   test('should return an array with 12 items', () => {
     const query = 'PRC_INTVL_LMP'
-    const data = lmp
+    const data = lmp1Hour
     const expected = 12
     const actual = parseCaisoData(query, data).length
     expect(actual).toEqual(expected)
@@ -68,21 +68,8 @@ describe('parseCaisoData()', () => {
 
   test('should return an array with 12 items, each including a `timestamp` key', () => {
     const query = 'PRC_INTVL_LMP'
-    const data = lmp
-    const expected = [
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-    ]
+    const data = lmp1Hour
+    const expected = new Array(12).fill(true)
     const arr = parseCaisoData(query, data)
     const keyArr = arr.map( obj => Object.keys(obj) )
     const actual = keyArr.map( k => k.includes('timestamp'))
@@ -91,21 +78,8 @@ describe('parseCaisoData()', () => {
 
   test('should return an array with 12 items, each including a `timestamp` and a `congestionPrc` key', () => {
     const query = 'PRC_INTVL_LMP'
-    const data = lmp
-    const expected = [
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-    ]
+    const data = lmp1Hour
+    const expected = new Array(12).fill(true)
     const arr = parseCaisoData(query, data)
     const keyArr = arr.map( obj => Object.keys(obj) )
     const actual = keyArr.map( k => k.includes('timestamp') && k.includes('congestionPrc'))
@@ -114,21 +88,8 @@ describe('parseCaisoData()', () => {
 
   test('should return an array with 12 items, each including a `timestamp`, `congestionPrc`, `energyPrc`, `lossPrc` and a `lmp` key', () => {
     const query = 'PRC_INTVL_LMP'
-    const data = lmp
-    const expected = [
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-    ]
+    const data = lmp1Hour
+    const expected = new Array(12).fill(true)
     const arr = parseCaisoData(query, data)
     const keyArr = arr.map( obj => Object.keys(obj) )
     const actual = keyArr.map( k =>
@@ -141,5 +102,30 @@ describe('parseCaisoData()', () => {
     expect(actual).toEqual(expected)
   })
 
-  
+  test('should return an array with 12 items, where the values of the `congestionPrc`, `energyPrc`, `lossPrc` and `lmp` properties are numbers', () => {
+    const query = 'PRC_INTVL_LMP'
+    const data = lmp1Hour
+    const expected = new Array(12).fill(true)
+    const arr = parseCaisoData(query, data)
+    const actual = arr.map( obj =>
+      typeof obj.congestionPrc === 'number' &&
+      typeof obj.energyPrc === 'number' &&
+      typeof obj.lossPrc === 'number' &&
+      typeof obj.lmp === 'number'
+    )
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return an array with 12 items, where the value of the `timestamp` is a number', () => {
+    const query = 'PRC_INTVL_LMP'
+    const data = lmp1Hour
+    const expected = new Array(12).fill(true)
+    const arr = parseCaisoData(query, data)
+    const actual = arr.map( obj =>
+      typeof obj.timestamp === 'number'
+    )
+    expect(actual).toEqual(expected)
+  })
+
+
 })

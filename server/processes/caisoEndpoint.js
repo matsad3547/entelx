@@ -6,19 +6,25 @@ const moment = require('moment-timezone')
 
 const { caisoFormat } = require('../config/')
 
+const caisoTimezone = 'Etc/GMT'
+
 const caisoReportKeys = {
   'PRC_INTVL_LMP': {
     'LMP_CONG_PRC': {
       output: 'congestionPrc',
+      format: val => parseFloat(val),
     },
     'LMP_ENE_PRC': {
       output: 'energyPrc',
+      format: val => parseFloat(val),
     },
     'LMP_LOSS_PRC': {
       output: 'lossPrc',
+      format: val => parseFloat(val),
     },
     'LMP_PRC' : {
       output: 'lmp',
+      format: val => parseFloat(val),
     },
   }
 }
@@ -38,23 +44,24 @@ const parseCaisoData = (query, data) => {
 
     return arr.length === 0 ? timeStamps.map( ts => ({
         timestamp: ts,
-        [keyObj.output]: dataGroup.find( d => d.INTERVAL_START_GMT._text === ts ).VALUE._text,
+        [keyObj.output]: keyObj.format(dataGroup.find( d => d.INTERVAL_START_GMT._text === ts ).VALUE._text),
       })
     ) : arr.map(obj => ({
         ...obj,
-        [keyObj.output]: dataGroup.find( d => d.INTERVAL_START_GMT._text === obj.timestamp ).VALUE._text,
+        [keyObj.output]: keyObj.format(dataGroup.find( d => d.INTERVAL_START_GMT._text === obj.timestamp ).VALUE._text),
       })
     )
   }, [])
-  console.log('parsed:', parsed);
-  //TODO convert time stamps to millis
-  //TODO coerce string numbers to float
-  return parsed
+  return parsed.map( obj => ({
+      ...obj,
+      timestamp: moment.tz(obj.timestamp, caisoTimezone).valueOf(),
+    })
+  )
 }
 
 const getDateString = (startMillis, endMillis) => {
-  const startDate = moment.tz(startMillis, 'Etc/GMT').format(caisoFormat)
-  const endDate = moment.tz(endMillis, 'Etc/GMT').format(caisoFormat)
+  const startDate = moment.tz(startMillis, caisoTimezone).format(caisoFormat)
+  const endDate = moment.tz(endMillis, caisoTimezone).format(caisoFormat)
   return `&startdatetime=${startDate}&enddatetime=${endDate}`
 }
 
@@ -78,9 +85,7 @@ const caisoEndpoint = (
   node,
 ) => new Promise( (resolve, reject) => {
 
-  const url = getUrl(startMillis, endMillis, 'PRC_INTVL_LMP')
-
-  // const url = 'http://oasis.caiso.com/oasisapi/SingleZip?queryname=PRC_INTVL_LMP&startdatetime=20170919T07:00-0000&enddatetime=20170919T08:00-0000&version=1&market_run_id=RTM&node=LAPLMG1_7_B2'
+  const url = getUrl(startMillis, endMillis, query)
 
   const stream = request(url)
 
@@ -100,7 +105,6 @@ const caisoEndpoint = (
     .on('end', () => {
       file.end()
       fs.createReadStream(dir + fileName)
-        // .pipe(unzipper.Extract({path: 'server/processes/output'}))
         .pipe(unzipper.Parse())
         .on('entry', entry => {
           entry.buffer()
@@ -114,7 +118,10 @@ const caisoEndpoint = (
           //   test.end()
           //   return obj
           // })
-          .then(resolve)
+          .then( str => {
+            const json = JSON.parse(str)
+            resolve(parseCaisoData(query, json))
+          })
         })
     })
     .on('error', reject)
