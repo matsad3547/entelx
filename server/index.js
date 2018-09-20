@@ -11,19 +11,10 @@ const {
 
 const { getCaiso } = require('./product')
 
-const { caisoEndpoint } = require('./processes/caisoEndpoint')
-
 //for testing python
 // const { demoProcess } = require('./processes/')
 
 const app = express()
-
-// const start = moment.tz(1537282770441, 'Etc/GMT')
-// const end = moment.tz(1537369170441, 'Etc/GMT')
-
-caisoEndpoint(1537282770441, 1537369170441)
-  .then(d => console.log('caiso endpoint:', d))
-  .catch( err => console.error('Caiso endpoint reject error:', err))
 
 app.set('port', process.env.PORT || 5000)
 

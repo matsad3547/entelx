@@ -1,8 +1,13 @@
 const moment = require('moment-timezone')
 
-const { getUrl } = require('../caisoEndpoint')
+const {
+  getUrl,
+  parseCaisoData,
+} = require('../caisoEndpoint')
+const lmp = require('../../utils/mocks/lmp.json')
 
 describe('caisoUrlBuilder()', () => {
+
   test('should return a url with start date, end date, and query name', () => {
     const start = moment.tz(1537282770441, 'Etc/GMT')
     const end = moment.tz(1537369170441, 'Etc/GMT')
@@ -10,4 +15,131 @@ describe('caisoUrlBuilder()', () => {
     const actual = getUrl(start, end, 'PRC_INTVL_LMP')
     expect(actual).toEqual(expected)
   })
+})
+
+describe('parseCaisoData()', () => {
+
+  // I have:
+  // 'REPORT_ITEM': [
+  //   {
+  //     'REPORT_HEADER': {} //useless!
+  //     'REPORT_DATA': [
+  //       "DATA_ITEM": {
+  //         "_text": "LMP_CONG_PRC"
+  //       },
+  //       // ...some other stuff
+  //       "INTERVAL_END_GMT": {
+  //         "_text": "2018-09-20T01:40:00-00:00"
+  //       },
+  //       "VALUE": {
+  //         "_text": "0.21427"
+  //       },
+  //       // ...more of these
+  //     ],
+  //
+  //   }
+  //   // ...pattern repeats for each data item
+  // ]
+
+  // I want an array of:
+  // {
+  //   timeStamp: millis,
+  //   congestionPrc: number,
+  //   energyPrc: number,
+  //   lossPrc: number,
+  //   lmp: number,
+  // }
+
+  test('should return an array', () => {
+    const query = 'PRC_INTVL_LMP'
+    const data = lmp
+    const expected = true
+    const actual = Array.isArray(parseCaisoData(query, data))
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return an array with 12 items', () => {
+    const query = 'PRC_INTVL_LMP'
+    const data = lmp
+    const expected = 12
+    const actual = parseCaisoData(query, data).length
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return an array with 12 items, each including a `timestamp` key', () => {
+    const query = 'PRC_INTVL_LMP'
+    const data = lmp
+    const expected = [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ]
+    const arr = parseCaisoData(query, data)
+    const keyArr = arr.map( obj => Object.keys(obj) )
+    const actual = keyArr.map( k => k.includes('timestamp'))
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return an array with 12 items, each including a `timestamp` and a `congestionPrc` key', () => {
+    const query = 'PRC_INTVL_LMP'
+    const data = lmp
+    const expected = [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ]
+    const arr = parseCaisoData(query, data)
+    const keyArr = arr.map( obj => Object.keys(obj) )
+    const actual = keyArr.map( k => k.includes('timestamp') && k.includes('congestionPrc'))
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return an array with 12 items, each including a `timestamp`, `congestionPrc`, `energyPrc`, `lossPrc` and a `lmp` key', () => {
+    const query = 'PRC_INTVL_LMP'
+    const data = lmp
+    const expected = [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ]
+    const arr = parseCaisoData(query, data)
+    const keyArr = arr.map( obj => Object.keys(obj) )
+    const actual = keyArr.map( k =>
+      k.includes('timestamp') &&
+      k.includes('congestionPrc') &&
+      k.includes('energyPrc') &&
+      k.includes('lossPrc') &&
+      k.includes('lmp')
+    )
+    expect(actual).toEqual(expected)
+  })
+
+  
 })

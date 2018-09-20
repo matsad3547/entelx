@@ -1,0 +1,1250 @@
+{
+  "_declaration": {
+    "_attributes": {
+      "version": "1.0",
+      "encoding": "UTF-8"
+    }
+  },
+  "OASISReport": {
+    "_attributes": {
+      "xmlns": "http://www.caiso.com/soa/OASISReport_v1.xsd"
+    },
+    "MessageHeader": {
+      "TimeDate": {
+        "_text": "2018-09-20T03:08:19-00:00"
+      },
+      "Source": {
+        "_text": "OASIS"
+      },
+      "Version": {
+        "_text": "v20131201"
+      }
+    },
+    "MessagePayload": {
+      "RTO": {
+        "name": {
+          "_text": "CAISO"
+        },
+        "REPORT_ITEM": [
+          {
+            "REPORT_HEADER": {
+              "SYSTEM": {
+                "_text": "OASIS"
+              },
+              "TZ": {
+                "_text": "PPT"
+              },
+              "REPORT": {
+                "_text": "PRC_INTVL_LMP"
+              },
+              "MKT_TYPE": {
+                "_text": "RTM"
+              },
+              "UOM": {
+                "_text": "US$/MWh"
+              },
+              "INTERVAL": {
+                "_text": "BEGINNING"
+              },
+              "SEC_PER_INTERVAL": {
+                "_text": "300"
+              }
+            },
+            "REPORT_DATA": [
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "224"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:35:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:40:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0.21427"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "225"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:40:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:45:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0.23662"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "226"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:45:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:50:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "227"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:50:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:55:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "228"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:55:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:00:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "229"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:00:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:05:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "230"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:05:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:10:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "231"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:10:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:15:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "232"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:15:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:20:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "233"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:20:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:25:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "234"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:25:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:30:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_CONG_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "235"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:30:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:35:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0"
+                }
+              }
+            ]
+          },
+          {
+            "REPORT_HEADER": {
+              "SYSTEM": {
+                "_text": "OASIS"
+              },
+              "TZ": {
+                "_text": "PPT"
+              },
+              "REPORT": {
+                "_text": "PRC_INTVL_LMP"
+              },
+              "MKT_TYPE": {
+                "_text": "RTM"
+              },
+              "UOM": {
+                "_text": "US$/MWh"
+              },
+              "INTERVAL": {
+                "_text": "BEGINNING"
+              },
+              "SEC_PER_INTERVAL": {
+                "_text": "300"
+              }
+            },
+            "REPORT_DATA": [
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "224"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:35:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:40:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "29.08319"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "225"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:40:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:45:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "29.08319"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "226"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:45:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:50:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.44089"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "227"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:50:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:55:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.98333"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "228"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:55:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:00:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "28.84154"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "229"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:00:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:05:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "29.15801"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "230"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:05:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:10:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.50785"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "231"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:10:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:15:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.35043"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "232"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:15:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:20:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "29.13173"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "233"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:20:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:25:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.62843"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "234"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:25:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:30:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.32042"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_ENE_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "235"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:30:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:35:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.61744"
+                }
+              }
+            ]
+          },
+          {
+            "REPORT_HEADER": {
+              "SYSTEM": {
+                "_text": "OASIS"
+              },
+              "TZ": {
+                "_text": "PPT"
+              },
+              "REPORT": {
+                "_text": "PRC_INTVL_LMP"
+              },
+              "MKT_TYPE": {
+                "_text": "RTM"
+              },
+              "UOM": {
+                "_text": "US$/MWh"
+              },
+              "INTERVAL": {
+                "_text": "BEGINNING"
+              },
+              "SEC_PER_INTERVAL": {
+                "_text": "300"
+              }
+            },
+            "REPORT_DATA": [
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "224"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:35:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:40:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.0349"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "225"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:40:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:45:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.0349"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "226"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:45:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:50:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.03842"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "227"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:50:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:55:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.03918"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "228"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:55:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:00:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.04038"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "229"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:00:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:05:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.04082"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "230"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:05:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:10:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.03851"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "231"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:10:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:15:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.03829"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "232"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:15:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:20:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.02039"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "233"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:20:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:25:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.01934"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "234"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:25:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:30:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "-0.01912"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_LOSS_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "235"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:30:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:35:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "0.01105"
+                }
+              }
+            ]
+          },
+          {
+            "REPORT_HEADER": {
+              "SYSTEM": {
+                "_text": "OASIS"
+              },
+              "TZ": {
+                "_text": "PPT"
+              },
+              "REPORT": {
+                "_text": "PRC_INTVL_LMP"
+              },
+              "MKT_TYPE": {
+                "_text": "RTM"
+              },
+              "UOM": {
+                "_text": "US$/MWh"
+              },
+              "INTERVAL": {
+                "_text": "BEGINNING"
+              },
+              "SEC_PER_INTERVAL": {
+                "_text": "300"
+              }
+            },
+            "REPORT_DATA": [
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "224"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:35:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:40:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "29.26256"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "225"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:40:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:45:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "29.28491"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "226"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:45:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:50:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.40248"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "227"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:50:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T01:55:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.94416"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "228"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T01:55:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:00:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "28.80116"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "229"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:00:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:05:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "29.11719"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "230"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:05:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:10:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.46933"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "231"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:10:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:15:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.31214"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "232"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:15:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:20:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "29.11134"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "233"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:20:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:25:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.60909"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "234"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:25:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:30:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.3013"
+                }
+              },
+              {
+                "DATA_ITEM": {
+                  "_text": "LMP_PRC"
+                },
+                "RESOURCE_NAME": {
+                  "_text": "LAPLMG1_7_B2"
+                },
+                "OPR_DATE": {
+                  "_text": "2018-09-19"
+                },
+                "INTERVAL_NUM": {
+                  "_text": "235"
+                },
+                "INTERVAL_START_GMT": {
+                  "_text": "2018-09-20T02:30:00-00:00"
+                },
+                "INTERVAL_END_GMT": {
+                  "_text": "2018-09-20T02:35:00-00:00"
+                },
+                "VALUE": {
+                  "_text": "27.62848"
+                }
+              }
+            ]
+          }
+        ],
+        "DISCLAIMER_ITEM": {
+          "DISCLAIMER": {
+            "_text": "The contents of these pages are subject to change without notice.  Decisions based on information contained within the California ISO's web site are the visitor's sole responsibility."
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,8 +6,49 @@ const moment = require('moment-timezone')
 
 const { caisoFormat } = require('../config/')
 
-const caisoQueries = {
-  '5minuteLmp': 'PRC_INTVL_LMP'
+const caisoReportKeys = {
+  'PRC_INTVL_LMP': {
+    'LMP_CONG_PRC': {
+      output: 'congestionPrc',
+    },
+    'LMP_ENE_PRC': {
+      output: 'energyPrc',
+    },
+    'LMP_LOSS_PRC': {
+      output: 'lossPrc',
+    },
+    'LMP_PRC' : {
+      output: 'lmp',
+    },
+  }
+}
+
+const parseCaisoData = (query, data) => {
+
+  const reportArr = data.OASISReport.MessagePayload.RTO.REPORT_ITEM
+
+  const keys = Object.keys(caisoReportKeys[query])
+
+  const parsed = keys.reduce( (arr, k) => {
+    const dataGroup = reportArr.find( obj => obj.REPORT_DATA[0].DATA_ITEM._text === k).REPORT_DATA
+
+    const timeStamps = dataGroup.map( d => d.INTERVAL_START_GMT._text )
+
+    arr = arr.length === 0 ? timeStamps.map( ts => ({
+        timestamp: ts,
+        [caisoReportKeys[query][k].output]: dataGroup.find( d => d.INTERVAL_START_GMT._text === ts ).VALUE._text,
+      })
+    ) : arr.map(obj => ({
+        ...obj,
+        [caisoReportKeys[query][k].output]: dataGroup.find( d => d.INTERVAL_START_GMT._text === obj.timestamp ).VALUE._text,
+      })
+    )
+
+    return arr
+  }, [])
+  console.log('parsed:', parsed);
+  //TODO convert time stamps to millis
+  return parsed
 }
 
 const getDateString = (startMillis, endMillis) => {
@@ -23,6 +64,7 @@ const getUrl = (
   marketType = 'RTM',
   node = 'LAPLMG1_7_B2',
 ) => {
+
   const baseUrl =  'http://oasis.caiso.com/oasisapi/SingleZip'
   return `${baseUrl}?queryname=${queryName}${getDateString(startMillis, endMillis)}&version=1&market_run_id=${marketType}&node=${node}`
 }
@@ -47,6 +89,12 @@ const caisoEndpoint = (
 
   const file = fs.createWriteStream(dir + fileName)
 
+  console.log('url at caiso endpoint: ', url);
+  const xmlOptions = {
+    compact: true,
+    spaces: 2
+  }
+
   stream.on('data', data => file.write(data) )
     .on('end', () => {
       file.end()
@@ -56,12 +104,15 @@ const caisoEndpoint = (
         .on('entry', entry => {
           entry.buffer()
           .then( buffer => buffer.toString() )
-          .then( str => convert.xml2json(str,
-            {
-              compact: true,
-              spaces: 2
-            })
-          )
+          .then( str => convert.xml2json(str, xmlOptions) )
+          // write data to mocks for testing
+
+          // .then( obj => {
+          //   const test = fs.createWriteStream('server/utils/mocks/lmp1.json')
+          //   test.write(obj)
+          //   test.end()
+          //   return obj
+          // })
           .then(resolve)
         })
     })
@@ -71,4 +122,5 @@ const caisoEndpoint = (
 module.exports = {
   caisoEndpoint,
   getUrl,
+  parseCaisoData,
 }
