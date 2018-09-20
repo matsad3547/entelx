@@ -2,6 +2,7 @@ const convert = require('xml-js')
 const unzipper = require('unzipper')
 const fs = require('fs')
 const request = require('request')
+const moment = require('moment-timezone')
 
 const { caisoFormat } = require('../config/')
 
@@ -9,34 +10,34 @@ const caisoQueries = {
   '5minuteLmp': 'PRC_INTVL_LMP'
 }
 
-const getDateString = (start, end) => {
-  const startDate = start.format(caisoFormat)
-  const endDate = end.format(caisoFormat)
+const getDateString = (startMillis, endMillis) => {
+  const startDate = moment.tz(startMillis, 'Etc/GMT').format(caisoFormat)
+  const endDate = moment.tz(endMillis, 'Etc/GMT').format(caisoFormat)
   return `&startdatetime=${startDate}&enddatetime=${endDate}`
 }
 
 const getUrl = (
-  start,
-  end,
+  startMillis,
+  endMillis,
   queryName,
   marketType = 'RTM',
   node = 'LAPLMG1_7_B2',
 ) => {
   const baseUrl =  'http://oasis.caiso.com/oasisapi/SingleZip'
-  return `${baseUrl}?queryname=${queryName}${getDateString(start, end)}&version=1&market_run_id=${marketType}&node=${node}`
+  return `${baseUrl}?queryname=${queryName}${getDateString(startMillis, endMillis)}&version=1&market_run_id=${marketType}&node=${node}`
 }
 
 const caisoEndpoint = (
-  start,
-  end,
+  startMillis,
+  endMillis,
   query,
   marketType,
   node,
 ) => new Promise( (resolve, reject) => {
 
-  const url = getUrl(start, end, 'PRC_INTVL_LMP')
+  const url = getUrl(startMillis, endMillis, 'PRC_INTVL_LMP')
 
-  // const url = `http://oasis.caiso.com/oasisapi/SingleZip?queryname=SLD_REN_FCST&market_run_id=DAM&startdatetime=20180819T07:00-0000&enddatetime=20180820T07:00-0000&version=1`
+  // const url = 'http://oasis.caiso.com/oasisapi/SingleZip?queryname=PRC_INTVL_LMP&startdatetime=20170919T07:00-0000&enddatetime=20170919T08:00-0000&version=1&market_run_id=RTM&node=LAPLMG1_7_B2'
 
   const stream = request(url)
 
