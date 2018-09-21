@@ -22,6 +22,8 @@
     "concurrently": "^3.5.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.2.1",
+    "jest-css-modules-transform": "^2.0.2",
+    "jest-svg-transformer": "^1.0.0",
     "nodemon": "^1.12.1"
   },
   "scripts": {
@@ -31,8 +33,11 @@
     "test": "NODE_ENV=test jest --watch"
   },
   "jest": {
-    "moduleNameMapper": {
-      "^.+\\.(css|scss|less)$": "identity-obj-proxy"
+    "moduleNameMapper": null,
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest",
+      "^.+\\.svg$": "jest-svg-transformer",
+      ".+\\.(css|styl|less|sass|scss)$": "<rootDir>/node_modules/jest-css-modules-transform"
     }
   }
 }

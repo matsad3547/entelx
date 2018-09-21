@@ -1,4 +1,4 @@
-const { parseHourlyWeatherData } = require('../getWeather')
+const { parseHourlyWeatherData } = require('../getHistoricalWeather')
 
 describe('parseHourlyWeatherData', () => {
 
