@@ -94,6 +94,8 @@ const caisoEndpoint = (
   node,
 ) => new Promise( (resolve, reject) => {
 
+  console.time(`CAISO ${query} request`)
+
   const url = getUrl(startMillis, endMillis, query)
 
   const stream = request(url)
@@ -129,6 +131,7 @@ const caisoEndpoint = (
           // })
           .then( str => {
             const json = JSON.parse(str)
+            console.timeEnd(`CAISO ${query} request`)
             resolve(parseCaisoData(query, json))
           })
         })

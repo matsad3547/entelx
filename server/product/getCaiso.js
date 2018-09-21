@@ -12,9 +12,9 @@ const getCaiso = (req, res) => {
     // TODO bring in lat lng from front end
   } = req.body
 
-  caisoEndpoint(startDate, endDate, 'PRC_INTVL_LMP')
-    .then(d => console.log('caiso endpoint:', d, ' length:', d.length))
-    .catch( err => console.error('Caiso endpoint reject error:', err))
+  // caisoEndpoint(startDate, endDate, 'PRC_INTVL_LMP')
+  //   .then(d => console.log('caiso endpoint:', d, ' length:', d.length))
+  //   .catch( err => console.error('Caiso endpoint reject error:', err))
 
   const start = moment.tz(startDate, timeZone)
   const end = moment.tz(endDate, timeZone)
@@ -24,7 +24,8 @@ const getCaiso = (req, res) => {
 
   Promise.all([
     getHistoricalWeather(start, end, lat, lng),
-    getLmp(start, end, 'CAISO')
+    caisoEndpoint(startDate, endDate, 'PRC_INTVL_LMP')
+    // getLmp(start, end, 'CAISO')
   ])
   .then( data => data.reduce( (agr, arr) => [...agr, ...arr] )
     .sort( (a, b) => a.timestamp - b.timestamp )
