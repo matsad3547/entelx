@@ -26,6 +26,10 @@ const caisoDataItems = {
       key: 'lmp',
       format: val => parseFloat(val),
     },
+    'LMP_GHG_PRC' : { //available on some nodes?
+      key: 'ghgPrc',
+      format: val => parseFloat(val),
+    },
   }
 }
 

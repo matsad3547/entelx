@@ -46,8 +46,8 @@ class Caiso extends PureComponent {
     })
 
     const body = JSON.stringify({
-      startDate: startDate.valueOf(),
-      endDate: endDate.valueOf(),
+      startMillis: startDate.valueOf(),
+      endMillis: endDate.valueOf(),
       timeZone: this.timeZone,
     })
 
