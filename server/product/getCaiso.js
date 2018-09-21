@@ -13,7 +13,7 @@ const getCaiso = (req, res) => {
   } = req.body
 
   caisoEndpoint(startDate, endDate, 'PRC_INTVL_LMP')
-    .then(d => console.log('caiso endpoint:', d))
+    .then(d => console.log('caiso endpoint:', d, ' length:', d.length))
     .catch( err => console.error('Caiso endpoint reject error:', err))
 
   const start = moment.tz(startDate, timeZone)

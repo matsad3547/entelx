@@ -4,7 +4,10 @@ const {
   getUrl,
   parseCaisoData,
 } = require('../caisoEndpoint')
-const lmp1Hour = require('../../utils/mocks/lmp1Hour.json')
+
+const lmp1Hour = require('../../config/mocks/lmp1Hour.json')
+
+const lmp1Day = require('../../config/mocks/lmp1Day.json')
 
 describe('caisoUrlBuilder()', () => {
 
@@ -127,5 +130,11 @@ describe('parseCaisoData()', () => {
     expect(actual).toEqual(expected)
   })
 
-
+  test('should return an array with 288 items', () => {
+    const query = 'PRC_INTVL_LMP'
+    const data = lmp1Day
+    const expected = 288
+    const actual = parseCaisoData(query, data).length
+    expect(actual).toEqual(expected)
+  })
 })

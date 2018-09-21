@@ -6,62 +6,71 @@ const moment = require('moment-timezone')
 
 const { caisoFormat } = require('../config/')
 
-const caisoTimezone = 'Etc/GMT'
+const caisoTZ = 'Etc/GMT'
 
-const caisoReportKeys = {
+const caisoDataItems = {
   'PRC_INTVL_LMP': {
     'LMP_CONG_PRC': {
-      output: 'congestionPrc',
+      key: 'congestionPrc',
       format: val => parseFloat(val),
     },
     'LMP_ENE_PRC': {
-      output: 'energyPrc',
+      key: 'energyPrc',
       format: val => parseFloat(val),
     },
     'LMP_LOSS_PRC': {
-      output: 'lossPrc',
+      key: 'lossPrc',
       format: val => parseFloat(val),
     },
     'LMP_PRC' : {
-      output: 'lmp',
+      key: 'lmp',
       format: val => parseFloat(val),
     },
   }
 }
 
+const tsToMillis = ts => moment.tz(ts, caisoTZ).valueOf()
+
 const parseCaisoData = (query, data) => {
 
-  const reportArr = data.OASISReport.MessagePayload.RTO.REPORT_ITEM
+  const reportItems = data.OASISReport.MessagePayload.RTO.REPORT_ITEM
 
-  const keys = Object.keys(caisoReportKeys[query])
+  return reportItems.reduce( (arr, item) => {
 
-  const parsed = keys.reduce( (arr, k) => {
-    const dataGroup = reportArr.find( obj => obj.REPORT_DATA[0].DATA_ITEM._text === k).REPORT_DATA
+    const dataItem = item.REPORT_DATA[0].DATA_ITEM._text
 
-    const timeStamps = dataGroup.map( d => d.INTERVAL_START_GMT._text )
+    const dataItemFormat = caisoDataItems[query][dataItem]
 
-    const keyObj = caisoReportKeys[query][k]
+    item.REPORT_DATA.forEach( rd => {
 
-    return arr.length === 0 ? timeStamps.map( ts => ({
-        timestamp: ts,
-        [keyObj.output]: keyObj.format(dataGroup.find( d => d.INTERVAL_START_GMT._text === ts ).VALUE._text),
-      })
-    ) : arr.map(obj => ({
-        ...obj,
-        [keyObj.output]: keyObj.format(dataGroup.find( d => d.INTERVAL_START_GMT._text === obj.timestamp ).VALUE._text),
-      })
-    )
-  }, [])
-  return parsed.map( obj => ({
-      ...obj,
-      timestamp: moment.tz(obj.timestamp, caisoTimezone).valueOf(),
+      const hasTsIndex = arr.findIndex( obj =>
+        obj.timestamp === tsToMillis(rd.INTERVAL_START_GMT._text) )
+
+      hasTsIndex === -1 ?
+      arr = [
+        ...arr,
+        {
+          timestamp: tsToMillis(rd.INTERVAL_START_GMT._text),
+          [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
+        },
+      ] :
+      arr = [
+        ...arr.slice(0, hasTsIndex),
+        {
+          ...arr[hasTsIndex],
+          [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text)
+        },
+        ...arr.slice(hasTsIndex + 1),
+      ]
     })
-  )
+
+    return arr
+  }, [])
 }
 
 const getDateString = (startMillis, endMillis) => {
-  const startDate = moment.tz(startMillis, caisoTimezone).format(caisoFormat)
-  const endDate = moment.tz(endMillis, caisoTimezone).format(caisoFormat)
+  const startDate = moment.tz(startMillis, caisoTZ).format(caisoFormat)
+  const endDate = moment.tz(endMillis, caisoTZ).format(caisoFormat)
   return `&startdatetime=${startDate}&enddatetime=${endDate}`
 }
 
@@ -110,10 +119,10 @@ const caisoEndpoint = (
           entry.buffer()
           .then( buffer => buffer.toString() )
           .then( str => convert.xml2json(str, xmlOptions) )
-          // write data to mocks for testing
-
+          // // write data to mocks for testing
+          //
           // .then( obj => {
-          //   const test = fs.createWriteStream('server/utils/mocks/lmp1.json')
+          //   const test = fs.createWriteStream('server/config/mocks/lmp2Day.json')
           //   test.write(obj)
           //   test.end()
           //   return obj
