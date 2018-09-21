@@ -28,7 +28,19 @@ const getCaiso = (req, res) => {
   ])
   .then( data => data.reduce( (agr, arr) => [...agr, ...arr] )
     .sort( (a, b) => a.timestamp - b.timestamp )
-      // TODO add reduce step to combine data with the same timestamp
+    .reduce( (agr, obj, i) =>
+    i > 0 && obj.timestamp === agr[agr.length - 1].timestamp ?
+    [
+      ...agr.slice(0, agr.length - 1),
+      {
+        ...agr[agr.length - 1],
+        ...obj,
+      },
+    ]:
+    [
+      ...agr,
+      obj,
+    ], [])
   )
   .then( parsed => res.json(parsed) )
   .catch( err => console.error('Error getting CAISO data:', err) )
