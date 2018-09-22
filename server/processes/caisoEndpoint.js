@@ -30,7 +30,29 @@ const caisoDataItems = {
       key: 'ghgPrc',
       format: val => parseFloat(val),
     },
-  }
+  },
+  'ENE_WIND_SOLAR_SUMMARY': {
+    'OPR_DATE': {
+      key: 'timestamp',
+      format: val => parseFloat(val),
+    },
+    'DATA_ITEM': {
+      key: 'di',
+      format: val => parseFloat(val),
+    },
+    'INTERVAL_START_GMT': {
+      key: 'start',
+      format: val => parseFloat(val),
+    },
+    'INTERVAL_END_GMT': {
+      key: 'end',
+      format: val => parseFloat(val),
+    },
+    'VALUE': {
+      key: 'val',
+      format: val => parseFloat(val),
+    },
+  },
 }
 
 const tsToMillis = ts => moment.tz(ts, caisoTZ).valueOf()
@@ -82,25 +104,35 @@ const getUrl = (
   startMillis,
   endMillis,
   queryName,
-  marketType = 'RTM',
-  node = 'LAPLMG1_7_B2',
+  marketType,
+  node,
 ) => {
 
   const baseUrl =  'http://oasis.caiso.com/oasisapi/SingleZip'
-  return `${baseUrl}?queryname=${queryName}${getDateString(startMillis, endMillis)}&version=1&market_run_id=${marketType}&node=${node}`
+  return `${baseUrl}?queryname=${queryName}${getDateString(startMillis, endMillis)}&version=1${ marketType ? `&market_run_id=${marketType}` : '' }${node ? `&node=${node}` : '' }`
 }
 
 const caisoEndpoint = (
-  startMillis,
-  endMillis,
-  query,
-  marketType,
-  node,
-) => new Promise( (resolve, reject) => {
+    startMillis,
+    endMillis,
+    query,
+    parse = false,
+    marketType,
+    node,
+    save = false
+  ) => new Promise( (resolve, reject) => {
+
+  'http://oasis.caiso.com/oasisapi/SingleZip?queryname=ATL_APNODE&APnode_type=ALL&startdatetime=20130919T07:00-0000&enddatetime=20130920T07:00-0000&version=1'
 
   console.time(`CAISO ${query} request`)
 
-  const url = getUrl(startMillis, endMillis, query)
+  const url = getUrl(
+    startMillis,
+    endMillis,
+    query,
+    marketType,
+    node,
+  )
 
   const stream = request(url)
 
@@ -125,18 +157,24 @@ const caisoEndpoint = (
           entry.buffer()
           .then( buffer => buffer.toString() )
           .then( str => convert.xml2json(str, xmlOptions) )
-          // // write data to mocks for testing
-          //
-          // .then( obj => {
-          //   const test = fs.createWriteStream('server/config/mocks/lmp2Day.json')
-          //   test.write(obj)
-          //   test.end()
-          //   return obj
-          // })
+          // write data to mocks for testing
+          .then( obj => {
+            if (save) {
+              const mock = fs.createWriteStream('server/config/mocks/apNodes.json')
+              mock.write(obj)
+              mock.end()
+            }
+            return obj
+          })
           .then( str => {
-            const json = JSON.parse(str)
-            console.timeEnd(`CAISO ${query} request`)
-            resolve(parseCaisoData(query, json))
+            if(parse) {
+              const json = JSON.parse(str)
+              console.timeEnd(`CAISO ${query} request`)
+              resolve(parseCaisoData(query, json))
+            }
+            else {
+              resolve(str)
+            }
           })
         })
     })

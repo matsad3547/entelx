@@ -14,6 +14,10 @@ import {
 class Caiso extends PureComponent {
 
   timeZone = 'America/Los_Angeles'
+  lat = 38.5816
+  lng = -121.4944
+  marketType = 'RTM'
+  node = 'LAPLMG1_7_B2'
 
   state = {
     data: null,
@@ -49,6 +53,10 @@ class Caiso extends PureComponent {
       startMillis: startDate.valueOf(),
       endMillis: endDate.valueOf(),
       timeZone: this.timeZone,
+      lat: this.lat,
+      lng: this.lng,
+      marketType: this.marketType,
+      node: this.node,
     })
 
     const request = {
