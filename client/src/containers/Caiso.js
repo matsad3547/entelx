@@ -6,6 +6,8 @@ import DateControl from '../components/DateControl'
 import Button from '../components/Button'
 import Loading from '../components/loading/'
 
+import Map from './map/Map'
+
 import {
   singlePostRequest,
   handleError,
@@ -15,7 +17,7 @@ class Caiso extends PureComponent {
 
   timeZone = 'America/Los_Angeles'
   lat = 38.5816
-  lng = -121.4944
+  lng = -110.0
   marketType = 'RTM'
   node = 'LAPLMG1_7_B2'
 
@@ -159,6 +161,11 @@ class Caiso extends PureComponent {
             tz={this.timeZone}
           />
         }
+        <Map
+          center={[this.lng, this.lat]}
+          zoom={5}
+        />
+
       </div>
     )
   }
