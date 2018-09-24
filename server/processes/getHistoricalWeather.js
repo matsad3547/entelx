@@ -3,6 +3,7 @@ const weatherKey = process.env.DARK_SKY_KEY
 
 const {
   convertMillisToSeconds,
+  checkStatus,
 } = require('../utils/')
 
 const parseHourlyWeatherData = (hourlyWeatherObj, ...keys) => {
@@ -18,29 +19,35 @@ const parseHourlyWeatherData = (hourlyWeatherObj, ...keys) => {
   }
 }
 
-const getTimes = (startDate, endDate) => {
+const getTimestamps = (startMillis, endMillis) => {
 
-  const diff = endDate.diff(startDate, 'hours')
+  const diff = (endMillis - startMillis) / (60 * 60 * 1000)
 
   return Array
     .apply(null, Array(Math.ceil(diff/24)))
-    .map( (time, i) => endDate.valueOf() - (i * 24 * 60 * 60 * 1000) )
+    .map( (time, i) => convertMillisToSeconds(endMillis - (i * 24 * 60 * 60 * 1000)) )
     .reverse()
 }
 
-const getHistoricalWeather = (start, end, lat, lng) => new Promise( (resolve, reject) => {
+const getHistoricalWeather = (
+  startMillis,
+  endMillis,
+  timeZone,
+  lat,
+  lng
+) => new Promise( (resolve, reject) => {
 
-  const endMillis = end.valueOf()
+  console.time('weather data')
 
-  const startMillis = start.valueOf()
+  const start = moment.tz(startMillis, timeZone)
+
+  const end = moment.tz(endMillis, timeZone)
 
   const endDate = end.hour() < 23 ? end.clone().hour(23) : end.hour()
 
   const startDate = start.hour() > 0 ? start.clone().hour(0) : start.hour()
 
-  const times = getTimes(startDate, endDate)
-
-  console.time('weather data')
+  const timestamps = getTimestamps(startMillis, endMillis)
 
   const keys = [
     'temperature',
@@ -49,7 +56,7 @@ const getHistoricalWeather = (start, end, lat, lng) => new Promise( (resolve, re
     'cloudCover',
   ]
 
-  Promise.all(times.map( time => getHistoricalWeatherByDay(time, lat, lng)))
+  Promise.all(timestamps.map( timestamp => getHistoricalWeatherByDay(timestamp, lat, lng)))
     .then(res => {
       console.timeEnd('weather data')
 
@@ -64,22 +71,13 @@ const getHistoricalWeather = (start, end, lat, lng) => new Promise( (resolve, re
     .catch( err => console.error(`There was an error getting weather data: ${err}`))
 })
 
-const getHistoricalWeatherByDay = (time, lat, lng) => new Promise( (resolve, reject) => {
-
-  const tsSeconds = convertMillisToSeconds(time)
+const getHistoricalWeatherByDay = (tsSeconds, lat, lng) => new Promise( (resolve, reject) => {
 
   const url = `          https://api.darksky.net/forecast/${weatherKey}/${lat},${lng},${tsSeconds}?exclude=currently,flags,units=si`
 
   fetch(url)
-    .then( res => {
-      if (res.status >= 400) {
-        const err = new Error("Bad response from server")
-        reject(err)
-      }
-      else {
-        return res.json()
-      }
-    })
+    .then(checkStatus)
+    .then( res => res.json() )
     .then(resolve)
     .catch(reject)
 })

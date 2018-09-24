@@ -6,8 +6,6 @@ import DateControl from '../components/DateControl'
 import Button from '../components/Button'
 import Loading from '../components/loading/'
 
-import Map from './map/Map'
-
 import {
   singlePostRequest,
   handleError,
@@ -161,11 +159,6 @@ class Caiso extends PureComponent {
             tz={this.timeZone}
           />
         }
-        <Map
-          center={[this.lng, this.lat]}
-          zoom={5}
-        />
-
       </div>
     )
   }

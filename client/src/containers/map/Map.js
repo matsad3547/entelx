@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY
@@ -26,7 +27,7 @@ class Map extends PureComponent {
 
   render() {
 
-    return <div style={styles.container} ref={ node => this.mapContainer = node } />;
+    return <div style={styles.container} ref={ node => this.mapContainer = node } />
   }
 }
 
@@ -39,6 +40,11 @@ const styles = {
     right: '24%',
     marginBottom: '6vh',
   }
+}
+
+Map.propTypes = {
+  center: PropTypes.arrayOf(PropTypes.number), //[lng, lat]
+  zoom: PropTypes.number,
 }
 
 export default Map

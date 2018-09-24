@@ -1,5 +1,4 @@
-const moment = require('moment-timezone')
-const { getLmp } = require('../processes/getLmp')
+// const { getLmp } = require('../processes/getLmp')
 const { getHistoricalWeather } = require('../processes/getHistoricalWeather')
 const { caisoEndpoint } = require('../processes/caisoEndpoint')
 
@@ -27,11 +26,14 @@ const getCaiso = (req, res) => {
   //   .then(d => console.log('caiso endpoint:', d, ' length:', d.length))
   //   .catch( err => console.error('Caiso endpoint reject error:', err))
 
-  const start = moment.tz(startMillis, timeZone)
-  const end = moment.tz(endMillis, timeZone)
-
   Promise.all([
-    getHistoricalWeather(start, end, lat, lng),
+    getHistoricalWeather(
+      startMillis,
+      endMillis,
+      timeZone,
+      lat,
+      lng,
+    ),
     caisoEndpoint(
       startMillis,
       endMillis,
