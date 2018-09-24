@@ -19,14 +19,12 @@ const parseHourlyWeatherData = (hourlyWeatherObj, ...keys) => {
   }
 }
 
-const getTimestamps = (startMillis, endMillis) => {
+const getTimestamps = (adjStartMillis, adjEndMillis) => {
 
-  const diff = (endMillis - startMillis) / (60 * 60 * 1000)
+  const diff = (adjEndMillis - adjStartMillis) / (60 * 60 * 1000)
 
-  return Array
-    .apply(null, Array(Math.ceil(diff/24)))
-    .map( (time, i) => convertMillisToSeconds(endMillis - (i * 24 * 60 * 60 * 1000)) )
-    .reverse()
+  return Array.apply(null, Array(Math.ceil(diff/24)))
+    .map( (time, i) => convertMillisToSeconds(adjStartMillis + (i * 24 * 60 * 60 * 1000)) )
 }
 
 const getHistoricalWeather = (
@@ -43,11 +41,11 @@ const getHistoricalWeather = (
 
   const end = moment.tz(endMillis, timeZone)
 
-  const endDate = end.hour() < 23 ? end.clone().hour(23) : end.hour()
+  const adjEndMillis = end.hour() < 23 ? end.clone().hour(23).valueOf() : end.hour().valueOf()
 
-  const startDate = start.hour() > 0 ? start.clone().hour(0) : start.hour()
+  const adjStartMillis = start.hour() > 0 ? start.clone().hour(0).valueOf() : start.hour().valueOf()
 
-  const timestamps = getTimestamps(startMillis, endMillis)
+  const timestamps = getTimestamps(adjStartMillis, adjEndMillis)
 
   const keys = [
     'temperature',
