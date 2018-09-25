@@ -36,7 +36,8 @@ const oasisEndpoint = (
 
   const file = fs.createWriteStream(dir + fileName)
 
-  console.log('url at caiso endpoint: ', url);
+  // console.log('url at caiso endpoint: ', url);
+
   const xmlOptions = {
     compact: true,
     spaces: 2

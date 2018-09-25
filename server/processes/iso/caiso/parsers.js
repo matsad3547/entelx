@@ -39,6 +39,15 @@ const parsePriceData = (query, data) => {
   }, [])
 }
 
+const parseNodeData = json => json.l[2].m.map( obj => ({
+      name: obj.n,
+      type: obj.p,
+      state: obj.a,
+      latLng: obj.c,
+    })
+  )
+
 module.exports = {
   parsePriceData,
+  parseNodeData,
 }

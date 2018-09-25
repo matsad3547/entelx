@@ -2,6 +2,7 @@
 const {
   aggregateHistoricalWeather,
   oasisEndpoint,
+  getNodeLocations,
 } = require('../processes/')
 
 const getCaiso = (req, res) => {
@@ -15,6 +16,10 @@ const getCaiso = (req, res) => {
     marketType,
     node,
   } = req.body
+
+  getNodeLocations()
+    .then(res => console.log('node locations:', res ))
+    .catch( err => console.error('There was an error getting node locations:', err))
 
   // oasisEndpoint(
   //   startMillis,
