@@ -1,33 +1,10 @@
 const moment = require('moment-timezone')
-const weatherKey = process.env.DARK_SKY_KEY
 
-const {
-  convertMillisToSeconds,
-  checkStatus,
-} = require('../utils/')
+const { getTimestamps } = require('./utils')
+const { getHistoricalWeatherByDay } = require('./getHistoricalWeatherByDay')
+const { parseHourlyWeatherData } = require('./parsers')
 
-const parseHourlyWeatherData = (hourlyWeatherObj, ...keys) => {
-
-  const otherVals = keys.reduce( (obj, key) => ({
-    ...obj,
-    [key]: hourlyWeatherObj[key],
-  }), {})
-
-  return {
-    timestamp: hourlyWeatherObj.time * 1000,
-    ...otherVals,
-  }
-}
-
-const getTimestamps = (adjStartMillis, adjEndMillis) => {
-
-  const diff = (adjEndMillis - adjStartMillis) / (60 * 60 * 1000)
-
-  return Array.apply(null, Array(Math.ceil(diff/24)))
-    .map( (time, i) => convertMillisToSeconds(adjStartMillis + (i * 24 * 60 * 60 * 1000)) )
-}
-
-const getHistoricalWeather = (
+const aggregateHistoricalWeather = (
   startMillis,
   endMillis,
   timeZone,
@@ -69,18 +46,6 @@ const getHistoricalWeather = (
     .catch( err => console.error(`There was an error getting weather data: ${err}`))
 })
 
-const getHistoricalWeatherByDay = (tsSeconds, lat, lng) => new Promise( (resolve, reject) => {
-
-  const url = `          https://api.darksky.net/forecast/${weatherKey}/${lat},${lng},${tsSeconds}?exclude=currently,flags,units=si`
-
-  fetch(url)
-    .then(checkStatus)
-    .then( res => res.json() )
-    .then(resolve)
-    .catch(reject)
-})
-
 module.exports = {
-  getHistoricalWeather,
-  parseHourlyWeatherData,
+  aggregateHistoricalWeather,
 }

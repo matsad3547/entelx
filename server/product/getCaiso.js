@@ -1,6 +1,8 @@
 // const { getLmp } = require('../processes/getLmp')
-const { getHistoricalWeather } = require('../processes/getHistoricalWeather')
-const { caisoEndpoint } = require('../processes/caisoEndpoint')
+const {
+  aggregateHistoricalWeather,
+  oasisEndpoint,
+} = require('../processes/')
 
 const getCaiso = (req, res) => {
 
@@ -14,7 +16,7 @@ const getCaiso = (req, res) => {
     node,
   } = req.body
 
-  // caisoEndpoint(
+  // oasisEndpoint(
   //   startMillis,
   //   endMillis,
   //   'ATL_APNODE&APnode_type=ALL',
@@ -27,14 +29,14 @@ const getCaiso = (req, res) => {
   //   .catch( err => console.error('Caiso endpoint reject error:', err))
 
   Promise.all([
-    getHistoricalWeather(
+    aggregateHistoricalWeather(
       startMillis,
       endMillis,
       timeZone,
       lat,
       lng,
     ),
-    caisoEndpoint(
+    oasisEndpoint(
       startMillis,
       endMillis,
       'PRC_INTVL_LMP',

@@ -1,26 +1,9 @@
-const moment = require('moment-timezone')
+const lmp1Hour = require('./mocks/lmp1Hour')
+const lmp1Day = require('./mocks/lmp1Day')
 
-const {
-  getUrl,
-  parseCaisoData,
-} = require('../caisoEndpoint')
+const { parsePriceData } = require('../parsers')
 
-const lmp1Hour = require('../../config/mocks/lmp1Hour.json')
-
-const lmp1Day = require('../../config/mocks/lmp1Day.json')
-
-describe('caisoUrlBuilder()', () => {
-
-  test('should return a url with start date, end date, and query name', () => {
-    const start = moment.tz(1537282770441, 'Etc/GMT')
-    const end = moment.tz(1537369170441, 'Etc/GMT')
-    const expected = 'http://oasis.caiso.com/oasisapi/SingleZip?queryname=PRC_INTVL_LMP&startdatetime=20180918T14:59-0000&enddatetime=20180919T14:59-0000&version=1&market_run_id=RTM&node=LAPLMG1_7_B2'
-    const actual = getUrl(start, end, 'PRC_INTVL_LMP')
-    expect(actual).toEqual(expected)
-  })
-})
-
-describe('parseCaisoData()', () => {
+describe('parsePriceData()', () => {
 
   // I have:
   // 'REPORT_ITEM': [
@@ -57,7 +40,7 @@ describe('parseCaisoData()', () => {
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Hour
     const expected = true
-    const actual = Array.isArray(parseCaisoData(query, data))
+    const actual = Array.isArray(parsePriceData(query, data))
     expect(actual).toEqual(expected)
   })
 
@@ -65,7 +48,7 @@ describe('parseCaisoData()', () => {
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Hour
     const expected = 12
-    const actual = parseCaisoData(query, data).length
+    const actual = parsePriceData(query, data).length
     expect(actual).toEqual(expected)
   })
 
@@ -73,7 +56,7 @@ describe('parseCaisoData()', () => {
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Hour
     const expected = new Array(12).fill(true)
-    const arr = parseCaisoData(query, data)
+    const arr = parsePriceData(query, data)
     const keyArr = arr.map( obj => Object.keys(obj) )
     const actual = keyArr.map( k => k.includes('timestamp'))
     expect(actual).toEqual(expected)
@@ -83,7 +66,7 @@ describe('parseCaisoData()', () => {
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Hour
     const expected = new Array(12).fill(true)
-    const arr = parseCaisoData(query, data)
+    const arr = parsePriceData(query, data)
     const keyArr = arr.map( obj => Object.keys(obj) )
     const actual = keyArr.map( k => k.includes('timestamp') && k.includes('congestionPrc'))
     expect(actual).toEqual(expected)
@@ -93,7 +76,7 @@ describe('parseCaisoData()', () => {
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Hour
     const expected = new Array(12).fill(true)
-    const arr = parseCaisoData(query, data)
+    const arr = parsePriceData(query, data)
     const keyArr = arr.map( obj => Object.keys(obj) )
     const actual = keyArr.map( k =>
       k.includes('timestamp') &&
@@ -109,7 +92,7 @@ describe('parseCaisoData()', () => {
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Hour
     const expected = new Array(12).fill(true)
-    const arr = parseCaisoData(query, data)
+    const arr = parsePriceData(query, data)
     const actual = arr.map( obj =>
       typeof obj.congestionPrc === 'number' &&
       typeof obj.energyPrc === 'number' &&
@@ -123,7 +106,7 @@ describe('parseCaisoData()', () => {
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Hour
     const expected = new Array(12).fill(true)
-    const arr = parseCaisoData(query, data)
+    const arr = parsePriceData(query, data)
     const actual = arr.map( obj =>
       typeof obj.timestamp === 'number'
     )
@@ -134,7 +117,7 @@ describe('parseCaisoData()', () => {
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Day
     const expected = 288
-    const actual = parseCaisoData(query, data).length
+    const actual = parsePriceData(query, data).length
     expect(actual).toEqual(expected)
   })
 })
