@@ -3,9 +3,10 @@ const crypto = require('crypto')
 
 const randomString = () => crypto.randomBytes(4).toString('hex')
 
-const saltHashPassword = ({ password,
-                            salt = randomString(),
-                          }) => {
+const saltHashPassword = ({
+  password,
+  salt = randomString(),
+}) => {
 
   const hash = crypto
                 .createHmac('sha512', salt)
@@ -42,9 +43,9 @@ const authenticate = ({ username, password }) => {
             }
             else {
               const { hash } = saltHashPassword({
-                                  password,
-                                  salt: user.salt,
-                                })
+                password,
+                salt: user.salt,
+              })
               //TODO add fixed time comparison
               return {
                 success: hash === user.encrypted_password,

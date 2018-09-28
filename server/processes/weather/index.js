@@ -1,4 +1,4 @@
-const { aggregateHistoricalWeather } = require('./aggregateHistoricalWeather')
+const aggregateHistoricalWeather = require('./aggregateHistoricalWeather')
 
 module.exports = {
   aggregateHistoricalWeather,

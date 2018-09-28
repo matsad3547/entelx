@@ -13,6 +13,4 @@ const getNodeLocations = () => new Promise( (resolve, reject) => {
     .catch(reject)
 })
 
-module.exports = {
-  getNodeLocations,
-}
+module.exports = getNodeLocations

@@ -1,7 +1,7 @@
 const moment = require('moment-timezone')
 
 const { getTimestamps } = require('./utils')
-const { getHistoricalWeatherByDay } = require('./getHistoricalWeatherByDay')
+const getHistoricalWeatherByDay = require('./getHistoricalWeatherByDay')
 const { parseHourlyWeatherData } = require('./parsers')
 
 const aggregateHistoricalWeather = (
@@ -46,6 +46,4 @@ const aggregateHistoricalWeather = (
     .catch( err => console.error(`There was an error getting weather data: ${err}`))
 })
 
-module.exports = {
-  aggregateHistoricalWeather,
-}
+module.exports = aggregateHistoricalWeather

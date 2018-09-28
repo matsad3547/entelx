@@ -76,6 +76,4 @@ const oasisEndpoint = (
     .on('error', reject)
 })
 
-module.exports = {
-  oasisEndpoint,
-}
+module.exports = oasisEndpoint

@@ -12,6 +12,4 @@ const getHistoricalWeatherByDay = (tsSeconds, lat, lng) => new Promise( (resolve
     .catch(reject)
 })
 
-module.exports = {
-  getHistoricalWeatherByDay,
-}
+module.exports = getHistoricalWeatherByDay
