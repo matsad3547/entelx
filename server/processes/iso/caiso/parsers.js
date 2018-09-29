@@ -48,7 +48,20 @@ const parseNodeData = json => json.l[2].m.map( obj => ({
     })
   )
 
+const parseAtlasData = (query, data) => {
+  console.log('data: ', data.OASISMaster.MessagePayload.RTO.ATLS_ITEM.length);
+  return data.OASISMaster.MessagePayload.RTO.ATLS_ITEM.map( obj => ({
+    'name': obj.ATLS_DATA.APNODE_NAME._text,
+    'start_date': obj.ATLS_DATA.START_DATE_GMT._text,
+    'end_date': obj.ATLS_DATA.END_DATE_GMT._text,
+    'type': obj.ATLS_DATA.APNODE_TYPE._text,
+    'max_mw': obj.ATLS_DATA.MAX_CB_MW._text,
+    })
+  )
+}
+
 module.exports = {
   parsePriceData,
   parseNodeData,
+  parseAtlasData,
 }
