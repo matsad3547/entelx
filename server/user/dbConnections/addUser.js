@@ -11,7 +11,7 @@ const addUser = ({ username, password }) => {
             username,
           })
           .debug()
-          .catch( err => console.error(`Error at store.createUser: ${err}`))
+          .catch( err => console.error(`Error at addUser: ${err}`))
 }
 
 module.exports = addUser

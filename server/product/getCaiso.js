@@ -5,6 +5,8 @@ const {
   getNodeLocations,
 } = require('../processes/')
 
+const addNode = require('../processes/dbConnections/addNode')
+
 const getCaiso = (req, res) => {
 
   const {
@@ -17,9 +19,13 @@ const getCaiso = (req, res) => {
     node,
   } = req.body
 
-  getNodeLocations()
-    .then(res => console.log('node locations:', res ))
-    .catch( err => console.error('There was an error getting node locations:', err))
+  // getNodeLocations()
+  //   .then(res => {
+  //     console.log('node locations:', res)
+  //     // res.map( node => addNode(node) )
+  //
+  //   })
+  //   .catch( err => console.error('There was an error getting node locations:', err))
 
   // oasisEndpoint(
   //   startMillis,

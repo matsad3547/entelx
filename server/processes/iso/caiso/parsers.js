@@ -42,8 +42,9 @@ const parsePriceData = (query, data) => {
 const parseNodeData = json => json.l[2].m.map( obj => ({
       name: obj.n,
       type: obj.p,
-      eimArea: obj.a,
-      latLng: obj.c,
+      eim_area: obj.a,
+      lat: obj.c[0],
+      lng: obj.c[1],
     })
   )
 
