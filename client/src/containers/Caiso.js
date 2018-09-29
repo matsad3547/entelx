@@ -9,6 +9,7 @@ import Loading from '../components/loading/'
 import {
   singlePostRequest,
   handleError,
+  parseResponse,
 } from '../utils/'
 
 class Caiso extends PureComponent {
@@ -69,6 +70,7 @@ class Caiso extends PureComponent {
     }
 
     singlePostRequest('/caiso', request)
+      .then(parseResponse)
       .then(this.setData)
       .catch(this.setError)
   }

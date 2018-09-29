@@ -15,7 +15,6 @@ class CreateProfile extends Component {
     location: [],
     loading: false,
     error: '',
-    showError: false,
   }
 
   handleResponse = res => {
@@ -60,7 +59,6 @@ class CreateProfile extends Component {
     }
     else {
       this.setState({
-        showError: true,
         error: 'Please verify password',
       })
     }
@@ -72,7 +70,6 @@ class CreateProfile extends Component {
       username,
       password,
       verifyPassword,
-      showError,
       error,
     } = this.state
 
@@ -85,8 +82,10 @@ class CreateProfile extends Component {
           <input type="password" id="verifyPassword" placeholder="verify" value={verifyPassword} onChange={fieldOnchange.bind(this)}/>
           <input type="button" value="Create your profile" onClick={this.createUser}/>
         </form>
-
-        <p style={ showError ? { display: 'block'} : {display: 'none'}}>{error}</p>
+        {
+          error &&
+          <p>{error}</p>
+        }
       </div>
     )
   }

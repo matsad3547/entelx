@@ -1,13 +1,13 @@
-const store = require('../store')
+const authenticateUser = require('./dbConnections/authenticateUser')
 
 const login = (req, res) => {
 
-  store
-    .authenticate({
+  authenticateUser({
       username: req.body.username,
       password: req.body.password,
     })
     .then( ({ success }) => {
+
       if (success) {
         res.sendStatus(200)
       }

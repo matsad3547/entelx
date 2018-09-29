@@ -44,8 +44,7 @@ class Login extends PureComponent {
     })
     singlePostRequest('/login/', request)
       .then(this.handleResponse)
-      .then(this.setError)
-    // singlePostRequest('/login/', request, this.handleResponse, this.setError)
+      .catch(this.setError)
   }
 
   render() {
@@ -53,15 +52,23 @@ class Login extends PureComponent {
     const {
       username,
       password,
+      error,
     } = this.state
 
     return (
-      <form className="createUser">
-        <h1>Login</h1>
-        <input type="text" id="username" placeholder="username" value={username} onChange={fieldOnchange.bind(this)}/>
-        <input type="password" id="password" placeholder="password" value={password} onChange={fieldOnchange.bind(this)}/>
-        <input type="button" value="Login" onClick={this.login}/>
-      </form>
+      <div>
+        <form className="createUser">
+          <h1>Login</h1>
+          <input type="text" id="username" placeholder="username" value={username} onChange={fieldOnchange.bind(this)}/>
+          <input type="password" id="password" placeholder="password" value={password} onChange={fieldOnchange.bind(this)}/>
+          <input type="button" value="Login" onClick={this.login}/>
+        </form>
+        {
+          error &&
+          <p>{error}</p>
+        }
+      </div>
+
     )
   }
 }

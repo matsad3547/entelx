@@ -46,7 +46,3 @@ app.listen(app.get('port'), err => {
   }
   console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
-
-module.exports = {
-  sayCheese: () => console.log('cheese!'),
-}
