@@ -5,7 +5,7 @@ const {
   getNodeLocations,
 } = require('../processes/')
 
-const addNode = require('../processes/dbConnections/addNode')
+const modifyNode = require('../processes/dbConnections/modifyNode')
 
 const getCaiso = (req, res) => {
 
@@ -19,17 +19,20 @@ const getCaiso = (req, res) => {
     node,
   } = req.body
 
-  oasisEndpoint(
-    startMillis,
-    endMillis,
-    'ATL_APNODE&APnode_type=ALL',
-    true,
-    // null,
-    // null,
-    // true,
-  )
-    .then(d => console.log('caiso endpoint:', d, ' length:', d.length))
-    .catch( err => console.error('Caiso endpoint reject error:', err))
+  // oasisEndpoint(
+  //   startMillis,
+  //   endMillis,
+  //   'ATL_CBNODE',
+  //   true,
+  //   // null,
+  //   // null,
+  //   // true,
+  // )
+  //   .then(nodes => {
+  //     console.log('caiso endpoint:', nodes, ' length:', nodes.length)
+  //     nodes.forEach( node => modifyNode(node) )
+  //   })
+  //   .catch( err => console.error('Caiso endpoint reject error:', err))
 
   Promise.all([
     aggregateHistoricalWeather(

@@ -38,7 +38,7 @@ const oasisEndpoint = (
 
   const file = fs.createWriteStream(dir + fileName)
 
-  // console.log('url at caiso endpoint: ', url);
+  console.log('url at caiso endpoint: ', url);
 
   const xmlOptions = {
     compact: true,
@@ -59,7 +59,7 @@ const oasisEndpoint = (
           // write data to mocks for testing
           .then( obj => {
             if (save) {
-              const mock = fs.createWriteStream('server/config/mocks/apNodes.json')
+              const mock = fs.createWriteStream('server/config/mocks/cbNodes.json')
               mock.write(obj)
               mock.end()
             }

@@ -4,6 +4,23 @@ const priceRequests = [
   'PRC_INTVL_LMP',
 ]
 
+const apNodeTypes = [
+  'POD',
+  'AG',
+  'CPZ',
+  'ASR',
+  'ASP',
+  'EPZ',
+  'SPZ',
+  'DASP',
+  'DEPZ',
+  'TH',
+  'DPZ',
+  'DCA',
+  'CASP',
+  'EIMT'
+]
+
 const atlasRequests = [
   'ATL_APNODE&APnode_type=ALL',
   'ATL_LAP',
@@ -87,6 +104,24 @@ const caisoDataItems = {
     'MAX_CB_MW': {
       key: 'max_mw',
       format: val => parseFloat(val),
+    },
+  },
+  'ATL_CBNODE': {
+    'NODE_NAME': {
+      key: 'name',
+      format: val => val,
+    },
+    'START_DATE_GMT': {
+      key: 'start_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'END_DATE_GMT': {
+      key: 'end_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'TIE_NAME': {
+      key: 'tie_name',
+      format: val => val,
     },
   }
 }
