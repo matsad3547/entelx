@@ -52,7 +52,6 @@ const parseNodeData = json => json.l[2].m.map( obj => ({
   )
 
 const parseAtlasData = (query, data) => {
-  console.log('query:', query,);
 
   const dataItemFormat = caisoDataItems[query]
 

@@ -81,7 +81,7 @@ const caisoDataItems = {
       format: val => tsToMillis(val, caisoTZ),
     },
     'APNODE_TYPE': {
-      key: 'type',
+      key: 'apnode_type',
       format: val => val,
     },
     'MAX_CB_MW': {

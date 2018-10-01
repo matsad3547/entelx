@@ -154,7 +154,7 @@ describe('parseAtlasData()', () => {
       k.includes('name') &&
       k.includes('start_date') &&
       k.includes('end_date') &&
-      k.includes('type') &&
+      k.includes('apnode_type') &&
       k.includes('max_mw')
     )
     expect(actual).toEqual(expected)
