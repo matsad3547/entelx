@@ -27,17 +27,17 @@ const getCaiso = (req, res) => {
   //   })
   //   .catch( err => console.error('There was an error getting node locations:', err))
 
-  // oasisEndpoint(
-  //   startMillis,
-  //   endMillis,
-  //   'ATL_APNODE&APnode_type=ALL',
-  //   false,
-  //   null,
-  //   null,
-  //   true,
-  // )
-  //   .then(d => console.log('caiso endpoint:', d, ' length:', d.length))
-  //   .catch( err => console.error('Caiso endpoint reject error:', err))
+  oasisEndpoint(
+    startMillis,
+    endMillis,
+    'ATL_APNODE&APnode_type=ALL',
+    true,
+    // null,
+    // null,
+    // true,
+  )
+    .then(d => console.log('caiso endpoint:', d, ' length:', d.length))
+    .catch( err => console.error('Caiso endpoint reject error:', err))
 
   Promise.all([
     aggregateHistoricalWeather(

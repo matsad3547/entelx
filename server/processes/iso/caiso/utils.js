@@ -3,9 +3,14 @@ const moment = require('moment-timezone')
 const {
   caisoTZ,
   caisoFormat,
+  priceRequests,
+  atlasRequests,
 } = require('./config')
 
-const tsToMillis = ts => moment.tz(ts, caisoTZ).valueOf()
+const {
+  parsePriceData,
+  parseAtlasData,
+} = require('./parsers')
 
 const getDateString = (startMillis, endMillis) => {
   const startDate = moment.tz(startMillis, caisoTZ).format(caisoFormat)
@@ -25,7 +30,20 @@ const getUrl = (
   return `${baseUrl}?queryname=${queryName}${getDateString(startMillis, endMillis)}&version=1${ marketType ? `&market_run_id=${marketType}` : '' }${node ? `&node=${node}` : '' }`
 }
 
+const getParser = query => {
+  switch (true) {
+    case priceRequests.includes(query):
+      return parsePriceData
+
+    case atlasRequests.includes(query):
+      return parseAtlasData
+
+    default:
+      return data => data
+  }
+}
+
 module.exports = {
-  tsToMillis,
   getUrl,
+  getParser,
 }

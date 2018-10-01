@@ -3,8 +3,10 @@ const unzipper = require('unzipper')
 const fs = require('fs')
 const request = require('request')
 
-const { parsePriceData } = require('./parsers')
-const { getUrl } = require('./utils')
+const {
+  getUrl,
+  getParser,
+} = require('./utils')
 
 const oasisEndpoint = (
     startMillis,
@@ -43,6 +45,8 @@ const oasisEndpoint = (
     spaces: 2
   }
 
+  const parser = getParser(query)
+
   stream.on('data', data => file.write(data) )
     .on('end', () => {
       file.end()
@@ -65,7 +69,7 @@ const oasisEndpoint = (
             if(parse) {
               const json = JSON.parse(str)
               console.timeEnd(`CAISO ${query} request`)
-              resolve(parsePriceData(query, json))
+              resolve(parser(query, json))
             }
             else {
               resolve(str)

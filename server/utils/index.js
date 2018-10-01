@@ -1,4 +1,8 @@
-const convertMillisToSeconds = millis => Math.round(millis / 1000)
+const moment = require('moment-timezone')
+
+const millisToSeconds = millis => Math.round(millis / 1000)
+
+const tsToMillis = (ts, tz) => moment.tz(ts, tz).valueOf()
 
 const checkStatus = res => {
   if (res.status >= 200 && res.status < 300) {
@@ -11,6 +15,7 @@ const checkStatus = res => {
 }
 
 module.exports = {
-  convertMillisToSeconds,
+  millisToSeconds,
   checkStatus,
+  tsToMillis,
 }

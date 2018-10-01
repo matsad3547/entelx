@@ -1,6 +1,9 @@
-const { caisoDataItems } = require('./config')
+const {
+  caisoDataItems,
+  caisoTZ,
+} = require('./config')
 
-const { tsToMillis } = require('./utils')
+const { tsToMillis } = require('../../../utils')
 
 const parsePriceData = (query, data) => {
 
@@ -15,13 +18,13 @@ const parsePriceData = (query, data) => {
     item.REPORT_DATA.forEach( rd => {
 
       const hasTsIndex = arr.findIndex( obj =>
-        obj.timestamp === tsToMillis(rd.INTERVAL_START_GMT._text) )
+        obj.timestamp === tsToMillis(rd.INTERVAL_START_GMT._text, caisoTZ) )
 
       hasTsIndex === -1 ?
       arr = [
         ...arr,
         {
-          timestamp: tsToMillis(rd.INTERVAL_START_GMT._text),
+          timestamp: tsToMillis(rd.INTERVAL_START_GMT._text, caisoTZ),
           [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
         },
       ] :
@@ -49,14 +52,14 @@ const parseNodeData = json => json.l[2].m.map( obj => ({
   )
 
 const parseAtlasData = (query, data) => {
-  console.log('data: ', data.OASISMaster.MessagePayload.RTO.ATLS_ITEM.length);
-  return data.OASISMaster.MessagePayload.RTO.ATLS_ITEM.map( obj => ({
-    'name': obj.ATLS_DATA.APNODE_NAME._text,
-    'start_date': obj.ATLS_DATA.START_DATE_GMT._text,
-    'end_date': obj.ATLS_DATA.END_DATE_GMT._text,
-    'type': obj.ATLS_DATA.APNODE_TYPE._text,
-    'max_mw': obj.ATLS_DATA.MAX_CB_MW._text,
-    })
+  console.log('query:', query,);
+
+  const dataItemFormat = caisoDataItems[query]
+
+  return data.OASISMaster.MessagePayload.RTO.ATLS_ITEM.map( d => Object.keys(dataItemFormat).reduce( (obj, k) => ({
+      ...obj,
+      [dataItemFormat[k].key]: dataItemFormat[k].format(d.ATLS_DATA[k]._text),
+    }), {})
   )
 }
 

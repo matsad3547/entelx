@@ -1,5 +1,11 @@
-const goodAtlasRequests = [
-  'ATL_APNODE',
+const { tsToMillis } = require('../../../utils/')
+
+const priceRequests = [
+  'PRC_INTVL_LMP',
+]
+
+const atlasRequests = [
+  'ATL_APNODE&APnode_type=ALL',
   'ATL_LAP',
   'ATL_HUB',
   'ATL_RUC_ZONE_MAP',
@@ -61,6 +67,28 @@ const caisoDataItems = {
       format: val => parseFloat(val),
     },
   },
+  'ATL_APNODE&APnode_type=ALL': {
+    'APNODE_NAME': {
+      key: 'name',
+      format: val => val,
+    },
+    'START_DATE_GMT': {
+      key: 'start_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'END_DATE_GMT': {
+      key: 'end_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'APNODE_TYPE': {
+      key: 'type',
+      format: val => val,
+    },
+    'MAX_CB_MW': {
+      key: 'max_mw',
+      format: val => parseFloat(val),
+    },
+  }
 }
 
 const caisoFormat = 'YYYYMMDDTHH:mm[-0000]'
@@ -69,4 +97,6 @@ module.exports = {
   caisoTZ,
   caisoDataItems,
   caisoFormat,
+  priceRequests,
+  atlasRequests,
 }
