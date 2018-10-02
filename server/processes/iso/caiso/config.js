@@ -22,11 +22,11 @@ const apNodeTypes = [
 ]
 
 const atlasRequests = [
-  'ATL_APNODE&APnode_type=ALL',
-  'ATL_LAP',
-  'ATL_HUB',
-  'ATL_RUC_ZONE_MAP',
-  'ATL_TAC_AREA_MAP',
+  'ATL_APNODE&APnode_type=ALL', //ap nodes do not correspond with location nodes
+  'ATL_LAP', //correspond to CA location nodes
+  'ATL_HUB', //only 3 hub nodes
+  'ATL_RUC_ZONE_MAP', //Residual Unit Commitment (RUC) - for the day ahead market - 2539 items
+  'ATL_TAC_AREA_MAP', //Transmission Access Charge (TAC) - 2528 items
   'ATL_TIEPOINT',
   'ATL_TI',
   'ATL_PUB',
@@ -71,31 +71,23 @@ const caisoDataItems = {
       key: 'di',
       format: val => parseFloat(val),
     },
-    'INTERVAL_START_GMT': {
-      key: 'start',
-      format: val => parseFloat(val),
-    },
-    'INTERVAL_END_GMT': {
-      key: 'end',
-      format: val => parseFloat(val),
-    },
     'VALUE': {
       key: 'val',
       format: val => parseFloat(val),
+    },
+    'INTERVAL_START_GMT': {
+      key: 'start',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'INTERVAL_END_GMT': {
+      key: 'end',
+      format: val => tsToMillis(val, caisoTZ),
     },
   },
   'ATL_APNODE&APnode_type=ALL': {
     'APNODE_NAME': {
       key: 'name',
       format: val => val,
-    },
-    'START_DATE_GMT': {
-      key: 'start_date',
-      format: val => tsToMillis(val, caisoTZ),
-    },
-    'END_DATE_GMT': {
-      key: 'end_date',
-      format: val => tsToMillis(val, caisoTZ),
     },
     'APNODE_TYPE': {
       key: 'apnode_type',
@@ -105,10 +97,22 @@ const caisoDataItems = {
       key: 'max_mw',
       format: val => parseFloat(val),
     },
+    'START_DATE_GMT': {
+      key: 'start_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'END_DATE_GMT': {
+      key: 'end_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
   },
   'ATL_LAP': {
     'APNODE_NAME': {
       key: 'name',
+      format: val => val,
+    },
+    'APNODE_TYPE': {
+      key: 'apnode_type',
       format: val => val,
     },
     'START_DATE_GMT': {
@@ -118,10 +122,6 @@ const caisoDataItems = {
     'END_DATE_GMT': {
       key: 'end_date',
       format: val => tsToMillis(val, caisoTZ),
-    },
-    'APNODE_TYPE': {
-      key: 'apnode_type',
-      format: val => val,
     },
   },
   'ATL_HUB': {
@@ -137,14 +137,14 @@ const caisoDataItems = {
       key: 'end_date',
       format: val => tsToMillis(val, caisoTZ),
     },
-    'APNODE_TYPE': {
-      key: 'apnode_type',
-      format: val => val,
-    },
   },
   'ATL_CBNODE': {
     'NODE_NAME': {
       key: 'name',
+      format: val => val,
+    },
+    'TIE_NAME': {
+      key: 'tie_name',
       format: val => val,
     },
     'START_DATE_GMT': {
@@ -155,11 +155,65 @@ const caisoDataItems = {
       key: 'end_date',
       format: val => tsToMillis(val, caisoTZ),
     },
-    'TIE_NAME': {
-      key: 'tie_name',
+  },
+  'ATL_RUC_ZONE_MAP': {
+    'PNODE_NAME': {
+      key: 'name',
       format: val => val,
     },
-  }
+    'RUC_ZONE_NAME': {
+      key: 'ruc_zone_name',
+      format: val => val,
+    },
+    'START_DATE_GMT': {
+      key: 'start_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'END_DATE_GMT': {
+      key: 'end_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+  },
+  'ATL_TAC_AREA_MAP': {
+    'PNODE_NAME': {
+      key: 'name',
+      format: val => val,
+    },
+    'TAC_AREA_NAME': {
+      key: 'ruc_zone_name',
+      format: val => val,
+    },
+    'START_DATE_GMT': {
+      key: 'start_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'END_DATE_GMT': {
+      key: 'end_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+  },
+  'ATL_TIEPOINT': {
+    'TI_NAME': {
+      key: 'ti_name',
+      format: val => val,
+    },
+    'TIEPOINT_NAME': {
+      key: 'tiepoint_name',
+      format: val => val,
+    },
+    'TSIN_NAME': {
+      key: 'tsin_name',
+      format: val => val,
+    },
+    'START_DATE_GMT': {
+      key: 'start_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'END_DATE_GMT': {
+      key: 'end_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+  },
 }
 
 const caisoFormat = 'YYYYMMDDTHH:mm[-0000]'

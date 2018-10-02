@@ -22,8 +22,8 @@ const getCaiso = (req, res) => {
   oasisEndpoint(
     startMillis,
     endMillis,
-    'ATL_HUB',
-    // true,
+    'ATL_TIEPOINT',
+    true,
     // null,
     // null,
     // true,
@@ -31,7 +31,7 @@ const getCaiso = (req, res) => {
     .then(nodes => {
       console.log('caiso endpoint:', nodes, ' length:', nodes.length)
       // nodes.forEach( node => modifyNode(node) )
-      console.log('node types: ', nodes.reduce((arr, node) => arr.includes(node.apnode_type) ? arr : [...arr, node.apnode_type], []));
+      // console.log('node types: ', nodes.reduce((arr, node) => arr.includes(node.apnode_type) ? arr : [...arr, node.apnode_type], []))
     })
     .catch( err => console.error('Caiso endpoint reject error:', err))
 
