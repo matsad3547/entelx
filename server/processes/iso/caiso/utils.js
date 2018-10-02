@@ -26,8 +26,10 @@ const getUrl = (
   node,
 ) => {
 
+  // use `version=2` for 'ATL_APNODE&APnode_type=ALL', 'ATL_CBNODE', 'PRC_INTVL_LMP'
+
   const baseUrl =  'http://oasis.caiso.com/oasisapi/SingleZip'
-  return `${baseUrl}?queryname=${queryName}${getDateString(startMillis, endMillis)}&version=2${ marketType ? `&market_run_id=${marketType}` : '' }${node ? `&node=${node}` : '' }`
+  return `${baseUrl}?queryname=${queryName}${getDateString(startMillis, endMillis)}&version=1${ marketType ? `&market_run_id=${marketType}` : '' }${node ? `&node=${node}` : '' }`
 }
 
 const getParser = query => {

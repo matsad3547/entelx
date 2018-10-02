@@ -106,6 +106,42 @@ const caisoDataItems = {
       format: val => parseFloat(val),
     },
   },
+  'ATL_LAP': {
+    'APNODE_NAME': {
+      key: 'name',
+      format: val => val,
+    },
+    'START_DATE_GMT': {
+      key: 'start_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'END_DATE_GMT': {
+      key: 'end_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'APNODE_TYPE': {
+      key: 'apnode_type',
+      format: val => val,
+    },
+  },
+  'ATL_HUB': {
+    'APNODE_NAME': {
+      key: 'name',
+      format: val => val,
+    },
+    'START_DATE_GMT': {
+      key: 'start_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'END_DATE_GMT': {
+      key: 'end_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'APNODE_TYPE': {
+      key: 'apnode_type',
+      format: val => val,
+    },
+  },
   'ATL_CBNODE': {
     'NODE_NAME': {
       key: 'name',

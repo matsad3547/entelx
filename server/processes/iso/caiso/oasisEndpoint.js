@@ -18,8 +18,6 @@ const oasisEndpoint = (
     save = false
   ) => new Promise( (resolve, reject) => {
 
-  'http://oasis.caiso.com/oasisapi/SingleZip?queryname=ATL_APNODE&APnode_type=ALL&startdatetime=20130919T07:00-0000&enddatetime=20130920T07:00-0000&version=1'
-
   console.time(`CAISO ${query} request`)
 
   const url = getUrl(

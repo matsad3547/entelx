@@ -15,8 +15,8 @@ import {
 class Caiso extends PureComponent {
 
   timeZone = 'America/Los_Angeles'
-  lat = 38.5816
-  lng = -110.0
+  lat = 35.30
+  lng = -119.59
   marketType = 'RTM'
   node = 'LAPLMG1_7_B2'
 
