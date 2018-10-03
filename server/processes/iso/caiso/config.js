@@ -27,8 +27,8 @@ const atlasRequests = [
   'ATL_HUB', //only 3 hub nodes
   'ATL_RUC_ZONE_MAP', //Residual Unit Commitment (RUC) - for the day ahead market - 2539 items
   'ATL_TAC_AREA_MAP', //Transmission Access Charge (TAC) - 2528 items
-  'ATL_TIEPOINT',
-  'ATL_TI',
+  'ATL_TIEPOINT', //Tie Points - 73 items
+  'ATL_TI', //Transmission Interfaces - 47 items
   'ATL_PUB',
   'ATL_PUB_SCHED',
   'ATL_OSM',
@@ -203,6 +203,32 @@ const caisoDataItems = {
     },
     'TSIN_NAME': {
       key: 'tsin_name',
+      format: val => val,
+    },
+    'START_DATE_GMT': {
+      key: 'start_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+    'END_DATE_GMT': {
+      key: 'end_date',
+      format: val => tsToMillis(val, caisoTZ),
+    },
+  },
+  'ATL_TI': {
+    'TI_NAME': {
+      key: 'ti_name',
+      format: val => val,
+    },
+    'TI_DIRECTION': {
+      key: 'ti_direction',
+      format: val => val,
+    },
+    'TI_TYPE': {
+      key: 'ti_type',
+      format: val => val,
+    },
+    'TI_WECC': {
+      key: 'ti_wecc',
       format: val => val,
     },
     'START_DATE_GMT': {

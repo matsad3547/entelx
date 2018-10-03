@@ -22,7 +22,7 @@ const getCaiso = (req, res) => {
   oasisEndpoint(
     startMillis,
     endMillis,
-    'ATL_TIEPOINT',
+    'ATL_TI',
     true,
     // null,
     // null,
