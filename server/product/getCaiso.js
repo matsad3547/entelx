@@ -22,8 +22,8 @@ const getCaiso = (req, res) => {
   oasisEndpoint(
     startMillis,
     endMillis,
-    'ATL_TI',
-    true,
+    'ATL_PEAK_ON_OFF',
+    // true,
     // null,
     // null,
     // true,

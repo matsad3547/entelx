@@ -18,18 +18,33 @@ const getDateString = (startMillis, endMillis) => {
   return `&startdatetime=${startDate}&enddatetime=${endDate}`
 }
 
+const getVersion = query => {
+  switch (query) {
+    case 'ATL_APNODE&APnode_type=ALL':
+    case 'ATL_CBNODE':
+    case 'PRC_INTVL_LMP':
+      return 2
+
+    case 'ENE_WIND_SOLAR_SUMMARY':
+      return 5
+
+    default:
+      return 1
+  }
+}
+
 const getUrl = (
   startMillis,
   endMillis,
-  queryName,
+  query,
   marketType,
   node,
 ) => {
 
-  // use `version=2` for 'ATL_APNODE&APnode_type=ALL', 'ATL_CBNODE', 'PRC_INTVL_LMP'
+  const version = getVersion(query)
 
   const baseUrl =  'http://oasis.caiso.com/oasisapi/SingleZip'
-  return `${baseUrl}?queryname=${queryName}${getDateString(startMillis, endMillis)}&version=1${ marketType ? `&market_run_id=${marketType}` : '' }${node ? `&node=${node}` : '' }`
+  return `${baseUrl}?queryname=${query}${getDateString(startMillis, endMillis)}&version=${version}${ marketType ? `&market_run_id=${marketType}` : '' }${node ? `&node=${node}` : '' }`
 }
 
 const getParser = query => {

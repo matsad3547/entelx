@@ -33,7 +33,7 @@ const atlasRequests = [
   'ATL_PUB_SCHED',
   'ATL_OSM',
   'ATL_PEAK_ON_OFF',
-  'ATL_CBNODE',
+  'ATL_CBNODE', //3113 Items - These nodes correspond to the locational nodes
   'ATL_ITC_SP',
 ]
 
