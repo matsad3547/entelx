@@ -12,7 +12,7 @@ const aggregateHistoricalWeather = (
   lng
 ) => new Promise( (resolve, reject) => {
 
-  console.time('weather data')
+  console.time(`weather for ${lat}, ${lng} request`)
 
   const start = moment.tz(startMillis, timeZone)
 
@@ -33,7 +33,7 @@ const aggregateHistoricalWeather = (
 
   Promise.all(timestamps.map( timestamp => getHistoricalWeatherByDay(timestamp, lat, lng)))
     .then(res => {
-      console.timeEnd('weather data')
+      console.timeEnd(`weather for ${lat}, ${lng} request`)
 
       resolve(
         res.reduce( (arr, wd) => {
