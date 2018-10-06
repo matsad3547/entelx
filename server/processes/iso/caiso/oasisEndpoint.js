@@ -29,7 +29,7 @@ const oasisEndpoint = (
     node,
   )
 
-  console.log('url at caiso endpoint: ', url);
+  // console.log('url at caiso endpoint: ', url);
 
   const xmlOptions = {
     compact: true,
@@ -44,56 +44,29 @@ const oasisEndpoint = (
       entry.buffer()
         .then( buffer => buffer.toString() )
         .then( str => convert.xml2json(str, xmlOptions) )
+        // write data to mocks for testing
+        // .then( obj => {
+        //   if (save) {
+        //     writeToFile(
+        //       obj,
+        //       'server/utils/test/mocks',
+        //       'timeSeries.json'
+        //     )
+        //   }
+        //   return obj
+        // })
         .then( str => {
           const json = JSON.parse(str)
           console.timeEnd(`CAISO ${query} request`)
+          // writeToFile(
+          //   `{"timeSeriesData": ${JSON.stringify(parser(query, json))}}`,
+          //   'server/utils/test/mocks',
+          //   'timeSeries'
+          // )
           resolve(parser(query, json))
       })
     )
     .on('error', reject)
-
-  // stream
-  //   .on('data', data => file.write(data) )
-  //   .on('end', () => {
-  //     file.end()
-  //     fs.createReadStream(`${dir}/${fileName}`)
-  //       .pipe(unzipper.Parse())
-  //       .on('entry', entry => {
-  //         entry.buffer()
-  //         .then( buffer => buffer.toString() )
-  //         .then( str => convert.xml2json(str, xmlOptions) )
-  //         // write data to mocks for testing
-  //         .then( obj => {
-  //           if (save) {
-  //             writeToFile(
-  //               obj,
-  //               'server/utils/test/mocks',
-  //               'timeSeries.json'
-  //             )
-  //             // const mock = fs.createWriteStream('server/processes/iso/caiso/test/mocks/test.json')
-  //             // mock.write(obj)
-  //             // mock.end()
-  //           }
-  //           return obj
-  //         })
-  //         .then( str => {
-  //           if(parse) {
-  //             const json = JSON.parse(str)
-  //             // writeToFile(
-  //             //   JSON.stringify(parser(query, json)),
-  //             //   'server/utils/test/mocks',
-  //             //   'timeSeries.json'
-  //             // )
-  //             console.timeEnd(`CAISO ${query} request`)
-  //             resolve(parser(query, json))
-  //           }
-  //           else {
-  //             resolve(str)
-  //           }
-  //         })
-  //       })
-  //   })
-  //   .on('error', reject)
 })
 
 module.exports = oasisEndpoint
