@@ -50,6 +50,7 @@ const getCaiso = (req, res) => {
       true,
       marketType,
       node,
+      // true
     )
   ])
   .then( data => data.reduce( (agr, arr) => [...agr, ...arr] )
