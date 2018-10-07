@@ -3,6 +3,7 @@ const {
   aggregateHistoricalWeather,
   oasisEndpoint,
   getNodeLocations,
+  caisoPriceRequest,
 } = require('../processes/')
 
 const modifyNode = require('../processes/dbConnections/modifyNode')
@@ -43,14 +44,12 @@ const getCaiso = (req, res) => {
       lat,
       lng,
     ),
-    oasisEndpoint(
+    caisoPriceRequest(
       startMillis,
       endMillis,
       'PRC_INTVL_LMP',
-      true,
       marketType,
       node,
-      // true
     )
   ])
   .then( data => data.reduce( (agr, arr) => [...agr, ...arr] )
