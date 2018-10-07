@@ -9,7 +9,10 @@ const {
   login,
 } = require('./user/')
 
-const { getCaiso } = require('./product')
+const {
+  getCaiso,
+  caisoNodeEvaluator,
+} = require('./product')
 
 //for testing python
 // const { demoProcess } = require('./processes/')
@@ -27,6 +30,7 @@ app.use(express.static('publick'))
 app.use(bodyParser.json())
 
 app.post('/caiso', getCaiso)
+app.post('/caiso_node_evaluator', caisoNodeEvaluator)
 
 app.get('/api', (req, res) => {
   //TODO: This is where the database goes
