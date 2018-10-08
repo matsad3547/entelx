@@ -16,7 +16,7 @@ import CustomLegend from './CustomLegend'
 
 import {
   monthDayTimeFormat,
-  dataFormat,
+  lineDataFormat,
 } from '../../config/'
 
 import {
@@ -24,10 +24,10 @@ import {
   findRelevantKeys,
 } from '../../utils'
 
-const LineChartLmp = ({data, tz}) => {
+const LineOnlyChart = ({data, tz}) => {
 
   const dataTypes = findRelevantKeys(data)
-                      .filter( d => Object.keys(dataFormat).includes(d) )
+                      .filter( d => Object.keys(lineDataFormat).includes(d) )
 
   return (
     <LineChart
@@ -54,7 +54,7 @@ const LineChartLmp = ({data, tz}) => {
             type="monotone"
             dataKey={t}
             connectNulls={true}
-            stroke={dataFormat[t].color}
+            stroke={lineDataFormat[t].color}
             dot={false}
           />
         )
@@ -68,10 +68,9 @@ const LineChartLmp = ({data, tz}) => {
   )
 }
 
-
-LineChartLmp.propTypes = {
+LineOnlyChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   tz: PropTypes.string.isRequired,
 }
 
-export default LineChartLmp
+export default LineOnlyChart

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { dataFormat } from '../../config/'
+import { lineDataFormat } from '../../config/'
 
 const CustomLegend = ({ payload }) => (
 
@@ -11,7 +11,7 @@ const CustomLegend = ({ payload }) => (
           style={styles.dataType}
           key={`legend-${i}`}
         >
-          {dataFormat[p.value].label}: <div style={getLegendTileStyles(p.color)}/>
+          {lineDataFormat[p.value].label}: <div style={getLegendTileStyles(p.color)}/>
         </div>
     )}
   </div>

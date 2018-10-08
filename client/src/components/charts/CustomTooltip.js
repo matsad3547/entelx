@@ -2,13 +2,12 @@ import React from 'react'
 
 import {
   monthDayTimeFormat,
-  dataFormat,
+  lineDataFormat,
 } from '../../config/'
 
 import { formatMillis } from '../../utils/'
 
 const CustomTooltip = ({
-  type,
   payload,
   label,
   active,
@@ -31,7 +30,7 @@ const CustomTooltip = ({
           key={`value-${i}`}
           >
             {
-              `${dataFormat[obj.name].label}:  ${dataFormat[obj.name].format(obj.value)}${dataFormat[obj.name].unit}`
+              `${lineDataFormat[obj.name].label}:  ${lineDataFormat[obj.name].format(obj.value)}${lineDataFormat[obj.name].unit}`
             }
          </p>
       )}

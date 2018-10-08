@@ -14,7 +14,7 @@ export const trendColors = [
   '#861388',
 ]
 
-export const dataFormat = {
+export const lineDataFormat = {
   lmp: {
     unit: '$/Mwh',
     label: 'Locational Marginal Price',
