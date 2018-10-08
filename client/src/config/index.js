@@ -49,7 +49,7 @@ export const lineDataFormat = {
     unit: '$/Mwh',
     label: 'Average Price',
     color: trendColors[6],
-    format: value => Math.round((value * 100))/100,
+    format: value => Math.round((value * 100)) / 100,
   },
 }
 
@@ -58,6 +58,6 @@ export const barDataFormat = {
     unit: '',
     label: 'Score',
     color: value => value > 0 ? 'red' : 'green',
-    format: value => value,
+    format: value => Math.round((value * 1000)) / 1000,
   }
 }

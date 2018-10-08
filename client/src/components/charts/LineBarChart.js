@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import {
   ComposedChart,
+  Cell,
   Line,
   Bar,
   XAxis,
@@ -18,7 +19,6 @@ import CustomLegend from './CustomLegend'
 import {
   monthDayTimeFormat,
   lineDataFormat,
-  barDataFormat,
 } from '../../config/'
 
 import {
@@ -36,7 +36,7 @@ const LineBarChart = ({
 
   return (
     <ComposedChart
-      width={800}
+      width={1200}
       height={450}
       data={data}
       margin={{top: 0, right: 0, left: 0, bottom: 0}}>
@@ -67,8 +67,17 @@ const LineBarChart = ({
       <Bar
         dataKey={'score'}
         width={10}
-        fill={'red'}
-      />
+        fill={'#000'}
+      >
+      {
+        data.map( (entry, i) =>
+          <Cell
+            fill={entry.score > 0 ? 'red' : 'green'}
+            key={`bar-${i}`}
+          />
+        )
+      }
+      </Bar>
       <Legend
         content={
           <CustomLegend />

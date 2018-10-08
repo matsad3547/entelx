@@ -31,15 +31,15 @@ const oasisEndpoint = (
 
   request(url)
     .pipe(unzipper.Parse())
-    .on('entry', entry => {
-      entry.buffer()
+    .on('entry',
+      entry => entry.buffer()
         .then( buffer => buffer.toString() )
         .then( str => convert.xml2json(str, xmlOptions) )
         .then( strJson => {
           console.timeEnd(`CAISO ${query} request`)
           resolve(strJson)
         })
-    })
+    )
     .on('error', reject)
 })
 

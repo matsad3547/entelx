@@ -31,7 +31,7 @@ const LineOnlyChart = ({data, tz}) => {
 
   return (
     <LineChart
-      width={800}
+      width={1200}
       height={450}
       data={data}
       margin={{top: 0, right: 0, left: 0, bottom: 0}}>

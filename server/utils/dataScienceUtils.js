@@ -20,7 +20,7 @@ const calculateScore = (data, key) => data.map( d => ({
     timestamp: d.timestamp,
     mvgAvg: d.mvgAvg,
     [key]: d[key],
-    score: d[key] / d.mvgAvg,
+    score: (d[key] - d.mvgAvg) / d.mvgAvg,
   })
 )
 

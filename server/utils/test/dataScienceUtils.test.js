@@ -62,29 +62,30 @@ describe('calculateMovingAverage', () => {
 describe('scoreValues', () => {
 
   const testData = [
+    //centered on 3
     {
       timestamp: 1,
       val: 3,
     },
     {
       timestamp: 2,
-      val: 6,
+      val: 7,
     },
     {
       timestamp: 3,
-      val: -3,
+      val: -1,
     },
     {
       timestamp: 4,
-      val: 12,
+      val: 6,
     },
     {
       timestamp: 5,
-      val: -6,
+      val: 0,
     },
     {
       timestamp: 6,
-      val: 9,
+      val: 8,
     },
   ]
 
@@ -122,32 +123,52 @@ describe('scoreValues', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should have a `mvgAvg` value of `3.6` for its last entry for the last 5 entries', () => {
+  test('should have a `mvgAvg` value of `4` for its last entry for the last 5 entries', () => {
     const data = testData
     const period = 5
     const key = 'val'
-    const expected = 3.6
+    const expected = 4
     const actual = scoreValues(data, key, period)[4].mvgAvg
     expect(actual).toEqual(expected)
   })
 
-  test('should have a `score` value of `2.5` for its last entry', () => {
+  test('should have a `score` value of `2` for its last entry', () => {
     const data = testData
     const period = 5
     const key = 'val'
-    const expected = 2.5
+    const expected = 1
     const actual = scoreValues(data, key, period)[4].score
     expect(actual).toEqual(expected)
   })
 
-  test('should have a `score` value of `1.3333` for its first entry', () => {
+  test('should have a `score` value of `0.4` for its first entry', () => {
     const data = testData
     const period = 5
     const key = 'val'
-    const expected = 1.3333333333333333
+    const expected = .4
     const actual = scoreValues(data, key, period)[0].score
     expect(actual).toEqual(expected)
   })
+
+  test('should have a `score` value of `-1` for its second to last entry', () => {
+    const data = testData
+    const period = 5
+    const key = 'val'
+    const expected = -1
+    const actual = scoreValues(data, key, period)[3].score
+    expect(actual).toEqual(expected)
+  })
+  
+  //visualization purposes only
+  // test('should look like an array of objects', () => {
+  //   const data = testData
+  //   const period = 5
+  //   const key = 'val'
+  //   const expected = []
+  //   const actual = scoreValues(data, key, period)
+  //   expect(actual).toEqual(expected)
+  // })
+
   // //visualization purposes only
   // test('should look like an array of objects', () => {
   //   const data = timeSeriesData
