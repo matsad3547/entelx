@@ -45,4 +45,10 @@ export const dataFormat = {
     color: trendColors[4],
     format: value => value * 100,
   },
+  mvgAvg: {
+    unit: '$/Mwh',
+    label: 'Average Price',
+    color: trendColors[6],
+    format: value => Math.round((value * 100))/100,
+  },
 }

@@ -40,3 +40,8 @@ export const singlePostRequest = ( path, options) => new Promise( (resolve, reje
   )
 
 export const formatMillis = (millis, tz, format) => moment.tz(millis, tz).format(format)
+
+export const findRelevantKeys = data => data.reduce( (arr, d) => {
+  Object.keys(d).forEach( k => arr = !arr.includes(k) && k !== 'timestamp' ? [...arr, k] : arr )
+  return arr
+}, [])

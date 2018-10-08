@@ -12,50 +12,62 @@ import {
 } from 'recharts'
 
 import CustomTooltip from './CustomTooltip'
+import CustomLegend from './CustomLegend'
 
 import {
   monthDayTimeFormat,
   dataFormat,
 } from '../../config/'
 
-import { formatMillis } from '../../utils'
+import {
+  formatMillis,
+  findRelevantKeys,
+} from '../../utils'
 
-const dataTypes = Object.keys(dataFormat)
+const LineChartLmp = ({data, tz}) => {
 
-const LineChartLmp = ({data, tz}) => (
+  const dataTypes = findRelevantKeys(data)
+                      .filter( d => Object.keys(dataFormat).includes(d) )
 
-  <LineChart
-    width={800}
-    height={450}
-    data={data}
-    margin={{top: 0, right: 0, left: 0, bottom: 0}}>
-    <XAxis
-      dataKey="timestamp"
-      tickFormatter={millis => formatMillis(millis, tz, monthDayTimeFormat)}
-    />
-    <YAxis/>
-    <CartesianGrid strokeDasharray="3 3"/>
-    <Tooltip
-      content={
-        <CustomTooltip
-          tz={tz}
+  return (
+    <LineChart
+      width={800}
+      height={450}
+      data={data}
+      margin={{top: 0, right: 0, left: 0, bottom: 0}}>
+      <XAxis
+        dataKey="timestamp"
+        tickFormatter={millis => formatMillis(millis, tz, monthDayTimeFormat)}
         />
+      <YAxis/>
+      <CartesianGrid strokeDasharray="3 3"/>
+      <Tooltip
+        content={
+          <CustomTooltip
+            tz={tz}
+          />
       }/>
-    <Legend />
-    {
-      dataTypes.map( t =>
-        <Line
-          key={`${t}-line`}
-          type="monotone"
-          dataKey={t}
-          connectNulls={true}
-          stroke={dataFormat[t].color}
-          activeDot={{r: 4}}
+      {
+        dataTypes.map( t =>
+          <Line
+            key={`${t}-line`}
+            type="monotone"
+            dataKey={t}
+            connectNulls={true}
+            stroke={dataFormat[t].color}
+            dot={false}
+          />
+        )
+      }
+      <Legend
+        content={
+          <CustomLegend />
+        }
         />
-      )
-    }
-  </LineChart>
-)
+    </LineChart>
+  )
+}
+
 
 LineChartLmp.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
