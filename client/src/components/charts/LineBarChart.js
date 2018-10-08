@@ -18,6 +18,7 @@ import CustomLegend from './CustomLegend'
 import {
   monthDayTimeFormat,
   lineDataFormat,
+  barDataFormat,
 } from '../../config/'
 
 import {
@@ -25,10 +26,13 @@ import {
   findRelevantKeys,
 } from '../../utils'
 
-const LineBarChart = ({data, tz}) => {
+const LineBarChart = ({
+  data,
+  tz,
+}) => {
 
   const dataTypes = findRelevantKeys(data)
-                      .filter( d => Object.keys(dataFormat).includes(d) )
+                      .filter( d => Object.keys(lineDataFormat).includes(d) )
 
   return (
     <ComposedChart
@@ -55,16 +59,21 @@ const LineBarChart = ({data, tz}) => {
             type="monotone"
             dataKey={t}
             connectNulls={true}
-            stroke={dataFormat[t].color}
+            stroke={lineDataFormat[t].color}
             dot={false}
           />
         )
       }
+      <Bar
+        dataKey={'score'}
+        width={10}
+        fill={'red'}
+      />
       <Legend
         content={
           <CustomLegend />
         }
-        />
+      />
     </ComposedChart>
   )
 }

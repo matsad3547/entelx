@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import moment from 'moment-timezone'
 
-import LineOnlyChart from '../components/charts/LineOnlyChart'
+import LineBarChart from '../components/charts/LineBarChart'
 import DateControl from '../components/DateControl'
 import Button from '../components/Button'
 import Loading from '../components/loading/'
@@ -157,7 +157,7 @@ class NodeEvaluator extends PureComponent {
         }
         {
           data &&
-          <LineOnlyChart
+          <LineBarChart
             data={data}
             tz={this.timeZone}
           />

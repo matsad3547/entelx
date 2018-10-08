@@ -52,3 +52,12 @@ export const lineDataFormat = {
     format: value => Math.round((value * 100))/100,
   },
 }
+
+export const barDataFormat = {
+  score: {
+    unit: '',
+    label: 'Score',
+    color: value => value > 0 ? 'red' : 'green',
+    format: value => value,
+  }
+}
