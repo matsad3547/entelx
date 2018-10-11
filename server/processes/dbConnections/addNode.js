@@ -3,14 +3,14 @@ const knex = require('../../store')
 const addNode = ({
   name,
   type,
-  eim_area,
+  control_area,
   lat,
   lng,
 }) => knex('node')
         .insert({
           name,
           type,
-          eim_area,
+          control_area,
           lat,
           lng,
         })

@@ -1,4 +1,4 @@
-// const { parseNodeData } = require('./parsers')
+const { parseControlAreaData } = require('./parsers')
 
 const getControlAreas = () => new Promise( (resolve, reject) => {
 
@@ -7,9 +7,9 @@ const getControlAreas = () => new Promise( (resolve, reject) => {
   fetch(url)
     .then( res => res.buffer() )
     .then( buffer => buffer.toString() )
+    .then( str => JSON.parse(str) )
+    .then( json => parseControlAreaData(json) )
     .then(resolve)
-    // .then( str => JSON.parse(str) )
-    // .then( json => parseNodeData(json) )
     .catch(reject)
 })
 
