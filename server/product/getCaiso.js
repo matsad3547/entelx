@@ -4,6 +4,7 @@ const {
   oasisEndpoint,
   getNodeLocations,
   caisoPriceRequest,
+  getControlAreas,
 } = require('../processes/')
 
 const modifyNode = require('../processes/dbConnections/modifyNode')
@@ -19,6 +20,10 @@ const getCaiso = (req, res) => {
     marketType,
     node,
   } = req.body
+
+  getControlAreas()
+    .then( res => console.log('control areas res:', res) )
+    .catch( err => console.error('Caiso endpoint reject error:', err))
 
   // oasisEndpoint(
   //   startMillis,

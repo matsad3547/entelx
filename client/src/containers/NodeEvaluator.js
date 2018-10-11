@@ -33,7 +33,7 @@ class NodeEvaluator extends PureComponent {
     const now = moment().tz(this.timeZone)
 
     const endDate = now
-    const startDate = now.clone().subtract(3, 'days')
+    const startDate = now.clone().subtract(4, 'days')
 
     this.setState({
       startDate,
@@ -44,6 +44,8 @@ class NodeEvaluator extends PureComponent {
   }
 
   getData = (startDate, endDate) => {
+
+    console.time('Node Evaluator request')
 
     this.setState({
       loading: true,
@@ -87,6 +89,7 @@ class NodeEvaluator extends PureComponent {
 
   setData = res => {
     console.log('response:', res);
+    console.timeEnd('Node Evaluator request')
     this.setState({
       loading: false,
       data: res,
