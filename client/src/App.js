@@ -8,6 +8,7 @@ import NodeEvaluator from './containers/NodeEvaluator'
 import Test from './containers/Test'
 
 import Home from './components/Home'
+import Demo from './components/Demo'
 import Button from './components/Button'
 
 class App extends Component {
@@ -18,31 +19,8 @@ class App extends Component {
       <div style={styles.root}>
         <div>
           <nav>
-            <Link to="/">
-              <Button
-                name={'Home'}
-              />
-            </Link>
-            <Link to="/create_user">
-              <Button
-                name={'Sign Up'}
-              />
-            </Link>
-            <Link to="/login">
-              <Button
-                name={'Login'}
-              />
-            </Link>
-            <Link to="/caiso">
-              <Button
-                name={'CAISO'}
-              />
-            </Link>
-            <Link to="/node_evaluator">
-              <Button
-                name={'Node Evaluator'}
-              />
-            </Link>
+            <Link to="/">Home</Link>
+            <Link to="/demo">Demo</Link>
           </nav>
         </div>
         <div>
@@ -51,25 +29,9 @@ class App extends Component {
             component={Home}
           />
           <Route
-            path="/caiso"
-            component={Caiso}
+            exact path="/demo"
+            component={Demo}
           />
-          <Route
-            path="/node_evaluator"
-            component={NodeEvaluator}
-          />
-          <Route
-            path="/create_user" component={CreateProfile}
-          />
-          <Route
-            path="/login"
-            component={Login}
-          />
-          <Route
-            path="/test"
-            component={Test}
-          />
-
         </div>
       </div>
     );
@@ -78,6 +40,7 @@ class App extends Component {
 
 const styles = {
   root: {
+    fontFamily: 'Helvetica, Arial',
     fontSize: 16,
     margin: 0,
     padding: 0,
