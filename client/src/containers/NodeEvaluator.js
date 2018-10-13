@@ -33,7 +33,7 @@ class NodeEvaluator extends PureComponent {
     const now = moment().tz(this.timeZone)
 
     const endDate = now
-    const startDate = now.clone().subtract(4, 'days')
+    const startDate = now.clone().subtract(2, 'days')
 
     this.setState({
       startDate,
