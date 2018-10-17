@@ -40,7 +40,9 @@ class App extends Component {
 
 const styles = {
   root: {
-    fontFamily: 'Helvetica, Arial',
+    fontFamily: 'Montserrat, Helvetica, sans-serif',
+    // fontFamily: 'Open Sans, sans-serif',
+    fontWeight: 200,
     fontSize: 16,
     margin: 0,
     padding: 0,
