@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
 import { Link, Route } from 'react-router-dom'
 
-import CreateProfile from './containers/CreateProfile'
-import Login from './containers/Login'
-import Caiso from './containers/Caiso'
-import NodeEvaluator from './containers/NodeEvaluator'
-import Test from './containers/Test'
-
 import Home from './components/Home'
 import Demo from './components/Demo'
-import Button from './components/Button'
 
 import './App.css'
 

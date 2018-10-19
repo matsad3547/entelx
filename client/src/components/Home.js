@@ -13,7 +13,7 @@ const Home = () => (
   <div style={styles.root}>
     <img
       style={styles.logoImg}
-      alt="Some photo"
+      alt="?"
       src=""
     />
     <Overlay addlStyles={styles.logo}/>
@@ -29,7 +29,7 @@ const Home = () => (
     </div>
     <img
       style={styles.sub1Img}
-      alt="video of wind turbines"
+      alt="wind turbines"
       src=""
     />
     <Overlay addlStyles={styles.sub1}/>
@@ -43,7 +43,7 @@ const Home = () => (
     </div>
     <img
       style={styles.sub2Img}
-      alt="picture of solar panels"
+      alt="solar panels"
       src=""
     />
     <Overlay addlStyles={styles.sub2}/>
@@ -57,7 +57,7 @@ const Home = () => (
     </div>
     <img
       style={styles.sub3Img}
-      alt="picture of coal plants"
+      alt="coal plants"
       src=""
     />
     <Overlay addlStyles={styles.sub3}/>
@@ -66,7 +66,7 @@ const Home = () => (
         ...styles.subText,
       }}>
       <Header2
-        content={"But transition to sustainable energy must move faster"}
+        content={"But the transition to sustainable energy must move faster"}
         />
     </div>
     <Overlay addlStyles={styles.sub4}/>
@@ -84,7 +84,7 @@ const Home = () => (
         />
     </div>
     <div style={styles.purpose}>
-      <p>{`${companyName} provides market intelligence by aggregating and distilling fine-grained, near-real-time data with proprietary algorithms`}</p>
+      <p>{`${companyName} provides market intelligence by aggregating and distilling fine-grained, real-time data with proprietary algorithms.  The purpose of our software is the maximize the return on energy storage assets and foster the market for intermittent renewable energy sources.  By preventing curtailment, overloaded transmission lines, and wasted energy, additional value acrues to renewable generators`}</p>
     </div>
   </div>
 )
@@ -106,7 +106,6 @@ const styles = {
   },
   logoImg: {
     width: '100%',
-    height: '100%',
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row1',
     height: 400,
@@ -117,7 +116,6 @@ const styles = {
   },
   sub1Img: {
     width: '100%',
-    height: '100%',
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row2',
     height: 300,
@@ -153,12 +151,12 @@ const styles = {
   mission: {
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row6',
-    padding: '1em 2em',
+    padding: '1em 3em',
   },
   purpose: {
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row7',
-    // padding: '1em 2em',
+    padding: '1em 3em',
   },
 }
 
