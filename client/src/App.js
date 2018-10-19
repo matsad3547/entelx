@@ -19,8 +19,8 @@ class App extends Component {
 
     return (
       <div style={styles.root}>
-        <div>
-          <nav>
+        <div style={styles.header}>
+          <nav style={styles.nav}>
             <Link to="/">Home</Link>
             <Link to="/demo">Demo</Link>
           </nav>
@@ -36,7 +36,7 @@ class App extends Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -46,6 +46,15 @@ const styles = {
     fontWeight: 200,
     fontSize: 16,
     textAlign: 'center',
+  },
+  nav: {
+    display: 'inline-flex',
+    width: '8em',
+    justifyContent: 'space-between',
+    padding: '1em',
+  },
+  header: {
+    textAlign: 'right',
   },
 }
 
