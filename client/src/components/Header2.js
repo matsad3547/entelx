@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { fontSize } from '../config/styles'
 
@@ -12,6 +13,10 @@ const Header2 = ({content}) => (
 
 const styles = {
   fontSize: fontSize.h2,
+}
+
+Header2.propTypes = {
+  content: PropTypes.string,
 }
 
 export default Header2
