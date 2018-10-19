@@ -51,7 +51,7 @@ const styles = {
     display: 'inline-flex',
     width: '8em',
     justifyContent: 'space-between',
-    padding: '1em',
+    padding: '1em 3em',
   },
   header: {
     textAlign: 'right',

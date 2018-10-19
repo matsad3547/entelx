@@ -14,7 +14,7 @@ const Home = () => (
     <img
       style={styles.logoImg}
       alt="Some photo"
-      src="http://unsplash.it/1200x800"
+      src=""
     />
     <Overlay addlStyles={styles.logo}/>
     <div style={{
@@ -25,7 +25,7 @@ const Home = () => (
       <Header1
         content={companyName}
         />
-      <p>sweet-ass header</p>
+      <p>Accelerating Energy Storage</p>
     </div>
     <img
       style={styles.sub1Img}
@@ -66,12 +66,13 @@ const Home = () => (
         ...styles.subText,
       }}>
       <Header2
-        content={"But there's a long way to go, and the transition to sustainable energy must move faster"}
+        content={"But transition to sustainable energy must move faster"}
         />
     </div>
+    <Overlay addlStyles={styles.sub4}/>
     <div style={{
         ...styles.sub4,
-        // ...styles.subText,
+        ...styles.subText,
       }}>
       <Header2
         content={`${companyName} is here to help`}
@@ -81,6 +82,8 @@ const Home = () => (
       <Header3
         content={'Our mission is to help accelerate the transition to renewable energy by improving the economics of bulk energy storage'}
         />
+    </div>
+    <div style={styles.purpose}>
       <p>{`${companyName} provides market intelligence by aggregating and distilling fine-grained, near-real-time data with proprietary algorithms`}</p>
     </div>
   </div>
@@ -90,7 +93,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftPanel] 45% [centerMargin] 10% [rightPanel] 45%',
-    gridTemplateRows: '[row1] auto [ws1] 50px [row2] auto [ws2] 50px [row3] auto [ws3] 50px [row4] auto [ws4] 50px [row5] auto [ws5] 50px [row6] auto',
+    gridTemplateRows: '[row1] auto [ws1] 50px [row2] auto [ws2] 50px [row3] auto [ws3] 50px [row4] auto [ws4] 50px [row5] auto  [row6] auto [row7] auto [ws5] 100px',
   },
   logo: {
     gridColumnStart: 'leftPanel',
@@ -99,7 +102,6 @@ const styles = {
   },
   logoText: {
     color: '#fff',
-    position: 'relative',
     zIndex: 2,
   },
   logoImg: {
@@ -107,7 +109,7 @@ const styles = {
     height: '100%',
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row1',
-    height: 300,
+    height: 400,
   },
   sub1: {
     gridColumnStart: 'rightPanel',
@@ -118,7 +120,7 @@ const styles = {
     height: '100%',
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row2',
-    height: 250,
+    height: 300,
   },
   sub2: {
     gridColumnStart: 'leftPanel',
@@ -131,26 +133,32 @@ const styles = {
     color: '#fff',
   },
   sub2Img: {
-    gridColumn: 'leftPanel / rightMargin',
+    gridColumn: 'leftPanel / 4',
     gridRowStart: 'row3',
-    height: 250,
+    height: 300,
   },
   sub3: {
     gridColumnStart: 'rightPanel',
     gridRowStart: 'row4',
   },
   sub3Img: {
-    gridColumn: 'leftPanel / rightMargin',
+    gridColumn: 'leftPanel / 4',
     gridRowStart: 'row4',
-    height: 250,
+    height: 300,
   },
   sub4: {
-    gridColumn: 'leftPanel / rightMargin',
+    gridColumn: 'leftPanel / 4',
     gridRowStart: 'row5',
   },
   mission: {
-    gridColumn: 'leftPanel / rightMargin',
+    gridColumn: 'leftPanel / 4',
     gridRowStart: 'row6',
+    padding: '1em 2em',
+  },
+  purpose: {
+    gridColumn: 'leftPanel / 4',
+    gridRowStart: 'row7',
+    // padding: '1em 2em',
   },
 }
 
