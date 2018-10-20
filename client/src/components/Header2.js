@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import { fontSize } from '../config/styles'
 
 const Header2 = ({content}) => (
-  <h1
+  <h2
     style={styles}
   >
   {content}
-  </h1>
+  </h2>
 )
 
 const styles = {

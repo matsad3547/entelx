@@ -3,20 +3,20 @@ import PropTypes from 'prop-types'
 
 import { fontSize } from '../config/styles'
 
-const Header3 = ({content}) => (
-  <h3
+const Header4 = ({content}) => (
+  <h4
     style={styles}
   >
   {content}
-  </h3>
+  </h4>
 )
 
 const styles = {
-  fontSize: fontSize.h3,
+  fontSize: fontSize.h4,
 }
 
-Header3.propTypes = {
+Header4.propTypes = {
   content: PropTypes.string,
 }
 
-export default Header3
+export default Header4

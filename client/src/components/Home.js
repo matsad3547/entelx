@@ -3,9 +3,10 @@ import React from 'react'
 import Header1 from './Header1'
 import Header2 from './Header2'
 import Header3 from './Header3'
+import Header4 from './Header4'
 import Overlay from './Overlay'
 
-const companyName = 'Knewable'
+const companyName = 'Enewably'
 // http://unsplash.it/1200x800
 
 const Home = () => (
@@ -13,7 +14,7 @@ const Home = () => (
   <div style={styles.root}>
     <img
       style={styles.logoImg}
-      alt="?"
+      alt="batteries"
       src=""
     />
     <Overlay addlStyles={styles.logo}/>
@@ -25,7 +26,9 @@ const Home = () => (
       <Header1
         content={companyName}
         />
-      <p>Accelerating Energy Storage</p>
+      <Header4
+        content={'Accelerating Energy Storage'}
+        />
     </div>
     <img
       style={styles.sub1Img}
@@ -98,11 +101,14 @@ const styles = {
   logo: {
     gridColumnStart: 'leftPanel',
     gridRowStart: 'row1',
-    alignSelf: 'center',
   },
   logoText: {
     color: '#fff',
     zIndex: 2,
+    alignSelf: 'end',
+    padding: '5em',
+    justifySelf: 'start',
+    textAlign: 'left',
   },
   logoImg: {
     width: '100%',
@@ -123,6 +129,7 @@ const styles = {
   sub2: {
     gridColumnStart: 'leftPanel',
     gridRowStart: 'row3',
+    // justifySelf: 'start',
   },
   subText: {
     alignSelf: 'end',
