@@ -5,3 +5,7 @@ export const fontSize = {
   h3: '1.777em',
   h4: '1.333em',
 }
+
+export const colors = {
+  text: '#383D36',
+}

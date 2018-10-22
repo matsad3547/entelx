@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom'
 
 import Home from './components/Home'
 import Demo from './components/Demo'
+import { colors } from './config/styles'
 
 import './App.css'
 
@@ -14,8 +15,8 @@ class App extends Component {
       <div style={styles.root}>
         <div style={styles.header}>
           <nav style={styles.nav}>
-            <Link to="/">Home</Link>
-            <Link to="/demo">Demo</Link>
+            <Link to="/" style={styles.link}>Home</Link>
+            <Link to="/demo" style={styles.link}>Demo</Link>
           </nav>
         </div>
         <div>
@@ -45,10 +46,15 @@ const styles = {
     width: '8em',
     justifyContent: 'space-between',
     padding: '1em 3em',
+
   },
   header: {
     textAlign: 'right',
   },
+  link: {
+    color: colors.text,
+    textDecoration: 'none',
+  }
 }
 
 export default App;

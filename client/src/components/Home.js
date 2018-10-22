@@ -6,6 +6,8 @@ import Header3 from './Header3'
 import Header4 from './Header4'
 import Overlay from './Overlay'
 
+import { colors } from '../config/styles'
+
 const companyName = 'Enewably'
 // http://unsplash.it/1200x800
 
@@ -87,7 +89,16 @@ const Home = () => (
         />
     </div>
     <div style={styles.purpose}>
-      <p>{`${companyName} provides market intelligence by aggregating and distilling fine-grained, real-time data with proprietary algorithms.  The purpose of our software is the maximize the return on energy storage assets and foster the market for intermittent renewable energy sources.  By preventing curtailment, overloaded transmission lines, and wasted energy, additional value acrues to renewable generators`}</p>
+      <p style={styles.text}>Renewable energy has expanded by leaps and bounds in the last decade and is already the lowest cost source of energy in many places in the world.  Unfortunately, most of its natural intermittency is currently handled by fossil fuel energy resources.  Plus the more renewable energy that is deployed in each location, the lower its value becomes.</p>
+
+      <p style={styles.text}>Energy storage can solve these issues.  Storage provides a market for renewable power that would otherwise be curtailed and storage assets charged from this low-cost power can still profitably undercut fossil fuel generators.  Energy storage is widely seen as key for renewable energy supplying the majority of energy demand and setting us on the path to a sustainable future.</p>
+
+      <p style={styles.text}>{companyName} is accelerating energy storage by:</p>
+      <ul style={styles.list}>
+        <li style={styles.listItem}>Providing real-time charge and discharge signals that maximize arbitrage value</li>
+        <li style={styles.listItem}>Locating and evaluating arbitrage opportunities</li>
+        <li style={styles.listItem}>Estimating project ROI</li>
+      </ul>
     </div>
   </div>
 )
@@ -95,8 +106,8 @@ const Home = () => (
 const styles = {
   root: {
     display: 'grid',
-    gridTemplateColumns: '[leftPanel] 45% [centerMargin] 10% [rightPanel] 45%',
-    gridTemplateRows: '[row1] auto [ws1] 50px [row2] auto [ws2] 50px [row3] auto [ws3] 50px [row4] auto [ws4] 50px [row5] auto  [row6] auto [row7] auto [ws5] 100px',
+    gridTemplateColumns: '[leftPanel] 45% [centerMargin] 10% [rightPanel] auto',
+    gridTemplateRows: '[row1] auto [ws1] 80px [row2] auto [ws2] 80px [row3] auto [ws3] 80px [row4] auto [ws4] 80px [row5] auto  [row6] auto [row7] auto [ws5] 100px',
   },
   logo: {
     gridColumnStart: 'leftPanel',
@@ -114,7 +125,7 @@ const styles = {
     width: '100%',
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row1',
-    height: 400,
+    height: 450,
   },
   sub1: {
     gridColumnStart: 'rightPanel',
@@ -124,7 +135,7 @@ const styles = {
     width: '100%',
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row2',
-    height: 300,
+    height: 350,
   },
   sub2: {
     gridColumnStart: 'leftPanel',
@@ -140,7 +151,7 @@ const styles = {
   sub2Img: {
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row3',
-    height: 300,
+    height: 350,
   },
   sub3: {
     gridColumnStart: 'rightPanel',
@@ -149,7 +160,7 @@ const styles = {
   sub3Img: {
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row4',
-    height: 300,
+    height: 350,
   },
   sub4: {
     gridColumn: 'leftPanel / 4',
@@ -159,11 +170,24 @@ const styles = {
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row6',
     padding: '1em 3em',
+    color: colors.text,
   },
   purpose: {
     gridColumn: 'leftPanel / 4',
     gridRowStart: 'row7',
-    padding: '1em 3em',
+    padding: '0 6em',
+    color: colors.text,
+  },
+  text: {
+    padding: '.5em',
+    textAlign: 'left',
+  },
+  list: {
+    textAlign: 'left',
+    padding: '0 2em',
+  },
+  listItem: {
+    padding: '.2em 0',
   },
 }
 
