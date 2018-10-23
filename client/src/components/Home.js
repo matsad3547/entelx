@@ -43,41 +43,16 @@ const Home = () => (
         ...styles.subText,
       }}>
       <Header2
-        content={'The landscape is changing'}
+        content={'Renewable energy has arrived...'}
         />
-    </div>
-    <img
-      style={styles.sub2Img}
-      alt="solar panels"
-      src=""
-    />
-    <Overlay addlStyles={styles.sub2}/>
-    <div style={{
-        ...styles.sub2,
-        ...styles.subText,
-      }}>
       <Header2
-        content={'Renewable energy has arrived'}
+        content={'But the transition to sustainable energy must move faster'}
         />
     </div>
-    <img
-      style={styles.sub3Img}
-      alt="coal plants"
-      src=""
-    />
-    <Overlay addlStyles={styles.sub3}/>
+    <Overlay addlStyles={styles.banner}/>
     <div style={{
-        ...styles.sub3,
-        ...styles.subText,
-      }}>
-      <Header2
-        content={"But the transition to sustainable energy must move faster"}
-        />
-    </div>
-    <Overlay addlStyles={styles.sub4}/>
-    <div style={{
-        ...styles.sub4,
-        ...styles.subText,
+        ...styles.banner,
+        ...styles.bannerText,
       }}>
       <Header2
         content={`${companyName} is here to help`}
@@ -107,7 +82,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftPanel] 45% [centerMargin] 10% [rightPanel] auto',
-    gridTemplateRows: '[row1] auto [ws1] 80px [row2] auto [ws2] 80px [row3] auto [ws3] 80px [row4] auto [ws4] 80px [row5] auto  [row6] auto [row7] auto [ws5] 100px',
+    gridTemplateRows: '[row1] auto [ws1] 80px [row2] auto [ws2] 80px [row5] auto  [row6] auto [row7] auto [ws5] 100px',
   },
   logo: {
     gridColumnStart: 'leftPanel',
@@ -137,34 +112,22 @@ const styles = {
     gridRowStart: 'row2',
     height: 350,
   },
-  sub2: {
-    gridColumnStart: 'leftPanel',
-    gridRowStart: 'row3',
-    // justifySelf: 'start',
-  },
   subText: {
+    textAlign: 'right',
+    alignSelf: 'end',
+    padding: '2em 3em',
+    zIndex: 2,
+    color: '#fff',
+  },
+  banner: {
+    gridColumn: 'leftPanel / 4',
+    gridRowStart: 'row5',
+  },
+  bannerText: {
     alignSelf: 'end',
     padding: '2em',
     zIndex: 2,
     color: '#fff',
-  },
-  sub2Img: {
-    gridColumn: 'leftPanel / 4',
-    gridRowStart: 'row3',
-    height: 350,
-  },
-  sub3: {
-    gridColumnStart: 'rightPanel',
-    gridRowStart: 'row4',
-  },
-  sub3Img: {
-    gridColumn: 'leftPanel / 4',
-    gridRowStart: 'row4',
-    height: 350,
-  },
-  sub4: {
-    gridColumn: 'leftPanel / 4',
-    gridRowStart: 'row5',
   },
   mission: {
     gridColumn: 'leftPanel / 4',
