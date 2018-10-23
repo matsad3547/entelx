@@ -81,11 +81,11 @@ const Home = () => (
 const styles = {
   root: {
     display: 'grid',
-    gridTemplateColumns: '[leftPanel] 45% [centerMargin] 10% [rightPanel] auto',
-    gridTemplateRows: '[row1] auto [ws1] 80px [row2] auto [ws2] 80px [row5] auto  [row6] auto [row7] auto [ws5] 100px',
+    gridTemplateColumns: '[leftCol1] 22% [leftCol2] 22% [centerMargin] 10% [rightCol1] 22% [rightCol2] auto [end]',
+    gridTemplateRows: '[row1] auto [ws1] 80px [row2] auto [ws2] 80px [row3] auto [row4] auto [row5] auto [ws5] 50px [row6] auto [ws6] 100px',
   },
   logo: {
-    gridColumnStart: 'leftPanel',
+    gridColumn: 'leftCol1 / centerMargin',
     gridRowStart: 'row1',
   },
   logoText: {
@@ -98,17 +98,17 @@ const styles = {
   },
   logoImg: {
     width: '100%',
-    gridColumn: 'leftPanel / 4',
+    gridColumn: 'leftCol1 / end',
     gridRowStart: 'row1',
     height: 450,
   },
   sub1: {
-    gridColumnStart: 'rightPanel',
+    gridColumn: 'rightCol1 / end',
     gridRowStart: 'row2',
   },
   sub1Img: {
     width: '100%',
-    gridColumn: 'leftPanel / 4',
+    gridColumn: 'leftCol1 / end',
     gridRowStart: 'row2',
     height: 350,
   },
@@ -120,8 +120,8 @@ const styles = {
     color: '#fff',
   },
   banner: {
-    gridColumn: 'leftPanel / 4',
-    gridRowStart: 'row5',
+    gridColumn: 'leftCol1 / end',
+    gridRowStart: 'row3',
   },
   bannerText: {
     alignSelf: 'end',
@@ -130,14 +130,14 @@ const styles = {
     color: '#fff',
   },
   mission: {
-    gridColumn: 'leftPanel / 4',
-    gridRowStart: 'row6',
+    gridColumn: 'leftCol1 / end',
+    gridRowStart: 'row4',
     padding: '1em 3em',
     color: colors.text,
   },
   purpose: {
-    gridColumn: 'leftPanel / 4',
-    gridRowStart: 'row7',
+    gridColumn: 'leftCol1 / end',
+    gridRowStart: 'row5',
     padding: '0 6em',
     color: colors.text,
   },
