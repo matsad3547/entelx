@@ -3,6 +3,8 @@ import { Link, Route } from 'react-router-dom'
 
 import Home from './components/Home'
 import Demo from './components/Demo'
+import Contact from './components/Contact'
+import About from './components/About'
 import { colors } from './config/styles'
 
 import './App.css'
@@ -27,6 +29,14 @@ class App extends Component {
           <Route
             exact path="/demo"
             component={Demo}
+          />
+          <Route
+            exact path="/about"
+            component={About}
+          />
+          <Route
+            exact path="/contact"
+            component={Contact}
           />
         </div>
       </div>
