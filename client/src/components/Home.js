@@ -86,7 +86,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftCol1] 22% [leftCol2] 22% [centerMargin] 10% [rightCol1] 22% [rightCol2] auto [end]',
-    gridTemplateRows: '[row1] auto [ws1] 80px [row2] auto [ws2] 80px [row3] auto [row4] auto [row5] auto [ws5] 50px',
+    gridTemplateRows: '[row1] auto [ws1] 10px [row2] auto [ws2] 80px [row3] auto [row4] auto [row5] auto [ws5] 50px',
   },
   logo: {
     gridColumn: 'leftCol1 / centerMargin',
@@ -114,7 +114,7 @@ const styles = {
     width: '100%',
     gridColumn: 'leftCol1 / end',
     gridRowStart: 'row2',
-    height: 350,
+    height: 400,
   },
   subText: {
     textAlign: 'right',
