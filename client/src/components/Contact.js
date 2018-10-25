@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Footer from './Footer'
+import { colors } from '../config/styles'
 
 const Contact = () => (
 
@@ -16,6 +17,7 @@ const styles = {
     height: '95vh',
     display: 'flex',
     flexDirection: 'column',
+    color: colors.text,
   },
   text: {
     padding: '1em',
