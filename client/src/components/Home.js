@@ -18,7 +18,7 @@ const Home = () => (
     <div style={styles.root}>
       <img
         style={styles.logoImg}
-        alt="batteries"
+        alt="solar panels"
         src=""
         />
       <Overlay addlStyles={styles.logo}/>
