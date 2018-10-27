@@ -12,7 +12,7 @@ import {
   parseResponse,
 } from '../utils/'
 
-class NodeEvaluator extends PureComponent {
+class ProjectEvaluation extends PureComponent {
 
   timeZone = 'America/Los_Angeles'
   lat = 35.30
@@ -33,7 +33,7 @@ class NodeEvaluator extends PureComponent {
     const now = moment().tz(this.timeZone)
 
     const endDate = now
-    const startDate = now.clone().subtract(4, 'days')
+    const startDate = now.clone().subtract(2, 'days')
 
     this.setState({
       startDate,
@@ -127,7 +127,7 @@ class NodeEvaluator extends PureComponent {
 
     return (
       <div style={styles.root}>
-        <h1>Node Arbitrage Evaluator</h1>
+        <h1>Project Evaluation</h1>
         <h2>Evaluating {this.node}</h2>
         <div style={styles.dates}>
           <DateControl
@@ -196,4 +196,4 @@ const styles = {
   }
 }
 
-export default NodeEvaluator
+export default ProjectEvaluation
