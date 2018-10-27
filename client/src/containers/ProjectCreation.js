@@ -9,6 +9,7 @@ const ProjectCreation = () => (
     * Enter an address or pick a location on the map
     * Project name
     * Project capacity (MW) (MWh)
+    
   </div>
 )
 

@@ -1,0 +1,7 @@
+{
+  "name": "Enewably",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "dotenv": true
+}
