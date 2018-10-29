@@ -11,7 +11,9 @@
     "dotenv": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
     "moment-timezone": "^0.5.21",
-    "prop-types": "^15.6.2"
+    "mv": "^2.1.1",
+    "prop-types": "^15.6.2",
+    "rimraf": "^2.6.2"
   },
   "devDependencies": {
     "babel-jest": "^21.2.0",
@@ -27,10 +29,13 @@
     "nodemon": "^1.12.1"
   },
   "scripts": {
-    "start": "concurrently \"yarn run server\" \"yarn run client\"",
-    "server": "nodemon server/index.js",
-    "client": "node start-client.js",
-    "test": "NODE_ENV=test jest --watch"
+    "start-dev": "concurrently \"yarn run server-dev\" \"yarn run client-dev\"",
+    "server-dev": "NODE_ENV=development nodemon server/index.js",
+    "client-dev": "node ./server/scripts/start-client.js",
+    "test": "NODE_ENV=test jest --watch",
+    "run-prod": "yarn run client-build && concurrently \"yarn run server-prod\" \"cd ~/Applications && ./ngrok http 5150\"",
+    "server-prod": "NODE_ENV=production PORT=5150 node server/index.js",
+    "client-build": "node ./server/scripts/build-client.js"
   },
   "jest": {
     "moduleNameMapper": null,
