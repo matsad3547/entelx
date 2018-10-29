@@ -12,7 +12,7 @@ import './App.css'
 class App extends Component {
 
   render() {
-
+console.log(process.env);
     return (
       <div style={styles.root}>
         <div style={styles.header}>

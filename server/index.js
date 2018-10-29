@@ -14,6 +14,8 @@ const {
   caisoNodeEvaluator,
 } = require('./product')
 
+console.log('node env:', process.env.NODE_ENV, ' port:', process.env.PORT);
+
 //for testing python
 // const { demoProcess } = require('./processes/')
 
@@ -22,7 +24,7 @@ const app = express()
 app.set('port', process.env.PORT || 5000)
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static("client/build"))
+  app.use(express.static('server/public'))
 }
 
 app.use(express.static('publick'))
