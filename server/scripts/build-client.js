@@ -19,11 +19,3 @@ rimraf(buildDir, () => {
     })
   )
 })
-
-
-
-
-
-
-
-// && cd ~/Applications/ && ./ngrok http 5150
