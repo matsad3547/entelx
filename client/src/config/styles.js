@@ -8,4 +8,5 @@ export const fontSize = {
 
 export const colors = {
   text: '#383D36',
+  disabled: '#838383',
 }
