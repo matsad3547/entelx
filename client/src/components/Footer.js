@@ -1,29 +1,22 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import Header4 from './Header4'
-
-import { colors } from '../config/styles'
+import DisableableLink from './DisableableLink'
 
 const Footer = () => (
 
   <div style={styles.root} >
-    <Link
-      to="/about"
-      style={styles.link}
-      >
+
+    <DisableableLink to="/about" >
       <Header4
         content={'About'}
       />
-    </Link>
-    <Link
-      to="/contact"
-      style={styles.link}
-      >
+    </DisableableLink>
+    <DisableableLink to="/contact">
       <Header4
         content={'Contact'}
       />
-    </Link>
+    </DisableableLink>
   </div>
 )
 
@@ -33,10 +26,6 @@ const styles = {
     display: 'inline-flex',
     justifyContent: 'space-around',
     margin: '0 0 5em',
-  },
-  link: {
-    color: colors.text,
-    textDecoration: 'none',
   },
 }
 

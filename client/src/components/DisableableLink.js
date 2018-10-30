@@ -1,0 +1,28 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+
+import { colors } from '../config/styles'
+
+const DisableableLink = ({
+  to,
+  children,
+  disabled = false,
+}) => (
+
+  <Link to={to} style={getStyles(disabled)}>{children}</Link>
+)
+
+const getStyles = disabled => ({
+  textDecoration: 'none',
+  color: disabled ? colors.disabled : colors.text,
+  pointerEvents: disabled ? 'none' : 'auto',
+  cursor: disabled ? 'not-allowed' : 'auto',
+})
+
+DisableableLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+}
+
+export default DisableableLink
