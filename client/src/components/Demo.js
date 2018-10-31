@@ -3,7 +3,7 @@ import React from 'react'
 import PublicPage from './PublicPage'
 import Header4 from './Header4'
 
-import ProjectCreation from '../containers/ProjectCreation'
+import CreateProject from '../containers/CreateProject'
 
 const Demo = () => (
 
@@ -12,7 +12,7 @@ const Demo = () => (
     >
     <div>
       <Header4 content={'Start by specifying your project'} />
-      <ProjectCreation />
+      <CreateProject />
     </div>
   </PublicPage>
 )
