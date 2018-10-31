@@ -22,7 +22,7 @@ const styles = {
     color: colors.text,
   },
   content: {
-    padding: '1em',
+    padding: '1em 3em',
     margin: '0 0 auto',
   }
 }
