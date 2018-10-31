@@ -6,6 +6,10 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY
 
 class Map extends PureComponent {
 
+  state = {
+    map: null,
+  }
+
   componentDidMount() {
 
     const {
@@ -13,32 +17,47 @@ class Map extends PureComponent {
       center,
     } = this.props
 
-    this.map = new mapboxgl.Map({
+    const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v9',
       zoom,
       center,
     })
+
+    this.setState({
+      map,
+    })
   }
 
   componentWillUnmount() {
-    this.map.remove();
+    this.state.map.remove()
   }
 
   render() {
 
-    return <div style={styles.container} ref={ node => this.mapContainer = node } />
+    const { map } = this.state
+
+    const { children } = this.props
+
+    const childrenWithProps = React.Children.map(children, child =>
+      React.cloneElement(child, {map: this.state.map })
+    )
+
+    return (
+      <div style={styles.root} ref={ node => this.mapContainer = node } >
+        {this.state.map ? childrenWithProps : null}
+      </div>
+    )
   }
 }
 
 const styles = {
-  container: {
-    position: 'absolute',
-    top: 680,
-    bottom: -100,
-    width: '100%',
-    right: '24%',
-    marginBottom: '6vh',
+  root: {
+    display: 'block',
+    width: '45vw',
+    height: '70vh',
+    margin: '2em 0',
+    textAlign: 'justify',
   }
 }
 
