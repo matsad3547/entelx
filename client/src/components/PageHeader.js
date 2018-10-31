@@ -30,7 +30,7 @@ const styles = {
   text: {
     zIndex: 2,
     color: '#fff',
-    padding: '1em 6em',
+    padding: '1em 3em',
     justifySelf: 'end',
     alignSelf: 'end',
     background: 'transparent',

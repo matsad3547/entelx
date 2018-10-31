@@ -55,8 +55,7 @@ const styles = {
   root: {
     display: 'block',
     width: '45vw',
-    height: '70vh',
-    margin: '2em 0',
+    height: '90vh',
     textAlign: 'justify',
   }
 }

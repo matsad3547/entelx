@@ -1,16 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { fontSize } from '../config/styles'
+import {
+  fontSize,
+  colors,
+} from '../config/styles'
 
 const LabeledInput = ({
   name,
   label,
-  type,
-  placeholder,
+  type = 'text',
+  placeholder = '',
   value,
-  onChange,
   inputWidth = 'auto',
+  unit = '',
+  disabled = false,
+  onChange,
 }) => (
 
   <div style={styles.root}>
@@ -19,50 +24,55 @@ const LabeledInput = ({
       style={styles.label}
       >{label}</label>
     <input
-      style={getInputStyles(inputWidth)}
+      style={getInputStyles(inputWidth, disabled)}
       type={type}
       name={name}
       placeholder={placeholder}
       value={value}
       onChange={ e => onChange(e, name) }
       />
+    <span>{unit}</span>
   </div>
 )
 
-const getInputStyles = inputWidth => ({
+const getInputStyles = (inputWidth, disabled) => ({
   ...styles.input,
   width: inputWidth,
+  color: disabled ? colors.disabled : colors.text,
 })
 
 const styles = {
   root: {
     display: 'block',
-    width: '100%',
   },
   label: {
     display: 'block',
     fontSize: '1.1em',
   },
   input: {
-    margin: '1em 1em',
-    fontSize: '1em',
-    padding: '.4em',
+    margin: '1em .5em',
+    fontSize: fontSize.label,
+    padding: '.5em',
+    background: colors.field,
+    border: 'none',
+    borderRadius: 10,
   },
 
 }
 
 LabeledInput.propTypes = {
-  content: PropTypes.string,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   label: PropTypes.string,
   type: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-  ]),
+  ]).isRequired,
   inputWidth: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  unit: PropTypes.string,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
 }
 
 export default LabeledInput

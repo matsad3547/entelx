@@ -43,6 +43,7 @@ const styles = {
     fontFamily: 'Montserrat, Helvetica, sans-serif',
     fontWeight: 200,
     fontSize: 16,
+    // fontSize: '1.5vw',
     textAlign: 'center',
   },
 }
