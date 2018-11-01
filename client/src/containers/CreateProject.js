@@ -2,6 +2,7 @@ import React from 'react'
 
 import Map from './map/Map'
 import MapLocationReader from './map/MapLocationReader'
+import MapMarkerRenderer from './map/MapMarkerRenderer'
 
 import LabeledInput from '../components/LabeledInput'
 import Header4 from '../components/Header4'
@@ -174,6 +175,9 @@ class CreateProject extends React.PureComponent {
           >
           <MapLocationReader
             getLatLng={this.setLatLng}
+          />
+          <MapMarkerRenderer
+            lngLat={[-111.9, 40.56]}
           />
         </Map>
       </div>
