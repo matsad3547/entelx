@@ -66,4 +66,12 @@ describe('roundToDigits', () => {
     const actual = roundToDigits(val, digits)
     expect(actual).toEqual(expected)
   })
+
+  test('should round a number to 4 digits', () => {
+    const val = 45.674596738
+    const digits = 4
+    const expected = 45.6746
+    const actual = roundToDigits(val, digits)
+    expect(actual).toEqual(expected)
+  })
 })
