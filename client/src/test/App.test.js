@@ -4,6 +4,8 @@ import App from '../App'
 
 import { BrowserRouter } from 'react-router-dom'
 
+jest.mock('mapbox-gl')
+
 it('renders without crashing', () => {
   const div = document.createElement('div')
   ReactDOM.render(
