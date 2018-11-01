@@ -12,5 +12,8 @@ module.exports = {
     password: 'password',
     // password: NODE_ENV === 'production' ? PROD_DB_PASSWORD : DEV_DB_PASSWORD,
     database: 'energy_storage_marketplace',
-  }
+  },
+  migrations: {
+    directory: '../migrations',
+  },
 }

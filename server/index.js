@@ -14,7 +14,7 @@ const {
   caisoNodeEvaluator,
 } = require('./product')
 
-console.log('node env:', process.env.NODE_ENV, ' port:', process.env.PORT);
+const { getNodes } = require('./processes')
 
 //for testing python
 // const { demoProcess } = require('./processes/')
@@ -34,17 +34,19 @@ app.use(bodyParser.json())
 app.post('/caiso', getCaiso)
 app.post('/caiso_node_evaluator', caisoNodeEvaluator)
 
-app.get('/api', (req, res) => {
-  //TODO: This is where the database goes
-  res.json({
-    stuff: 'things',
-    cheese: 'poofs',
-    eia,
-  })
-})
-
 app.post('/createUser', createUser)
 app.post('/login', login)
+// app.get('/api', (req, res) => {
+//   //TODO: This is where the database goes
+//   res.json({
+//     stuff: 'things',
+//     cheese: 'poofs',
+//     eia,
+//   })
+// })
+app.get('/get_nodes', getNodes)
+
+
 
 app.listen(app.get('port'), err => {
   if (err) {

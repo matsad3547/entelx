@@ -1,5 +1,7 @@
 const demoProcess = require('./demoProcess')
 
+const { getNodes } = require('./dbConnections/')
+
 const {
   oasisEndpoint,
   getNodeLocations,
@@ -16,4 +18,5 @@ module.exports = {
   getControlAreas,
   caisoPriceRequest,
   aggregateHistoricalWeather,
+  getNodes,
 }
