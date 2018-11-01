@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Map from './map/Map'
+import MapLocationReader from './map/MapLocationReader'
+
+import LabeledInput from '../components/LabeledInput'
+import Header4 from '../components/Header4'
+import Button from '../components/button/'
+
 import {
   colors,
   fontSize,
 } from '../config/styles'
-import LabeledInput from '../components/LabeledInput'
-import Header4 from '../components/Header4'
-import Button from '../components/button/'
+
+import { roundToDigits } from '../utils/'
+// import Example from './Example'
 
 class CreateProject extends React.PureComponent {
 
@@ -27,6 +33,13 @@ class CreateProject extends React.PureComponent {
     const value = e.target.value
     this.setState({
       [field]: value,
+    })
+  }
+
+  setLatLng = ({lat, lng}) => {
+    this.setState({
+      lat: roundToDigits(lat, 4),
+      lng: roundToDigits(lng, 4),
     })
   }
 
@@ -109,7 +122,7 @@ class CreateProject extends React.PureComponent {
             <LabeledInput
               name={'zip'}
               label={'Zip Code'}
-              placeholder={''}
+              placeholder={'"90001"'}
               value={zip}
               inputWidth={'10em'}
               onChange={this.setField}
@@ -144,7 +157,11 @@ class CreateProject extends React.PureComponent {
         <Map
           center={[lng, lat]}
           zoom={5}
+          >
+          <MapLocationReader
+            getLatLng={this.setLatLng}
           />
+        </Map>
       </div>
     )
   }
@@ -153,6 +170,7 @@ class CreateProject extends React.PureComponent {
 const styles = {
   root: {
     display: 'flex',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     color: colors.text,
     padding: '2em 0',

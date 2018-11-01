@@ -29,6 +29,7 @@ const LabeledInput = ({
       name={name}
       placeholder={placeholder}
       value={value}
+      disabled={disabled}
       onChange={ e => onChange(e, name) }
       />
     <span>{unit}</span>
@@ -39,6 +40,7 @@ const getInputStyles = (inputWidth, disabled) => ({
   ...styles.input,
   width: inputWidth,
   color: disabled ? colors.disabled : colors.text,
+  cursor: disabled ? 'not-allowed' : 'inherit',
 })
 
 const styles = {
