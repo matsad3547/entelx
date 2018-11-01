@@ -10,10 +10,11 @@ class MapMarkerRenderer extends PureComponent {
     const {
       map,
       lngLat,
+      color,
     } = this.props
 
     if(map) {
-      this.marker = new mapboxgl.Marker()
+      this.marker = new mapboxgl.Marker({color})
                       .setLngLat(lngLat)
                       .addTo(map)
     }
