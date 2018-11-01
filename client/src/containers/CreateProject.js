@@ -1,8 +1,10 @@
 import React from 'react'
 
 import Map from './map/Map'
-import MapLocationReader from './map/MapLocationReader'
-import MapMarkerRenderer from './map/MapMarkerRenderer'
+
+import MapNodeRenderer from './map/MapNodeRenderer'
+
+import MapLocationReader from '../components/map/MapLocationReader'
 
 import LabeledInput from '../components/LabeledInput'
 import Header4 from '../components/Header4'
@@ -13,12 +15,7 @@ import {
   fontSize,
 } from '../config/styles'
 
-import {
-  roundToDigits,
-  singleGetRequest,
-  parseResponse,
-  handleError,
-} from '../utils/'
+import { roundToDigits } from '../utils/'
 // import Example from './Example'
 
 class CreateProject extends React.PureComponent {
@@ -44,19 +41,10 @@ class CreateProject extends React.PureComponent {
 
   setLatLng = ({lat, lng}) => {
     this.setState({
-      lat: roundToDigits(lat, 4),
-      lng: roundToDigits(lng, 4),
+      lat: roundToDigits(lat, 3),
+      lng: roundToDigits(lng, 3),
     })
   }
-
-  componentDidMount() {
-    singleGetRequest('/get_nodes')
-      .then(parseResponse)
-      .then( res => console.log('res from getNodes:', res))
-      .catch(this.setError)
-  }
-
-  setError = err => handleError(this, err)
 
   render() {
 
@@ -176,9 +164,7 @@ class CreateProject extends React.PureComponent {
           <MapLocationReader
             getLatLng={this.setLatLng}
           />
-          <MapMarkerRenderer
-            lngLat={[-111.9, 40.56]}
-          />
+          <MapNodeRenderer />
         </Map>
       </div>
     )
