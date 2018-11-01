@@ -1,4 +1,7 @@
-import { findRelevantKeys } from '../index'
+import {
+  findRelevantKeys,
+  roundToDigits,
+} from '../index'
 
 test('findRelevantKeys', () => {
   const data = [
@@ -44,4 +47,23 @@ test('findRelevantKeys', () => {
   ]
   const actual = findRelevantKeys(data)
   expect(actual).toEqual(expected)
+})
+
+describe('roundToDigits', () => {
+
+  test('should round a number to 2 digits', () => {
+    const val = 45.674596738
+    const digits = 2
+    const expected = 45.67
+    const actual = roundToDigits(val, digits)
+    expect(actual).toEqual(expected)
+  })
+
+  test('should round a number to 3 digits', () => {
+    const val = 45.674596738
+    const digits = 3
+    const expected = 45.675
+    const actual = roundToDigits(val, digits)
+    expect(actual).toEqual(expected)
+  })
 })

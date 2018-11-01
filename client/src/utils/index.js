@@ -45,3 +45,8 @@ export const findRelevantKeys = data => data.reduce( (arr, d) => {
   Object.keys(d).forEach( k => arr = !arr.includes(k) && k !== 'timestamp' ? [...arr, k] : arr )
   return arr
 }, [])
+
+export const roundToDigits = (val, digits) => {
+  const rounder = Math.pow(10, digits)
+  return Math.round((val * rounder))/rounder
+}

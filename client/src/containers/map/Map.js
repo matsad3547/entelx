@@ -40,12 +40,12 @@ class Map extends PureComponent {
     const { children } = this.props
 
     const childrenWithProps = React.Children.map(children, child =>
-      React.cloneElement(child, {map: this.state.map })
+      React.cloneElement(child, { map, })
     )
 
     return (
       <div style={styles.root} ref={ node => this.mapContainer = node } >
-        {this.state.map ? childrenWithProps : null}
+        {map ? childrenWithProps : null}
       </div>
     )
   }
