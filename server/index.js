@@ -46,8 +46,6 @@ app.post('/login', login)
 // })
 app.get('/get_nodes', getNodes)
 
-
-
 app.listen(app.get('port'), err => {
   if (err) {
     console.error('An error occured:', err)

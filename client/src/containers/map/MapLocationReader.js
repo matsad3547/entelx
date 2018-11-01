@@ -14,6 +14,7 @@ class MapLocationReader extends PureComponent {
       map.on('click', e => getLatLng(e.lngLat))
     }
   }
+  
   render() {
     return false
   }
