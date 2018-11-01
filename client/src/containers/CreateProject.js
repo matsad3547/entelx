@@ -12,7 +12,12 @@ import {
   fontSize,
 } from '../config/styles'
 
-import { roundToDigits } from '../utils/'
+import {
+  roundToDigits,
+  singleGetRequest,
+  parseResponse,
+  handleError,
+} from '../utils/'
 // import Example from './Example'
 
 class CreateProject extends React.PureComponent {
@@ -42,6 +47,15 @@ class CreateProject extends React.PureComponent {
       lng: roundToDigits(lng, 4),
     })
   }
+
+  componentDidMount() {
+    singleGetRequest('/get_nodes')
+      .then(parseResponse)
+      .then( res => console.log('res from getNodes:', res))
+      .catch(this.setError)
+  }
+
+  setError = err => handleError(this, err)
 
   render() {
 
