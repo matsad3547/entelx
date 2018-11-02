@@ -27,6 +27,13 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('server/public'))
 }
 
+app.listen(app.get('port'), err => {
+  if (err) {
+    console.error('An error occured:', err)
+  }
+  console.log(`Find the server at: http://localhost:${app.get('port')}`)
+})
+
 app.use(express.static('publick'))
 
 app.use(bodyParser.json())
@@ -45,10 +52,3 @@ app.post('/login', login)
 //   })
 // })
 app.get('/get_nodes', getNodes)
-
-app.listen(app.get('port'), err => {
-  if (err) {
-    console.error('An error occured:', err)
-  }
-  console.log(`Find the server at: http://localhost:${app.get('port')}`)
-})

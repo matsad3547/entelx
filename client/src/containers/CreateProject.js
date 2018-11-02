@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
+import { withRouter } from 'react-router'
 
 import Map from './map/Map'
 
-import MapNodeRenderer from './map/MapNodeRenderer'
+// import MapNodeRenderer from './map/MapNodeRenderer'
 
 import MapLocationReader from '../components/map/MapLocationReader'
 
 import LabeledInput from '../components/LabeledInput'
+import Header3 from '../components/Header3'
 import Header4 from '../components/Header4'
 import Button from '../components/button/'
 
@@ -18,11 +20,11 @@ import {
 import { roundToDigits } from '../utils/'
 // import Example from './Example'
 
-class CreateProject extends React.PureComponent {
+class CreateProject extends PureComponent {
 
   state = {
-    lat: 37.5,
-    lng: -117.5,
+    lat: 34.00000,
+    lng: -118.00000,
     projectName: '',
     energyCapacity: 5,
     powerCapacity: 2.5,
@@ -41,9 +43,27 @@ class CreateProject extends React.PureComponent {
 
   setLatLng = ({lat, lng}) => {
     this.setState({
-      lat: roundToDigits(lat, 3),
-      lng: roundToDigits(lng, 3),
+      lat: roundToDigits(lat, 5),
+      lng: roundToDigits(lng, 5),
     })
+  }
+
+  dummyPromise = millis => new Promise( (resolve, reject) => {
+    setTimeout( resolve, millis )
+  })
+
+  onSubmit = () => {
+
+    const {
+      match,
+      history
+    } = this.props
+
+    const projectId = 123
+    // TODO send form data to the backend, build the project, send back the project id number
+
+    this.dummyPromise(2000)
+      .then( () => history.push(`${match.url}/project/${projectId}`))
   }
 
   render() {
@@ -63,6 +83,9 @@ class CreateProject extends React.PureComponent {
     return (
 
       <div style={styles.root}>
+        <div style={styles.header}>
+          <Header3 content={'Start by specifying your project'} />
+        </div>
         <div style={styles.form}>
           <div style={styles.header}>
             <Header4 content={'General'} />
@@ -136,7 +159,7 @@ class CreateProject extends React.PureComponent {
                 label={'Latitude'}
                 type={'number'}
                 value={lat}
-                inputWidth={'5em'}
+                inputWidth={'6em'}
                 disabled={true}
                 onChange={this.setField}
                 />
@@ -145,7 +168,7 @@ class CreateProject extends React.PureComponent {
                 label={'Longitude'}
                 type={'number'}
                 value={lng}
-                inputWidth={'5em'}
+                inputWidth={'6em'}
                 disabled={true}
                 onChange={this.setField}
                 />
@@ -154,7 +177,7 @@ class CreateProject extends React.PureComponent {
           <Button
             value={'SUBMIT'}
             type="success"
-            onClick={() => console.log('form:', this.state)}
+            onClick={this.onSubmit}
             />
         </div>
         <Map
@@ -164,7 +187,7 @@ class CreateProject extends React.PureComponent {
           <MapLocationReader
             getLatLng={this.setLatLng}
           />
-          <MapNodeRenderer />
+          {/*<MapNodeRenderer />*/}
         </Map>
       </div>
     )
@@ -199,8 +222,7 @@ const styles = {
   },
   latLng: {
     display: 'inline-flex',
-    width: '40%',
     justifyContent: 'space-between',
   }
 }
-export default CreateProject
+export default withRouter(CreateProject)

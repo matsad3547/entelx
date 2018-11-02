@@ -21,15 +21,15 @@ class App extends Component {
             component={Home}
           />
           <Route
-            exact path="/demo"
+            path="/demo"
             component={Demo}
           />
           <Route
-            exact path="/about"
+            path="/about"
             component={About}
           />
           <Route
-            exact path="/contact"
+            path="/contact"
             component={Contact}
           />
         </div>
