@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Header3 from '../components/Header3'
 import Header4 from '../components/Header4'
 import DisableableLink from '../components/DisableableLink'
+import SubPageTemplate from '../components/SubPageTemplate'
 
 const Project = ({match}) => {
 
@@ -15,8 +15,7 @@ const Project = ({match}) => {
   const cleanUrl = url.replace('/project/' + params.projectId, '')
 
   return (
-    <div>
-      <Header3 content="Project Home"/>
+    <SubPageTemplate title={'Project Home'}>
       <p>Project {match.params.projectId}</p>
       <div style={styles.root}>
         <nav style={styles.nav}>
@@ -28,7 +27,7 @@ const Project = ({match}) => {
           </DisableableLink>
         </nav>
       </div>
-    </div>
+    </SubPageTemplate>
   )
 }
 

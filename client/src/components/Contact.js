@@ -1,14 +1,14 @@
 import React from 'react'
 
-import PublicPage from './PublicPage'
+import PublicPageTemplate from './PublicPageTemplate'
 
 const Contact = () => (
 
-  <PublicPage
+  <PublicPageTemplate
     title={'Contact'}
     >
     <p>Coming soon!</p>
-  </PublicPage>
+  </PublicPageTemplate>
 )
 
 export default Contact

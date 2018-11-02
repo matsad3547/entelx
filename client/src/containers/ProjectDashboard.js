@@ -1,18 +1,15 @@
 import React from 'react'
 
-import { colors } from '../config/styles'
+import SubPageTemplate from '../components/SubPageTemplate'
 
 const ProjectDashboard = ({match}) => (
 
-  <div style={styles.root}>
-    <h1>Project Dashboard</h1>
+  <SubPageTemplate title={'Project Dashboard'}>
     <p>Project id: {match.params.projectId}</p>
-  </div>
+  </SubPageTemplate>
 )
 
 const styles = {
-  root: {
-    color: colors.text,
-  },
 }
+
 export default ProjectDashboard

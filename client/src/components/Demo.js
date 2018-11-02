@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 
-import PublicPage from './PublicPage'
+import PublicPageTemplate from './PublicPageTemplate'
 
 import CreateProject from '../containers/CreateProject'
 import Project from '../containers/Project'
@@ -10,7 +10,7 @@ import ProjectDashboard from '../containers/ProjectDashboard'
 
 const Demo = ({ match }) => (
 
-  <PublicPage
+  <PublicPageTemplate
     title={'Demo'}
     >
     <div>
@@ -31,7 +31,7 @@ const Demo = ({ match }) => (
         component={ProjectDashboard}
       />
     </div>
-  </PublicPage>
+  </PublicPageTemplate>
 )
 
 export default Demo
