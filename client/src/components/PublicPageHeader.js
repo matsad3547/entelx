@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Overlay from './Overlay'
 import Header2 from './Header2'
 
-const PageHeader = ({title}) => (
+const PublicPageHeader = ({title}) => (
 
   <div style={styles.root}>
     <Overlay addlStyles={styles.content}/>
@@ -20,7 +20,7 @@ const PageHeader = ({title}) => (
 const styles = {
   root: {
     display: 'grid',
-    gridTemplateColumns: '[leftCol] auto [centerMargin] 20% [rightCol] 40% [end]',
+    gridTemplateColumns: '[leftCol] auto [centerMargin] 10% [rightCol] 45% [end]',
     gridTemplateRows: '[row1] 7em [ws1] 2em',
   },
   content: {
@@ -37,8 +37,8 @@ const styles = {
   }
 }
 
-PageHeader.propTypes = {
+PublicPageHeader.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
-export default PageHeader
+export default PublicPageHeader

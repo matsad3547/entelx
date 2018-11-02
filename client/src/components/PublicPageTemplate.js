@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Footer from './Footer'
-import PageHeader from './PageHeader'
+import PublicPageHeader from './PublicPageHeader'
 import { colors } from '../config/styles'
 
-const PublicPage = ({title, children}) => (
+const PublicPageTemplate = ({title, children}) => (
 
   <div style={styles.root}>
-    <PageHeader title={title} />
+    <PublicPageHeader title={title} />
     <div style={styles.content}>{children}</div>
     <Footer />
   </div>
@@ -27,9 +27,9 @@ const styles = {
   }
 }
 
-PageHeader.propTypes = {
+PublicPageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.node,
 }
 
-export default PublicPage
+export default PublicPageTemplate

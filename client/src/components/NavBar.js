@@ -15,9 +15,6 @@ const NavBar = () => (
       <DisableableLink to="/login" disabled={true} >
         Log In
       </DisableableLink>
-      <DisableableLink to="/signup" disabled={true} >
-        Sign Up
-      </DisableableLink>
     </nav>
   </div>
 )
@@ -28,7 +25,7 @@ const styles = {
   },
   nav: {
     display: 'inline-flex',
-    width: '18em',
+    width: '13em',
     justifyContent: 'space-between',
     padding: '1em 3em',
   },

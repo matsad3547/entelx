@@ -1,23 +1,17 @@
 import React from 'react'
 
-import { fontSize } from '../config/styles'
+import SubPageTemplate from '../components/SubPageTemplate'
 
 const ProjectRoi = ({match}) => {
 
   return (
-    <div>
-      <h1
-        style={styles}
-        >
-        Project Return on Investment
-      </h1>
-      <p>{match.params.projectId}</p>
-    </div>
+    <SubPageTemplate title={'Project Return on Investment'}>
+      <p>Project id: {match.params.projectId}</p>
+    </SubPageTemplate>
   )
 }
 
 const styles = {
-  fontSize: fontSize.h1,
 }
 
 export default ProjectRoi
