@@ -5,7 +5,6 @@ import Header3 from '../components/Header3'
 import Header4 from '../components/Header4'
 import DisableableLink from '../components/DisableableLink'
 
-
 const Project = ({match}) => {
 
   const {
