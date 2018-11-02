@@ -18,13 +18,12 @@ import {
 } from '../config/styles'
 
 import { roundToDigits } from '../utils/'
-// import Example from './Example'
 
 class CreateProject extends PureComponent {
 
   state = {
-    lat: 34.00000,
-    lng: -118.00000,
+    lat: 34.00002,
+    lng: -118.00003,
     projectName: '',
     energyCapacity: 5,
     powerCapacity: 2.5,
