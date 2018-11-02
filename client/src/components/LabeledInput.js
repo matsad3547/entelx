@@ -59,7 +59,6 @@ const styles = {
     border: 'none',
     borderRadius: 10,
   },
-
 }
 
 LabeledInput.propTypes = {

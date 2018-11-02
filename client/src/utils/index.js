@@ -7,38 +7,6 @@ export function fieldOnchange(e){
   })
 }
 
-export const parseResponse = res => res.json()
-
-export const handleError = (self, err) => self.setState({
-  loading: false,
-  showError: true,
-  error: err.message,
-})
-
-export const checkStatus = res => {
-  if (res.status >= 200 && res.status < 300) {
-    return res
-  }
-  else {
-    const error = new Error(`HTTP Error: ${res.status} ${res.statusText}`)
-    error.status = res.statusText
-    error.response = res
-    throw error
-  }
-}
-
-export const singleGetRequest = (path, options) => new Promise( (resolve, reject) => fetch(path, options)
-    .then(checkStatus)
-    .then(resolve)
-    .catch(reject)
-  )
-
-export const singlePostRequest = ( path, options) => new Promise( (resolve, reject) => fetch(path, options)
-    .then(checkStatus)
-    .then(resolve)
-    .catch(reject)
-  )
-
 export const formatMillis = (millis, tz, format) => moment.tz(millis, tz).format(format)
 
 export const findRelevantKeys = data => data.reduce( (arr, d) => {
@@ -47,6 +15,6 @@ export const findRelevantKeys = data => data.reduce( (arr, d) => {
 }, [])
 
 export const roundToDigits = (val, digits) => {
-  const rounder = Math.pow(10, digits)
+  const rounder = 10 ** digits
   return Math.round((val * rounder))/rounder
 }
