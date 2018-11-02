@@ -37,25 +37,33 @@ class Map extends PureComponent {
 
     const { map } = this.state
 
-    const { children } = this.props
+    const {
+      children,
+      size,
+    } = this.props
 
     const childrenWithProps = React.Children.map(children, child =>
       React.cloneElement(child, { map, })
     )
 
     return (
-      <div style={styles.root} ref={ node => this.mapContainer = node } >
+      <div style={getRootStyles(size)} ref={ node => this.mapContainer = node } >
         {map ? childrenWithProps : null}
       </div>
     )
   }
 }
 
+const getRootStyles = size => ({
+  ...styles.root,
+  ...size,
+})
+
 const styles = {
   root: {
     display: 'block',
-    width: '45vw',
-    height: '90vh',
+    // width: '45vw',
+    // height: '90vh',
     textAlign: 'justify',
   }
 }
@@ -63,6 +71,10 @@ const styles = {
 Map.propTypes = {
   center: PropTypes.arrayOf(PropTypes.number), //[lng, lat]
   zoom: PropTypes.number,
+  size: PropTypes.shape({
+    width: PropTypes.string,
+    height: PropTypes.string,
+  })
 }
 
 export default Map

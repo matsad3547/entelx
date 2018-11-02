@@ -94,7 +94,7 @@ class CreateProject extends PureComponent {
             label={'Project Name'}
             placeholder={'"My Project"'}
             value={projectName}
-            inputWidth={'90%'}
+            inputWidth={'23em'}
             onChange={this.setField}
             />
           <LabeledInput
@@ -102,7 +102,7 @@ class CreateProject extends PureComponent {
             label={'Project Energy Capacity'}
             type={'number'}
             value={energyCapacity}
-            inputWidth={'10%'}
+            inputWidth={'4em'}
             unit={'MWh'}
             onChange={this.setField}
             />
@@ -111,7 +111,7 @@ class CreateProject extends PureComponent {
             label={'Project Power Capacity'}
             type={'number'}
             value={powerCapacity}
-            inputWidth={'10%'}
+            inputWidth={'4em'}
             unit={'MW'}
             onChange={this.setField}
             />
@@ -125,7 +125,7 @@ class CreateProject extends PureComponent {
               label={'Address'}
               placeholder={'"123 Main St. Ste 456"'}
               value={address}
-              inputWidth={'28em'}
+              inputWidth={'23em'}
               onChange={this.setField}
               />
             <LabeledInput
@@ -182,6 +182,11 @@ class CreateProject extends PureComponent {
         <Map
           center={[lng, lat]}
           zoom={5}
+          size={{
+            width: '45%',
+            minWidth: '30rem',
+            height: '90vh',
+          }}
           >
           <MapLocationReader
             getLatLng={this.setLatLng}
@@ -200,9 +205,11 @@ const styles = {
     justifyContent: 'space-between',
     color: colors.text,
     padding: '2em 0',
+    width: '100%',
   },
   form: {
     width: '45%',
+    minWidth: '30rem',
     textAlign: 'left',
   },
   location: {
