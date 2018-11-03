@@ -7,8 +7,13 @@ export const fontSize = {
   label: '1.1em',
 }
 
+export const rgbColors = {
+  photoOverlay: [0, 71, 23],
+  header: [0, 147, 49],
+}
+
 export const colors = {
-  text: '#383D36',
+  text: '#363D38',
   disabled: '#838383',
   field: '#e2e2e2',
   white: '#fff',

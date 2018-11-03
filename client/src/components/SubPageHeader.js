@@ -4,10 +4,15 @@ import PropTypes from 'prop-types'
 import Overlay from './Overlay'
 import Header3 from './Header3'
 
+import { rgbColors } from '../config/styles'
+
 const SubPageHeader = ({title}) => (
 
   <div style={styles.root}>
-    <Overlay addlStyles={styles.content}/>
+    <Overlay
+      addlStyles={styles.content}
+      colorArr={rgbColors.header}
+      />
     <div style={{
         ...styles.content,
         ...styles.text,

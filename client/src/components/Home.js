@@ -7,7 +7,10 @@ import Header4 from './Header4'
 import Overlay from './Overlay'
 import Footer from './Footer'
 
-import { colors } from '../config/styles'
+import {
+  colors,
+  rgbColors,
+} from '../config/styles'
 
 const companyName = 'Enewably'
 // http://unsplash.it/1200x800
@@ -19,9 +22,12 @@ const Home = () => (
       <img
         style={styles.logoImg}
         alt="solar panels"
-        src=""
+        src="/images/solarPanels1.jpeg"
         />
-      <Overlay addlStyles={styles.logo}/>
+      <Overlay
+        addlStyles={styles.logo}
+        colorArr={rgbColors.photoOverlay}
+        />
       <div style={{
           ...styles.logo,
           ...styles.logoText,
@@ -37,9 +43,12 @@ const Home = () => (
       <img
         style={styles.sub1Img}
         alt="wind turbines"
-        src=""
+        src="/images/windTurbines3.jpeg"
         />
-      <Overlay addlStyles={styles.sub1}/>
+      <Overlay
+        addlStyles={styles.sub1}
+        colorArr={rgbColors.photoOverlay}
+        />
       <div style={{
           ...styles.sub1,
           ...styles.subText,
@@ -51,7 +60,10 @@ const Home = () => (
           content={'But the transition to sustainable energy must move faster'}
           />
       </div>
-      <Overlay addlStyles={styles.banner}/>
+      <Overlay
+        addlStyles={styles.banner}
+        colorArr={rgbColors.header}
+        />
       <div style={{
           ...styles.banner,
           ...styles.bannerText,
@@ -86,7 +98,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftCol1] 22% [leftCol2] 22% [centerMargin] 10% [rightCol1] 22% [rightCol2] auto [end]',
-    gridTemplateRows: '[row1] auto [ws1] 10px [row2] auto [ws2] 80px [row3] auto [row4] auto [row5] auto [ws5] 50px',
+    gridTemplateRows: '[row1] auto [ws1] 50px [row2] auto [ws2] 50px [row3] auto [row4] auto [row5] auto [ws5] 50px',
   },
   logo: {
     gridColumn: 'leftCol1 / centerMargin',
@@ -104,7 +116,9 @@ const styles = {
     width: '100%',
     gridColumn: 'leftCol1 / end',
     gridRowStart: 'row1',
-    height: 450,
+    height: '85vh',
+    objectFit: 'cover',
+    objectPosition: '100% 70%',
   },
   sub1: {
     gridColumn: 'rightCol1 / end',
@@ -114,7 +128,9 @@ const styles = {
     width: '100%',
     gridColumn: 'leftCol1 / end',
     gridRowStart: 'row2',
-    height: 400,
+    height: '70vh',
+    objectFit: 'cover',
+    objectPosition: '100% 50%',
   },
   subText: {
     textAlign: 'right',
