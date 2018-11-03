@@ -27,7 +27,7 @@ const styles = {
     display: 'inline-flex',
     width: '13em',
     justifyContent: 'space-between',
-    padding: '1em 3em',
+    padding: '1.5em 3em',
   },
 }
 

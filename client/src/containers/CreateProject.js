@@ -182,11 +182,7 @@ class CreateProject extends PureComponent {
         <Map
           center={[lng, lat]}
           zoom={5}
-          size={{
-            width: '45%',
-            minWidth: '30rem',
-            height: '90vh',
-          }}
+          style={styles.map}
           >
           <MapLocationReader
             getLatLng={this.setLatLng}
@@ -201,14 +197,16 @@ class CreateProject extends PureComponent {
 const styles = {
   root: {
     display: 'flex',
+    boxSizing: 'border-box',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     color: colors.text,
-    padding: '2em 0',
+    padding: '2em 3em',
     width: '100%',
   },
   form: {
-    width: '45%',
+    display: 'block',
+    width: '48%',
     minWidth: '30rem',
     textAlign: 'left',
   },
@@ -229,6 +227,11 @@ const styles = {
   latLng: {
     display: 'inline-flex',
     justifyContent: 'space-between',
-  }
+  },
+  map: {
+    width: '48%',
+    minWidth: '30rem',
+    height: '110vh',
+  },
 }
 export default withRouter(CreateProject)
