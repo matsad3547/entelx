@@ -11,7 +11,8 @@ const PublicPageHeader = ({title}) => (
   <div style={styles.root}>
     <Overlay
       addlStyles={styles.content}
-      colorArr={rgbColors.header}
+      topColorArr={[...rgbColors.header, .2]}
+      bottomColorArr={[...rgbColors.header, .95]}
       />
     <div style={{
         ...styles.content,
