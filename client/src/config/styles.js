@@ -9,7 +9,9 @@ export const fontSize = {
 
 export const rgbColors = {
   photoOverlay: [0, 71, 23],
-  header: [0, 147, 49],
+  // header: [33, 94, 54],
+  header: [0, 135, 45],
+  // header: [0, 147, 49],
 }
 
 export const colors = {
@@ -18,6 +20,9 @@ export const colors = {
   field: '#e2e2e2',
   white: '#fff',
   brightGreen: '#23B253', //hsb(140 80 70)
+  middleGreen: '#00872D',
+  deepGreen: '#046D27',
+  darkGreen: '#001E0A',
 }
 
 export const buttons = {

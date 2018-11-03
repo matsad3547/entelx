@@ -26,7 +26,8 @@ const Home = () => (
         />
       <Overlay
         addlStyles={styles.logo}
-        colorArr={rgbColors.photoOverlay}
+        topColorArr={[...rgbColors.photoOverlay, .2]}
+        bottomColorArr={[...rgbColors.photoOverlay, .95]}
         />
       <div style={{
           ...styles.logo,
@@ -47,7 +48,8 @@ const Home = () => (
         />
       <Overlay
         addlStyles={styles.sub1}
-        colorArr={rgbColors.photoOverlay}
+        topColorArr={[...rgbColors.photoOverlay, .2]}
+        bottomColorArr={[...rgbColors.photoOverlay, .95]}
         />
       <div style={{
           ...styles.sub1,
@@ -62,7 +64,8 @@ const Home = () => (
       </div>
       <Overlay
         addlStyles={styles.banner}
-        colorArr={rgbColors.header}
+        topColorArr={[...rgbColors.photoOverlay, .95]}
+        bottomColorArr={[...rgbColors.header, .5]}
         />
       <div style={{
           ...styles.banner,
@@ -142,18 +145,22 @@ const styles = {
   banner: {
     gridColumn: 'leftCol1 / end',
     gridRowStart: 'row3',
+    // background: colors.deepGreen,
   },
   bannerText: {
     alignSelf: 'end',
     padding: '2em',
     zIndex: 2,
     color: '#fff',
+    // color: colors.text,
   },
   mission: {
     gridColumn: 'leftCol1 / end',
     gridRowStart: 'row4',
     padding: '1em 3em',
     color: colors.text,
+    zIndex: 2,
+    // color: '#fff',
   },
   purpose: {
     gridColumn: 'leftCol1 / end',

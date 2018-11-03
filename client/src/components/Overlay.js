@@ -3,21 +3,22 @@ import PropTypes from 'prop-types'
 
 const Overlay = ({
   addlStyles,
-  colorArr,
+  topColorArr,
+  bottomColorArr,
 }) => (
 
   <div
     style={{
-      ...getStyles(colorArr),
+      ...getStyles(topColorArr, bottomColorArr),
       ...addlStyles,
     }}
   />
 )
 
-const getStyles = colorArr => ({
+const getStyles = (topColorArr, bottomColorArr) => ({
   zIndex: 1,
   height: '100%',
-  backgroundImage: `linear-gradient( rgba(${colorArr[0]}, ${colorArr[1]}, ${colorArr[2]}, .2), rgba(${colorArr[0]}, ${colorArr[1]}, ${colorArr[2]}, .95))`,
+  backgroundImage: `linear-gradient( rgba(${topColorArr[0]}, ${topColorArr[1]}, ${topColorArr[2]}, ${topColorArr[3]}),  rgba(${bottomColorArr[0]}, ${bottomColorArr[1]}, ${bottomColorArr[2]}, ${bottomColorArr[3]}))`,
 })
 
 Overlay.propTypes = {
