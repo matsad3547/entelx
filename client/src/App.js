@@ -42,8 +42,8 @@ const styles = {
   root: {
     fontFamily: 'Montserrat, Helvetica, sans-serif',
     fontWeight: 200,
-    fontSize: 16,
-    // fontSize: '1.5vw',
+    // fontSize: 16,
+    fontSize: '1.5vw',
     textAlign: 'center',
   },
 }
