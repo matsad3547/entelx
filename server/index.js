@@ -16,7 +16,8 @@ const {
 } = require('./product/')
 
 const {
-  createProject
+  createProject,
+  deleteProject,
 } = require('./project/')
 
 const { getNodes } = require('./processes/')
@@ -52,5 +53,6 @@ app.post('/login', login)
 app.get('/get_nodes', getNodes)
 
 app.post('/create_project', createProject)
+app.delete('/delete_project', deleteProject)
 
 module.exports = app
