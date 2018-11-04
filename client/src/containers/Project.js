@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffects} from 'react'
 import PropTypes from 'prop-types'
 
 import Header4 from '../components/Header4'
