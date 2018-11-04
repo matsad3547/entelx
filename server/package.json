@@ -10,5 +10,8 @@
     "rxjs": "^5.5.5",
     "unzipper": "^0.9.3",
     "xml-js": "^1.6.7"
+  },
+  "devDependencies": {
+    "supertest": "^3.3.0"
   }
 }

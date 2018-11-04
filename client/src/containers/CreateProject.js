@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, useState } from 'react'
 import { withRouter } from 'react-router'
 
 import Map from './map/Map'
@@ -17,181 +17,189 @@ import {
   fontSize,
 } from '../config/styles'
 
-import { roundToDigits } from '../utils/'
+import {
+  singlePostRequest,
+  parseResponse,
+} from '../utils/requestUtils'
 
-class CreateProject extends PureComponent {
+import {
+  roundToDigits,
+  setField,
+} from '../utils/'
 
-  state = {
-    lat: 34.00002,
-    lng: -118.00003,
-    projectName: '',
-    energyCapacity: 5,
-    powerCapacity: 2.5,
-    address: '',
-    city: '',
-    state: 'CA',
-    zip: '',
+
+const CreateProject = ({
+  match,
+  history,
+}) => {
+
+  const [lat, setLat] = useState(40.00002)
+  const [lng, setLng] = useState(-119.00003)
+  const [name, setProjectName] = useState('')
+  const [energy, setEnergyCapacity] = useState(5)
+  const [power, setPowerCapacity] = useState(2.5)
+  const [address, setAddress] = useState('')
+  const [city, setCity] = useState('')
+  const [state, setState] = useState('CA')
+  const [zip, setZip] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const setLatLng = ({lat, lng}) => {
+    setLat(roundToDigits(lat, 5))
+    setLng(roundToDigits(lng, 5))
   }
 
-  setField = (e, field) => {
-    const value = e.target.value
-    this.setState({
-      [field]: value,
-    })
-  }
+  const setError = err => console.error(`There was an error creating your project: ${err}`)
 
-  setLatLng = ({lat, lng}) => {
-    this.setState({
-      lat: roundToDigits(lat, 5),
-      lng: roundToDigits(lng, 5),
-    })
-  }
+  const onSubmit = () => {
 
-  dummyPromise = millis => new Promise( (resolve, reject) => {
-    setTimeout( resolve, millis )
-  })
+    setLoading(true)
 
-  onSubmit = () => {
-
-    const {
-      match,
-      history
-    } = this.props
-
-    const projectId = 123
-    // TODO send form data to the backend, build the project, send back the project id number
-
-    this.dummyPromise(2000)
-      .then( () => history.push(`${match.url}/project/${projectId}`))
-  }
-
-  render() {
-
-    const {
+    const body = JSON.stringify({
+      name,
+      address,
+      power,
+      energy,
       lat,
       lng,
-      projectName,
-      energyCapacity,
-      powerCapacity,
-      address,
-      city,
-      state,
-      zip,
-    } = this.state
+      type: match.url.includes('demo') ? 'demo' : 'test'
+    })
 
-    return (
+    const request = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body,
+    }
 
-      <div style={styles.root}>
+    singlePostRequest('/create_project', request)
+      .then(parseResponse)
+      .then( res => {
+        setLoading(false)
+        history.push(`${match.url}/project/${res.id[0]}`)
+      })
+      .catch( err => {
+        setLoading(false)
+        setError(err)
+      })
+  }
+
+  return (
+
+    <div style={styles.root}>
+      <div style={styles.header}>
+        <Header3 content={'Start by specifying your project'} />
+      </div>
+      <div style={styles.form}>
         <div style={styles.header}>
-          <Header3 content={'Start by specifying your project'} />
+          <Header4 content={'General'} />
         </div>
-        <div style={styles.form}>
+        <LabeledInput
+          name={'projectName'}
+          label={'Project Name'}
+          placeholder={'"My Project"'}
+          value={name}
+          inputWidth={'23em'}
+          onChange={e => setField(e, setProjectName)}
+          />
+        <LabeledInput
+          name={'energyCapacity'}
+          label={'Project Energy Capacity'}
+          type={'number'}
+          value={energy}
+          inputWidth={'4em'}
+          unit={'MWh'}
+          min={0}
+          step={0.1}
+          onChange={e => setField(e, setEnergyCapacity)}
+          />
+        <LabeledInput
+          name={'powerCapacity'}
+          label={'Project Power Capacity'}
+          type={'number'}
+          value={power}
+          inputWidth={'4em'}
+          unit={'MW'}
+          min={0}
+          step={0.1}
+          onChange={e => setField(e, setPowerCapacity)}
+          />
+        <div style={styles.location}>
           <div style={styles.header}>
-            <Header4 content={'General'} />
+            <Header4 content={'Location'} />
           </div>
+          <p style={styles.label}>Enter an address or pick a location on the map</p>
           <LabeledInput
-            name={'projectName'}
-            label={'Project Name'}
-            placeholder={'"My Project"'}
-            value={projectName}
+            name={'address'}
+            label={'Address'}
+            placeholder={'"123 Main St. Ste 456"'}
+            value={address}
             inputWidth={'23em'}
-            onChange={this.setField}
+            onChange={e => setField(e, setAddress)}
             />
           <LabeledInput
-            name={'energyCapacity'}
-            label={'Project Energy Capacity'}
-            type={'number'}
-            value={energyCapacity}
-            inputWidth={'4em'}
-            unit={'MWh'}
-            onChange={this.setField}
+            name={'city'}
+            label={'City'}
+            placeholder={'"Los Angeles"'}
+            value={city}
+            inputWidth={'18em'}
+            onChange={e => setField(e, setCity)}
             />
           <LabeledInput
-            name={'powerCapacity'}
-            label={'Project Power Capacity'}
-            type={'number'}
-            value={powerCapacity}
-            inputWidth={'4em'}
-            unit={'MW'}
-            onChange={this.setField}
+            name={'state'}
+            label={'State'}
+            value={state}
+            inputWidth={'5em'}
+            onChange={setState}
+            disabled={true}
             />
-          <div style={styles.location}>
-            <div style={styles.header}>
-              <Header4 content={'Location'} />
-            </div>
-            <p style={styles.label}>Enter an address or pick a location on the map</p>
+          <LabeledInput
+            name={'zip'}
+            label={'Zip Code'}
+            placeholder={'"90001"'}
+            value={zip}
+            inputWidth={'10em'}
+            onChange={e => setField(e, setZip)}
+            />
+          <div style={styles.latLng}>
             <LabeledInput
-              name={'address'}
-              label={'Address'}
-              placeholder={'"123 Main St. Ste 456"'}
-              value={address}
-              inputWidth={'23em'}
-              onChange={this.setField}
-              />
-            <LabeledInput
-              name={'city'}
-              label={'City'}
-              placeholder={'"Los Angeles"'}
-              value={city}
-              inputWidth={'18em'}
-              onChange={this.setField}
-              />
-            <LabeledInput
-              name={'state'}
-              label={'State'}
-              value={state}
-              inputWidth={'5em'}
-              onChange={this.setField}
+              name={'lat'}
+              label={'Latitude'}
+              type={'number'}
+              value={lat}
+              inputWidth={'6em'}
               disabled={true}
               />
             <LabeledInput
-              name={'zip'}
-              label={'Zip Code'}
-              placeholder={'"90001"'}
-              value={zip}
-              inputWidth={'10em'}
-              onChange={this.setField}
+              name={'lng'}
+              label={'Longitude'}
+              type={'number'}
+              value={lng}
+              inputWidth={'6em'}
+              disabled={true}
               />
-            <div style={styles.latLng}>
-              <LabeledInput
-                name={'lat'}
-                label={'Latitude'}
-                type={'number'}
-                value={lat}
-                inputWidth={'6em'}
-                disabled={true}
-                onChange={this.setField}
-                />
-              <LabeledInput
-                name={'lng'}
-                label={'Longitude'}
-                type={'number'}
-                value={lng}
-                inputWidth={'6em'}
-                disabled={true}
-                onChange={this.setField}
-                />
-            </div>
           </div>
-          <Button
-            value={'SUBMIT'}
-            type="success"
-            onClick={this.onSubmit}
-            />
         </div>
-        <Map
-          center={[lng, lat]}
-          zoom={5}
-          style={styles.map}
-          >
-          <MapLocationReader
-            getLatLng={this.setLatLng}
+        <Button
+          value={'SUBMIT'}
+          type="success"
+          onClick={onSubmit}
           />
-          {/*<MapNodeRenderer />*/}
-        </Map>
       </div>
-    )
-  }
+      <Map
+        center={[lng, lat]}
+        zoom={5}
+        style={styles.map}
+        >
+        <MapLocationReader
+          getLatLng={setLatLng}
+        />
+        {/*<MapNodeRenderer />*/}
+      </Map>
+    </div>
+  )
 }
 
 const styles = {
@@ -231,7 +239,7 @@ const styles = {
   map: {
     width: '48%',
     minWidth: '30rem',
-    height: '110vh',
+    height: '130vh',
   },
 }
 export default withRouter(CreateProject)
