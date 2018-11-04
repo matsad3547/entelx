@@ -18,3 +18,8 @@ export const roundToDigits = (val, digits) => {
   const rounder = 10 ** digits
   return Math.round((val * rounder))/rounder
 }
+
+export const setField = (e, stateFunction) => {
+  e.preventDefault()
+  stateFunction(e.target.value)
+}

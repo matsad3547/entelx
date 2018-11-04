@@ -12,9 +12,13 @@ const {
 const {
   getCaiso,
   caisoNodeEvaluator,
-} = require('./product')
+} = require('./product/')
 
-const { getNodes } = require('./processes')
+const {
+  createProject
+} = require('./project/')
+
+const { getNodes } = require('./processes/')
 
 //for testing python
 // const { demoProcess } = require('./processes/')
@@ -52,3 +56,7 @@ app.post('/login', login)
 //   })
 // })
 app.get('/get_nodes', getNodes)
+
+app.post('/create_project', createProject)
+
+module.exports = app

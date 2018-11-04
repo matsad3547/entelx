@@ -15,6 +15,9 @@ const LabeledInput = ({
   inputWidth = 'auto',
   unit = '',
   disabled = false,
+  min = -1000,
+  max = 1000,
+  step = 1,
   onChange,
 }) => (
 
@@ -30,6 +33,9 @@ const LabeledInput = ({
       placeholder={placeholder}
       value={value}
       disabled={disabled}
+      min={ type === 'number' ? min : undefined }
+      max={ type === 'number' ? max : undefined }
+      step={ type === 'number' ? step : undefined }
       onChange={ e => onChange(e, name) }
       />
     <span>{unit}</span>

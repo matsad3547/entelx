@@ -23,7 +23,8 @@ const getStyles = (topColorArr, bottomColorArr) => ({
 
 Overlay.propTypes = {
   addlStyles: PropTypes.object,
-  colorArr: PropTypes.arrayOf(PropTypes.number).isRequired,
+  topColorArr: PropTypes.arrayOf(PropTypes.number).isRequired,
+  bottomColorArr: PropTypes.arrayOf(PropTypes.number).isRequired,
 }
 
 export default Overlay

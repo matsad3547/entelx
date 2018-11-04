@@ -6,7 +6,7 @@ const createUser = (req, res) => {
     username: req.body.username,
     password: req.body.password,
   })
-    .then( () => res.sendStatus(200))
+    .then( () => res.sendStatus(200) )
     .catch( err => console.error(`Error at createUser: ${err}`))
 }
 
