@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config()
 const bodyParser = require('body-parser')
 
 const eia = require('./app/eiaRequest')
+
 const {
   createUser,
   login,
@@ -47,14 +48,7 @@ app.post('/caiso_node_evaluator', caisoNodeEvaluator)
 
 app.post('/createUser', createUser)
 app.post('/login', login)
-// app.get('/api', (req, res) => {
-//   //TODO: This is where the database goes
-//   res.json({
-//     stuff: 'things',
-//     cheese: 'poofs',
-//     eia,
-//   })
-// })
+
 app.get('/get_nodes', getNodes)
 
 app.post('/create_project', createProject)

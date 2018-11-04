@@ -8,8 +8,8 @@ const ProjectDashboard = ({match}) => (
     <p>Project id: {match.params.projectId}</p>
   </SubPageTemplate>
 )
-
-const styles = {
-}
+ 
+// const styles = {
+// }
 
 export default ProjectDashboard

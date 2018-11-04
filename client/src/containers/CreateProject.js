@@ -1,4 +1,4 @@
-import React, { PureComponent, useState } from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router'
 
 import Map from './map/Map'
@@ -11,6 +11,8 @@ import LabeledInput from '../components/LabeledInput'
 import Header3 from '../components/Header3'
 import Header4 from '../components/Header4'
 import Button from '../components/button/'
+
+import Loading from '../components/loading/'
 
 import {
   colors,
@@ -26,7 +28,6 @@ import {
   roundToDigits,
   setField,
 } from '../utils/'
-
 
 const CreateProject = ({
   match,
@@ -89,6 +90,7 @@ const CreateProject = ({
   return (
 
     <div style={styles.root}>
+      { loading && <Loading message={'Creating your project...'} />}
       <div style={styles.header}>
         <Header3 content={'Start by specifying your project'} />
       </div>
@@ -239,7 +241,7 @@ const styles = {
   map: {
     width: '48%',
     minWidth: '30rem',
-    height: '130vh',
+    height: '100vh',
   },
 }
 export default withRouter(CreateProject)
