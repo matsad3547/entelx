@@ -53,32 +53,32 @@ const Project = ({match, history}) => {
       })
   }
 
-  // useEffect( () => {
-  //   setLoading(true)
-  //
-  //   const body = JSON.stringify({id: params.projectId})
-  //
-  //   const request = {
-  //     method: 'GET',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body,
-  //   }
-  //
-  //   singleRequest('/get_project', request)
-  //     .then(parseResponse)
-  //     .then( res => console.log('project:', res))
-  //     // .then( res => {
-  //     //   setLoading(false)
-  //     //   history.push(`${cleanUrl}`)
-  //     // })
-  //     .catch( err => {
-  //       setLoading(false)
-  //       console.error(`There was an error deleting your project: ${err}`)
-  //     })
-  // })
+  useEffect( () => {
+    // setLoading(true)
+
+    const body = JSON.stringify({id: params.projectId})
+
+    const request = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body,
+    }
+
+    singleRequest('/retrieve_project', request)
+      .then(parseResponse)
+      .then( res => console.log('project:', res))
+      // .then( res => {
+      //   setLoading(false)
+      //   history.push(`${cleanUrl}`)
+      // })
+      .catch( err => {
+        // setLoading(false)
+        console.error(`There was an error retrieving your project: ${err}`)
+      })
+  })
 
   return (
     <SubPageTemplate title={'Project Home'}>
