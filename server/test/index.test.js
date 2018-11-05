@@ -7,7 +7,7 @@ const knex = require('../store/')
 const {
   createProject,
   deleteProject,
-  getProject,
+  retrieveProject,
 } = require('../project/')
 
 const app = express()
@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 
 app.post('/create_project', createProject)
 app.delete('/delete_project', deleteProject)
-app.get('/get_project', getProject)
+app.post('/retrieve_project', retrieveProject)
 
 describe('Project routes should', () => {
 
@@ -65,7 +65,7 @@ describe('Project routes should', () => {
 
   test('respond with a resource not found for /GET', done => {
     request(app)
-      .get('/get_project')
+      .post('/retrieve_project')
       .send({name: 'Test Project'})
       .set('Accept', 'application/json')
       .expect(404)
