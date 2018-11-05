@@ -20,7 +20,6 @@ const addProject = ({
         })
         .debug()
         .returning('id')
-        .then( id => id )
         .catch( err => console.error(`Error at addProject: ${err}`))
 
 module.exports = addProject

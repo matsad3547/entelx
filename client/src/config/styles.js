@@ -23,11 +23,16 @@ export const colors = {
   middleGreen: '#00872D',
   deepGreen: '#046D27',
   darkGreen: '#001E0A',
+  red: '#CC333F',
 }
 
 export const buttons = {
   success: {
     color: colors.white,
     background: colors.brightGreen,
+  },
+  danger: {
+    color: colors.white,
+    background: colors.red,
   },
 }
