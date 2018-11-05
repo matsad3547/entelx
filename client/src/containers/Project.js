@@ -1,22 +1,61 @@
 import React, {useState, useEffects} from 'react'
+import { withRouter } from 'react-router'
+
 import PropTypes from 'prop-types'
 
 import Header4 from '../components/Header4'
 import DisableableLink from '../components/DisableableLink'
 import SubPageTemplate from '../components/SubPageTemplate'
+import Button from '../components/button/'
+import Loading from '../components/loading/'
 
-const Project = ({match}) => {
+import { singleRequest } from '../utils/requestUtils'
+
+const Project = ({match, history}) => {
 
   const {
     url,
     params,
   } = match
 
-  const cleanUrl = url.replace('/project/' + params.projectId, '')
+  const { projectId } = params
+
+  const [loading, setLoading] = useState(false)
+
+  const setError = err => console.error(`There was an error deleting your project: ${err}`)
+
+  const cleanUrl = url.replace(`/project/${projectId}`, '')
+
+  const onDelete = () => {
+
+    setLoading(true)
+
+    const body = JSON.stringify({id: params.projectId})
+
+    const request = {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body,
+    }
+
+    singleRequest('/delete_project', request)
+      .then( res => {
+        setLoading(false)
+        history.push(`${cleanUrl}`)
+      })
+      .catch( err => {
+        setLoading(false)
+        setError(err)
+      })
+  }
 
   return (
     <SubPageTemplate title={'Project Home'}>
-      <p>Project {match.params.projectId}</p>
+      { loading && <Loading message={`Deleting Project ${projectId}...`} />}
+      <p>Project {projectId}</p>
       <div style={styles.root}>
         <nav style={styles.nav}>
           <DisableableLink to={`${cleanUrl}/roi/${params.projectId}`}>
@@ -26,6 +65,11 @@ const Project = ({match}) => {
             <Header4 content="Project Dashboard" />
           </DisableableLink>
         </nav>
+        <Button
+          value={'DELETE PROJECT'}
+          type="danger"
+          onClick={onDelete}
+          />
       </div>
     </SubPageTemplate>
   )
@@ -44,4 +88,4 @@ Project.propTypes = {
   content: PropTypes.string,
 }
 
-export default Project
+export default withRouter(Project)

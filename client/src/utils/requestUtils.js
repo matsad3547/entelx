@@ -18,13 +18,7 @@ export const checkStatus = res => {
   }
 }
 
-export const singleGetRequest = (path, options) => new Promise( (resolve, reject) => fetch(path, options)
-    .then(checkStatus)
-    .then(resolve)
-    .catch(reject)
-  )
-
-export const singlePostRequest = ( path, options) => new Promise( (resolve, reject) => fetch(path, options)
+export const singleRequest = (path, options) => new Promise( (resolve, reject) => fetch(path, options)
     .then(checkStatus)
     .then(resolve)
     .catch(reject)

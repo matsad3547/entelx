@@ -11,7 +11,6 @@ import LabeledInput from '../components/LabeledInput'
 import Header3 from '../components/Header3'
 import Header4 from '../components/Header4'
 import Button from '../components/button/'
-
 import Loading from '../components/loading/'
 
 import {
@@ -20,7 +19,7 @@ import {
 } from '../config/styles'
 
 import {
-  singlePostRequest,
+  singleRequest,
   parseResponse,
 } from '../utils/requestUtils'
 
@@ -75,7 +74,7 @@ const CreateProject = ({
       body,
     }
 
-    singlePostRequest('/create_project', request)
+    singleRequest('/create_project', request)
       .then(parseResponse)
       .then( res => {
         setLoading(false)

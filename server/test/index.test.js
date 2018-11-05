@@ -49,39 +49,15 @@ describe('Project routes should', () => {
       })
   })
 
-  test('respond with success for /DELETE', done => {
+  test('respond with a resource not found for /DELETE', done => {
     request(app)
       .delete('/delete_project')
       .send({type: 'demo'})
       .set('Accept', 'application/json')
-      .expect(200)
+      .expect(404)
       .end((err, res) => {
         if (err) return done(err)
         done()
       })
-      // .post('/create_project')
-      // .send({
-      //   name: 'Test Project',
-      //   address: '123 Main St.',
-      //   power: 2.557,
-      //   energy: 4,
-      //   lat: 39.5,
-      //   lng: -121.5,
-      //   type: 'demo',
-      // })
-      // .set('Accept', 'application/json')
-      // .expect(200)
-      // .then( () => {
-      //   request(app)
-      //     .delete('/delete_project')
-      //     .send({type: 'demo'})
-      //     .set('Accept', 'application/json')
-      //     .expect(200)
-      //     .end((err, res) => {
-      //       if (err) return done(err)
-      //       done()
-      //     })
-      // })
-
   })
 })

@@ -54,5 +54,3 @@ app.get('/get_nodes', getNodes)
 
 app.post('/create_project', createProject)
 app.delete('/delete_project', deleteProject)
-
-module.exports = app
