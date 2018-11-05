@@ -1,4 +1,4 @@
-import React, {useState, useEffects} from 'react'
+import React, {useState, useEffect} from 'react'
 import { withRouter } from 'react-router'
 
 import PropTypes from 'prop-types'
@@ -9,7 +9,10 @@ import SubPageTemplate from '../components/SubPageTemplate'
 import Button from '../components/button/'
 import Loading from '../components/loading/'
 
-import { singleRequest } from '../utils/requestUtils'
+import {
+  singleRequest,
+  parseResponse,
+} from '../utils/requestUtils'
 
 const Project = ({match, history}) => {
 
@@ -21,8 +24,6 @@ const Project = ({match, history}) => {
   const { projectId } = params
 
   const [loading, setLoading] = useState(false)
-
-  const setError = err => console.error(`There was an error deleting your project: ${err}`)
 
   const cleanUrl = url.replace(`/project/${projectId}`, '')
 
@@ -48,13 +49,40 @@ const Project = ({match, history}) => {
       })
       .catch( err => {
         setLoading(false)
-        setError(err)
+        console.error(`There was an error deleting your project: ${err}`)
       })
   }
 
+  // useEffect( () => {
+  //   setLoading(true)
+  //
+  //   const body = JSON.stringify({id: params.projectId})
+  //
+  //   const request = {
+  //     method: 'GET',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body,
+  //   }
+  //
+  //   singleRequest('/get_project', request)
+  //     .then(parseResponse)
+  //     .then( res => console.log('project:', res))
+  //     // .then( res => {
+  //     //   setLoading(false)
+  //     //   history.push(`${cleanUrl}`)
+  //     // })
+  //     .catch( err => {
+  //       setLoading(false)
+  //       console.error(`There was an error deleting your project: ${err}`)
+  //     })
+  // })
+
   return (
     <SubPageTemplate title={'Project Home'}>
-      { loading && <Loading message={`Deleting Project ${projectId}...`} />}
+      { loading && <Loading message={''} />}
       <p>Project {projectId}</p>
       <div style={styles.root}>
         <nav style={styles.nav}>
