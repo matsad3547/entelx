@@ -5,6 +5,4 @@ const removeProject = query => knex('project')
   .del()
   .then( rows => rows > 0 ? {success: true} : {success: false} )
 
-  // .exec( val => console.log('val at remove:', val) )
-
 module.exports = removeProject
