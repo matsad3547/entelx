@@ -18,6 +18,7 @@ const {
 const {
   createProject,
   deleteProject,
+  getProject,
 } = require('./project/')
 
 const { getNodes } = require('./processes/')
@@ -54,3 +55,4 @@ app.get('/get_nodes', getNodes)
 
 app.post('/create_project', createProject)
 app.delete('/delete_project', deleteProject)
+app.get('/get_project', getProject)
