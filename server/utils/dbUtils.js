@@ -5,6 +5,7 @@ const findByLatLng = (
   lng,
   table,
 ) => new Promise( (resolve, reject) => {
+  console.time('findByLatLng')
 
   const query = (
     minLat,
@@ -29,6 +30,7 @@ const findByLatLng = (
         return null
       }
       else {
+        console.timeEnd('findByLatLng')
         resolve(matches)
       }
     })

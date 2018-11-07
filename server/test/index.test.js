@@ -27,29 +27,29 @@ describe('Project routes should', () => {
     mockDb.unmock(knex)
   })
 
-  test('respond with success for /POST', done => {
-    request(app)
-      .post('/create_project')
-      .send({
-        name: 'Test Project',
-        address: '123 Main St.',
-        power: 2.557,
-        energy: 4,
-        lat: 39.5,
-        lng: -121.5,
-        type: 'demo',
-      })
-      .set('Accept', 'application/json')
-      .expect(200)
-      // TODO it would be nice to return an id value as it does when writing to the real database
-      // .expect(200, {
-      //   id: [0],
-      // })
-      .end((err, res) => {
-        if (err) return done(err)
-        done()
-      })
-  })
+  // test('respond with success for /POST', done => {
+  //   request(app)
+  //     .post('/create_project')
+  //     .send({
+  //       name: 'Test Project',
+  //       address: '123 Main St.',
+  //       power: 2.557,
+  //       energy: 4,
+  //       lat: 39.5,
+  //       lng: -121.5,
+  //       type: 'demo',
+  //     })
+  //     .set('Accept', 'application/json')
+  //     .expect(200)
+  //     // TODO it would be nice to return an id value as it does when writing to the real database
+  //     // .expect(200, {
+  //     //   id: [0],
+  //     // })
+  //     .end((err, res) => {
+  //       if (err) return done(err)
+  //       done()
+  //     })
+  // })
 
   test('respond with a resource not found for /DELETE', done => {
     request(app)

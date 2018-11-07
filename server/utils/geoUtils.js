@@ -13,7 +13,32 @@ const haversineDist = (o, d) => {
       Math.sin((lat1 - lat2)/2)**2 + (Math.cos(lat1) * Math.cos(lat2) * Math.sin((lng1 - lng2)/2)**2)))
 }
 
+// items in search array `arr` must have `lat`, `lng`, and `id` properties for this function to work correctly
+const findClosestId = (lat, lng, arr) => {
+
+  const closest = arr.reduce( (acc, item) => {
+    const d = haversineDist(
+      {
+        lat,
+        lng
+      },
+      {
+        lat: item.lat,
+        lng:item.lng
+      },
+    )
+    return d < acc.d ? {d, id: item.id} : acc
+
+  }, {
+      d: Infinity,
+      id: null,
+    }
+  )
+  return closest.id
+}
+
 module.exports = {
   haversineDist,
   degToRad,
+  findClosestId,
 }

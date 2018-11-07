@@ -1,6 +1,9 @@
 const { addProject } = require('./dbConnections/')
 const { removeProject } = require('./dbConnections/')
-const { findByLatLng } = require('../utils/dbUtils')
+const {
+  findByLatLng,
+  findClosestId,
+} = require('../utils/')
 
 const createProject = (req, res) => {
   const {
@@ -19,7 +22,12 @@ const createProject = (req, res) => {
       return id[0]
     })
     .then( id => findByLatLng(lat, lng, 'node')
-        .then( val => console.log('val from inside:', val) )
+        .then( matches => {
+          const nodeId = findClosestId(lat, lng, matches)
+          console.log('id still defined?', id, 'closest node:', nodeId)
+          //filter by closest haversine distance
+          //send id of selected node to DB
+        })
         .catch( err => console.error(`Error getting a result from the 'node' table by lat lng: ${err}`))
     )
     .catch( err => console.error(`Error at createProject: ${err}`))
