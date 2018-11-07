@@ -4,9 +4,7 @@ const findByLatLng = (
   lat,
   lng,
   table,
-) => {
-
-  let matches = []
+) => new Promise( (resolve, reject) => {
 
   const query = (
     minLat,
@@ -17,26 +15,24 @@ const findByLatLng = (
   ) => {
 
     knex(table)
-      .whereBetween('lat', [minLat, maxLat])
-      .andWhereBetween('lng', [minLng, maxLng])
-      .then( val => {
-        // console.log('val?', val, 'comp:', comp)
-        matches = val
-        if (matches.length === 0) {
-          return query(
-            minLat - comp,
-            maxLat + comp,
-            minLng - comp,
-            maxLng + comp,
-            comp * 2,
-          )
-        }
-        else {
-          return matches
-        }
-      })
-      .then( val => console.log('am I returning anything?', val))
-      .catch( err => console.error(`Error getting a result from ${table} by lat lng: ${err}`))
+    .whereBetween('lat', [minLat, maxLat])
+    .andWhereBetween('lng', [minLng, maxLng])
+    .then( matches => {
+      if (matches.length === 0) {
+        query(
+          minLat - comp,
+          maxLat + comp,
+          minLng - comp,
+          maxLng + comp,
+          comp * 2,
+        )
+        return null
+      }
+      else {
+        resolve(matches)
+      }
+    })
+    .catch(reject)
   }
 
   let comp = .1
@@ -46,7 +42,7 @@ const findByLatLng = (
   let maxLng = lng + comp
 
   query(minLat, maxLat, minLng, maxLng, comp)
-}
+})
 
 module.exports = {
   findByLatLng,
