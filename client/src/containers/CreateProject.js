@@ -78,7 +78,7 @@ const CreateProject = ({
       .then(parseResponse)
       .then( res => {
         setLoading(false)
-        history.push(`${match.url}/project/${res.id[0]}`)
+        history.push(`${match.url}/project/${res.id}`)
       })
       .catch( err => {
         setLoading(false)
