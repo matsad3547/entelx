@@ -4,19 +4,18 @@ const { getNodes } = require('./dbConnections/')
 
 const {
   oasisEndpoint,
-  getNodeLocations,
-  getControlAreas,
   caisoPriceRequest,
 } = require('./iso/caiso/')
 
 const { aggregateHistoricalWeather } = require('./weather/')
 
+const updateNodeData = require('./updateNodeData')
+
 module.exports = {
   demoProcess,
   oasisEndpoint,
-  getNodeLocations,
-  getControlAreas,
   caisoPriceRequest,
   aggregateHistoricalWeather,
   getNodes,
+  updateNodeData,
 }

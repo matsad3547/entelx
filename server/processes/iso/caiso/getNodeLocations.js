@@ -1,10 +1,12 @@
 const { parseNodeData } = require('./parsers')
+const { checkStatus } = require('../../../utils')
 
 const getNodeLocations = () => new Promise( (resolve, reject) => {
 
   const url = 'http://wwwmobile.caiso.com/Web.Service.Chart/api/v1/ChartService/GetPriceContourMap'
 
   fetch(url)
+    .then(checkStatus)
     .then( res => res.buffer() )
     .then( buffer => buffer.toString() )
     .then( str => JSON.parse(str) )

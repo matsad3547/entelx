@@ -27,6 +27,7 @@ const createProject = (req, res) => {
           console.log('id still defined?', id, 'closest node:', nodeId)
           //filter by closest haversine distance
           //send id of selected node to DB
+          //start data processing for that node
         })
         .catch( err => console.error(`Error getting a result from the 'node' table by lat lng: ${err}`))
     )

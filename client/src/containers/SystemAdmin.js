@@ -1,38 +1,67 @@
 import React, {useState, useEffect} from 'react'
 
 import SubPageTemplate from '../components/SubPageTemplate'
+
 import Button from '../components/button/'
+import Loading from '../components/loading/'
 
-const onRequest = () => {
+import {
+  singleRequest,
+  parseResponse,
+} from '../utils/requestUtils'
 
-  // setLoading(true)
-
-  // const body = JSON.stringify({id: params.projectId})
-  //
-  // const request = {
-  //   method: 'DELETE',
-  //   headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body,
-  // }
-  //
-  // singleRequest('/delete_project', request)
-  //   .then( res => {
-  //     setLoading(false)
-  //     history.push(`${cleanUrl}`)
-  //   })
-  //   .catch( err => {
-  //     // setLoading(false)
-  //     console.error(`There was an error deleting your project: ${err}`)
-  //   })
-}
+import { setField } from '../utils/'
 
 const SystemAdmin = () => {
 
+  const [loading, setLoading] = useState(false)
+  const [keys, setKeys] = useState([])
+
+  // const addKey = key => setKeys([...keys, key])
+  //
+  // const removeKey = key => {
+  //   const index = keys.indexOf(key)
+  //   setKeys(
+  //     [
+  //       ...keys.slice(0, index),
+  //       ...keys.slice(index + 1),
+  //     ]
+  //   )
+  // }
+
+  const onRequest = () => {
+
+    setLoading(true)
+
+    const keys = []
+    const path = ''
+
+    const body = JSON.stringify({keys,})
+
+    const request = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body,
+    }
+
+    singleRequest(path, request)
+      .then( res => {
+        console.log('res at onRequest', res);
+        setLoading(false)
+      })
+      .catch( err => {
+        setLoading(false)
+        console.error(`There was an error writing to ${path}: ${err}`)
+      })
+  }
+
   return (
     <SubPageTemplate title={'System Administration'}>
+      { loading && <Loading message={''} />}
+      <p>One Time Request</p>
       <Button
         value={'EXECUTE'}
         type="danger"
