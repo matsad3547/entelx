@@ -1,8 +1,8 @@
 const knex = require('../../store/')
 
-const removeProject = query => knex('project')
+const deleteProject = query => knex('project')
   .where(query)
   .del()
   .then( rows => rows > 0 ? {success: true} : {success: false} )
 
-module.exports = removeProject
+module.exports = deleteProject

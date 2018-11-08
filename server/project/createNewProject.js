@@ -1,11 +1,11 @@
-const { addProject } = require('./dbConnections/')
-const { removeProject } = require('./dbConnections/')
+const { createProject } = require('./dbConnections/')
+const { deleteProject } = require('./dbConnections/')
 const {
   findByLatLng,
   findClosestId,
 } = require('../utils/')
 
-const createProject = (req, res) => {
+const createNewProject = (req, res) => {
   const {
     type,
     lat,
@@ -13,10 +13,10 @@ const createProject = (req, res) => {
   } = req.body
   // TODO add validation for request here
   if(type === 'demo') {
-    removeProject({type: 'demo'})
+    deleteProject({type: 'demo'})
       .then( () => true ) //just want to have just one demo project at a time
   }
-  addProject(req.body)
+  createProject(req.body)
     .then( id => {
       res.status(200).json({id: id[0]})
       return id[0]
@@ -31,7 +31,7 @@ const createProject = (req, res) => {
         })
         .catch( err => console.error(`Error getting a result from the 'node' table by lat lng: ${err}`))
     )
-    .catch( err => console.error(`Error at createProject: ${err}`))
+    .catch( err => console.error(`Error at createNewProject: ${err}`))
 }
 
-module.exports = createProject
+module.exports = createNewProject

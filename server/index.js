@@ -16,9 +16,9 @@ const {
 } = require('./product/')
 
 const {
-  createProject,
-  deleteProject,
-  readProject,
+  createNewProject,
+  deleteProjectById,
+  getProjectById,
 } = require('./project/')
 
 const {
@@ -57,6 +57,6 @@ app.post('/login', login)
 app.get('/get_nodes', getNodes)
 app.post('/update_node_data', updateNodeData)
 
-app.post('/create_project', createProject)
-app.post('/read_project', readProject)
-app.delete('/delete_project', deleteProject)
+app.post('/create_project', createNewProject)
+app.post('/get_project', getProjectById)
+app.delete('/delete_project', deleteProjectById)
