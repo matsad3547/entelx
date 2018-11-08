@@ -1,6 +1,6 @@
 const knex = require('../../store/')
 
-const addProject = ({
+const createProject = ({
   name,
   address,
   power,
@@ -20,6 +20,6 @@ const addProject = ({
         })
         .debug()
         .returning('id')
-        .catch( err => console.error(`Error at addProject: ${err}`))
+        .catch( err => console.error(`Error at createProject: ${err}`))
 
-module.exports = addProject
+module.exports = createProject

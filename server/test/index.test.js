@@ -5,18 +5,18 @@ const mockDb = require('mock-knex')
 
 const knex = require('../store/')
 const {
-  createProject,
-  deleteProject,
-  readProject,
+  createNewProject,
+  deleteProjectById,
+  getProjectById,
 } = require('../project/')
 
 const app = express()
 
 app.use(bodyParser.json())
 
-app.post('/create_project', createProject)
-app.delete('/delete_project', deleteProject)
-app.post('/read_project', readProject)
+app.post('/create_project', createNewProject)
+app.delete('/delete_project', deleteProjectById)
+app.post('/read_project', getProjectById)
 
 describe('Project routes should', () => {
 

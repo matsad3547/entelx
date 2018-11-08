@@ -1,9 +1,9 @@
-const createProject = require('./createProject')
-const deleteProject = require('./deleteProject')
-const readProject = require('./readProject')
+const createNewProject = require('./createNewProject')
+const deleteProjectById = require('./deleteProjectById')
+const getProjectById = require('./getProjectById')
 
 module.exports = {
-  createProject,
-  deleteProject,
-  readProject,
+  createNewProject,
+  deleteProjectById,
+  getProjectById,
 }
