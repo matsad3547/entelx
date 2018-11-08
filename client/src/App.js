@@ -7,6 +7,8 @@ import Contact from './components/Contact'
 import About from './components/About'
 import NavBar from './components/NavBar'
 
+import SystemAdmin from './containers/SystemAdmin'
+
 import './App.css'
 
 class App extends Component {
@@ -31,6 +33,10 @@ class App extends Component {
           <Route
             path="/contact"
             component={Contact}
+          />
+          <Route
+            path="/system_admin"
+            component={SystemAdmin}
           />
         </div>
       </div>
