@@ -14,7 +14,7 @@ const createProject = (req, res) => {
   // TODO add validation for request here
   if(type === 'demo') {
     removeProject({type: 'demo'})
-      .then( () => true ) //just want to have just one project at a time
+      .then( () => true ) //just want to have just one demo project at a time
   }
   addProject(req.body)
     .then( id => {

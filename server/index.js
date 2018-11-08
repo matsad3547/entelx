@@ -18,7 +18,7 @@ const {
 const {
   createProject,
   deleteProject,
-  retrieveProject,
+  readProject,
 } = require('./project/')
 
 const {
@@ -58,5 +58,5 @@ app.get('/get_nodes', getNodes)
 app.post('/update_node_data', updateNodeData)
 
 app.post('/create_project', createProject)
-app.post('/retrieve_project', retrieveProject)
+app.post('/read_project', readProject)
 app.delete('/delete_project', deleteProject)
