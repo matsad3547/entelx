@@ -1,9 +1,9 @@
 const addProject = require('./addProject')
 const removeProject = require('./removeProject')
-const readProject = require('./readProject')
+const getProject = require('./getProject')
 
 module.exports = {
   addProject,
   removeProject,
-  readProject,
+  getProject,
 }

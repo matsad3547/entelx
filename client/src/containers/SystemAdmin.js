@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 import SubPageTemplate from '../components/SubPageTemplate'
 
@@ -7,15 +7,15 @@ import Loading from '../components/loading/'
 
 import {
   singleRequest,
-  parseResponse,
+  // parseResponse,
 } from '../utils/requestUtils'
 
-import { setField } from '../utils/'
+// import { setField } from '../utils/'
 
 const SystemAdmin = () => {
 
   const [loading, setLoading] = useState(false)
-  const [keys, setKeys] = useState([])
+  // const [keys, setKeys] = useState([])
 
   // const addKey = key => setKeys([...keys, key])
   //

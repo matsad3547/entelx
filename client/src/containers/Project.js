@@ -67,7 +67,7 @@ const Project = ({match, history}) => {
       body,
     }
 
-    singleRequest('/retrieve_project', request)
+    singleRequest('/read_project', request)
       .then(parseResponse)
       .then( res => console.log('project:', res))
       // .then( res => {
