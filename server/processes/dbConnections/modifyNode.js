@@ -1,21 +1,15 @@
 const knex = require('../../store/')
 
-const modifyNode = obj => {
+const modifyNode = data => {
 
   const {
     name,
-    start_date,
-    end_date,
-    max_mw,
-  } = obj
+    ...remainingData
+  } = data
 
   return knex('node')
-    .where({ name: name })
-    .update({
-      start_date,
-      end_date,
-      max_mw,
-    })
+    .where({ name })
+    .update(remainingData)
     .debug()
     .catch( err => console.error(`Error at modifyNode node: ${err}`))
 }

@@ -21,7 +21,10 @@ const {
   retrieveProject,
 } = require('./project/')
 
-const { getNodes } = require('./processes/')
+const {
+  getNodes,
+  updateNodeData,
+} = require('./processes/')
 
 //for testing python
 // const { demoProcess } = require('./processes/')
@@ -52,6 +55,7 @@ app.post('/createUser', createUser)
 app.post('/login', login)
 
 app.get('/get_nodes', getNodes)
+app.post('/update_node_data', updateNodeData)
 
 app.post('/create_project', createProject)
 app.post('/retrieve_project', retrieveProject)
