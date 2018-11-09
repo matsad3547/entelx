@@ -1,12 +1,10 @@
-const { readProject } = require('./dbConnections/')
+const { readTableRows } = require('../utils/')
 
 const getProjectById = (req, res) => {
 
   const { id } = req.body
 
-  console.log('id?', id);
-
-  readProject({id,})
+  readTableRows('project', {id,})
     .then( project => {
       console.log('project at getProjectById:', project);
       return project ? res.status(200).json({...project}) : res.sendStatus(404)
