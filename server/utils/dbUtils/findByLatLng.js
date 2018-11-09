@@ -1,9 +1,9 @@
-const knex = require('../store/')
+const db = require('../../store/')
 
 const findByLatLng = (
+  table,
   lat,
   lng,
-  table,
 ) => new Promise( (resolve, reject) => {
   console.time('findByLatLng')
 
@@ -15,7 +15,7 @@ const findByLatLng = (
     comp,
   ) => {
 
-    knex(table)
+    db(table)
     .whereBetween('lat', [minLat, maxLat])
     .andWhereBetween('lng', [minLng, maxLng])
     .then( matches => {
@@ -46,6 +46,4 @@ const findByLatLng = (
   query(minLat, maxLat, minLng, maxLng, comp)
 })
 
-module.exports = {
-  findByLatLng,
-}
+module.exports = findByLatLng

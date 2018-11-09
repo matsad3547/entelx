@@ -11,7 +11,13 @@ const { scoreValues } = require('./dataScienceUtils')
 
 const { findClosestId } = require('./geoUtils')
 
-const { findByLatLng } = require('./dbUtils')
+const {
+  findByLatLng,
+  createTableRow,
+  readTableRows,
+  updateTableRow,
+  deleteTableRows,
+} = require('./dbUtils/')
 
 module.exports = {
   millisToSeconds,
@@ -21,4 +27,8 @@ module.exports = {
   scoreValues,
   findClosestId,
   findByLatLng,
+  createTableRow,
+  readTableRows,
+  updateTableRow,
+  deleteTableRows,
 }
