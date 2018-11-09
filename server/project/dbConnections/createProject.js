@@ -1,4 +1,4 @@
-const knex = require('../../store/')
+const db = require('../../store/')
 
 const createProject = ({
   name,
@@ -8,7 +8,7 @@ const createProject = ({
   lat,
   lng,
   type,
-}) => knex('project')
+}) => db('project')
         .insert({
           name,
           address,

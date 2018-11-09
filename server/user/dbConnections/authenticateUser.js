@@ -1,10 +1,10 @@
-const knex = require('../../store')
+const db = require('../../store')
 
 const { saltHashPassword } = require('../utils')
 
 const authenticateUser = ({ username, password }) => {
   console.log(`Authenticating user ${username}`)
-  return knex('user')
+  return db('user')
           .where({ username })
           .then( ([user]) => {
             if(!user) {

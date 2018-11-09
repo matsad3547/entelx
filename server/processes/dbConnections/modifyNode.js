@@ -1,4 +1,4 @@
-const knex = require('../../store/')
+const db = require('../../store/')
 
 const modifyNode = data => {
 
@@ -7,7 +7,7 @@ const modifyNode = data => {
     ...remainingData
   } = data
 
-  return knex('node')
+  return db('node')
     .where({ name })
     .update(remainingData)
     .debug()
