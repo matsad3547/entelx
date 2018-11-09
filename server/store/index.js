@@ -1,3 +1,3 @@
-const knex = require('knex')(require('./knexfile'))
+const db = require('knex')(require('./knexfile'))
 
-module.exports = knex
+module.exports = db
