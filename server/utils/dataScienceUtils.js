@@ -14,8 +14,7 @@ const calculateMovingAverage = (data, key, period) => data.reduce( (arr, d, i) =
                 (sum + obj[key])/(n + 1)
               , [0, 0]),
     }
-  ] :
-  arr, [])
+  ] : arr, [])
 
 const calculateScore = (data, key) => data.map( d => ({
     timestamp: d.timestamp,

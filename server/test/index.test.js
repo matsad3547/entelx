@@ -51,17 +51,17 @@ describe('Project routes should', () => {
   //     })
   // })
 
-  test('respond with a resource not found for /DELETE', done => {
-    request(app)
-      .delete('/delete_project')
-      .send({name: 'Test Project'})
-      .set('Accept', 'application/json')
-      .expect(404)
-      .end((err, res) => {
-        if (err) return done(err)
-        done()
-      })
-  })
+  // test('respond with a resource not found for /DELETE', done => {
+  //   request(app)
+  //     .delete('/delete_project')
+  //     .send({name: 'Test Project'})
+  //     .set('Accept', 'application/json')
+  //     .expect(404)
+  //     .end((err, res) => {
+  //       if (err) return done(err)
+  //       done()
+  //     })
+  // })
 
   test('respond with a resource not found for /GET', done => {
     request(app)

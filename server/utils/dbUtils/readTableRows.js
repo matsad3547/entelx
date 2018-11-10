@@ -1,6 +1,6 @@
-const db = require('../../store/')
+const knex = require('../../store/')
 
-const readTableRows = (table, query) => db(table)
+const readTableRows = (table, query) => knex(table)
   .where(query)
   .debug()
   .catch( err => console.error(`Error reading from table ${table} by ${query}: ${err}`))

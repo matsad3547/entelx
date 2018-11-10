@@ -1,6 +1,6 @@
-const db = require('../../store/')
+const knex = require('../../store/')
 
-const updateTableRow = (table, identifier, data) => db(table)
+const updateTableRow = (table, identifier, data) => knex(table)
   .where(identifier)
   .update(data)
   .debug()
