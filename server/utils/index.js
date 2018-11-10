@@ -9,7 +9,7 @@ const { writeToFile } = require('./fileUtils')
 
 const { scoreValues } = require('./dataScienceUtils')
 
-const { findClosestId } = require('./geoUtils')
+const { findClosest } = require('./geoUtils')
 
 const {
   findByLatLng,
@@ -25,7 +25,7 @@ module.exports = {
   checkStatus,
   writeToFile,
   scoreValues,
-  findClosestId,
+  findClosest,
   findByLatLng,
   createTableRow,
   readTableRows,

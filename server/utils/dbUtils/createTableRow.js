@@ -1,6 +1,6 @@
-const db = require('../../store/')
+const knex = require('../../store/')
 
-const createTableRow = (table, data) => db(table)
+const createTableRow = (table, data) => knex(table)
   .insert(data)
   .debug()
   .returning('id')

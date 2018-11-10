@@ -1,4 +1,4 @@
-const db = require('../../store/')
+const knex = require('../../store/')
 
 const addNode = ({
   name,
@@ -6,7 +6,7 @@ const addNode = ({
   control_area,
   lat,
   lng,
-}) => db('node')
+}) => knex('node')
         .insert({
           name,
           type,

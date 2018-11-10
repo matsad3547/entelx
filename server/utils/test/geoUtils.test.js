@@ -1,7 +1,7 @@
 const {
   haversineDist,
   degToRad,
-  findClosestId,
+  findClosest,
 } = require('../geoUtils')
 
 const selectedNodes = [
@@ -9,8 +9,8 @@ const selectedNodes = [
     name: 'DESRT PK_GNODEIT',
     type: 'GEN',
     control_area: 'NV',
-    lat: 39.75,
-    lng: -118.95,
+    lat: 39.754,
+    lng: -118.954,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -21,8 +21,8 @@ const selectedNodes = [
     name: 'EAGLE_LNODE01',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.62,
-    lng: -119.21,
+    lat: 39.623,
+    lng: -119.213,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -33,8 +33,8 @@ const selectedNodes = [
     name: 'EAGLE_LNODE02',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.62,
-    lng: -119.21,
+    lat: 39.622,
+    lng: -119.212,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -45,8 +45,8 @@ const selectedNodes = [
     name: 'EAGLE_LNODE18',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.62,
-    lng: -119.21,
+    lat: 39.621,
+    lng: -119.211,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -57,8 +57,8 @@ const selectedNodes = [
     name: 'NDL-BUSH_LNODE-1',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.62,
-    lng: -119.21,
+    lat: 39.620,
+    lng: -119.210,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -69,8 +69,8 @@ const selectedNodes = [
     name: 'NDL-EGL_LNODE-1',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.62,
-    lng: -119.21,
+    lat: 39.629,
+    lng: -119.219,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -81,8 +81,8 @@ const selectedNodes = [
     name: 'NDL-EGL_LNODE-2',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.62,
-    lng: -119.21,
+    lat: 39.628,
+    lng: -119.218,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -93,8 +93,8 @@ const selectedNodes = [
     name: 'NGHTGALE_GNODEIT',
     type: 'GEN',
     control_area: 'NV',
-    lat: 39.8,
-    lng: -119.01,
+    lat: 39.87,
+    lng: -119.017,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -105,8 +105,8 @@ const selectedNodes = [
     name: 'NGHTGALE_LNODE18',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.8,
-    lng: -119.01,
+    lat: 39.86,
+    lng: -119.016,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -117,8 +117,8 @@ const selectedNodes = [
     name: 'NVCEMNT_LNODEC1',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.62,
-    lng: -119.26,
+    lat: 39.625,
+    lng: -119.265,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -129,8 +129,8 @@ const selectedNodes = [
     name: 'NVCEMNT_LNODEC2',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.62,
-    lng: -119.26,
+    lat: 39.624,
+    lng: -119.264,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -141,8 +141,8 @@ const selectedNodes = [
     name: 'PATUA_GNODEIT',
     type: 'GEN',
     control_area: 'NV',
-    lat: 39.62,
-    lng: -119.21,
+    lat: 39.623,
+    lng: -119.213,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -153,8 +153,8 @@ const selectedNodes = [
     name: 'US GEO_GNODET',
     type: 'GEN',
     control_area: 'NV',
-    lat: 40.35,
-    lng: -119.34,
+    lat: 40.352,
+    lng: -119.342,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -165,8 +165,8 @@ const selectedNodes = [
     name: 'WADSWRTH_LNODETH',
     type: 'LOAD',
     control_area: 'NV',
-    lat: 39.65,
-    lng: -119.33,
+    lat: 39.651,
+    lng: -119.331,
     start_date: null,
     end_date: null,
     max_mw: null,
@@ -216,12 +216,21 @@ test('degToRad should return correct values', () => {
   expect(actual).toEqual(expected)
 })
 
-describe('findClosestId', () => {
-  test('should return a number', () => {
-    const lat = 40.0
-    const lng = -119.0
-    const actual = findClosestId(lat, lng, selectedNodes)
-    const expected = 3973
-    expect(actual).toEqual(expected)
-  })
+test('findClosest should return a number', () => {
+  const lat = 40.0
+  const lng = -119.0
+  const actual = findClosest(lat, lng, selectedNodes)
+  const expected = {
+    name: 'NGHTGALE_GNODEIT',
+    type: 'GEN',
+    control_area: 'NV',
+    lat: 39.87,
+    lng: -119.017,
+    start_date: null,
+    end_date: null,
+    max_mw: null,
+    id: 3973,
+    score: 0
+  }
+  expect(actual).toEqual(expected)
 })

@@ -1,6 +1,6 @@
-const db = require('../../store/')
+const knex = require('../../store/')
 
-const deleteTableRows = (table, identifier) => db(table)
+const deleteTableRows = (table, identifier) => knex(table)
   .where(identifier)
   .del()
   .then( rows => rows > 0 ? {success: true} : {success: false} )

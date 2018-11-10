@@ -9,8 +9,6 @@ const caisoNodeEvaluator = (req, res) => {
     startMillis,
     endMillis,
     timeZone,
-    lat,
-    lng,
     marketType,
     node,
   } = req.body

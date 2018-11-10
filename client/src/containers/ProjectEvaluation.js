@@ -15,8 +15,6 @@ import {
 class ProjectEvaluation extends PureComponent {
 
   timeZone = 'America/Los_Angeles'
-  lat = 35.30
-  lng = -119.59
   marketType = 'RTM'
   node = 'LAPLMG1_7_B2'
 
@@ -56,8 +54,6 @@ class ProjectEvaluation extends PureComponent {
       startMillis: startDate.valueOf(),
       endMillis: endDate.valueOf(),
       timeZone: this.timeZone,
-      lat: this.lat,
-      lng: this.lng,
       marketType: this.marketType,
       node: this.node,
     })
