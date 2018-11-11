@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import { withRouter } from 'react-router'
 
-import Header4 from '../components/Header4'
 import DisableableLink from '../components/DisableableLink'
 import SubPageTemplate from '../components/SubPageTemplate'
+import ProjectNav from '../components/ProjectNav'
 import Button from '../components/button/'
 import Loading from '../components/loading/'
 
@@ -68,14 +68,10 @@ const Project = ({match, history}) => {
       { loading && <Loading message={''} />}
       <p>Project {projectId}</p>
       <div style={styles.root}>
-        <nav style={styles.nav}>
-          <DisableableLink to={`${cleanUrl}/roi/${params.projectId}`}>
-            <Header4 content="Project ROI" />
-          </DisableableLink>
-          <DisableableLink to={`${cleanUrl}/dashboard/${params.projectId}`}>
-            <Header4 content="Project Dashboard" />
-          </DisableableLink>
-        </nav>
+        <ProjectNav
+          url={cleanUrl}
+          id={projectId}
+          />
         <Button
           value={'DELETE PROJECT'}
           type="danger"
