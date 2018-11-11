@@ -33,7 +33,7 @@ const CreateProject = ({
   history,
 }) => {
 
-  const [lat, setLat] = useState(40.00002)
+  const [lat, setLat] = useState(38.00002)
   const [lng, setLng] = useState(-119.00003)
   const [name, setProjectName] = useState('')
   const [energy, setEnergyCapacity] = useState(5)
@@ -94,44 +94,46 @@ const CreateProject = ({
         <Header3 content={'Start by specifying your project'} />
       </div>
       <div style={styles.form}>
-        <div style={styles.header}>
-          <Header4 content={'General'} />
+        <div style={styles.subSection}>
+          <div style={styles.header}>
+            <Header4 content={'General'} />
+          </div>
+          <LabeledInput
+            name={'projectName'}
+            label={'Project Name'}
+            placeholder={'"My Project"'}
+            value={name}
+            inputWidth={'23em'}
+            onChange={e => setField(e, setProjectName)}
+            />
+          <LabeledInput
+            name={'energyCapacity'}
+            label={'Project Energy Capacity'}
+            type={'number'}
+            value={energy}
+            inputWidth={'4em'}
+            unit={'MWh'}
+            min={0}
+            step={0.1}
+            onChange={e => setField(e, setEnergyCapacity)}
+            />
+          <LabeledInput
+            name={'powerCapacity'}
+            label={'Project Power Capacity'}
+            type={'number'}
+            value={power}
+            inputWidth={'4em'}
+            unit={'MW'}
+            min={0}
+            step={0.1}
+            onChange={e => setField(e, setPowerCapacity)}
+            />
         </div>
-        <LabeledInput
-          name={'projectName'}
-          label={'Project Name'}
-          placeholder={'"My Project"'}
-          value={name}
-          inputWidth={'23em'}
-          onChange={e => setField(e, setProjectName)}
-          />
-        <LabeledInput
-          name={'energyCapacity'}
-          label={'Project Energy Capacity'}
-          type={'number'}
-          value={energy}
-          inputWidth={'4em'}
-          unit={'MWh'}
-          min={0}
-          step={0.1}
-          onChange={e => setField(e, setEnergyCapacity)}
-          />
-        <LabeledInput
-          name={'powerCapacity'}
-          label={'Project Power Capacity'}
-          type={'number'}
-          value={power}
-          inputWidth={'4em'}
-          unit={'MW'}
-          min={0}
-          step={0.1}
-          onChange={e => setField(e, setPowerCapacity)}
-          />
-        <div style={styles.location}>
+        <div style={styles.subSection}>
           <div style={styles.header}>
             <Header4 content={'Location'} />
+            <p style={styles.label}>Enter an address or pick a location on the map</p>
           </div>
-          <p style={styles.label}>Enter an address or pick a location on the map</p>
           <LabeledInput
             name={'address'}
             label={'Address'}
@@ -183,11 +185,6 @@ const CreateProject = ({
               />
           </div>
         </div>
-        <Button
-          value={'SUBMIT'}
-          type="success"
-          onClick={onSubmit}
-          />
       </div>
       <Map
         center={[lng, lat]}
@@ -199,6 +196,13 @@ const CreateProject = ({
         />
         {/*<MapNodeRenderer />*/}
       </Map>
+      <div style={styles.button}>
+        <Button
+          value={'SUBMIT'}
+          type="success"
+          onClick={onSubmit}
+          />
+      </div>
     </div>
   )
 }
@@ -215,11 +219,13 @@ const styles = {
   },
   form: {
     display: 'block',
-    width: '48%',
+    boxSizing: 'border-box',
     minWidth: '30rem',
     textAlign: 'left',
+    flex: '1 1 48%',
+    padding: '0 1em',
   },
-  location: {
+  subSection: {
     display: 'flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
@@ -231,16 +237,22 @@ const styles = {
   },
   label: {
     fontSize: fontSize.label,
-    padding: '0 0 1em',
+    padding: '1em 0',
   },
   latLng: {
     display: 'inline-flex',
     justifyContent: 'space-between',
   },
   map: {
-    width: '48%',
+    flex: '1 1 48%',
     minWidth: '30rem',
-    height: '100vh',
+    height: '75vh',
+    padding: '0 1em',
   },
+  button: {
+    display: 'flex',
+    width: '100%',
+    padding: '0 1em',
+  }
 }
 export default withRouter(CreateProject)
