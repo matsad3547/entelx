@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { withRouter } from 'react-router'
 
-import DisableableLink from '../components/DisableableLink'
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectNav from '../components/ProjectNav'
 import Button from '../components/button/'

@@ -247,7 +247,6 @@ const styles = {
     flex: '1 1 48%',
     minWidth: '30rem',
     height: '75vh',
-    padding: '0 1em',
   },
   button: {
     display: 'flex',
