@@ -1,5 +1,3 @@
-.navButton:active {
-  background-image:
-  linear-gradient( #046D27, #90DDAA);
-  background-size: cover;
+.navButton:hover {
+  background: #e2e2e2;
 }

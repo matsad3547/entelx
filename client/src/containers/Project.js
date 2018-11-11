@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { withRouter } from 'react-router'
 
 import SubPageTemplate from '../components/SubPageTemplate'
-import ProjectNav from '../components/ProjectNav'
+import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Button from '../components/button/'
 import Loading from '../components/loading/'
 
@@ -11,6 +11,8 @@ import {
   parseResponse,
   getRequest,
 } from '../utils/requestUtils'
+
+import { getBaseUrl } from '../utils/'
 
 const Project = ({match, history}) => {
 
@@ -24,7 +26,7 @@ const Project = ({match, history}) => {
   const [loading, setLoading] = useState(false)
   const [project, setProject] = useState(null)
 
-  const cleanUrl = url.replace(`/project/${projectId}`, '')
+  const cleanUrl = getBaseUrl(url, 'project', projectId)
 
   const onDelete = () => {
 
@@ -63,30 +65,27 @@ const Project = ({match, history}) => {
   console.log('project?', project);
 
   return (
-    <SubPageTemplate title={'Project Home'}>
+    <SubPageTemplate title={project ? `${project.name} - Home` : 'Project Home'}>
       { loading && <Loading message={''} />}
-      <p>Project {projectId}</p>
-      <div style={styles.root}>
-        <ProjectNav
-          url={cleanUrl}
-          id={projectId}
-          />
-        <Button
-          value={'DELETE PROJECT'}
-          type="danger"
-          onClick={onDelete}
-          />
-      </div>
+      <ProjectPageTemplate
+        baseUrl={cleanUrl}
+        id={projectId}
+        >
+        <div style={styles.root}>
+          <p>Project {projectId}</p>
+          <Button
+            value={'DELETE PROJECT'}
+            type="danger"
+            onClick={onDelete}
+            />
+        </div>
+      </ProjectPageTemplate>
     </SubPageTemplate>
   )
 }
 
 const styles = {
-  nav: {
-    display: 'inline-flex',
-    width: '18em',
-    justifyContent: 'space-between',
-    padding: '1em 3em',
+  root: {
   },
 }
 
