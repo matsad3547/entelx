@@ -8,7 +8,9 @@ const SubPageTemplate = ({title, children}) => (
 
   <div style={styles.root}>
     <SubPageHeader title={title} />
-    <div style={styles.content}>{children}</div>
+    <div style={styles.content}>
+      {children}
+    </div>
   </div>
 )
 
@@ -20,7 +22,7 @@ const styles = {
     color: colors.text,
   },
   content: {
-    padding: '1em 3em',
+    padding: '1em 0',
     margin: '0 0 auto',
   }
 }
