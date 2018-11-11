@@ -1,13 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import DisableableLink from './DisableableLink'
-import Header4 from './Header4'
 import NavButton from './navButton/'
 
-import { colors } from '../config/styles'
-
-const ProjectNav = ({url, id}) => {
+const ProjectNav = ({baseUrl, id}) => {
 
   const buttons = [
     {
@@ -15,12 +11,12 @@ const ProjectNav = ({url, id}) => {
       label: 'Project Home',
     },
     {
-      link: 'roi',
-      label: 'Project ROI',
-    },
-    {
       link: 'dashboard',
       label: 'Project Dashboard',
+    },
+    {
+      link: 'roi',
+      label: 'Project ROI',
     },
   ]
 
@@ -29,7 +25,7 @@ const ProjectNav = ({url, id}) => {
     <ul style={styles.root}>
       {buttons.map((b, i) => <NavButton
         key={`nav-button${i}`}
-        url={url}
+        baseUrl={baseUrl}
         link={b.link}
         id={id}
         label={b.label}
@@ -39,12 +35,15 @@ const ProjectNav = ({url, id}) => {
   )
 }
 
-
 const styles = {
   root: {
-    width: '15em',
-    backgroundImage: `linear-gradient(${colors.lightGreen}, ${colors.deepGreen})`,
+    width: '18em',
   },
+}
+
+ProjectNav.propTypes = {
+  baseUrl: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 }
 
 export default ProjectNav

@@ -7,14 +7,14 @@ import './NavButton.css'
 import { colors } from '../../config/styles'
 
 const NavButton = ({
-  url,
+  baseUrl,
   link,
   id,
   label,
 }) => (
 
   <Link
-    to={`${url}/${link}/${id}`}
+    to={`${baseUrl}/${link}/${id}`}
     style={styles.link}
     >
     <li
@@ -34,15 +34,15 @@ const styles = {
   link: {
     fontSize: '1.2em',
     textDecoration: 'none',
-    color: colors.white,
+    color: colors.text,
   }
 }
 
 NavButton.propTypes = {
-  url: PropTypes.string,
-  link: PropTypes.string,
-  id: PropTypes.string,
-  label: PropTypes.string,
+  baseUrl: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 }
 
 export default NavButton

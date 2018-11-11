@@ -1,14 +1,38 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
 import SubPageTemplate from '../components/SubPageTemplate'
+import ProjectPageTemplate from '../components/ProjectPageTemplate'
+import Loading from '../components/loading/'
 
-const ProjectDashboard = ({match}) => (
+import { getBaseUrl } from '../utils/'
 
-  <SubPageTemplate title={'Project Dashboard'}>
-    <p>Project id: {match.params.projectId}</p>
-  </SubPageTemplate>
-)
- 
+const ProjectDashboard = ({match}) => {
+
+  const {
+    url,
+    params,
+  } = match
+
+  const { projectId } = params
+
+  const cleanUrl = getBaseUrl(url, 'dashboard', projectId)
+
+  const [loading, setLoading] = useState(false)
+
+  return (
+
+    <SubPageTemplate title={'Project Dashboard'}>
+      { loading && <Loading message={''} />}
+      <ProjectPageTemplate
+        baseUrl={cleanUrl}
+        id={projectId}
+        >
+        <p>Project id: {match.params.projectId}</p>
+      </ProjectPageTemplate>
+    </SubPageTemplate>
+  )
+}
+
 // const styles = {
 // }
 

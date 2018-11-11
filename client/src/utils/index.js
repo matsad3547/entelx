@@ -23,3 +23,5 @@ export const setField = (e, stateFunction) => {
   e.preventDefault()
   stateFunction(e.target.value)
 }
+
+export const getBaseUrl = (url, page, projectId) => url.replace(`/${page}/${projectId}`, '')

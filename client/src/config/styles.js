@@ -9,9 +9,7 @@ export const fontSize = {
 
 export const rgbColors = {
   photoOverlay: [0, 71, 23],
-  // header: [33, 94, 54],
   header: [0, 135, 45],
-  // header: [0, 147, 49],
 }
 
 export const colors = {
