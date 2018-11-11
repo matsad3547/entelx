@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { withRouter } from 'react-router'
 
-import PropTypes from 'prop-types'
-
 import Header4 from '../components/Header4'
 import DisableableLink from '../components/DisableableLink'
 import SubPageTemplate from '../components/SubPageTemplate'
@@ -12,6 +10,7 @@ import Loading from '../components/loading/'
 import {
   singleRequest,
   parseResponse,
+  getRequest,
 } from '../utils/requestUtils'
 
 const Project = ({match, history}) => {
@@ -24,6 +23,7 @@ const Project = ({match, history}) => {
   const { projectId } = params
 
   const [loading, setLoading] = useState(false)
+  const [project, setProject] = useState(null)
 
   const cleanUrl = url.replace(`/project/${projectId}`, '')
 
@@ -33,16 +33,7 @@ const Project = ({match, history}) => {
 
     const body = JSON.stringify({id: params.projectId})
 
-    const request = {
-      method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body,
-    }
-
-    singleRequest('/delete_project', request)
+    singleRequest('/delete_project', getRequest('DELETE', body))
       .then( res => {
         setLoading(false)
         history.push(`${cleanUrl}`)
@@ -53,32 +44,24 @@ const Project = ({match, history}) => {
       })
   }
 
-  useEffect( () => {
-    // setLoading(true)
-
+  const getProject = () => {
+    setLoading(true)
     const body = JSON.stringify({id: params.projectId})
-
-    const request = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body,
-    }
-
-    singleRequest('/get_project', request)
+    singleRequest('/get_project', getRequest('POST', body))
       .then(parseResponse)
-      .then( res => console.log('project:', res))
-      // .then( res => {
-      //   setLoading(false)
-      //   history.push(`${cleanUrl}`)
-      // })
+      .then( res => {
+        setProject(res[0])
+        setLoading(false)
+      })
       .catch( err => {
-        // setLoading(false)
+        setLoading(false)
         console.error(`There was an error retrieving your project: ${err}`)
       })
-  })
+  }
+
+  useEffect( () => getProject(), [])
+
+  console.log('project?', project);
 
   return (
     <SubPageTemplate title={'Project Home'}>
@@ -110,10 +93,6 @@ const styles = {
     justifyContent: 'space-between',
     padding: '1em 3em',
   },
-}
-
-Project.propTypes = {
-  content: PropTypes.string,
 }
 
 export default withRouter(Project)
