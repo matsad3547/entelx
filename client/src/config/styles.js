@@ -19,6 +19,7 @@ export const colors = {
   disabled: '#838383',
   field: '#e2e2e2',
   white: '#fff',
+  lightGreen: '#90DDAA',
   brightGreen: '#23B253', //hsb(140 80 70)
   middleGreen: '#00872D',
   deepGreen: '#046D27',

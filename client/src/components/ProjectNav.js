@@ -1,44 +1,49 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import DisableableLink from './DisableableLink'
 import Header4 from './Header4'
+import NavButton from './navButton/'
 
-const ProjectNav = ({url, id}) => (
+import { colors } from '../config/styles'
 
-  <ul style={styles.nav}>
-    <li style={styles.linkButton}>
-      <DisableableLink to={`${url}/project/${id}`}>
-        <Header4 content="Project Home" />
-      </DisableableLink>
-    </li>
-    <li style={styles.linkButton}>
-      <DisableableLink to={`${url}/roi/${id}`}>
-        <Header4 content="Project ROI" />
-      </DisableableLink>
-    </li>
-    <li style={styles.linkButton}>
-      <DisableableLink to={`${url}/dashboard/${id}`}>
-        <Header4 content="Project Dashboard" />
-      </DisableableLink>
-    </li>
-  </ul>
-)
+const ProjectNav = ({url, id}) => {
+
+  const buttons = [
+    {
+      link: 'project',
+      label: 'Project Home',
+    },
+    {
+      link: 'roi',
+      label: 'Project ROI',
+    },
+    {
+      link: 'dashboard',
+      label: 'Project Dashboard',
+    },
+  ]
+
+  return (
+
+    <ul style={styles.root}>
+      {buttons.map((b, i) => <NavButton
+        key={`nav-button${i}`}
+        url={url}
+        link={b.link}
+        id={id}
+        label={b.label}
+        />
+      )}
+    </ul>
+  )
+}
+
 
 const styles = {
   root: {
-    display: 'flex',
-    flexDirection: 'column',
-
-    justifyContent: 'space-between',
-    padding: '1.5em 3em',
-  },
-  linkButton: {
-    border: '1px solid black',
-    // display: 'block',
-    // boxSizing: 'border-box',
-    // height: '3em',
     width: '15em',
-    padding: '1em, .5em',
+    backgroundImage: `linear-gradient(${colors.lightGreen}, ${colors.deepGreen})`,
   },
 }
 

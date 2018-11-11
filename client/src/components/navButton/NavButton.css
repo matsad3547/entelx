@@ -1,0 +1,5 @@
+.navButton:active {
+  background-image:
+  linear-gradient( #046D27, #90DDAA);
+  background-size: cover;
+}
