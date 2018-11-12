@@ -3,6 +3,7 @@ import { withRouter } from 'react-router'
 
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
+import Header4 from '../components/Header4'
 import Button from '../components/button/'
 import Loading from '../components/loading/'
 
@@ -13,6 +14,8 @@ import {
 } from '../utils/requestUtils'
 
 import { getBaseUrl } from '../utils/'
+
+import { colors } from '../config/styles'
 
 const Project = ({match, history}) => {
 
@@ -72,12 +75,53 @@ const Project = ({match, history}) => {
         id={projectId}
         >
         <div style={styles.root}>
-          <p>Project {projectId}</p>
-          <Button
-            value={'DELETE PROJECT'}
-            type="danger"
-            onClick={onDelete}
-            />
+          <div style={styles.header}>
+            <Header4 content="Project Specifications" />
+          </div>
+          {
+            project &&
+            <div style={styles.specs}>
+              <span style={styles.label}>
+                Power
+              </span>
+              <p style={styles.data}>
+                {`${project.power} Mw`}
+              </p>
+              <span style={styles.label}>
+                Energy
+              </span>
+              <p style={styles.data}>
+                {`${project.energy} Mwh`}
+              </p>
+              <span style={styles.label}>
+                Location
+              </span>
+              {
+                project.address ?
+                <p style={styles.data}>
+                  {`${project.address} - ${project.city} -  ${project.state}`}
+                </p>
+                :
+                <p style={styles.data}>
+                  {`${project.lat} `}
+                  <span style={styles.label}>
+                    latitude
+                  </span>
+                  {`,  ${project.lng} `}
+                  <span style={styles.label}>
+                    longitude
+                  </span>
+                </p>
+              }
+            </div>
+          }
+          <div style={styles.button}>
+            <Button
+              value={'DELETE PROJECT'}
+              type="danger"
+              onClick={onDelete}
+              />
+          </div>
         </div>
       </ProjectPageTemplate>
     </SubPageTemplate>
@@ -86,6 +130,26 @@ const Project = ({match, history}) => {
 
 const styles = {
   root: {
+    textAlign: 'left',
+    padding: '0 1em',
+  },
+  header: {
+    padding: '0 1em 2em',
+  },
+  specs: {
+    padding: '0 2em',
+  },
+  label: {
+    fontSize: '.9em',
+    padding: '1em 0',
+    fontStyle: 'italic',
+    color: colors.gray,
+  },
+  data: {
+    padding: '1em',
+  },
+  button: {
+    padding: '0 1em',
   },
 }
 
