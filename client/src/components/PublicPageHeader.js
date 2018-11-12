@@ -1,18 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Overlay from './Overlay'
+import GradientBackground from './GradientBackground'
 import Header2 from './Header2'
 
-import { rgbColors } from '../config/styles'
+import { colors } from '../config/styles'
 
 const PublicPageHeader = ({title}) => (
 
   <div style={styles.root}>
-    <Overlay
+    <GradientBackground
       addlStyles={styles.content}
-      topColorArr={[...rgbColors.header, .2]}
-      bottomColorArr={[...rgbColors.header, .95]}
       />
     <div style={{
         ...styles.content,
@@ -35,12 +33,12 @@ const styles = {
   },
   text: {
     zIndex: 2,
-    color: '#fff',
+    color: colors.white,
     padding: '1em 3em',
     justifySelf: 'end',
     alignSelf: 'end',
     background: 'transparent',
-  }
+  },
 }
 
 PublicPageHeader.propTypes = {

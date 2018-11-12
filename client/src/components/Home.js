@@ -6,11 +6,9 @@ import Header3 from './Header3'
 import Header4 from './Header4'
 import Overlay from './Overlay'
 import Footer from './Footer'
+import GradientBackground from './GradientBackground'
 
-import {
-  colors,
-  rgbColors,
-} from '../config/styles'
+import { colors } from '../config/styles'
 
 import { companyName } from '../config/'
 
@@ -27,8 +25,6 @@ const Home = () => (
         />
       <Overlay
         addlStyles={styles.logo}
-        topColorArr={[...rgbColors.photoOverlay, .2]}
-        bottomColorArr={[...rgbColors.photoOverlay, .95]}
         />
       <div style={{
           ...styles.logo,
@@ -49,8 +45,6 @@ const Home = () => (
         />
       <Overlay
         addlStyles={styles.sub1}
-        topColorArr={[...rgbColors.photoOverlay, .2]}
-        bottomColorArr={[...rgbColors.photoOverlay, .95]}
         />
       <div style={{
           ...styles.sub1,
@@ -63,10 +57,8 @@ const Home = () => (
           content={'But the transition to sustainable energy must move faster'}
           />
       </div>
-      <Overlay
+      <GradientBackground
         addlStyles={styles.banner}
-        topColorArr={[...rgbColors.photoOverlay, .95]}
-        bottomColorArr={[...rgbColors.header, .5]}
         />
       <div style={{
           ...styles.banner,

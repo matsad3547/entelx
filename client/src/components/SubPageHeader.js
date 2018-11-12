@@ -1,18 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Overlay from './Overlay'
+import GradientBackground from './GradientBackground'
 import Header3 from './Header3'
 
-import { rgbColors } from '../config/styles'
+import { colors } from '../config/styles'
 
 const SubPageHeader = ({title}) => (
 
   <div style={styles.root}>
-    <Overlay
+    <GradientBackground
       addlStyles={styles.content}
-      topColorArr={[...rgbColors.header, .2]}
-      bottomColorArr={[...rgbColors.header, .95]}
       />
     <div style={{
         ...styles.content,
@@ -27,7 +25,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftCol] auto [centerMargin] 10% [rightCol] 45% [end]',
-    gridTemplateRows: '[row1] 6em [ws1] 2em',
+    gridTemplateRows: '[row1] 6em [ws1] 1em',
   },
   content: {
     gridColumn: 'leftCol / centerMargin',
@@ -35,7 +33,7 @@ const styles = {
   },
   text: {
     zIndex: 2,
-    color: '#fff',
+    color: colors.white,
     padding: '1em 3em',
     justifySelf: 'start',
     alignSelf: 'end',
