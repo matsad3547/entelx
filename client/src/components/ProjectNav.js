@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import NavButton from './navButton/'
 
+import { colors } from '../config/styles'
+
 const ProjectNav = ({baseUrl, id}) => {
 
   const buttons = [
@@ -38,6 +40,7 @@ const ProjectNav = ({baseUrl, id}) => {
 const styles = {
   root: {
     width: '18em',
+    borderRight: `1px solid ${colors.gray}`,
   },
 }
 

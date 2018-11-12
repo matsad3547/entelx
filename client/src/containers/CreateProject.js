@@ -58,6 +58,8 @@ const CreateProject = ({
     const body = JSON.stringify({
       name,
       address,
+      city,
+      state,
       power,
       energy,
       lat,

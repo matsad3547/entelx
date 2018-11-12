@@ -27,7 +27,7 @@ const ProjectRoi = ({match}) => {
         baseUrl={cleanUrl}
         id={projectId}
         >
-        <p>Project id: {match.params.projectId}</p>
+        <p>Project id: {projectId}</p>
       </ProjectPageTemplate>
     </SubPageTemplate>
   )

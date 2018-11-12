@@ -45,7 +45,7 @@ const LabeledInput = ({
 const getInputStyles = (inputWidth, disabled) => ({
   ...styles.input,
   width: inputWidth,
-  color: disabled ? colors.disabled : colors.text,
+  color: disabled ? colors.gray : colors.text,
   cursor: disabled ? 'not-allowed' : 'inherit',
 })
 
@@ -61,7 +61,7 @@ const styles = {
     margin: '1em .5em',
     fontSize: fontSize.label,
     padding: '.5em',
-    background: colors.field,
+    background: colors.lightGray,
     border: 'none',
     borderRadius: 10,
   },

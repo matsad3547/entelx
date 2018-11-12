@@ -14,8 +14,8 @@ export const rgbColors = {
 
 export const colors = {
   text: '#363D38',
-  disabled: '#838383',
-  field: '#e2e2e2',
+  gray: '#838383',
+  lightGray: '#e2e2e2',
   white: '#fff',
   lightGreen: '#90DDAA',
   brightGreen: '#23B253', //hsb(140 80 70)
