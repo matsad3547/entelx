@@ -1,30 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Overlay = ({
-  addlStyles,
-  topColorArr,
-  bottomColorArr,
-}) => (
+const Overlay = ({ addlStyles }) => (
 
   <div
     style={{
-      ...getStyles(topColorArr, bottomColorArr),
+      ...styles,
       ...addlStyles,
     }}
   />
 )
 
-const getStyles = (topColorArr, bottomColorArr) => ({
+const styles = {
   zIndex: 1,
   height: '100%',
-  backgroundImage: `linear-gradient( rgba(${topColorArr[0]}, ${topColorArr[1]}, ${topColorArr[2]}, ${topColorArr[3]}),  rgba(${bottomColorArr[0]}, ${bottomColorArr[1]}, ${bottomColorArr[2]}, ${bottomColorArr[3]}))`,
-})
+  backgroundImage: `linear-gradient(rgba(0, 71, 23, .2),  rgba(0, 71, 23, .9))`,
+}
 
 Overlay.propTypes = {
   addlStyles: PropTypes.object,
-  topColorArr: PropTypes.arrayOf(PropTypes.number).isRequired,
-  bottomColorArr: PropTypes.arrayOf(PropTypes.number).isRequired,
+  // topColorArr: PropTypes.arrayOf(PropTypes.number).isRequired,
+  // bottomColorArr: PropTypes.arrayOf(PropTypes.number).isRequired,
 }
 
 export default Overlay

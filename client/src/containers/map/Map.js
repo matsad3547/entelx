@@ -22,6 +22,7 @@ class Map extends PureComponent {
       style: 'mapbox://styles/mapbox/streets-v9',
       zoom,
       center,
+      minZoom: 3,
     })
 
     this.setState({

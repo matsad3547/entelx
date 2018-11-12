@@ -6,11 +6,11 @@ export const fontSize = {
   h4: '1.333em',
   label: '1.1em',
 }
-
-export const rgbColors = {
-  photoOverlay: [0, 71, 23],
-  header: [0, 135, 45],
-}
+// 
+// export const rgbColors = {
+//   photoOverlay: [0, 71, 23],
+//   header: [0, 135, 45],
+// }
 
 export const colors = {
   text: '#363D38',
