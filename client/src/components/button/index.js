@@ -32,7 +32,7 @@ const styles = {
   	display: 'inline-block',
   	cursor: 'pointer',
   	fontSize: '1.3em',
-  	padding: '1em 1.5em',
+  	padding: '1em',
     margin: '1em 0',
 },
 }

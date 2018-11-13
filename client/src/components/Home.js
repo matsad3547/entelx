@@ -12,8 +12,6 @@ import { colors } from '../config/styles'
 
 import { companyName } from '../config/'
 
-// http://unsplash.it/1200x800
-
 const Home = () => (
 
   <div>
