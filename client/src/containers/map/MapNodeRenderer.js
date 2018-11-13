@@ -1,52 +1,110 @@
-import React, { PureComponent } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import * as Rx from 'rxjs'
+import * as ops from 'rxjs/operators'
 
 import MapMarkerRenderer from '../../components/map/MapMarkerRenderer'
 
 import {
-  singleGetRequest,
+  singleRequest,
+  getRequest,
   parseResponse,
-  handleError,
-} from '../../utils/'
+} from '../../utils/requestUtils'
 
-class MapNodeRenderer extends PureComponent {
+import {
+  nodeColors,
+  colors,
+} from '../../config/styles'
 
-  state = {
-    nodes: [],
+const getNodeColor = node => {
+  switch (node.control_area) {
+    case 'CA':
+      return nodeColors[0]
+
+    case 'PACW':
+      return nodeColors[1]
+
+    case 'PGE':
+      return nodeColors[2]
+
+    case 'PSE':
+      return nodeColors[3]
+
+    case 'NV':
+      return nodeColors[4]
+
+    case 'IPCO':
+      return nodeColors[5]
+
+    case 'PACE':
+      return nodeColors[6]
+
+    case 'APS':
+      return nodeColors[7]
+
+    default:
+      return colors.gray
   }
+}
 
-  componentDidMount() {
-    singleGetRequest('/get_nodes')
+const MapNodeRenderer = ({ map }) => {
+
+  const bounds = map.getBounds()
+
+  const minLat = bounds._sw.lat
+  const maxLat = bounds._ne.lat
+
+  const minLng = bounds._ne.lng
+  const maxLng = bounds._sw.lng
+
+  console.log('rxjs?', Rx, '\nops?', ops)
+
+  const [nodes, setNodes] = useState(null)
+
+  const buttonRef = useRef(null)
+
+  useEffect( () => {
+    singleRequest('/get_nodes', getRequest('GET', null))
       .then(parseResponse)
-      .then(this.setData)
-      .catch(this.setError)
-  }
+      .then(setNodes)
+      .catch(handleError)
+  }, [])
 
-  getNodeColor = score => '#838383'
+  const handleError = err => console.error(`there was an error getting nodes: ${err}`)
 
-  processNodes = nodes => nodes.map( node => ({
-      lngLat: [node.lng, node.lat],
-      color: this.getNodeColor(node.score)
-    })
-  )
+  const nodeStream = nodes && Rx.from(nodes)
 
-  setData = nodes => this.setState({
-    nodes: this.processNodes(nodes),
-  })
+  buttonRef.current && Rx.fromEvent(buttonRef.current, 'click')
+    .pipe(ops.bufferCount(3))
+    .subscribe( () => console.log('clicking, motherfuckers!!!') )
 
-  setError = err => handleError(this, err)
+  const nodeStreamF = nodes && nodeStream.pipe(ops.filter( node => node.lat < maxLat && node.lat > minLat && node.lng < maxLng && node.lng > minLng)).subscribe( node => console.log('node:', node) )
 
-  render() {
-    return (
-      this.state.nodes.map( (node, i) =>
-        <MapMarkerRenderer
-          map={this.props.map}
-          key={`node-${i}`}
-          lngLat={node.lngLat}
-          color={node.color}
-        />
-      )
-    )
+return (
+  false
+  // <button
+  //   style={styles.root}
+  //   ref={buttonRef}>CLICK ME</button>
+)
+
+  // return (
+  //   nodes &&
+  //   nodes.map( (node, i) =>
+  //     <MapMarkerRenderer
+  //       map={map}
+  //       key={`node-${i}`}
+  //       lngLat={[node.lng, node.lat]}
+  //       color={getNodeColor(node)}
+  //     />
+  //   )
+  // )
+}
+
+const styles = {
+  root: {
+    position: 'relative',
+    background: 'red',
+    zIndex: 10,
   }
 }
 

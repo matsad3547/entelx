@@ -6,7 +6,7 @@ export const fontSize = {
   h4: '1.333em',
   label: '1.1em',
 }
-// 
+//
 // export const rgbColors = {
 //   photoOverlay: [0, 71, 23],
 //   header: [0, 135, 45],
@@ -24,6 +24,28 @@ export const colors = {
   darkGreen: '#001E0A',
   red: '#CC333F',
 }
+
+export const nodeColors = [
+  '#F71735',
+  '#91A6FF',
+  '#FF88DC',
+  '#FAFF7F',
+  '#003459',
+  '#FF5154',
+  '#17BEBB',
+  '#CD5334',
+  '#004E64',
+  '#9FFFCB',
+  '#7AE582',
+  '#007EA7',
+  '#FF9F1C',
+  '#380036',
+  '#01BAEF',
+  '#26081C',
+  '#192BC2',
+  '#0E0E52',
+  '#FDE74C',
+]
 
 export const buttons = {
   success: {

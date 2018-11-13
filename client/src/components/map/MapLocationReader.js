@@ -1,23 +1,19 @@
-import { PureComponent } from 'react'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-class MapLocationReader extends PureComponent {
+const MapLocationReader = ({
+  map,
+  getLatLng,
+}) => {
 
-  componentDidMount() {
+  const onClick = e => getLatLng(e.lngLat)
 
-    const {
-      map,
-      getLatLng,
-    } = this.props
+  useEffect( () => {
+    map.on('click', onClick)
+    return () => map.off('click', onClick)
+  }, [])
 
-    if(map) {
-      map.on('click', e => getLatLng(e.lngLat))
-    }
-  }
-  
-  render() {
-    return false
-  }
+  return false
 }
 
 MapLocationReader.propTypes = {

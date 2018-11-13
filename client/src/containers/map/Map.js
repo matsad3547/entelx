@@ -1,64 +1,56 @@
-import React, { PureComponent } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY
 
-class Map extends PureComponent {
+const Map = ({
+  zoom,
+  center,
+  style,
+  children,
+}) => {
 
-  state = {
-    map: null,
-  }
+  const [map, setMap] = useState(null)
+  const [loaded, setLoaded] = useState(false)
 
-  componentDidMount() {
+  const removeMap = () => map && map.remove()
 
-    const {
-      zoom,
-      center,
-    } = this.props
+  const mapContainer = useRef(null)
+
+  useEffect( () => {
 
     const map = new mapboxgl.Map({
-      container: this.mapContainer,
+      container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v9',
       zoom,
       center,
       minZoom: 3,
     })
 
-    this.setState({
-      map,
-    })
-  }
+    setMap(map)
 
-  componentWillUnmount() {
-    this.state.map.remove()
-  }
+    map.on('load', () => setLoaded(true) )
 
-  render() {
+    return () => removeMap()
+  }, [])
 
-    const { map } = this.state
+  const childrenWithProps = React.Children.map(children, child =>
+    React.cloneElement(child, { map, })
+  )
 
-    const {
-      children,
-      style,
-    } = this.props
+  return (
 
-    const childrenWithProps = React.Children.map(children, child =>
-      React.cloneElement(child, { map, })
-    )
-
-    return (
-      <div
-        style={{
-          ...styles.root,
-          ...style,
-        }}
-        ref={ node => this.mapContainer = node }
-        >
-        {map ? childrenWithProps : null}
-      </div>
-    )
-  }
+    <div
+      style={{
+        ...styles.root,
+        ...style,
+      }}
+      ref={mapContainer}
+      >
+      {loaded && childrenWithProps}
+    </div>
+  )
 }
 
 const styles = {

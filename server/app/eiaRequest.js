@@ -1,4 +1,4 @@
-const Rx = require('rxjs/Rx')
+// const Rx = require('rxjs/Rx')
 const eiaKey = process.env.EIA_API_KEY
 
 const url = `https://api.eia.gov/series/?api_key=${eiaKey}&series_id=EBA.CAL-ALL.D.H`
