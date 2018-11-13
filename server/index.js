@@ -39,6 +39,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.listen(app.get('port'), err => {
   if (err) {
+    throw new Error(err)
     console.error('An error occured:', err)
   }
   console.log(`Find the server at: http://localhost:${app.get('port')}`)

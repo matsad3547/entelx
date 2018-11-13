@@ -1,6 +1,6 @@
 const demoProcess = require('./demoProcess')
 
-const { getNodes } = require('./dbConnections/')
+const getNodes = require('./getNodes')
 
 const {
   oasisEndpoint,
