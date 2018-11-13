@@ -1,32 +1,23 @@
-import { PureComponent } from 'react'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
-class MapMarkerRenderer extends PureComponent {
-  marker = null
+const MapMarkerRenderer = ({
+  map,
+  lngLat,
+  color,
+}) => {
 
-  componentDidMount() {
+  useEffect( () => {
 
-    const {
-      map,
-      lngLat,
-      color,
-    } = this.props
+    const marker = map && new mapboxgl.Marker({color})
+                    .setLngLat(lngLat)
+                    .addTo(map)
 
-    if(map) {
-      this.marker = new mapboxgl.Marker({color})
-                      .setLngLat(lngLat)
-                      .addTo(map)
-    }
-  }
+    return () => marker.remove()
+  }, [])
 
-  componentWillUnmount() {
-    this.marker.remove()
-  }
-
-  render() {
-    return false
-  }
+  return false
 }
 
 MapMarkerRenderer.propTypes = {

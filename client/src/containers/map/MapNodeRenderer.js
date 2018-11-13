@@ -72,32 +72,34 @@ const MapNodeRenderer = ({ map }) => {
 
   const handleError = err => console.error(`there was an error getting nodes: ${err}`)
 
-  const nodeStream = nodes && Rx.from(nodes)
+  // const nodeStream = nodes && Rx.from(nodes)
+  //
+  // buttonRef.current && Rx.fromEvent(buttonRef.current, 'click')
+  //   .pipe(ops.bufferCount(3))
+  //   .subscribe( () => console.log('clicking, motherfuckers!!!') )
+  //
+  // const nodeStreamF = nodes && nodeStream.pipe(ops.filter( node => node.lat < maxLat && node.lat > minLat && node.lng < maxLng && node.lng > minLng)).subscribe( node => console.log('node:', node) )
+  //
+  // console.log('node stream filtered:', nodeStreamF);
 
-  buttonRef.current && Rx.fromEvent(buttonRef.current, 'click')
-    .pipe(ops.bufferCount(3))
-    .subscribe( () => console.log('clicking, motherfuckers!!!') )
+// return (
+//   // false
+//   <button
+//     style={styles.root}
+//     ref={buttonRef}>CLICK ME</button>
+// )
 
-  const nodeStreamF = nodes && nodeStream.pipe(ops.filter( node => node.lat < maxLat && node.lat > minLat && node.lng < maxLng && node.lng > minLng)).subscribe( node => console.log('node:', node) )
-
-return (
-  false
-  // <button
-  //   style={styles.root}
-  //   ref={buttonRef}>CLICK ME</button>
-)
-
-  // return (
-  //   nodes &&
-  //   nodes.map( (node, i) =>
-  //     <MapMarkerRenderer
-  //       map={map}
-  //       key={`node-${i}`}
-  //       lngLat={[node.lng, node.lat]}
-  //       color={getNodeColor(node)}
-  //     />
-  //   )
-  // )
+  return (
+    nodes &&
+    nodes.filter( node => node.control_area == 'APS' ).map( (node, i) =>
+      <MapMarkerRenderer
+        map={map}
+        key={`node-${i}`}
+        lngLat={[node.lng, node.lat]}
+        color={getNodeColor(node)}
+      />
+    )
+  )
 }
 
 const styles = {
