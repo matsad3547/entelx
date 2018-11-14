@@ -7,7 +7,10 @@ const {
   caisoPriceRequest,
 } = require('./iso/caiso/')
 
-const { aggregateHistoricalWeather } = require('./weather/')
+const {
+  aggregateHistoricalWeather,
+  getCurrentWeather,
+} = require('./weather/')
 
 const updateNodeData = require('./updateNodeData')
 
@@ -16,6 +19,7 @@ module.exports = {
   oasisEndpoint,
   caisoPriceRequest,
   aggregateHistoricalWeather,
+  getCurrentWeather,
   getNodes,
   updateNodeData,
 }

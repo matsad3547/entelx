@@ -6,6 +6,12 @@ import Loading from '../components/loading/'
 
 import { getBaseUrl } from '../utils/'
 
+import {
+  singleRequest,
+  parseResponse,
+  getRequest,
+} from '../utils/requestUtils'
+
 const ProjectDashboard = ({match}) => {
 
   const {
@@ -18,6 +24,25 @@ const ProjectDashboard = ({match}) => {
   const cleanUrl = getBaseUrl(url, 'dashboard', projectId)
 
   const [loading, setLoading] = useState(false)
+  const [weather, setWeather] = useState(null)
+
+  const getInitDashboard = () => {
+    setLoading(true)
+    const body = JSON.stringify({id: projectId})
+    singleRequest('/get_dashboard', getRequest('POST', body))
+      .then(parseResponse)
+      .then( res => {
+        console.log('res:', res);
+        setWeather(res.weather)
+        setLoading(false)
+      })
+      .catch( err => {
+        setLoading(false)
+        console.error(`There was an error retrieving your project: ${err}`)
+      })
+  }
+
+  useEffect( () => getInitDashboard(), [])
 
   return (
 
