@@ -10,7 +10,7 @@ const getCurrentWeather = (lat, lng) => new Promise( (resolve, reject) => {
   fetch(url)
     .then(checkStatus)
     .then( res => res.json() )
-    .then(resolve)
+    .then(data => resolve(data.currently) )
     .catch(reject)
 })
 

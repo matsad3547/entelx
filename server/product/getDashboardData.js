@@ -1,7 +1,13 @@
+const moment = require('moment-timezone')
+
 const { readTableRows } = require('../utils/')
-const { getCurrentWeather } = require('../processes/')
+const {
+  getCurrentWeather,
+  caisoPriceRequest,
+} = require('../processes/')
 
 const getDashboardData = (req, res) => {
+
   const { id } = req.body
 
   readTableRows('project', { id, })
@@ -13,23 +19,28 @@ const getDashboardData = (req, res) => {
         node_id,
       } = project[0]
 
+      const projectName = project[0].name
+
       readTableRows('node', { id: node_id })
         .then( node => {
 
-          // get weather based on latLng
-          // get currentAvg from from node
-          // get last hour of price data from CAISO
-          Promise.all([
-            getCurrentWeather(lat, lng)
-          ])
-            .then( arr => {
-              const weather = arr.find( obj => obj.currently !== undefined )
+          const {
+            name,
+            avg,
+          } = node[0]
+
+          buildDashboardData(lat, lng, name)
+            .then( data => {
               return res.status(200).json({
-                weather: weather.currently,
+                ...data,
+                params: {
+                  lat,
+                  lng,
+                  avg,
+                  nodeName: name,
+                  projectName,
+                },
               })
-            })
-            .catch( err => {
-              if (err) throw new Error(err)
             })
         })
         .catch( err => {
@@ -39,7 +50,34 @@ const getDashboardData = (req, res) => {
     .catch( err => {
       console.error(`There was an error getting dashboard data for project ${id}: ${err}`)
     })
-
 }
+
+const buildDashboardData = (lat, lng, nodeName) => new Promise( (resolve, reject) => {
+
+  console.time('build dashboard data')
+
+  const timeZone = 'America/Los_Angeles'
+  const now = moment().tz(timeZone)
+  const endMillis = now.valueOf()
+  const startMillis = now.clone()
+                        .subtract(1, 'hour')
+                        .valueOf()
+
+  Promise.all([
+    getCurrentWeather(lat, lng),
+    caisoPriceRequest(
+      startMillis,
+      endMillis,
+      'PRC_INTVL_LMP',
+      'RTM',
+      nodeName),
+    ])
+    .then( data => resolve({
+        weather: data[0],
+        prices: data[1],
+      })
+    )
+    .catch(reject)
+})
 
 module.exports = getDashboardData
