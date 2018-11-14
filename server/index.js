@@ -13,6 +13,7 @@ const {
 const {
   getCaiso,
   caisoNodeEvaluator,
+  getDashboardData,
 } = require('./product/')
 
 const {
@@ -51,6 +52,7 @@ app.use(bodyParser.json())
 
 app.post('/caiso', getCaiso)
 app.post('/caiso_node_evaluator', caisoNodeEvaluator)
+app.post('/get_dashboard', getDashboardData)
 
 app.post('/createUser', createUser)
 app.post('/login', login)

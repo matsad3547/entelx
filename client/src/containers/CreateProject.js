@@ -3,7 +3,7 @@ import { withRouter } from 'react-router'
 
 import Map from './map/Map'
 
-import MapNodeRenderer from './map/MapNodeRenderer'
+// import MapNodeRenderer from './map/MapNodeRenderer'
 
 import MapLocationReader from '../components/map/MapLocationReader'
 
@@ -196,7 +196,7 @@ const CreateProject = ({
         <MapLocationReader
           getLatLng={setLatLng}
         />
-        <MapNodeRenderer />
+        {/*<MapNodeRenderer />*/}
       </Map>
       <div style={styles.button}>
         <Button

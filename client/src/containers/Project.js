@@ -15,8 +15,6 @@ import {
 
 import { getBaseUrl } from '../utils/'
 
-import { colors } from '../config/styles'
-
 const Project = ({match, history}) => {
 
   const {
@@ -50,7 +48,7 @@ const Project = ({match, history}) => {
 
   const getProject = () => {
     setLoading(true)
-    const body = JSON.stringify({id: params.projectId})
+    const body = JSON.stringify({id: projectId})
     singleRequest('/get_project', getRequest('POST', body))
       .then(parseResponse)
       .then( res => {
@@ -140,12 +138,10 @@ const styles = {
     padding: '0 2em',
   },
   label: {
-    fontSize: '.9em',
     padding: '1em 0',
-    fontStyle: 'italic',
-    color: colors.gray,
   },
   data: {
+    fontSize: '1.2em',
     padding: '1em',
   },
   button: {

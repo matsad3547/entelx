@@ -55,7 +55,6 @@ const styles = {
   },
   label: {
     display: 'block',
-    fontSize: '1.1em',
   },
   input: {
     margin: '1em .5em',
