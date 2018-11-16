@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
+import Header3 from '../components/Header3'
+import Header4 from '../components/Header4'
 import Loading from '../components/loading/'
 
 import { getBaseUrl } from '../utils/'
@@ -25,6 +27,7 @@ const ProjectDashboard = ({match}) => {
 
   const [loading, setLoading] = useState(false)
   const [weather, setWeather] = useState(null)
+  const [config, setConfig] = useState(null)
 
   const getInitDashboard = () => {
     setLoading(true)
@@ -34,6 +37,7 @@ const ProjectDashboard = ({match}) => {
       .then( res => {
         console.log('res:', res);
         setWeather(res.weather)
+        setConfig(res.config)
         setLoading(false)
       })
       .catch( err => {
@@ -46,19 +50,47 @@ const ProjectDashboard = ({match}) => {
 
   return (
 
-    <SubPageTemplate title={'Project Dashboard'}>
+    <SubPageTemplate title={config ? `${config.projectName} - Dashboard` : 'Project Dashboard'}>
       { loading && <Loading message={''} />}
       <ProjectPageTemplate
         baseUrl={cleanUrl}
         id={projectId}
         >
-        <p>Project id: {projectId}</p>
+        <div>
+          <div style={styles.header}>
+            <Header3 content="Last Hour" />
+          </div>
+        </div>
+        <div>
+          <div style={styles.header}>
+            <Header4 content="Weather" />
+          </div>
+          <a
+            style={styles.ds}
+            className="ds"
+            target="_blank"
+            href="https://darksky.net/poweredby/">
+            Powered by Dark Sky
+          </a>
+        </div>
+        <div>
+          <div style={styles.header}>
+            <Header4 content="Charge Status" />
+          </div>
+        </div>
       </ProjectPageTemplate>
     </SubPageTemplate>
   )
 }
 
-// const styles = {
-// }
+const styles = {
+  header: {
+    padding: '0 1em 2em',
+  },
+  ds: {
+    color: '#0BA8F7',
+    textDecoration: 'none',
+  }
+}
 
 export default ProjectDashboard

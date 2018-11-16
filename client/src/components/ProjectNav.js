@@ -25,21 +25,24 @@ const ProjectNav = ({baseUrl, id}) => {
   return (
 
     <ul style={styles.root}>
-      {buttons.map((b, i) => <NavButton
-        key={`nav-button${i}`}
-        baseUrl={baseUrl}
-        link={b.link}
-        id={id}
-        label={b.label}
-        />
-      )}
+      {
+        buttons.map( (b, i) => <NavButton
+          key={`nav-button${i}`}
+          baseUrl={baseUrl}
+          link={b.link}
+          id={id}
+          label={b.label}
+          />
+        )
+      }
     </ul>
   )
 }
 
 const styles = {
   root: {
-    width: '18em',
+    width: '19em',
+    padding: '0 1em',
     borderRight: `1px solid ${colors.gray}`,
   },
 }

@@ -24,7 +24,7 @@ const SubPageHeader = ({title}) => (
 const styles = {
   root: {
     display: 'grid',
-    gridTemplateColumns: '[leftCol] auto [centerMargin] 10% [rightCol] 45% [end]',
+    gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
     gridTemplateRows: '[row1] 6em [ws1] 1em',
   },
   content: {
@@ -34,7 +34,7 @@ const styles = {
   text: {
     zIndex: 2,
     color: colors.white,
-    padding: '1em 3em',
+    padding: '1em 2em',
     justifySelf: 'start',
     alignSelf: 'end',
     background: 'transparent',

@@ -28,14 +28,15 @@ const NavButton = ({
 
 const styles = {
   label: {
+    textAlign: 'left',
     listStyle: 'none',
-    padding: '1em .5em',
+    padding: '1em',
   },
   link: {
     fontSize: '1.2em',
     textDecoration: 'none',
     color: colors.text,
-  }
+  },
 }
 
 NavButton.propTypes = {

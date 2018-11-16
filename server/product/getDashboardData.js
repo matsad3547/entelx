@@ -33,7 +33,7 @@ const getDashboardData = (req, res) => {
             .then( data => {
               return res.status(200).json({
                 ...data,
-                params: {
+                config: {
                   lat,
                   lng,
                   avg,
