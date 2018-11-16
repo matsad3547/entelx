@@ -24,7 +24,7 @@ const PublicPageHeader = ({title}) => (
 const styles = {
   root: {
     display: 'grid',
-    gridTemplateColumns: '[leftCol] auto [centerMargin] 10% [rightCol] 45% [end]',
+    gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
     gridTemplateRows: '[row1] 7em [ws1] 2em',
   },
   content: {
