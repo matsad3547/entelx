@@ -4,6 +4,7 @@ import { withRouter } from 'react-router'
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Header4 from '../components/Header4'
+import Label from '../components/Label'
 import Button from '../components/button/'
 import Loading from '../components/loading/'
 
@@ -79,21 +80,15 @@ const Project = ({match, history}) => {
           {
             project &&
             <div style={styles.specs}>
-              <span style={styles.label}>
-                Power
-              </span>
+              <Label content="Power"/>
               <p style={styles.data}>
                 {`${project.power} Mw`}
               </p>
-              <span style={styles.label}>
-                Energy
-              </span>
+              <Label content="Energy"/>
               <p style={styles.data}>
                 {`${project.energy} Mwh`}
               </p>
-              <span style={styles.label}>
-                Location
-              </span>
+              <Label content="Location"/>
               {
                 project.address ?
                 <p style={styles.data}>
@@ -102,13 +97,9 @@ const Project = ({match, history}) => {
                 :
                 <p style={styles.data}>
                   {`${project.lat} `}
-                  <span style={styles.label}>
-                    latitude
-                  </span>
+                  <Label content="latitude"/>
                   {`,  ${project.lng} `}
-                  <span style={styles.label}>
-                    longitude
-                  </span>
+                  <Label content="longitude"/>
                 </p>
               }
             </div>
@@ -137,12 +128,9 @@ const styles = {
   specs: {
     padding: '0 2em',
   },
-  label: {
-    padding: '1em 0',
-  },
   data: {
     fontSize: '1.2em',
-    padding: '1em',
+    padding: '0 .5em 1em',
   },
   button: {
     padding: '0 1em',

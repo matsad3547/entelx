@@ -6,6 +6,8 @@ import {
   colors,
 } from '../config/styles'
 
+import { labelStyle } from './Label'
+
 const LabeledInput = ({
   name,
   label,
@@ -24,7 +26,7 @@ const LabeledInput = ({
   <div style={styles.root}>
     <label
       htmlFor={name}
-      style={styles.label}
+      style={labelStyle}
       >{label}</label>
     <input
       style={getInputStyles(inputWidth, disabled)}
@@ -53,11 +55,8 @@ const styles = {
   root: {
     display: 'block',
   },
-  label: {
-    display: 'block',
-  },
   input: {
-    margin: '1em .5em',
+    margin: '0 .5em 1em',
     fontSize: fontSize.label,
     padding: '.5em',
     background: colors.lightGray,

@@ -234,7 +234,6 @@ const styles = {
     padding: '1em 0',
   },
   header: {
-    padding: '0 0 1.5em',
     width: '100%',
   },
   label: {
@@ -256,4 +255,5 @@ const styles = {
     padding: '0 1em',
   }
 }
+
 export default withRouter(CreateProject)

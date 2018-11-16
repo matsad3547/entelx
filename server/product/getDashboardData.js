@@ -54,8 +54,6 @@ const getDashboardData = (req, res) => {
 
 const buildDashboardData = (lat, lng, nodeName) => new Promise( (resolve, reject) => {
 
-  console.time('build dashboard data')
-
   const timeZone = 'America/Los_Angeles'
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
