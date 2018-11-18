@@ -56,26 +56,30 @@ const ProjectDashboard = ({match}) => {
         baseUrl={cleanUrl}
         id={projectId}
         >
-        <div>
-          <div style={styles.header}>
+        <div style={styles.root}>
+          {/*<div style={styles.header}>
             <Header3 content="Last Hour" />
+          </div>*/}
+          <div style={styles.subSection}>
+            <div style={styles.header}>
+              <Header4 content="Weather" />
+            </div>
+            <div>
+
+            </div>
+            <div style={styles.link}>
+              <a
+                style={styles.ds}
+                target="_blank"
+                href="https://darksky.net/poweredby/">
+                Powered by Dark Sky
+              </a>
+            </div>
           </div>
-        </div>
-        <div>
-          <div style={styles.header}>
-            <Header4 content="Weather" />
-          </div>
-          <a
-            style={styles.ds}
-            className="ds"
-            target="_blank"
-            href="https://darksky.net/poweredby/">
-            Powered by Dark Sky
-          </a>
-        </div>
-        <div>
-          <div style={styles.header}>
-            <Header4 content="Charge Status" />
+          <div style={styles.subSection}>
+            <div style={styles.header}>
+              <Header4 content="State of Charge" />
+            </div>
           </div>
         </div>
       </ProjectPageTemplate>
@@ -84,12 +88,24 @@ const ProjectDashboard = ({match}) => {
 }
 
 const styles = {
+  root: {
+    textAlign: 'left',
+  },
   header: {
-    padding: '0 1em 2em',
+    padding: '0 2em 1em',
+  },
+  subSection: {
+    textAlign: 'left',
+    padding: '0 1em',
+  },
+  link: {
+    textAlign: 'right',
   },
   ds: {
     color: '#0BA8F7',
     textDecoration: 'none',
+    fontSize: '.8em',
+    textAlign: 'right',
   }
 }
 
