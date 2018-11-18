@@ -3,7 +3,8 @@ const moment = require('moment-timezone')
 const { readTableRows } = require('../utils/')
 const {
   getCurrentWeather,
-  caisoPriceRequest,
+  oasisEndpoint,
+  // caisoPriceRequest,
 } = require('../processes/')
 
 const getDashboardData = (req, res) => {
@@ -43,16 +44,15 @@ const getDashboardData = (req, res) => {
               })
             })
         })
-        .catch( err => {
-          if (err) throw new Error(err)
-        })
+        .catch( err => { throw err })
     })
     .catch( err => {
-      console.error(`There was an error getting dashboard data for project ${id}: ${err}`)
+      console.error(err.stack)
+      res.status(500).send('There was an error getting dashboard data', err)
     })
 }
 
-const buildDashboardData = (lat, lng, nodeName) => new Promise( (resolve, reject) => {
+const buildDashboardData = (lat, lng, nodeName) => {
 
   const timeZone = 'America/Los_Angeles'
   const now = moment().tz(timeZone)
@@ -61,21 +61,27 @@ const buildDashboardData = (lat, lng, nodeName) => new Promise( (resolve, reject
                         .subtract(1, 'hour')
                         .valueOf()
 
-  Promise.all([
+  return Promise.all([
     getCurrentWeather(lat, lng),
-    caisoPriceRequest(
-      startMillis,
-      endMillis,
-      'PRC_INTVL_LMP',
-      'RTM',
-      nodeName),
-    ])
-    .then( data => resolve({
+    oasisEndpoint(
+        startMillis,
+        endMillis,
+        'PRC_INTVL_LMP',
+        'RTM',
+        nodeName),
+      ]
+      .map( p => p.catch(handleMultiPromiseError) )
+    )
+    .then( data => ({
         weather: data[0],
         prices: data[1],
       })
     )
-    .catch(reject)
-})
+}
+
+const handleMultiPromiseError = err => {
+  console.error(`there was an error: ${err}`)
+  return { error: `there was an error: ${err}`}
+}
 
 module.exports = getDashboardData

@@ -1,10 +1,11 @@
 const convert = require('xml-js')
 const unzipper = require('unzipper')
-const fs = require('fs')
 const request = require('request')
 
-const { writeToFile } = require('../../../utils/')
-const { getUrl } = require('./utils')
+const {
+  getUrl,
+  getParser,
+} = require('./utils')
 
 const oasisEndpoint = (
     startMillis,
@@ -35,9 +36,24 @@ const oasisEndpoint = (
       entry => entry.buffer()
         .then( buffer => buffer.toString() )
         .then( str => convert.xml2json(str, xmlOptions) )
-        .then( strJson => {
-          console.timeEnd(`CAISO ${query} request`)
-          resolve(strJson)
+        .then( strJson => JSON.parse(strJson))
+        .then( json => {
+
+          const error = json['m:OASISReport'] &&
+            json['m:OASISReport']
+              ['m:MessagePayload']
+              ['m:RTO']
+              ['m:ERROR']
+
+          if(error !== undefined) {
+            console.timeEnd(`CAISO ${query} request`)
+            reject(error['m:ERR_DESC']._text)
+          }
+          else {
+            const parser = getParser(query)
+            console.timeEnd(`CAISO ${query} request`)
+            resolve(parser(query, json))
+          }
         })
     )
     .on('error', reject)
