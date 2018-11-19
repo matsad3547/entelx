@@ -51,8 +51,11 @@ const oasisEndpoint = (
           }
           else {
             const parser = getParser(query)
+            console.time('parser time')
+            const parsed = parser(query, json)
+            console.timeEnd('parser time')
             console.timeEnd(`CAISO ${query} request`)
-            resolve(parser(query, json))
+            resolve(parsed)
           }
         })
     )

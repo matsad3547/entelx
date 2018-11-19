@@ -3,6 +3,7 @@ const moment = require('moment-timezone')
 const { readTableRows } = require('../utils/')
 const {
   getCurrentWeather,
+  getPriceSeries,
   oasisEndpoint,
 } = require('../processes/')
 
@@ -11,33 +12,29 @@ const getDashboardData = (req, res) => {
   const { id } = req.body
 
   readTableRows('project', { id, })
-    .then( project => {
+    .then( projectRes => {
 
       const {
         lat,
         lng,
         node_id,
-      } = project[0]
+      } = projectRes[0]
 
-      const projectName = project[0].name
+      const projectName = projectRes[0].name
 
       readTableRows('node', { id: node_id })
-        .then( node => {
+        .then( nodeRes => {
 
-          const {
-            name,
-            avg,
-          } = node[0]
+          const node = nodeRes[0]
 
-          buildDashboardData(lat, lng, name)
+          buildDashboardData(lat, lng, node)
             .then( data => {
               return res.status(200).json({
                 ...data,
                 config: {
                   lat,
                   lng,
-                  avg,
-                  nodeName: name,
+                  node,
                   projectName,
                 },
               })
@@ -51,23 +48,11 @@ const getDashboardData = (req, res) => {
     })
 }
 
-const buildDashboardData = (lat, lng, nodeName) => {
-
-  const timeZone = 'America/Los_Angeles'
-  const now = moment().tz(timeZone)
-  const endMillis = now.valueOf()
-  const startMillis = now.clone()
-                        .subtract(1, 'hour')
-                        .valueOf()
+const buildDashboardData = (lat, lng, node) => {
 
   return Promise.all([
-    getCurrentWeather(lat, lng),
-    oasisEndpoint(
-        'PRC_INTVL_LMP',
-        'RTM',
-        startMillis,
-        endMillis,
-        nodeName),
+        getCurrentWeather(lat, lng),
+        getPriceSeries(node),
       ]
       .map( p => p.catch(handleMultiPromiseError) )
     )

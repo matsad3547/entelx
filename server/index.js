@@ -29,13 +29,15 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('server/public'))
 }
 
-app.listen(app.get('port'), err => {
+const server = app.listen(app.get('port'), err => {
   if (err) {
     throw new Error(err)
     console.error('An error occured:', err)
   }
   console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
+
+server.setTimeout = 200000
 
 app.use(express.static('publick'))
 

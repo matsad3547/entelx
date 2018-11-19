@@ -2,22 +2,19 @@ const moment = require('moment-timezone')
 
 const getPriceRequest = require('./getPriceRequest')
 
-const {
-  calculateMovingAverage,
-  scoreValues,
-} = require('../utils/')
+const { calculateScore } = require('../utils/')
 
-const getRunningAverage = node => {
+const getPriceSeries = node => {
+  console.time('get price series')
 
-  const numDays = 6
   const timeZone = 'America/Los_Angeles'
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
   const startMillis = now.clone()
-                      .subtract(numDays, 'days')
+                      .subtract(1, 'hour')
                       .valueOf()
 
-  const dayOf5Mins = (24 * 60) / 5
+  const currentAvg = node.current_avg
 
   const {
     req,
@@ -30,8 +27,16 @@ const getRunningAverage = node => {
     endMillis,
     node.name,
   )
-  .then( data => calculateMovingAverage(data, 'lmp', numDays * dayOf5Mins) )
+  .then( data => {
+    const dataWithAvg = data.map( obj => ({
+        ...obj,
+        mvgAvg: currentAvg,
+      })
+    )
+    console.timeEnd('get price series')
+    return calculateScore(dataWithAvg, 'lmp')
+  })
   .catch( err => console.error('There was an error getting the running average:', err))
 }
 
-module.exports = getRunningAverage
+module.exports = getPriceSeries
