@@ -1,24 +1,16 @@
-const moment = require('moment-timezone')
-
 const {
   findByLatLng,
   findClosest,
   createTableRow,
   updateTableRow,
   deleteTableRows,
-  scoreValues,
 } = require('../utils/')
 
-const { caisoPriceRequest } = require('../processes/')
+const { getRunningAverage } = require('../processes/')
 
-const timeZone = 'America/Los_Angeles'
-const now = moment().tz(timeZone)
-const endMillis = now.valueOf()
-const startMillis = now.clone()
-                    .subtract(1, 'days')
-                    .valueOf()
-
-const weekOf5Mins = (7 * 24 * 60) / 5
+const handleError = err => {
+  throw err
+}
 
 const createNewProject = (req, res) => {
   const { type } = req.body
@@ -49,20 +41,16 @@ const createProject = (data, res) => {
         updateTableRow('project', {id,}, {node_id: node.id})
           .then( () => res.status(200).json({id,}))
           .then( () => {
-            caisoPriceRequest(
-              startMillis,
-              endMillis,
-              'PRC_INTVL_LMP',
-              'RTM',
-              node.name,
-            )
-              .then( data => scoreValues(data, 'lmp', 2 * weekOf5Mins) )
-              .then( data => console.log(`Parsed data from ${node.name}: ${data}`) )
-              .catch( err => console.error('Error getting CAISO node evaluation data:', err) )
-            })
-          .catch( err => console.error(`Error updating project ${id}: ${err}`) )
+            console.log('at then?');
+            getRunningAverage(node)
+              .then( arr => {
+                const currentAvg = arr[arr.length - 1].mvgAvg
+                
+              })
+          })
+          .catch( handleError )
       })
-      .catch( err => console.error(`Error getting a result from the 'node' table by lat lng: ${err}`))
+      .catch( handleError )
     )
     .catch(err => console.error(`Error at createProject: ${err}`))
 }

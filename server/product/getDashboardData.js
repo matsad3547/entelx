@@ -4,7 +4,6 @@ const { readTableRows } = require('../utils/')
 const {
   getCurrentWeather,
   oasisEndpoint,
-  // caisoPriceRequest,
 } = require('../processes/')
 
 const getDashboardData = (req, res) => {
@@ -64,10 +63,10 @@ const buildDashboardData = (lat, lng, nodeName) => {
   return Promise.all([
     getCurrentWeather(lat, lng),
     oasisEndpoint(
-        startMillis,
-        endMillis,
         'PRC_INTVL_LMP',
         'RTM',
+        startMillis,
+        endMillis,
         nodeName),
       ]
       .map( p => p.catch(handleMultiPromiseError) )
