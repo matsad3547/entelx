@@ -91,7 +91,7 @@ const CreateProject = ({
   return (
 
     <div style={styles.root}>
-      { loading && <Loading message={'Creating your project...'} />}
+      { loading && <Loading message={'Building your project...'} />}
       <div style={styles.header}>
         <Header3 content={'Start by specifying your project'} />
       </div>

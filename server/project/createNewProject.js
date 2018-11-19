@@ -41,12 +41,17 @@ const createProject = (data, res) => {
         updateTableRow('project', {id,}, {node_id: node.id})
           .then( () => res.status(200).json({id,}))
           .then( () => {
-            console.log('at then?');
             getRunningAverage(node)
               .then( arr => {
                 const currentAvg = arr[arr.length - 1].mvgAvg
-                
+                updateTableRow(
+                  'node',
+                  {id: node.id},
+                  {current_avg: currentAvg},
+                )
+                // .then( () => res.status(200).json({id,}))
               })
+              .catch( handleError )
           })
           .catch( handleError )
       })
