@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
-import Header3 from '../components/Header3'
 import Header4 from '../components/Header4'
 import Loading from '../components/loading/'
 
@@ -71,6 +70,7 @@ const ProjectDashboard = ({match}) => {
               <a
                 style={styles.ds}
                 target="_blank"
+                rel="noopener noreferrer"
                 href="https://darksky.net/poweredby/">
                 Powered by Dark Sky
               </a>

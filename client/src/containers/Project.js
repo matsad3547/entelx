@@ -95,12 +95,16 @@ const Project = ({match, history}) => {
                   {`${project.address} - ${project.city} -  ${project.state}`}
                 </p>
                 :
-                <p style={styles.data}>
-                  {`${project.lat} `}
+                <div style={styles.latLng}>
+                  <p style={styles.data}>
+                    {project.lat}
+                  </p>
                   <Label content="latitude"/>
-                  {`,  ${project.lng} `}
+                  <p style={styles.data}>
+                    {project.lng}
+                  </p>
                   <Label content="longitude"/>
-                </p>
+                </div>
               }
             </div>
           }
@@ -131,6 +135,12 @@ const styles = {
   data: {
     fontSize: '1.2em',
     padding: '0 .5em 1em',
+  },
+  latLng: {
+    display: 'inline-flex',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+    width: '22em',
   },
   button: {
     padding: '0 1em',

@@ -8,10 +8,10 @@ const {
 } = require('./utils')
 
 const oasisEndpoint = (
-    startMillis,
-    endMillis,
     query,
     marketType,
+    startMillis,
+    endMillis,
     node,
   ) => new Promise( (resolve, reject) => {
 

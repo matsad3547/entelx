@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
@@ -17,7 +17,7 @@ const ProjectRoi = ({match}) => {
 
   const cleanUrl = getBaseUrl(url, 'roi', projectId)
 
-  const [loading, setLoading] = useState(false)
+  const [loading] = useState(false)
 
   return (
 

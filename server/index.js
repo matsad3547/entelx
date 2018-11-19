@@ -10,22 +10,13 @@ const {
   login,
 } = require('./user/')
 
-const {
-  getCaiso,
-  caisoNodeEvaluator,
-  getDashboardData,
-} = require('./product/')
+const { getDashboardData } = require('./product/')
 
 const {
   createNewProject,
   deleteProjectById,
   getProjectById,
 } = require('./project/')
-
-const {
-  getNodes,
-  updateNodeData,
-} = require('./processes/')
 
 //for testing python
 // const { demoProcess } = require('./processes/')
@@ -50,15 +41,10 @@ app.use(express.static('publick'))
 
 app.use(bodyParser.json())
 
-app.post('/caiso', getCaiso)
-app.post('/caiso_node_evaluator', caisoNodeEvaluator)
 app.post('/get_dashboard', getDashboardData)
 
 app.post('/createUser', createUser)
 app.post('/login', login)
-
-app.get('/get_nodes', getNodes)
-app.post('/update_node_data', updateNodeData)
 
 app.post('/create_project', createNewProject)
 app.post('/get_project', getProjectById)
