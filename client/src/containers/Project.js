@@ -5,6 +5,7 @@ import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Header4 from '../components/Header4'
 import Label from '../components/Label'
+import DataDisplay from '../components/DataDisplay'
 import Button from '../components/button/'
 import Loading from '../components/loading/'
 
@@ -64,8 +65,6 @@ const Project = ({match, history}) => {
 
   useEffect( () => getProject(), [])
 
-  console.log('project?', project);
-
   return (
     <SubPageTemplate title={project ? `${project.name} - Home` : 'Project Home'}>
       { loading && <Loading message={''} />}
@@ -81,28 +80,18 @@ const Project = ({match, history}) => {
             project &&
             <div style={styles.specs}>
               <Label content="Power"/>
-              <p style={styles.data}>
-                {`${project.power} Mw`}
-              </p>
+              <DataDisplay content={`${project.power} Mw`}/>
               <Label content="Energy"/>
-              <p style={styles.data}>
-                {`${project.energy} Mwh`}
-              </p>
+              <DataDisplay content={`${project.energy} Mwh`}/>
               <Label content="Location"/>
               {
                 project.address ?
-                <p style={styles.data}>
-                  {`${project.address} - ${project.city} -  ${project.state}`}
-                </p>
+                <DataDisplay content={`${project.address} - ${project.city} -  ${project.state}`}/>
                 :
                 <div style={styles.latLng}>
-                  <p style={styles.data}>
-                    {project.lat}
-                  </p>
+                  <DataDisplay content={project.lat}/>
                   <Label content="latitude"/>
-                  <p style={styles.data}>
-                    {project.lng}
-                  </p>
+                  <DataDisplay content={project.lng}/>
                   <Label content="longitude"/>
                 </div>
               }
@@ -131,10 +120,6 @@ const styles = {
   },
   specs: {
     padding: '0 2em',
-  },
-  data: {
-    fontSize: '1.2em',
-    padding: '0 .5em 1em',
   },
   latLng: {
     display: 'inline-flex',

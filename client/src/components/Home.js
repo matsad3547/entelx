@@ -6,7 +6,7 @@ import Header3 from './Header3'
 import Header4 from './Header4'
 import Overlay from './Overlay'
 import Footer from './Footer'
-import GradientBackground from './GradientBackground'
+import ReverseGradientBackground from './ReverseGradientBackground'
 
 import { colors } from '../config/styles'
 
@@ -55,7 +55,7 @@ const Home = () => (
           content={'But the transition to sustainable energy must move faster'}
           />
       </div>
-      <GradientBackground
+      <ReverseGradientBackground
         addlStyles={styles.banner}
         />
       <div style={{
