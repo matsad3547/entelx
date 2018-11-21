@@ -2,16 +2,12 @@ import React, { useState, useEffect, useRef } from 'react'
 
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
+import CurrentWeatherDisplay from '../components/CurrentWeatherDisplay'
+import ChargingIndicator from '../components/ChargingIndicator'
 import Header4 from '../components/Header4'
-import Label from '../components/Label'
-import DataDisplay from '../components/DataDisplay'
-import WeatherIcon from '../components/WeatherIcon'
 import Loading from '../components/loading/'
 
-import {
-  getBaseUrl,
-  roundToDigits,
-} from '../utils/'
+import { getBaseUrl } from '../utils/'
 
 import {
   singleRequest,
@@ -32,6 +28,8 @@ const ProjectDashboard = ({match}) => {
 
   const [loading, setLoading] = useState(false)
   const [weather, setWeather] = useState(null)
+  const [prices, setPrices] = useState(null)
+  const [stateOfCharge, setStateOfCharge] = useState(null)
   const [config, setConfig] = useState(null)
 
   const intervalRef = useRef(null)
@@ -51,6 +49,8 @@ const ProjectDashboard = ({match}) => {
         setLoading(false)
         setWeather(res.weather)
         setConfig(res.config)
+        setPrices(res.prices)
+        setStateOfCharge(null)
         setRefresh()
       })
       .catch( err => {
@@ -74,41 +74,21 @@ const ProjectDashboard = ({match}) => {
         >
         <div style={styles.root}>
           {
+            prices &&
+            <ChargingIndicator prices={prices} />
+          }
+          {
             weather &&
+            <CurrentWeatherDisplay weather={weather} />
+          }
+          {
+            stateOfCharge &&
             <div style={styles.subSection}>
               <div style={styles.header}>
-                <Header4 content="Weather" />
-                <WeatherIcon
-                  icon={weather.icon}
-                  style={styles.icon}
-                  />
-              </div>
-              <div style={styles.data}>
-                <Label content="Current Temperature"/>
-                <DataDisplay content={`${roundToDigits(weather.temperature, 1)}°F`}/>
-                <Label content="Cloud Cover"/>
-                <DataDisplay content={`${roundToDigits(weather.cloudCover * 100, 0)} %`}/>
-                <Label content="Wind"/>
-                <DataDisplay content={`${roundToDigits(weather.windSpeed, 1)} mph gusting to ${roundToDigits(weather.windGust, 1)} mph, bearing ${weather.windBearing}°`}/>
-                <Label content="Nearest Storm"/>
-                <DataDisplay content={`${weather.nearestStormDistance} mi bearing ${weather.nearestStormBearing}°`}/>
-              </div>
-              <div style={styles.link}>
-                <a
-                  style={styles.ds}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://darksky.net/poweredby/">
-                  Powered by Dark Sky
-                </a>
+                <Header4 content="State of Charge" />
               </div>
             </div>
           }
-          <div style={styles.subSection}>
-            <div style={styles.header}>
-              <Header4 content="State of Charge" />
-            </div>
-          </div>
         </div>
       </ProjectPageTemplate>
     </SubPageTemplate>
@@ -119,30 +99,6 @@ const styles = {
   root: {
     textAlign: 'left',
   },
-  header: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    padding: '0 2em 1em',
-  },
-  subSection: {
-    textAlign: 'left',
-    padding: '0 1em',
-  },
-  data: {
-    padding: '0 3em',
-  },
-  link: {
-    textAlign: 'right',
-  },
-  icon: {
-    height: '4em'
-  },
-  ds: {
-    color: '#0BA8F7',
-    textDecoration: 'none',
-    fontSize: '.8em',
-    textAlign: 'right',
-  }
 }
 
 export default ProjectDashboard
