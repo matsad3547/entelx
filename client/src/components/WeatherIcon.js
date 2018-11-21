@@ -1,68 +1,71 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
+import { colors } from '../config/styles'
+
 const Skycons = require('skycons')(window)
+
 
 const getIconConfig = icon => {
   switch (icon) {
     case 'clear-night':
     return {
       key: 'CLEAR_NIGHT',
-      color: '#082656',
+      color: colors.darkBlue,
     }
 
     case 'rain':
     return {
       key: 'RAIN',
-      color: '#01BAEF',
+      color: colors.lightBlue,
     }
 
     case 'snow':
     return {
       key: 'SNOW',
-      color: '#01BAEF',
+      color: colors.lightBlue,
     }
 
     case 'sleet':
     return {
       key: 'SLEET',
-      color: '#01BAEF',
+      color: colors.lightBlue,
     }
 
     case 'wind':
     return {
       key: 'WIND',
-      color: '#01BAEF',
+      color: colors.mediumGray,
     }
 
     case 'fog':
     return {
       key: 'FOG',
-      color: '#A0A0A0',
+      color: colors.mediumGray,
     }
 
     case 'cloudy':
     return {
       key: 'CLOUDY',
-      color: '#A0A0A0',
+      color: colors.mediumGray,
     }
 
     case 'partly-cloudy-day':
     return {
       key: 'PARTLY_CLOUDY_DAY',
-      color: '#FFE659',
+      color: colors.paleYellow,
     }
 
     case 'partly-cloudy-night':
     return {
       key: 'PARTLY_CLOUDY_NIGHT',
-      color: '#082656',
+      color: colors.darkBlue,
     }
 
     default:
       return {
         key: 'CLEAR_DAY',
-        color: '#FFD800',
+        color: colors.deepYellow,
       }
   }
 }

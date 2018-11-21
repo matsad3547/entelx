@@ -14,8 +14,6 @@ const Map = ({
   const [map, setMap] = useState(null)
   const [loaded, setLoaded] = useState(false)
 
-  const removeMap = () => map && map.remove()
-
   const mapContainer = useRef(null)
 
   useEffect( () => {
@@ -32,7 +30,7 @@ const Map = ({
 
     map.on('load', () => setLoaded(true) )
 
-    return () => removeMap()
+    return () => map.remove()
   }, [])
 
   const childrenWithProps = React.Children.map(children, child =>
