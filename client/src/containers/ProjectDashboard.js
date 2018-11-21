@@ -5,6 +5,7 @@ import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Header4 from '../components/Header4'
 import Label from '../components/Label'
 import DataDisplay from '../components/DataDisplay'
+import WeatherIcon from '../components/WeatherIcon'
 import Loading from '../components/loading/'
 
 import {
@@ -77,6 +78,10 @@ const ProjectDashboard = ({match}) => {
             <div style={styles.subSection}>
               <div style={styles.header}>
                 <Header4 content="Weather" />
+                <WeatherIcon
+                  icon={weather.icon}
+                  style={styles.icon}
+                  />
               </div>
               <div style={styles.data}>
                 <Label content="Current Temperature"/>
@@ -115,6 +120,8 @@ const styles = {
     textAlign: 'left',
   },
   header: {
+    display: 'inline-flex',
+    alignItems: 'center',
     padding: '0 2em 1em',
   },
   subSection: {
@@ -126,6 +133,9 @@ const styles = {
   },
   link: {
     textAlign: 'right',
+  },
+  icon: {
+    height: '4em'
   },
   ds: {
     color: '#0BA8F7',
