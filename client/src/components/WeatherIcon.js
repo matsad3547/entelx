@@ -5,7 +5,6 @@ import { colors } from '../config/styles'
 
 const Skycons = require('skycons')(window)
 
-
 const getIconConfig = icon => {
   switch (icon) {
     case 'clear-night':

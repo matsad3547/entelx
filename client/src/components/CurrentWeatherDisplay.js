@@ -21,8 +21,13 @@ const CurrentWeatherDisplay = ({ weather }) => (
     <DataDisplay content={`${roundToDigits(weather.cloudCover * 100, 0)} %`}/>
     <Label content="Wind"/>
     <DataDisplay content={`${roundToDigits(weather.windSpeed, 1)} mph gusting to ${roundToDigits(weather.windGust, 1)} mph, bearing ${weather.windBearing}°`}/>
-    <Label content="Nearest Storm"/>
-    <DataDisplay content={`${weather.nearestStormDistance} mi bearing ${weather.nearestStormBearing}°`}/>
+    {
+      weather.nearestStormDistance > 0 &&
+      <div>
+        <Label content="Nearest Storm"/>
+        <DataDisplay content={`${weather.nearestStormDistance} mi bearing ${weather.nearestStormBearing}°`}/>
+      </div>
+    }
     <div style={styles.link}>
       <a
         style={styles.ds}

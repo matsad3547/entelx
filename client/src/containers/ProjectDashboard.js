@@ -34,28 +34,46 @@ const ProjectDashboard = ({match}) => {
 
   const intervalRef = useRef(null)
 
-  const setRefresh = () => {
-    intervalRef.current = setInterval( () =>
-    { console.log('doing the thing!')}, 5 * 60 * 1000)
+  const setRefresh = config => {
+    intervalRef.current = setInterval( () => refreshDashboard(config), 5 * 60 * 1000)
   }
 
   const getInitDashboard = () => {
+
     setLoading(true)
     const body = JSON.stringify({id: projectId})
-    singleRequest('/get_dashboard', getRequest('POST', body))
+    singleRequest('/get_init_dashboard', getRequest('POST', body))
       .then(parseResponse)
       .then( res => {
-        console.log('res:', res);
         setLoading(false)
         setWeather(res.weather)
         setConfig(res.config)
         setPrices(res.prices)
         setStateOfCharge(null)
-        setRefresh()
+        setRefresh(res.config)
       })
       .catch( err => {
         setLoading(false)
         console.error(`There was an error retrieving your project: ${err}`)
+      })
+  }
+
+  const refreshDashboard = config => {
+
+    console.log('refreshing...')
+
+    const body = JSON.stringify({...config})
+
+    singleRequest('/refresh_dashboard', getRequest('POST', body))
+      .then(parseResponse)
+      .then( res => {
+        setWeather(res.weather)
+        setPrices(res.prices)
+        setStateOfCharge(null)
+      })
+      .catch( err => {
+        setLoading(false)
+        console.error(`There was an error refreshing your project dashboard: ${err}`)
       })
   }
 

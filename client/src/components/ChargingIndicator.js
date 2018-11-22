@@ -7,7 +7,7 @@ import { roundToDigits } from '../utils/'
 
 import { colors } from '../config/styles'
 
-const getPriceDescription = (diff) => {
+const getPriceDescription = diff => {
 
   const displayPrc = roundToDigits(Math.abs(diff), 2)
 
