@@ -10,7 +10,10 @@ const {
   login,
 } = require('./user/')
 
-const { getDashboardData } = require('./product/')
+const {
+  getInitDashboardData,
+  refreshDashboardData,
+} = require('./product/')
 
 const {
   createNewProject,
@@ -43,7 +46,8 @@ app.use(express.static('publick'))
 
 app.use(bodyParser.json())
 
-app.post('/get_dashboard', getDashboardData)
+app.post('/get_init_dashboard', getInitDashboardData)
+app.post('/refresh_dashboard', refreshDashboardData)
 
 app.post('/createUser', createUser)
 app.post('/login', login)

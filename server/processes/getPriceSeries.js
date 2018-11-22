@@ -1,18 +1,9 @@
-const moment = require('moment-timezone')
-
 const getPriceRequest = require('./getPriceRequest')
 
 const { calculateScore } = require('../utils/')
 
-const getPriceSeries = node => {
+const getPriceSeries = (endMillis, startMillis, node) => {
   console.time('get price series')
-
-  const timeZone = 'America/Los_Angeles'
-  const now = moment().tz(timeZone)
-  const endMillis = now.valueOf()
-  const startMillis = now.clone()
-                      .subtract(1, 'hour')
-                      .valueOf()
 
   const currentAvg = node.current_avg
 

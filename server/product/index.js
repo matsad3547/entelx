@@ -1,5 +1,7 @@
-const getDashboardData = require('./getDashboardData')
+const getInitDashboardData = require('./getInitDashboardData')
+const refreshDashboardData = require('./refreshDashboardData')
 
 module.exports = {
-  getDashboardData,
+  getInitDashboardData,
+  refreshDashboardData,
 }
