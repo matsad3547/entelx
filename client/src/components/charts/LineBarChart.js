@@ -28,7 +28,7 @@ import {
 
 const LineBarChart = ({
   data,
-  tz,
+  timeZone,
 }) => {
 
   const dataTypes = findRelevantKeys(data)
@@ -42,14 +42,14 @@ const LineBarChart = ({
       margin={{top: 0, right: 0, left: 0, bottom: 0}}>
       <XAxis
         dataKey="timestamp"
-        tickFormatter={millis => formatMillis(millis, tz, monthDayTimeFormat)}
+        tickFormatter={millis => formatMillis(millis, timeZone, monthDayTimeFormat)}
         />
       <YAxis/>
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip
         content={
           <CustomTooltip
-            tz={tz}
+            timeZone={timeZone}
           />
       }/>
       {
@@ -89,7 +89,7 @@ const LineBarChart = ({
 
 LineBarChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  tz: PropTypes.string.isRequired,
+  timeZone: PropTypes.string.isRequired,
 }
 
 export default LineBarChart

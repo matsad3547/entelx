@@ -5,15 +5,20 @@ import Label from '../components/Label'
 import DashboardSection from '../components/DashboardSection'
 import DataDisplay from '../components/DataDisplay'
 import WeatherIcon from '../components/WeatherIcon'
+import DataTimeDisplay from '../components/DataTimeDisplay'
 
 import { roundToDigits } from '../utils/'
 
-const CurrentWeatherDisplay = ({ weather }) => (
+const CurrentWeatherDisplay = ({ weather, timeZone }) => (
 
   <DashboardSection headerContent="Weather">
     <WeatherIcon
       icon={weather.icon}
       style={styles.icon}
+      />
+    <DataTimeDisplay
+      millis={weather.time * 1000}
+      timeZone={timeZone}
       />
     <Label content="Current Temperature"/>
     <DataDisplay content={`${roundToDigits(weather.temperature, 1)}°F`}/>
@@ -45,7 +50,8 @@ const styles = {
     textAlign: 'right',
   },
   icon: {
-    height: '5em'
+    height: '5em',
+    padding: '0 0 1em',
   },
   ds: {
     color: '#0BA8F7',
@@ -57,6 +63,7 @@ const styles = {
 
 CurrentWeatherDisplay.propTypes = {
   weather: PropTypes.shape({
+    time: PropTypes.number,
     icon: PropTypes.string,
     temperature: PropTypes.number,
     cloudCover: PropTypes.number,

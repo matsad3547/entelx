@@ -45,6 +45,7 @@ const ProjectDashboard = ({match}) => {
     singleRequest('/get_init_dashboard', getRequest('POST', body))
       .then(parseResponse)
       .then( res => {
+        console.log('res:', res);
         setLoading(false)
         setWeather(res.weather)
         setConfig(res.config)
@@ -93,11 +94,17 @@ const ProjectDashboard = ({match}) => {
         <div style={styles.root}>
           {
             prices &&
-            <ChargingIndicator prices={prices} />
+            <ChargingIndicator
+              prices={prices}
+              timeZone={config.timeZone}
+              />
           }
           {
-            weather &&
-            <CurrentWeatherDisplay weather={weather} />
+            (weather && config) &&
+            <CurrentWeatherDisplay
+              weather={weather}
+              timeZone={config.timeZone}
+              />
           }
           {
             stateOfCharge &&
