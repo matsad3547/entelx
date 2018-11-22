@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import DashboardSection from '../components/DashboardSection'
+import DataTimeDisplay from '../components/DataTimeDisplay'
 
 import { roundToDigits } from '../utils/'
 
@@ -24,17 +25,23 @@ const getStatusStyles = diff => ({
   color: diff > 0 ? colors.red : colors.brightGreen,
 })
 
-const ChargingIndicator = ({prices}) => {
+const ChargingIndicator = ({prices, timeZone}) => {
 
-  const currentPrc = prices[prices.length - 1].lmp
-  const avgPrc = prices[prices.length - 1].mvgAvg
+  const latest = prices[prices.length - 1]
+
+  const currentPrc = latest.lmp
+  const avgPrc = latest.mvgAvg
 
   const diff = currentPrc - avgPrc
 
   return (
     <DashboardSection headerContent="Status">
+      <DataTimeDisplay
+        millis={latest.timestamp}
+        timeZone={timeZone}
+        />
       {
-        prices[prices.length - 1].lmp < prices[prices.length - 1].mvgAvg ?
+        currentPrc < avgPrc ?
           <div style={getStatusStyles(diff)}>CHARGE</div> :
           <div style={getStatusStyles(diff)}>DISCHARGE</div>
       }
