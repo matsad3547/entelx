@@ -3,7 +3,9 @@ import React from 'react'
 import {
   lineDataFormat,
   barDataFormat,
-} from '../../config/'
+} from '../../config/chart'
+
+import './CustomLegend.css'
 
 const formats = {
   ...lineDataFormat,
@@ -33,6 +35,9 @@ const getLegendTileStyles = color => ({
 const styles = {
   root: {
     display: 'inline-flex',
+    // background: 'purple',
+    left: 30,
+    top: 10,
   },
   dataType: {
     display: 'inline-flex',

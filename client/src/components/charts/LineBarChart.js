@@ -16,10 +16,9 @@ import {
 import CustomTooltip from './CustomTooltip'
 import CustomLegend from './CustomLegend'
 
-import {
-  monthDayTimeFormat,
-  lineDataFormat,
-} from '../../config/'
+import { monthDayTimeFormat } from '../../config/'
+
+import { lineDataFormat } from '../../config/chart'
 
 import {
   formatMillis,
@@ -29,6 +28,8 @@ import {
 const LineBarChart = ({
   data,
   timeZone,
+  width = 1000,
+  height = 400,
 }) => {
 
   const dataTypes = findRelevantKeys(data)
@@ -36,15 +37,24 @@ const LineBarChart = ({
 
   return (
     <ComposedChart
-      width={1200}
-      height={450}
+      width={width}
+      height={height}
       data={data}
       margin={{top: 0, right: 0, left: 0, bottom: 0}}>
       <XAxis
         dataKey="timestamp"
         tickFormatter={millis => formatMillis(millis, timeZone, monthDayTimeFormat)}
         />
-      <YAxis/>
+      <YAxis
+        yAxisId="left"
+        tickCount={10}
+        minTickGap={5}
+        />
+      <YAxis
+        yAxisId="right"
+        orientation="right"
+        domain={[-3, 3]}
+        />
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip
         content={
@@ -55,6 +65,7 @@ const LineBarChart = ({
       {
         dataTypes.map( t =>
           <Line
+            yAxisId="left"
             key={`${t}-line`}
             type="monotone"
             dataKey={t}
@@ -65,6 +76,7 @@ const LineBarChart = ({
         )
       }
       <Bar
+        yAxisId="right"
         dataKey={'score'}
         width={10}
         fill={'#000'}

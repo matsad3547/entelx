@@ -13,13 +13,13 @@ const CurrentWeatherDisplay = ({ weather, timeZone }) => (
 
   <DashboardSection headerContent="Weather">
     <div>
-      <WeatherIcon
-        icon={weather.icon}
-        style={styles.icon}
-        />
       <DataTimeDisplay
         millis={weather.time * 1000}
         timeZone={timeZone}
+        />
+      <WeatherIcon
+        icon={weather.icon}
+        style={styles.icon}
         />
     </div>
     <div>
