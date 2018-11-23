@@ -26,7 +26,6 @@ const styles = {
     display: 'flex',
   },
   content: {
-    // padding: '1em 0',
     margin: '0 0 auto',
     width: '100%',
   },

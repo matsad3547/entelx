@@ -3,7 +3,6 @@ const getPriceRequest = require('./getPriceRequest')
 const { calculateScore } = require('../utils/')
 
 const getPriceSeries = (endMillis, startMillis, node) => {
-  console.time('get price series')
 
   const currentAvg = node.current_avg
 
@@ -24,7 +23,6 @@ const getPriceSeries = (endMillis, startMillis, node) => {
         mvgAvg: currentAvg,
       })
     )
-    console.timeEnd('get price series')
     return calculateScore(dataWithAvg, 'lmp')
   })
   .catch( err => console.error('There was an error getting the running average:', err))

@@ -15,8 +15,8 @@ const app = express()
 app.use(bodyParser.json())
 
 app.post('/create_project', createNewProject)
+app.post('/get_project', getProjectById)
 app.delete('/delete_project', deleteProjectById)
-app.post('/read_project', getProjectById)
 
 describe('Project routes should', () => {
 
