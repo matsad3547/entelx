@@ -25,7 +25,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
-    gridTemplateRows: '[row1] 6em [ws1] 1em',
+    gridTemplateRows: '[row1] 6em [ws1] 2em',
   },
   content: {
     gridColumn: 'leftCol / centerMargin',

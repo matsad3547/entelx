@@ -36,18 +36,20 @@ const ChargingIndicator = ({prices, timeZone}) => {
 
   return (
     <DashboardSection headerContent="Status">
-      <DataTimeDisplay
-        millis={latest.timestamp}
-        timeZone={timeZone}
-        />
-      {
-        currentPrc < avgPrc ?
+      <div>
+        <DataTimeDisplay
+          millis={latest.timestamp}
+          timeZone={timeZone}
+          />
+        {
+          currentPrc < avgPrc ?
           <div style={getStatusStyles(diff)}>CHARGE</div> :
-          <div style={getStatusStyles(diff)}>DISCHARGE</div>
-      }
-      <p>
-        {getPriceDescription(diff)}
-      </p>
+            <div style={getStatusStyles(diff)}>DISCHARGE</div>
+          }
+          <p>
+            {getPriceDescription(diff)}
+          </p>
+      </div>
     </DashboardSection>
   )
 }

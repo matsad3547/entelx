@@ -30,7 +30,7 @@ const styles = {
   label: {
     textAlign: 'left',
     listStyle: 'none',
-    padding: '1em',
+    padding: '1em .5em',
   },
   link: {
     fontSize: '1.2em',

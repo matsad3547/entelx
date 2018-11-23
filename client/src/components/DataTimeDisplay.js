@@ -5,7 +5,7 @@ import moment from 'moment-timezone'
 const DataTimeDisplay = ({millis, timeZone}) => (
 
   <p style={styles}>
-    Data as of {moment(millis).tz(timeZone).format('H:MM A')}
+    Data as of {moment(millis).tz(timeZone).format('h:mm A')}
   </p>
 )
 

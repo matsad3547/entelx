@@ -22,7 +22,6 @@ const styles = {
     color: colors.text,
   },
   content: {
-    padding: '1em 0',
     margin: '0 0 auto',
   }
 }

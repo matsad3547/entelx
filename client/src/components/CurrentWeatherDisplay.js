@@ -12,20 +12,28 @@ import { roundToDigits } from '../utils/'
 const CurrentWeatherDisplay = ({ weather, timeZone }) => (
 
   <DashboardSection headerContent="Weather">
-    <WeatherIcon
-      icon={weather.icon}
-      style={styles.icon}
-      />
-    <DataTimeDisplay
-      millis={weather.time * 1000}
-      timeZone={timeZone}
-      />
-    <Label content="Current Temperature"/>
-    <DataDisplay content={`${roundToDigits(weather.temperature, 1)}°F`}/>
-    <Label content="Cloud Cover"/>
-    <DataDisplay content={`${roundToDigits(weather.cloudCover * 100, 0)} %`}/>
-    <Label content="Wind"/>
-    <DataDisplay content={`${roundToDigits(weather.windSpeed, 1)} mph gusting to ${roundToDigits(weather.windGust, 1)} mph, bearing ${weather.windBearing}°`}/>
+    <div>
+      <WeatherIcon
+        icon={weather.icon}
+        style={styles.icon}
+        />
+      <DataTimeDisplay
+        millis={weather.time * 1000}
+        timeZone={timeZone}
+        />
+    </div>
+    <div>
+      <Label content="Current Temperature"/>
+      <DataDisplay content={`${roundToDigits(weather.temperature, 1)}°F`}/>
+    </div>
+    <div>
+      <Label content="Cloud Cover"/>
+      <DataDisplay content={`${roundToDigits(weather.cloudCover * 100, 0)} %`}/>
+    </div>
+    <div>
+      <Label content="Wind"/>
+      <DataDisplay content={`${roundToDigits(weather.windSpeed, 1)} mph gusting to ${roundToDigits(weather.windGust, 1)} mph, bearing ${weather.windBearing}°`}/>
+    </div>
     {
       weather.nearestStormDistance > 0 &&
       <div>
@@ -33,7 +41,7 @@ const CurrentWeatherDisplay = ({ weather, timeZone }) => (
         <DataDisplay content={`${weather.nearestStormDistance} mi bearing ${weather.nearestStormBearing}°`}/>
       </div>
     }
-    <div style={styles.link}>
+    <div style={styles.linkContainer}>
       <a
         style={styles.ds}
         target="_blank"
@@ -46,7 +54,8 @@ const CurrentWeatherDisplay = ({ weather, timeZone }) => (
 )
 
 const styles = {
-  link: {
+  linkContainer: {
+    width: '100%',
     textAlign: 'right',
   },
   icon: {
