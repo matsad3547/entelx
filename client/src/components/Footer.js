@@ -25,7 +25,7 @@ const styles = {
     width: '100%',
     display: 'inline-flex',
     justifyContent: 'space-around',
-    margin: '0 0 5em',
+    margin: '2em 0 4em',
   },
 }
 
