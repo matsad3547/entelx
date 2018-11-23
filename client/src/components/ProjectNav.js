@@ -41,7 +41,9 @@ const ProjectNav = ({baseUrl, id}) => {
 
 const styles = {
   root: {
-    width: '18em',
+    flexShrink: 0,
+    flexGrow: 0,
+    width: '13em',
     padding: '0 1em',
     borderRight: `1px solid ${colors.gray}`,
   },

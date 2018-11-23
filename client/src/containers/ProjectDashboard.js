@@ -46,7 +46,7 @@ const ProjectDashboard = ({match}) => {
     singleRequest('/get_init_dashboard', getRequest('POST', body))
       .then(parseResponse)
       .then( res => {
-        console.log('res:', res);
+        // console.log('res:', res);
         setLoading(false)
         setWeather(res.weather)
         setConfig(res.config)

@@ -53,6 +53,7 @@ const LineBarChart = ({
       <YAxis
         yAxisId="right"
         orientation="right"
+        tickCount={5}
         domain={[-3, 3]}
         />
       <CartesianGrid strokeDasharray="3 3"/>
@@ -62,6 +63,21 @@ const LineBarChart = ({
             timeZone={timeZone}
           />
       }/>
+      <Bar
+        yAxisId="right"
+        dataKey={'score'}
+        width={10}
+        fill={'#000'}
+        >
+        {
+          data.map( (entry, i) =>
+            <Cell
+              fill={entry.score > 0 ? 'red' : 'green'}
+              key={`bar-${i}`}
+            />
+          )
+        }
+      </Bar>
       {
         dataTypes.map( t =>
           <Line
@@ -72,24 +88,9 @@ const LineBarChart = ({
             connectNulls={true}
             stroke={lineDataFormat[t].color}
             dot={false}
-          />
+            />
         )
       }
-      <Bar
-        yAxisId="right"
-        dataKey={'score'}
-        width={10}
-        fill={'#000'}
-      >
-      {
-        data.map( (entry, i) =>
-          <Cell
-            fill={entry.score > 0 ? 'red' : 'green'}
-            key={`bar-${i}`}
-          />
-        )
-      }
-      </Bar>
       <Legend
         content={
           <CustomLegend />

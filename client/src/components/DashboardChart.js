@@ -23,7 +23,6 @@ const DashboardChart = ({prices, timeZone}) => {
     return () => window.removeEventListener('resize', updateWidth)
   })
 
-
   return (
 
     <div ref={sectionRef}>
