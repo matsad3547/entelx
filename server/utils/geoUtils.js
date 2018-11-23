@@ -24,7 +24,7 @@ const findClosest = (lat, lng, arr) => {
       },
       {
         lat: item.lat,
-        lng:item.lng
+        lng: item.lng,
       },
     )
     return d < acc.d ? {d, val: item} : acc

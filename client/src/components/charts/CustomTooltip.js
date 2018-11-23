@@ -1,10 +1,11 @@
 import React from 'react'
 
+import { monthDayTimeFormat } from '../../config/'
+
 import {
-  monthDayTimeFormat,
   lineDataFormat,
   barDataFormat,
-} from '../../config/'
+} from '../../config/chart'
 
 import { formatMillis } from '../../utils/'
 
@@ -17,13 +18,13 @@ const CustomTooltip = ({
   payload,
   label,
   active,
-  tz,
+  timeZone,
  }) => (
 
-  active ?
+  active &&
     <div style={styles.root}>
       <p style={styles.date}>
-        {formatMillis(label, tz, monthDayTimeFormat)}
+        {formatMillis(label, timeZone, monthDayTimeFormat)}
       </p>
       { payload.map( (obj, i) =>
         <p
@@ -40,7 +41,7 @@ const CustomTooltip = ({
             }
          </p>
       )}
-    </div> : null
+    </div>
 )
 
 const styles = {

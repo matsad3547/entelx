@@ -62,6 +62,7 @@ ChargingIndicator.propTypes = {
       timestamp: PropTypes.number,
     })
   ).isRequired,
+  timeZone: PropTypes.string.isRequired,
 }
 
 export default ChargingIndicator
