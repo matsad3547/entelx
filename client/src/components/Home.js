@@ -33,7 +33,7 @@ const Home = () => (
           content={companyName}
           />
         <Header4
-          content={'Accelerating Energy Storage'}
+          content={'Accelerating Energy Intelligence'}
           />
       </div>
       <img
@@ -74,13 +74,13 @@ const Home = () => (
       <div style={styles.purpose}>
         <p style={styles.text}>Renewable energy has expanded by leaps and bounds in the last decade and is already the lowest cost source of energy in many places in the world.  Unfortunately, most of its natural intermittency is currently handled by fossil fuel energy resources.  Plus the more renewable energy that is deployed in each location, the lower its value becomes.</p>
 
-        <p style={styles.text}>Energy storage can solve these issues.  Storage provides a market for renewable power that would otherwise be curtailed and storage assets charged from this low-cost power can still profitably undercut fossil fuel generators.  Energy storage is widely seen as key for renewable energy supplying the majority of energy demand and setting us on the path to a sustainable future.</p>
+        <p style={styles.text}>Energy storage can solve these issues.  Storage provides a market for renewable power that would otherwise be curtailed and storage assets charged from this low-cost power can then profitably undercut the dirtiest fossil fuel generators.  Energy storage is widely seen as essential for renewable energy supplying the majority of energy demand and setting us on the path to a sustainable future.</p>
 
-        <p style={styles.text}>{companyName} is accelerating energy storage by:</p>
+        <p style={styles.text}>{companyName} is accelerating energy intelligence by:</p>
         <ul style={styles.list}>
           <li style={styles.listItem}>Providing real-time charge and discharge signals that maximize arbitrage value</li>
           <li style={styles.listItem}>Locating and evaluating arbitrage opportunities</li>
-          <li style={styles.listItem}>Estimating project ROI</li>
+          <li style={styles.listItem}>Estimating storage project ROI</li>
         </ul>
       </div>
     </div>

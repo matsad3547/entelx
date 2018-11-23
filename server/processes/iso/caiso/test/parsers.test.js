@@ -118,10 +118,13 @@ describe('parsePriceData()', () => {
   })
 
   test('should return an array with 288 items', () => {
+    console.time('parse one day')
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Day
     const expected = 288
     const actual = parsePriceData(query, data).length
+    console.timeEnd('parse one day')
+
     expect(actual).toEqual(expected)
   })
 })
