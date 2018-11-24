@@ -6,39 +6,34 @@ const {
 const { tsToMillis } = require('../../../utils')
 
 const parsePriceData = (query, data) => {
-
   const reportItems = data.OASISReport.MessagePayload.RTO.REPORT_ITEM
 
-  return reportItems.reduce( (arr, item) => {
-
-    const dataItem = item.REPORT_DATA[0].DATA_ITEM._text
-
+  return reportItems.reduce( (arr, item) => [...arr, ...item.REPORT_DATA], [] )
+  .map( rd => {
+    const dataItem = rd.DATA_ITEM._text
     const dataItemFormat = caisoDataItems[query][dataItem]
+    return {
+      timestamp: tsToMillis(rd.INTERVAL_START_GMT._text, caisoTZ),
+      [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
+    }
+  })
+  .sort( (a, b) => a.timestamp > b.timestamp ? 1 : -1 )
+  .reduce( (acc, next) => {
+    const lastItemIndex = acc.length - 1
+    const accHasContent = acc.length > 0
 
-    item.REPORT_DATA.forEach( rd => {
-
-      const hasTsIndex = arr.findIndex( obj =>
-        obj.timestamp === tsToMillis(rd.INTERVAL_START_GMT._text, caisoTZ) )
-
-      hasTsIndex === -1 ?
-      arr = [
-        ...arr,
-        {
-          timestamp: tsToMillis(rd.INTERVAL_START_GMT._text, caisoTZ),
-          [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
-        },
-      ] :
-      arr = [
-        ...arr.slice(0, hasTsIndex),
-        {
-          ...arr[hasTsIndex],
-          [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text)
-        },
-        ...arr.slice(hasTsIndex + 1),
-      ]
-    })
-
-    return arr
+    return (accHasContent && acc[lastItemIndex].timestamp === next.timestamp ) ?
+    [
+      ...acc.slice(0, lastItemIndex),
+      {
+        ...next,
+        ...acc[lastItemIndex],
+      },
+    ] :
+    [
+      ...acc,
+      next,
+    ]
   }, [])
 }
 
