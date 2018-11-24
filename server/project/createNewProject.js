@@ -38,7 +38,7 @@ const createProject = (data, res) => {
     time_zone: 'America/Los_Angeles',
   }
 
-  createTableRow('project', data)
+  createTableRow('project', manualData)
     .then( id => id[0] )
     .then( id => findByLatLng('node', lat, lng)
       .then( matches => {
