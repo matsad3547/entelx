@@ -9,7 +9,7 @@ const {
 
 const getRunningAverage = node => {
 
-  const numDays = 6
+  const numDays = 21
   const timeZone = 'America/Los_Angeles'
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()

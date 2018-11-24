@@ -188,16 +188,18 @@ const CreateProject = ({
           </div>
         </div>
       </div>
-      <Map
-        center={[lng, lat]}
-        zoom={5}
-        style={styles.map}
-        >
-        <MapLocationReader
-          getLatLng={setLatLng}
-        />
-        {/*<MapNodeRenderer />*/}
-      </Map>
+      <div style={styles.mapContainer}>
+        <Map
+          center={[lng, lat]}
+          zoom={5}
+          style={styles.map}
+          >
+          <MapLocationReader
+            getLatLng={setLatLng}
+            />
+          {/*<MapNodeRenderer />*/}
+        </Map>
+      </div>
       <div style={styles.button}>
         <Button
           value={'SUBMIT'}
@@ -244,10 +246,14 @@ const styles = {
     display: 'inline-flex',
     justifyContent: 'space-between',
   },
-  map: {
+  mapContainer: {
+    display: 'block',
+    boxSizing: 'border-box',
     flex: '1 1 48%',
-    minWidth: '30rem',
-    height: '75vh',
+    padding: '1em',
+  },
+  map: {
+    height: '100vh',
   },
   button: {
     display: 'flex',

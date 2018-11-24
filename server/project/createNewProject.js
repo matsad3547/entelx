@@ -44,7 +44,6 @@ const createProject = (data, res) => {
       .then( matches => {
         const node = findClosest(lat, lng, matches)
         updateTableRow('project', {id,}, {node_id: node.id})
-          .then( () => res.status(200).json({id,}))
           .then( () => {
             getRunningAverage(node)
               .then( arr => {
@@ -54,7 +53,7 @@ const createProject = (data, res) => {
                   {id: node.id},
                   {current_avg: currentAvg},
                 )
-                // .then( () => res.status(200).json({id,}))
+                .then( () => res.status(200).json({id,}))
               })
               .catch( handleError )
           })
