@@ -5,7 +5,7 @@ const {
   getCurrentWeather,
 } = require('./weather/')
 
-const getRunningAverage = require('./getRunningAverage')
+const calculateDerivedData = require('./calculateDerivedData')
 const getPriceSeries = require('./getPriceSeries')
 // const demoProcess = require('./demoProcess')
 
@@ -21,6 +21,6 @@ module.exports = {
   getCurrentWeather,
   // getNodes,
   // updateNodeData,
-  getRunningAverage,
+  calculateDerivedData,
   getPriceSeries,
 }

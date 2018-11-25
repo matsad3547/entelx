@@ -14,8 +14,6 @@ const refreshDashboardData = (req, res) => {
     node,
   } = req.body
 
-  console.log('request:', req.body);
-
   getDashboardData(
     lat,
     lng,
