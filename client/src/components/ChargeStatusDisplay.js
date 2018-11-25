@@ -32,9 +32,9 @@ const getStatusStyles = color => ({
 })
 
 const statusColors = {
-  charge: colors.red,
+  charge: colors.lightBlue,
   discharge: colors.brightGreen,
-  standby: colors.lightBlue,
+  standby: colors.gray,
 }
 
 const ChargeStatusDisplay = ({

@@ -20,6 +20,8 @@ import { monthDayTimeFormat } from '../../config/'
 
 import { lineDataFormat } from '../../config/chart'
 
+import { colors } from '../../config/styles'
+
 import {
   formatMillis,
   findRelevantKeys,
@@ -72,7 +74,7 @@ const LineBarChart = ({
         {
           data.map( (entry, i) =>
             <Cell
-              fill={entry.score > 0 ? 'red' : 'green'}
+              fill={entry.score > 0 ? colors.brightGreen : colors.lightBlue }
               key={`bar-${i}`}
             />
           )

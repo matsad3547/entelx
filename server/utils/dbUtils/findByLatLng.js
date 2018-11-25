@@ -15,26 +15,26 @@ const findByLatLng = (
     comp,
   ) => {
 
-    knex(table)
-    .where(addlQuery)
-    .whereBetween('lat', [minLat, maxLat])
-    .andWhereBetween('lng', [minLng, maxLng])
-    .then( matches => {
-      if (matches.length === 0) {
-        query(
-          minLat - comp,
-          maxLat + comp,
-          minLng - comp,
-          maxLng + comp,
-          comp * 2,
-        )
-        return null
-      }
-      else {
-        resolve(matches)
-      }
-    })
-    .catch(reject)
+    return knex(table)
+      .where(addlQuery)
+      .whereBetween('lat', [minLat, maxLat])
+      .andWhereBetween('lng', [minLng, maxLng])
+      .then( matches => {
+        if (matches.length === 0) {
+          query(
+            minLat - comp,
+            maxLat + comp,
+            minLng - comp,
+            maxLng + comp,
+            comp * 2,
+          )
+          return null
+        }
+        else {
+          resolve(matches)
+        }
+      })
+      .catch(reject)
   }
 
   let comp = .1

@@ -17,11 +17,11 @@ const createNewProject = (req, res) => {
   // TODO add validation for request here
   if(type === 'demo') {
     //just want to have just one demo project at a time
-    deleteTableRows('project', {type: 'demo'})
+    return deleteTableRows('project', {type: 'demo'})
       .then( () => createProject(req.body, res) )
   }
   else {
-    createProject(req.body, res)
+    return createProject(req.body, res)
   }
 }
 
@@ -34,8 +34,8 @@ const createProject = (data, res) => {
   } = data
 
   const timeZone = 'America/Los_Angeles'
-  const chargeThreshold = 2.50
-  const dischargeThreshold = 2.50
+  const chargeThreshold = 6.50
+  const dischargeThreshold = 6.50
 
   const manualData = {
     ...data,

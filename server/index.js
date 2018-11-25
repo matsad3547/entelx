@@ -40,8 +40,6 @@ const server = app.listen(app.get('port'), err => {
   console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
 
-server.setTimeout = 200000
-
 app.use(express.static('publick'))
 
 app.use(bodyParser.json())

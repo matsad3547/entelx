@@ -23,7 +23,7 @@ const getInitDashboardData = (req, res) => {
       const dischargeThreshold = projectRes[0].discharge_threshold
 
 
-      readTableRows('node', { id: node_id })
+      return readTableRows('node', { id: node_id })
         .then( nodeRes => {
 
           const node = nodeRes[0]
