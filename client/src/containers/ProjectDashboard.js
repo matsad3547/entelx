@@ -98,6 +98,8 @@ const ProjectDashboard = ({match}) => {
             <ChargingIndicator
               prices={prices}
               timeZone={config.timeZone}
+              chargeThreshold={config.chargeThreshold}
+              dischargeThreshold={config.dischargeThreshold}
               />
           }
           {

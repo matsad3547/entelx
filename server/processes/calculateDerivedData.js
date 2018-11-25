@@ -7,10 +7,9 @@ const {
   scoreValues,
 } = require('../utils/')
 
-const getRunningAverage = node => {
+const calculateDerivedData = (node, timeZone) => {
 
   const numDays = 21
-  const timeZone = 'America/Los_Angeles'
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
   const startMillis = now.clone()
@@ -34,4 +33,4 @@ const getRunningAverage = node => {
   .catch( err => console.error('There was an error getting the running average:', err))
 }
 
-module.exports = getRunningAverage
+module.exports = calculateDerivedData

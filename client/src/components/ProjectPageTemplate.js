@@ -23,6 +23,7 @@ const ProjectPageTemplate = ({
 const styles = {
   root: {
     minHeight: '95vh',
+    maxWidth: '100vw',
     display: 'flex',
   },
   content: {

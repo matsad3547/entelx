@@ -6,7 +6,7 @@ const {
   deleteTableRows,
 } = require('../utils/')
 
-const { getRunningAverage } = require('../processes/')
+const { calculateDerivedData } = require('../processes/')
 
 const handleError = err => {
   throw err
@@ -33,9 +33,15 @@ const createProject = (data, res) => {
     lng,
   } = data
 
+  const timeZone = 'America/Los_Angeles'
+  const chargeThreshold = 2.50
+  const dischargeThreshold = 2.50
+
   const manualData = {
     ...data,
-    time_zone: 'America/Los_Angeles',
+    time_zone: timeZone,
+    charge_threshold: chargeThreshold,
+    discharge_threshold: dischargeThreshold,
   }
 
   createTableRow('project', manualData)
@@ -43,12 +49,12 @@ const createProject = (data, res) => {
     .then( id => findByLatLng('node', lat, lng)
       .then( matches => {
         const node = findClosest(lat, lng, matches)
-        updateTableRow('project', {id,}, {node_id: node.id})
+        return updateTableRow('project', {id,}, {node_id: node.id})
           .then( () => {
-            getRunningAverage(node)
+            return calculateDerivedData(node, timeZone)
               .then( arr => {
                 const currentAvg = arr[arr.length - 1].mvgAvg
-                updateTableRow(
+                return updateTableRow(
                   'node',
                   {id: node.id},
                   {current_avg: currentAvg},
