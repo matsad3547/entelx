@@ -4,7 +4,7 @@ const getDashboardData = require('./getDashboardData')
 
 const { readTableRows } = require('../utils/')
 
-const getInitDashboardData = (req, res) => {
+const getThreeWeekData = (req, res) => {
 
   const { id } = req.body
 
@@ -25,20 +25,17 @@ const getInitDashboardData = (req, res) => {
       const dischargeThreshold = project.discharge_threshold
 
 
-      return readTableRows(
-          'node',
-          { id: node_id },
-        )
+      return readTableRows('node', { id: node_id })
         .then( nodeRes => {
 
           const node = nodeRes[0]
 
           return getDashboardData(
-              lat,
-              lng,
-              timeZone,
-              node,
-            )
+            lat,
+            lng,
+            timeZone,
+            node,
+          )
             .then( data => {
               return res.status(200).json({
                 ...data,
@@ -62,4 +59,4 @@ const getInitDashboardData = (req, res) => {
     })
 }
 
-module.exports = getInitDashboardData
+module.exports = getThreeWeekData

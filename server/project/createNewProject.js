@@ -25,7 +25,6 @@ const createNewProject = (req, res) => {
   }
 }
 
-
 const createProject = (data, res) => {
 
   const {
@@ -46,23 +45,31 @@ const createProject = (data, res) => {
 
   createTableRow('project', manualData)
     .then( id => id[0] )
-    .then( id => findByLatLng('node', lat, lng)
+    .then( id => findByLatLng(
+        'node',
+        lat,
+        lng
+      )
       .then( matches => {
         const node = findClosest(lat, lng, matches)
-        return updateTableRow('project', {id,}, {node_id: node.id})
-          .then( () => {
-            return calculateDerivedData(node, timeZone)
-              .then( arr => {
-                const currentAvg = arr[arr.length - 1].mvgAvg
-                return updateTableRow(
-                  'node',
-                  {id: node.id},
-                  {current_avg: currentAvg},
-                )
-                .then( () => res.status(200).json({id,}))
-              })
+        return updateTableRow(
+            'project',
+            {id,},
+            {node_id: node.id},
+          )
+          .then( () => calculateDerivedData(node, timeZone)
+            .then( arr => {
+              const currentAvg = arr[arr.length - 1].mvgAvg
+              return updateTableRow(
+                'node',
+                {id: node.id},
+                {current_avg: currentAvg},
+              )
+              .then( () => res.status(200).json({id,}) )
               .catch( handleError )
-          })
+            })
+            .catch( handleError )
+          )
           .catch( handleError )
       })
       .catch( handleError )
