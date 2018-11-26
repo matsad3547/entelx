@@ -4,6 +4,7 @@ const {
   calculateMovingAverage,
   calculateScore,
   calculateArbitrage,
+  findMinMax,
   pipeData,
 } = require('../dataScienceUtils')
 
@@ -217,7 +218,7 @@ describe('calculateArbitrage', () => {
   })
 
   test('should return the passed in data', () => {
-    const actual = calculateArbitrage(data, key, period, .5).data
+    const actual = calculateArbitrage(data, key, period, null, .5).data
     const expected = [
       {
         mvgAvg: 5,
@@ -253,8 +254,8 @@ describe('calculateArbitrage', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should return an object with a correct `chargeVol` object', () => {
-    const actual = calculateArbitrage(data, key, period, .5).chargeVol
+  test('should return an `aggregate` object with a correct `chargeVol` object', () => {
+    const actual = calculateArbitrage(data, key, period, null, .5).aggregate.chargeVol
     const expected = {
       avgPrc: -.5,
       n: 2,
@@ -262,12 +263,77 @@ describe('calculateArbitrage', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should return an object with a correct `dischargeVol` object', () => {
-    const actual = calculateArbitrage(data, key, period, .5).dischargeVol
+  test('should return an `aggregate` object with a correct `dischargeVol` object', () => {
+    const actual = calculateArbitrage(data, key, period, null, .5).aggregate.dischargeVol
     const expected = {
       avgPrc: 7,
       n: 2,
     }
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('findMinMax', () => {
+
+  let period = 5
+  let key = 'val'
+  const getScoreData = pipeData(
+    calculateMovingAverage,
+    calculateScore,
+  )
+
+  let data
+
+  beforeEach( () => {
+    data = getScoreData(testData, key, period)
+  })
+
+  test('should return the passed in data', () => {
+    const actual = findMinMax(data, key, period).data
+    const expected = [
+      {
+        mvgAvg: 5,
+        score: 0.4,
+        timestamp: 2,
+        val: 7,
+      },
+      {
+        mvgAvg: 3,
+        score: -1.3333333333333333,
+        timestamp: 3,
+        val: -1,
+      },
+      {
+        mvgAvg: 3.75,
+        score: 0.6,
+        timestamp: 4,
+        val: 6,
+      },
+      {
+        mvgAvg: 3,
+        score: -1,
+        timestamp: 5,
+        val: 0,
+      },
+      {
+        mvgAvg: 4,
+        score: 1,
+        timestamp: 6,
+        val: 8,
+      },
+    ]
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return an `aggregate` object with a correct `max` value', () => {
+    const actual = findMinMax(data, key, period, null).aggregate.max
+    const expected = 8
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return an `aggregate` object with a correct `min` value', () => {
+    const actual = findMinMax(data, key, period, null).aggregate.min
+    const expected = -1
     expect(actual).toEqual(expected)
   })
 })

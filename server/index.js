@@ -13,6 +13,7 @@ const {
 const {
   getInitDashboardData,
   refreshDashboardData,
+  getThreeWeekData,
 } = require('./product/')
 
 const {
@@ -44,12 +45,18 @@ app.use(express.static('publick'))
 
 app.use(bodyParser.json())
 
-app.post('/get_init_dashboard', getInitDashboardData)
-app.post('/refresh_dashboard', refreshDashboardData)
-
 app.post('/createUser', createUser)
 app.post('/login', login)
 
+//dashboard
+app.post('/get_init_dashboard', getInitDashboardData)
+app.post('/refresh_dashboard', refreshDashboardData)
+
 app.post('/create_project', createNewProject)
+
+//project page
 app.post('/get_project', getProjectById)
 app.delete('/delete_project', deleteProjectById)
+
+// last 3 weeks
+app.post('/get_3_week_data', getThreeWeekData)

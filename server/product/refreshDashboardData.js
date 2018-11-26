@@ -15,11 +15,11 @@ const refreshDashboardData = (req, res) => {
   } = req.body
 
   getDashboardData(
-    lat,
-    lng,
-    timeZone,
-    node,
-  )
+      lat,
+      lng,
+      timeZone,
+      node,
+    )
     .then( data => res.status(200).json({ ...data, }) )
     .catch( err => {
       console.error('There was an error refreshing dashboard data:', err)
