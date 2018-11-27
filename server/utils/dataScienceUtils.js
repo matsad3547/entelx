@@ -1,9 +1,9 @@
-const pipeData = (...fns) => (data, key, period, ...rest) => {
+const pipeData = (...fns) => (data, key, period, options) => {
   const res = {
     timeSeries: data,
     aggregate: {},
   }
-  return fns.reduce( (v, f) => f(v, key, period, ...rest), res)
+  return fns.reduce( (v, f) => f(v, key, period, options), res)
 }
 
 const calculateMovingAverage = (data, key, period) => {
@@ -54,8 +54,13 @@ const calculateArbitrage = (
   data,
   key,
   period,
-  threshold,
+  options,
 ) => {
+
+  const {
+    chargeThreshold,
+    dischargeThreshold,
+  } = options
 
   const {
     timeSeries,
@@ -65,36 +70,36 @@ const calculateArbitrage = (
   const calculation = timeSeries.reduce( (obj, d, i) => i < timeSeries.length - 1 ?
     {
       chargeVol: {
-        prcSum: d.score < -threshold ?
+        prcSum: d.score < - chargeThreshold ?
         obj.chargeVol.prcSum + d[key] :
         obj.chargeVol.prcSum,
-        n: d.score < -threshold ?
+        n: d.score < - chargeThreshold ?
         obj.chargeVol.n + 1 :
         obj.chargeVol.n,
       },
       dischargeVol: {
-        prcSum: d.score > threshold ?
+        prcSum: d.score > dischargeThreshold ?
         obj.dischargeVol.prcSum + d[key] :
         obj.dischargeVol.prcSum,
-        n: d.score > threshold ?
+        n: d.score > dischargeThreshold ?
         obj.dischargeVol.n + 1 :
         obj.dischargeVol.n,
       },
     } :
     {
       chargeVol: {
-        avgPrc: d.score < -threshold ?
+        avgPrc: d.score < - chargeThreshold ?
         (obj.chargeVol.prcSum + d[key]) / (obj.chargeVol.n + 1) :
         obj.chargeVol.prcSum / obj.chargeVol.n,
-        n: d.score < -threshold ?
+        n: d.score < - chargeThreshold ?
         obj.chargeVol.n + 1 :
         obj.chargeVol.n,
       },
       dischargeVol: {
-        avgPrc: d.score > threshold ?
+        avgPrc: d.score > dischargeThreshold ?
         (obj.dischargeVol.prcSum + d[key]) / (obj.dischargeVol.n + 1) :
         obj.dischargeVol.prcSum / obj.dischargeVol.n,
-        n: d.score > threshold ?
+        n: d.score > dischargeThreshold ?
         obj.dischargeVol.n + 1 :
         obj.dischargeVol.n,
       },
@@ -110,8 +115,6 @@ const calculateArbitrage = (
       },
     }
   )
-
-  // console.log('calculation?', calculation);
 
   return {
     ...data,
@@ -147,9 +150,12 @@ const findMinMax = (
   }
 }
 
-
 const scoreValues = pipeData(
   calculateMovingAverage,
+  calculateScore,
+)
+
+const getScoreData = pipeData(
   calculateScore,
 )
 
@@ -160,4 +166,5 @@ module.exports = {
   pipeData,
   scoreValues,
   findMinMax,
+  getScoreData,
 }

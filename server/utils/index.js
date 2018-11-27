@@ -11,6 +11,7 @@ const {
   pipeData,
   calculateScore,
   calculateMovingAverage,
+  getScoreData,
 } = require('./dataScienceUtils')
 
 const { findClosest } = require('./geoUtils')
@@ -31,6 +32,7 @@ module.exports = {
   pipeData,
   calculateScore,
   calculateMovingAverage,
+  getScoreData,
   findClosest,
   findByLatLng,
   createTableRow,

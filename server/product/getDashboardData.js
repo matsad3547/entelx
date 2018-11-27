@@ -26,7 +26,8 @@ const getDashboardData = (
   )
   .then( data => ({
       weather: data[0],
-      prices: data[1],
+      prices: data[1].timeSeries,
+      aggregate: data[1].aggregate,
     })
   )
 }
