@@ -221,8 +221,13 @@ describe('calculateArbitrage', () => {
     calculateArbitrage,
   )
 
+  const options = {
+    chargeThreshold: .5,
+    dischargeThreshold: .5,
+  }
+
   test('should return the passed in data', () => {
-    const actual = getArbitrageData(testData, key, period, .5).timeSeries
+    const actual = getArbitrageData(testData, key, period, options).timeSeries
 
     const expected = [
       {
@@ -260,7 +265,7 @@ describe('calculateArbitrage', () => {
   })
 
   test('should return an `aggregate` object with a correct `chargeVol` object', () => {
-    const actual = getArbitrageData(testData, key, period, .5).aggregate.chargeVol
+    const actual = getArbitrageData(testData, key, period, options).aggregate.chargeVol
     const expected = {
       avgPrc: -.5,
       n: 2,
@@ -269,7 +274,7 @@ describe('calculateArbitrage', () => {
   })
 
   test('should return an `aggregate` object with a correct `dischargeVol` object', () => {
-    const actual = getArbitrageData(testData, key, period, .5).aggregate.dischargeVol
+    const actual = getArbitrageData(testData, key, period, options).aggregate.dischargeVol
     const expected = {
       avgPrc: 7,
       n: 2,
