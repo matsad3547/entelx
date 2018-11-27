@@ -1,38 +1,68 @@
-const pipeData = (...fns) => (data, key, period) => fns.reduce( (v, f) => f(v, key, period), data)
+const pipeData = (...fns) => (data, key, period, ...rest) => {
+  const res = {
+    timeSeries: data,
+    aggregate: {},
+  }
+  return fns.reduce( (v, f) => f(v, key, period, ...rest), res)
+}
 
-const calculateMovingAverage = (data, key, period) => data.reduce( (arr, d, i) => data[i - 1] ?
+const calculateMovingAverage = (data, key, period) => {
+
+  const { timeSeries } = data
+
+  const calculation = timeSeries.reduce( (arr, d, i) => timeSeries[i - 1] ?
   [
     ...arr,
     {
       timestamp: d.timestamp,
       [key]: d[key],
-      mvgAvg: data
-              .slice(Math.max(0, i - (period - 1)), i + 1)
-              .reduce( ([sum, n], obj, i, arr) =>
-              i !== (arr.length - 1) ?
-                [sum + obj[key], n + 1] :
-                (sum + obj[key])/(n + 1)
-              , [0, 0]),
+      mvgAvg: timeSeries
+        .slice(Math.max(0, i - (period - 1)), i + 1)
+        .reduce( ([sum, n], obj, i, arr) =>
+          i !== (arr.length - 1) ?
+          [sum + obj[key], n + 1] :
+          (sum + obj[key])/(n + 1)
+          , [0, 0]),
     }
   ] : arr, [])
 
-const calculateScore = (data, key) => data.map( d => ({
-    timestamp: d.timestamp,
-    mvgAvg: d.mvgAvg,
-    [key]: d[key],
-    score: (d[key] - d.mvgAvg) / d.mvgAvg,
-  })
-)
+  return {
+    ...data,
+    timeSeries: calculation,
+  }
+}
+
+const calculateScore = (data, key) => {
+
+  const { timeSeries } = data
+
+  const calculation = timeSeries.map( d => ({
+      timestamp: d.timestamp,
+      mvgAvg: d.mvgAvg,
+      [key]: d[key],
+      score: (d[key] - d.mvgAvg) / d.mvgAvg,
+    })
+  )
+
+  return {
+    ...data,
+    timeSeries: calculation,
+  }
+}
 
 const calculateArbitrage = (
   data,
   key,
   period,
-  aggregate = {},
   threshold,
 ) => {
 
-  const calculation = data.reduce( (obj, d, i) => i < data.length - 1 ?
+  const {
+    timeSeries,
+    aggregate,
+  } = data
+
+  const calculation = timeSeries.reduce( (obj, d, i) => i < timeSeries.length - 1 ?
     {
       chargeVol: {
         prcSum: d.score < -threshold ?
@@ -53,18 +83,18 @@ const calculateArbitrage = (
     } :
     {
       chargeVol: {
-        avgPrc: data[i].score < -threshold ?
-        (obj.chargeVol.prcSum + data[i][key]) / (obj.chargeVol.n + 1) :
+        avgPrc: d.score < -threshold ?
+        (obj.chargeVol.prcSum + d[key]) / (obj.chargeVol.n + 1) :
         obj.chargeVol.prcSum / obj.chargeVol.n,
-        n: data[i].score < -threshold ?
+        n: d.score < -threshold ?
         obj.chargeVol.n + 1 :
         obj.chargeVol.n,
       },
       dischargeVol: {
-        avgPrc: data[i].score > threshold ?
-        (obj.dischargeVol.prcSum + data[i][key]) / (obj.dischargeVol.n + 1) :
+        avgPrc: d.score > threshold ?
+        (obj.dischargeVol.prcSum + d[key]) / (obj.dischargeVol.n + 1) :
         obj.dischargeVol.prcSum / obj.dischargeVol.n,
-        n: data[i].score > threshold ?
+        n: d.score > threshold ?
         obj.dischargeVol.n + 1 :
         obj.dischargeVol.n,
       },
@@ -81,11 +111,13 @@ const calculateArbitrage = (
     }
   )
 
+  // console.log('calculation?', calculation);
+
   return {
-    data,
+    ...data,
     aggregate: {
       ...aggregate,
-      ...calculation
+      ...calculation,
     },
   }
 }
@@ -94,20 +126,23 @@ const findMinMax = (
   data,
   key,
   period,
-  aggregate = {},
 ) => {
 
-  const calculation = data.reduce( (obj, d, i) =>  ({
+  const {
+    timeSeries,
+    aggregate,
+  } = data
+
+  const calculation = timeSeries.reduce( (obj, d, i) =>  ({
     max: d[key] > obj.max ? d[key] : obj.max,
     min: d[key] < obj.min ? d[key] : obj.min,
   }), {max: 0, min: 0})
 
   return {
-    data,
+    ...data,
     aggregate: {
       ...aggregate,
-      max: calculation.max,
-      min: calculation.min,
+      ...calculation,
     }
   }
 }
