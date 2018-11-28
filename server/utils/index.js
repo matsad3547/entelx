@@ -8,10 +8,8 @@ const { checkStatus } = require('./requestUtils')
 const { writeToFile } = require('./fileUtils')
 
 const {
-  pipeData,
-  calculateScore,
-  calculateMovingAverage,
-  getScoreData,
+  calculateScoreData,
+  calculateDerivedData,
 } = require('./dataScienceUtils')
 
 const { findClosest } = require('./geoUtils')
@@ -29,10 +27,8 @@ module.exports = {
   tsToMillis,
   checkStatus,
   writeToFile,
-  pipeData,
-  calculateScore,
-  calculateMovingAverage,
-  getScoreData,
+  calculateScoreData,
+  calculateDerivedData,
   findClosest,
   findByLatLng,
   createTableRow,

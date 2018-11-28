@@ -1,13 +1,12 @@
 const moment = require('moment-timezone')
 
-const getPriceRequest = require('./getPriceRequest')
+const { getPriceRequest } = require('../processes/')
 
-const {
-  calculateMovingAverage,
-  scoreValues,
-} = require('../utils/')
+const { calculateDerivedData } = require('../utils/')
 
-const calculateDerivedData = (node, timeZone) => {
+const { dayOf5Mins } = require('../config/')
+
+const getDerivedData = (node, timeZone) => {
 
   const numDays = 21
   const now = moment().tz(timeZone)
@@ -15,8 +14,6 @@ const calculateDerivedData = (node, timeZone) => {
   const startMillis = now.clone()
                       .subtract(numDays, 'days')
                       .valueOf()
-
-  const dayOf5Mins = (24 * 60) / 5
 
   const {
     req,
@@ -29,8 +26,8 @@ const calculateDerivedData = (node, timeZone) => {
     endMillis,
     node.name,
   )
-  .then( data => calculateMovingAverage(data, 'lmp', numDays * dayOf5Mins) )
+  .then( data => calculateDerivedData(data, 'lmp', numDays * dayOf5Mins) )
   .catch( err => console.error('There was an error getting the running average:', err))
 }
 
-module.exports = calculateDerivedData
+module.exports = getDerivedData

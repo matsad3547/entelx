@@ -1,6 +1,6 @@
 const moment = require('moment-timezone')
 
-const getDashboardData = require('./getDashboardData')
+const getHistoricalData = require('./getHistoricalData')
 
 const { readTableRows } = require('../utils/')
 
@@ -24,37 +24,24 @@ const getThreeWeekData = (req, res) => {
       const chargeThreshold = project.charge_threshold
       const dischargeThreshold = project.discharge_threshold
 
-
       return readTableRows('node', { id: node_id })
         .then( nodeRes => {
 
           const node = nodeRes[0]
 
-          return getDashboardData(
-            lat,
-            lng,
-            timeZone,
-            node,
-          )
-            .then( data => {
-              return res.status(200).json({
-                ...data,
-                config: {
-                  lat,
-                  lng,
-                  node,
-                  projectName,
-                  timeZone,
-                  chargeThreshold,
-                  dischargeThreshold,
-                },
-              })
-            })
+          return getHistoricalData(
+              lat,
+              lng,
+              timeZone,
+              node,
+              21,
+            )
+            .then( data => res.status(200).json({...data}) )
         })
         .catch( err => { throw err })
     })
     .catch( err => {
-      console.error('There was an error getting dashboard data', err)
+      console.error('There was an error getting 3 week data', err)
       next(err)
     })
 }

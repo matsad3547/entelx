@@ -6,7 +6,7 @@ const {
   deleteTableRows,
 } = require('../utils/')
 
-const { calculateDerivedData } = require('../processes/')
+const { getDerivedData } = require('../product/')
 
 const handleError = err => {
   throw err
@@ -57,9 +57,10 @@ const createProject = (data, res) => {
             {id,},
             {node_id: node.id},
           )
-          .then( () => calculateDerivedData(node, timeZone)
-            .then( arr => {
-              const currentAvg = arr[arr.length - 1].mvgAvg
+          .then( () => getDerivedData(node, timeZone)
+            .then( data => {
+              const { timeSeries } = data
+              const currentAvg = timeSeries[timeSeries.length - 1].mvgAvg
               return updateTableRow(
                 'node',
                 {id: node.id},
