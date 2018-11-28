@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
-import DashboardChart from '../components/DashboardChart'
+import ResponsiveChart from '../components/ResponsiveChart'
 import Loading from '../components/loading/'
 
 import { getBaseUrl } from '../utils/'
@@ -13,7 +13,7 @@ import {
   getRequest,
 } from '../utils/requestUtils'
 
-const LastThreeWeeks = ({match}) => {
+const HistoricalDisplay = ({match}) => {
 
   const {
     url,
@@ -22,7 +22,7 @@ const LastThreeWeeks = ({match}) => {
 
   const { projectId } = params
 
-  const cleanUrl = getBaseUrl(url, 'last_3_weeks', projectId)
+  const cleanUrl = getBaseUrl(url, 'historical', projectId)
 
   const [loading, setLoading] = useState(false)
   const [timeSeries, setTimeSeries] = useState(null)
@@ -54,7 +54,7 @@ const LastThreeWeeks = ({match}) => {
 
   return (
 
-    <SubPageTemplate title={'Last Three Weeks'}>
+    <SubPageTemplate title={'Last Week'}>
       { loading && <Loading message={''} />}
       <ProjectPageTemplate
         baseUrl={cleanUrl}
@@ -62,8 +62,10 @@ const LastThreeWeeks = ({match}) => {
         >
         {
           (timeSeries && config) &&
-          <DashboardChart
-            prices={timeSeries}
+          <ResponsiveChart
+            header={'Last Week'}
+            heightProportion={.6}
+            timeSeries={timeSeries}
             timeZone={config.timeZone}
             />
         }
@@ -75,4 +77,4 @@ const LastThreeWeeks = ({match}) => {
 // const styles = {
 // }
 
-export default LastThreeWeeks
+export default HistoricalDisplay

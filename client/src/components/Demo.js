@@ -7,7 +7,7 @@ import CreateProject from '../containers/CreateProject'
 import Project from '../containers/Project'
 import ProjectRoi from '../containers/ProjectRoi'
 import ProjectDashboard from '../containers/ProjectDashboard'
-import LastThreeWeeks from '../containers/LastThreeWeeks'
+import HistoricalDisplay from '../containers/HistoricalDisplay'
 
 const Demo = ({ match }) => (
 
@@ -32,8 +32,8 @@ const Demo = ({ match }) => (
         component={ProjectDashboard}
       />
       <Route
-        path={`${match.path}/last_3_weeks/:projectId`}
-        component={LastThreeWeeks}
+        path={`${match.path}/historical/:projectId`}
+        component={HistoricalDisplay}
       />
     </div>
   </PublicPageTemplate>

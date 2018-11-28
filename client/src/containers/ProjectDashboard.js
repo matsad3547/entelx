@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import CurrentWeatherDisplay from '../components/CurrentWeatherDisplay'
-import DashboardChart from '../components/DashboardChart'
+import ResponsiveChart from '../components/ResponsiveChart'
 import ChargingIndicator from '../components/ChargingIndicator'
 import Header4 from '../components/Header4'
 import Loading from '../components/loading/'
@@ -104,8 +104,9 @@ const ProjectDashboard = ({match}) => {
           }
           {
             (prices && config) &&
-            <DashboardChart
-              prices={prices}
+            <ResponsiveChart
+              header={'Last Hour'}
+              timeSeries={prices}
               timeZone={config.timeZone}
               />
           }
