@@ -36,7 +36,16 @@ const getThreeWeekData = (req, res) => {
               node,
               21,
             )
-            .then( data => res.status(200).json({...data}) )
+            .then( data => res.status(200).json({
+              ...data,
+              config: {
+                lat,
+                lng,
+                timeZone,
+                node,
+              }
+            })
+          )
         })
         .catch( err => { throw err })
     })

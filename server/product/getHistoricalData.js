@@ -29,13 +29,13 @@ const getHistoricalData = (
   } = getPriceRequest(node)
 
   return Promise.all([
-      aggregateHistoricalWeather(
-        startMillis,
-        endMillis,
-        timeZone,
-        lat,
-        lng,
-      ),
+      // aggregateHistoricalWeather(
+      //   startMillis,
+      //   endMillis,
+      //   timeZone,
+      //   lat,
+      //   lng,
+      // ),
       req(
         ...params,
         startMillis,
@@ -47,11 +47,29 @@ const getHistoricalData = (
   )
   .then( data => {
 
-    const processedData = calculateDerivedData(data[1], 'lmp', numDays * dayOf5Mins)
+    const processedData = calculateDerivedData(data[0], 'lmp', numDays * dayOf5Mins)
+
+    // console.log('weather data:', data[0]);
+
+    const combinedData = [processedData.timeSeries].reduce( (agr, arr) => [...agr, ...arr], [] )
+      .sort( (a, b) => a.timestamp - b.timestamp )
+      .reduce( (agr, obj, i) =>
+        i > 0 && obj.timestamp === agr[agr.length - 1].timestamp ?
+        [
+          ...agr.slice(0, agr.length - 1),
+          {
+            ...agr[agr.length - 1],
+            ...obj,
+          },
+        ]:
+        [
+          ...agr,
+          obj,
+        ], [])
 
     return {
-      weather: data[0],
-      prices: processedData.timeSeries,
+
+      timeSeries: combinedData,
       aggregate: processedData.aggregate,
     }
   })
