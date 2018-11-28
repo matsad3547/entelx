@@ -14,6 +14,7 @@ const calculateMovingAverage = (data, key, period) => {
   [
     ...arr,
     {
+      ...d,
       timestamp: d.timestamp,
       [key]: d[key],
       mvgAvg: timeSeries
@@ -161,6 +162,7 @@ const calculateScoreData = pipeData(
 
 const calculateDerivedData = pipeData(
   calculateMovingAverage,
+  calculateScore,
   findMinMax,
 )
 
