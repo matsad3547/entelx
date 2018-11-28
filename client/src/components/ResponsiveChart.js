@@ -5,7 +5,12 @@ import PropTypes from 'prop-types'
 import DashboardSection from './DashboardSection'
 import LineBarChart from './charts/LineBarChart'
 
-const DashboardChart = ({prices, timeZone}) => {
+const ResponsiveChart = ({
+  header,
+  heightProportion = .4,
+  timeSeries,
+  timeZone,
+}) => {
 
   const [width, setWidth] = useState(500)
 
@@ -28,13 +33,13 @@ const DashboardChart = ({prices, timeZone}) => {
   return (
 
     <div ref={sectionRef}>
-      <DashboardSection headerContent="Last Hour">
+      <DashboardSection headerContent={header}>
         <div style={styles}>
           <LineBarChart
-            data={prices}
+            data={timeSeries}
             timeZone={timeZone}
             width={width}
-            height={.4 * width}
+            height={heightProportion * width}
             />
         </div>
       </DashboardSection>
@@ -46,8 +51,10 @@ const styles = {
   padding: '1em 0',
 }
 
-DashboardChart.propTypes = {
-  prices: PropTypes.arrayOf(PropTypes.shape({
+ResponsiveChart.propTypes = {
+  header: PropTypes.string.isRequired,
+  heightProportion: PropTypes.number,
+  timeSeries: PropTypes.arrayOf(PropTypes.shape({
       lmp: PropTypes.number,
       mvgAvg: PropTypes.number,
       score: PropTypes.number,
@@ -57,4 +64,4 @@ DashboardChart.propTypes = {
   timeZone: PropTypes.string.isRequired,
 }
 
-export default DashboardChart
+export default ResponsiveChart

@@ -34,7 +34,7 @@ const getThreeWeekData = (req, res) => {
               lng,
               timeZone,
               node,
-              21,
+              7,
             )
             .then( data => res.status(200).json({
               ...data,

@@ -21,8 +21,8 @@ const ProjectNav = ({baseUrl, id}) => {
       label: 'Project ROI',
     },
     {
-      link: 'last_3_weeks',
-      label: 'Last Three Weeks',
+      link: 'historical',
+      label: 'Historical',
     },
   ]
 

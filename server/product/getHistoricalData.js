@@ -29,18 +29,18 @@ const getHistoricalData = (
   } = getPriceRequest(node)
 
   return Promise.all([
-      // aggregateHistoricalWeather(
-      //   startMillis,
-      //   endMillis,
-      //   timeZone,
-      //   lat,
-      //   lng,
-      // ),
       req(
         ...params,
         startMillis,
         endMillis,
         node.name,
+      ),
+      aggregateHistoricalWeather(
+        startMillis,
+        endMillis,
+        timeZone,
+        lat,
+        lng,
       ),
     ]
     .map( p => p.catch(handleMultiPromiseError) )
@@ -49,9 +49,7 @@ const getHistoricalData = (
 
     const processedData = calculateDerivedData(data[0], 'lmp', numDays * dayOf5Mins)
 
-    // console.log('weather data:', data[0]);
-
-    const combinedData = [processedData.timeSeries].reduce( (agr, arr) => [...agr, ...arr], [] )
+    const combinedData = [processedData.timeSeries, data[1]].reduce( (agr, arr) => [...agr, ...arr], [] )
       .sort( (a, b) => a.timestamp - b.timestamp )
       .reduce( (agr, obj, i) =>
         i > 0 && obj.timestamp === agr[agr.length - 1].timestamp ?
