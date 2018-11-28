@@ -7,7 +7,7 @@ import LineBarChart from './charts/LineBarChart'
 
 const DashboardChart = ({prices, timeZone}) => {
 
-  const [width, setWidth] = useState(1000)
+  const [width, setWidth] = useState(500)
 
   const sectionRef = useRef(null)
 
@@ -18,10 +18,12 @@ const DashboardChart = ({prices, timeZone}) => {
 
   useEffect( () => {
 
+    updateWidth()
+
     window.addEventListener('resize', updateWidth)
 
     return () => window.removeEventListener('resize', updateWidth)
-  })
+  }, [])
 
   return (
 

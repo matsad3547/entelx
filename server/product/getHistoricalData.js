@@ -1,23 +1,26 @@
 const moment = require('moment-timezone')
 
 const {
-  getCurrentWeather,
+  aggregateHistoricalWeather,
   getPriceRequest,
 } = require('../processes/')
 
-const { calculateScoreData } = require('../utils/')
+const { calculateDerivedData } = require('../utils/')
 
-const getDashboardData = (
+const { dayOf5Mins } = require('../config/')
+
+const getHistoricalData = (
   lat,
   lng,
   timeZone,
-  node
+  node,
+  numDays,
 ) => {
 
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
   const startMillis = now.clone()
-                      .subtract(1, 'hour')
+                      .subtract(numDays, 'days')
                       .valueOf()
 
   const {
@@ -26,7 +29,13 @@ const getDashboardData = (
   } = getPriceRequest(node)
 
   return Promise.all([
-      getCurrentWeather(lat, lng),
+      aggregateHistoricalWeather(
+        startMillis,
+        endMillis,
+        timeZone,
+        lat,
+        lng,
+      ),
       req(
         ...params,
         startMillis,
@@ -38,15 +47,7 @@ const getDashboardData = (
   )
   .then( data => {
 
-    const dataWithAvg = data[1].map( obj => ({
-        ...obj,
-        mvgAvg: node.current_avg,
-      })
-    )
-
-    // console.log('dataWithAvg?', dataWithAvg);
-
-    const processedData = calculateScoreData(dataWithAvg, 'lmp')
+    const processedData = calculateDerivedData(data[1], 'lmp', numDays * dayOf5Mins)
 
     return {
       weather: data[0],
@@ -61,4 +62,4 @@ const handleMultiPromiseError = err => {
   return { error: `there was an error: ${err}`}
 }
 
-module.exports = getDashboardData
+module.exports = getHistoricalData

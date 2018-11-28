@@ -17,7 +17,7 @@ const parsePriceData = (query, data) => {
       [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
     }
   })
-  .sort( (a, b) => a.timestamp > b.timestamp ? 1 : -1 )
+  .sort( (a, b) => a.timestamp - b.timestamp )
   .reduce( (acc, next) => {
     const lastItemIndex = acc.length - 1
     const accHasContent = acc.length > 0

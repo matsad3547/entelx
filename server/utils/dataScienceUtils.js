@@ -155,16 +155,22 @@ const scoreValues = pipeData(
   calculateScore,
 )
 
-const getScoreData = pipeData(
+const calculateScoreData = pipeData(
   calculateScore,
 )
 
+const calculateDerivedData = pipeData(
+  calculateMovingAverage,
+  findMinMax,
+)
+
 module.exports = {
+  pipeData,
   calculateMovingAverage,
   calculateScore,
   calculateArbitrage,
-  pipeData,
   scoreValues,
   findMinMax,
-  getScoreData,
+  calculateScoreData,
+  calculateDerivedData,
 }

@@ -30,7 +30,7 @@ import {
 const LineBarChart = ({
   data,
   timeZone,
-  width = 1000,
+  width = 800,
   height = 400,
 }) => {
 

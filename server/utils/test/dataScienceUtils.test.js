@@ -1,11 +1,12 @@
 const { timeSeriesData } = require('./mocks/timeSeries')
 
 const {
+  pipeData,
   calculateMovingAverage,
   calculateScore,
   calculateArbitrage,
   findMinMax,
-  pipeData,
+  calculateDerivedData,
 } = require('../dataScienceUtils')
 
 const testData = [
@@ -341,4 +342,9 @@ describe('findMinMax', () => {
     const expected = -1
     expect(actual).toEqual(expected)
   })
+})
+
+test('calculateDerivedData should work', () => {
+  const actual = calculateDerivedData(testData, 'val', 5)
+  expect(actual).toBeDefined()
 })
