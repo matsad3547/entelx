@@ -106,6 +106,9 @@ const ProjectDashboard = ({match}) => {
             (prices && config) &&
             <ResponsiveChart
               header={'Last Hour'}
+              barKey={'lmp'}
+              negBarThreshold={config.chargeThreshold}
+              posBarThreshold={config.dischargeThreshold}
               timeSeries={prices}
               timeZone={config.timeZone}
               />

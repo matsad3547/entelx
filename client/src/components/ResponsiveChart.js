@@ -7,6 +7,9 @@ import LineBarChart from './charts/LineBarChart'
 
 const ResponsiveChart = ({
   header,
+  barKey,
+  negBarThreshold,
+  posBarThreshold,
   heightProportion = .4,
   timeSeries,
   timeZone,
@@ -36,6 +39,9 @@ const ResponsiveChart = ({
       <DashboardSection headerContent={header}>
         <div style={styles}>
           <LineBarChart
+            barKey={barKey}
+            negBarThreshold={negBarThreshold}
+            posBarThreshold={posBarThreshold}
             data={timeSeries}
             timeZone={timeZone}
             width={width}
