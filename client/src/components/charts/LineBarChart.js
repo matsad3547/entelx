@@ -30,6 +30,9 @@ import {
 const LineBarChart = ({
   data,
   timeZone,
+  barKey,
+  negBarThreshold = 0,
+  posBarThreshold = 0,
   width = 800,
   height = 400,
 }) => {
@@ -37,11 +40,27 @@ const LineBarChart = ({
   const dataTypes = findRelevantKeys(data)
                       .filter( d => Object.keys(lineDataFormat).includes(d) )
 
+  const overThreshold = data.reduce( (agg, entry) => {
+    const isScorePositive = entry.score > 0
+
+    const includeScore = isScorePositive ?
+      entry[barKey] > entry.mvgAvg + posBarThreshold : entry[barKey] < entry.mvgAvg - negBarThreshold
+
+      const {
+        score,
+        ...remaining
+      } = entry
+
+    return includeScore ? [...agg, entry] : [...agg, {...remaining}]
+  }, [])
+
+  console.log('overThreshold?', overThreshold, overThreshold.length, data.length);
+
   return (
     <ComposedChart
       width={width}
       height={height}
-      data={data}
+      data={overThreshold}
       margin={{top: 0, right: 0, left: 0, bottom: 0}}>
       <XAxis
         dataKey="timestamp"
@@ -64,19 +83,19 @@ const LineBarChart = ({
           <CustomTooltip
             timeZone={timeZone}
           />
-      }/>
+        }
+      />
       <Bar
         yAxisId="right"
         dataKey={'score'}
-        width={10}
         fill={'#000'}
         >
         {
           data.map( (entry, i) =>
             <Cell
-              fill={entry.score > 0 ? colors.brightGreen : colors.lightBlue }
+              fill={entry.score > 0 ? colors.brightGreen : colors.lightBlue}
               key={`bar-${i}`}
-            />
+              />
           )
         }
       </Bar>
@@ -103,7 +122,15 @@ const LineBarChart = ({
 }
 
 LineBarChart.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    lmp: PropTypes.number,
+    mvgAvg: PropTypes.number,
+    score: PropTypes.number,
+    timestamp: PropTypes.number,
+  })).isRequired,
+  barKey: PropTypes.string.isRequired,
+  posBarThreshold: PropTypes.number,
+  negBarThreshold: PropTypes.number,
   timeZone: PropTypes.string.isRequired,
 }
 
