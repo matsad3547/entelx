@@ -10,7 +10,7 @@ const ResponsiveChart = ({
   barKey,
   negBarThreshold,
   posBarThreshold,
-  heightProportion = .4,
+  heightProportion = .3,
   timeSeries,
   timeZone,
 }) => {

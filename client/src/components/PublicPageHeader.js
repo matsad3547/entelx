@@ -25,7 +25,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
-    gridTemplateRows: '[row1] 7em [ws1] 1em',
+    gridTemplateRows: '[row1] 5em [ws1] 1em',
   },
   content: {
     gridColumn: 'rightCol / end',
@@ -34,7 +34,7 @@ const styles = {
   text: {
     zIndex: 2,
     color: colors.white,
-    padding: '1em 3em',
+    padding: '.5em 3em',
     justifySelf: 'end',
     alignSelf: 'end',
     background: 'transparent',
