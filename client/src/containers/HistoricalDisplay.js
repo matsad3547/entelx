@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react'
 
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
-import ResponsiveChart from '../components/ResponsiveChart'
 import Loading from '../components/loading/'
+import DashboardSection from '../components/DashboardSection'
+import LineBarChart from '../components/charts/LineBarChart'
 
 import { getBaseUrl } from '../utils/'
 
@@ -62,14 +63,15 @@ const HistoricalDisplay = ({match}) => {
         >
         {
           (timeSeries && config && aggregate) &&
-          <ResponsiveChart
-            barKey="lmp"
-            header={'Last Week'}
-            heightProportion={.5}
-            timeSeries={timeSeries}
-            timeZone={config.timeZone}
-            xRefLines={aggregate.inflections}
-            />
+          <DashboardSection headerContent={'Last Week'}>
+            <LineBarChart
+              barKey={'lmp'}
+              data={timeSeries}
+              timeZone={config.timeZone}
+              xRefLines={aggregate.inflections}
+              aspect={2}
+              />
+          </DashboardSection>
         }
       </ProjectPageTemplate>
     </SubPageTemplate>

@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend,
   ReferenceLine,
+  ResponsiveContainer
 } from 'recharts'
 
 import CustomTooltip from './CustomTooltip'
@@ -34,8 +35,7 @@ const LineBarChart = ({
   barKey,
   negBarThreshold = 0,
   posBarThreshold = 0,
-  width = 800,
-  height = 400,
+  aspect = 3,
   xRefLines = [],
 }) => {
 
@@ -57,41 +57,40 @@ const LineBarChart = ({
   }, [])
 
   return (
-    <ComposedChart
-      width={width}
-      height={height}
-      data={overThreshold}
-      margin={{top: 0, right: 0, left: 0, bottom: 0}}>
-      <XAxis
-        dataKey="timestamp"
-        tickFormatter={millis => formatMillis(millis, timeZone, monthDayTimeFormat)}
-        />
-      <YAxis
-        yAxisId="left"
-        tickCount={10}
-        minTickGap={5}
-        />
-      <YAxis
-        yAxisId="right"
-        orientation="right"
-        tickCount={5}
-        domain={[-3, 3]}
-        />
-      <CartesianGrid strokeDasharray="3 3"/>
-      <Tooltip
-        content={
-          <CustomTooltip
-            timeZone={timeZone}
+    <ResponsiveContainer width={'98%'} aspect={aspect}>
+      <ComposedChart
+        data={overThreshold}
+        margin={{top: 0, right: 0, left: 0, bottom: 0}}>
+        <XAxis
+          dataKey="timestamp"
+          tickFormatter={millis => formatMillis(millis, timeZone, monthDayTimeFormat)}
           />
-        }
-      />
-      <Bar
-        yAxisId="right"
-        dataKey={'score'}
-        fill={'#000'}
-        >
-        {
-          data.map( (entry, i) =>
+        <YAxis
+          yAxisId="left"
+          tickCount={10}
+          minTickGap={5}
+          />
+        <YAxis
+          yAxisId="right"
+          orientation="right"
+          tickCount={5}
+          domain={[-3, 3]}
+          />
+        <CartesianGrid strokeDasharray="3 3"/>
+        <Tooltip
+          content={
+            <CustomTooltip
+              timeZone={timeZone}
+              />
+          }
+          />
+        <Bar
+          yAxisId="right"
+          dataKey={'score'}
+          fill={'#000'}
+          >
+          {
+            data.map( (entry, i) =>
             <Cell
               fill={entry.score > 0 ? colors.brightGreen : colors.lightBlue}
               key={`bar-${i}`}
@@ -114,19 +113,20 @@ const LineBarChart = ({
       }
       {
         xRefLines.map( (x, i) =>
-          <ReferenceLine
-            x={x}
-            yAxisId="right"
-            key={`x-${i}`}
-            />
-          )
+        <ReferenceLine
+          x={x}
+          yAxisId="right"
+          key={`x-${i}`}
+          />
+      )
+    }
+    <Legend
+      content={
+        <CustomLegend />
       }
-      <Legend
-        content={
-          <CustomLegend />
-        }
       />
-    </ComposedChart>
+  </ComposedChart>
+    </ResponsiveContainer>
   )
 }
 

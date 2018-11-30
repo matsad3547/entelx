@@ -30,7 +30,7 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    padding: '0 1em',
+    padding: '.5em 1em',
   },
 }
 
