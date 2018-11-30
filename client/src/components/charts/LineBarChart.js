@@ -54,8 +54,6 @@ const LineBarChart = ({
     return includeScore ? [...agg, entry] : [...agg, {...remaining}]
   }, [])
 
-  console.log('overThreshold?', overThreshold, overThreshold.length, data.length);
-
   return (
     <ComposedChart
       width={width}

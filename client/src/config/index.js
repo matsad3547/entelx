@@ -1,4 +1,4 @@
-export const companyName = 'Xentell'
+export const companyName = 'Entelx'
 
 export const utcFormat = 'YYYY-MM-DDTHH:mm:ss.sss[Z]'
 

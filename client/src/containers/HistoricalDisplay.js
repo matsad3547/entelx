@@ -63,8 +63,9 @@ const HistoricalDisplay = ({match}) => {
         {
           (timeSeries && config) &&
           <ResponsiveChart
+            barKey="lmp"
             header={'Last Week'}
-            heightProportion={.6}
+            heightProportion={.5}
             timeSeries={timeSeries}
             timeZone={config.timeZone}
             />
