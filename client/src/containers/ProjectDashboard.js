@@ -3,10 +3,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import CurrentWeatherDisplay from '../components/CurrentWeatherDisplay'
-import ResponsiveChart from '../components/ResponsiveChart'
 import ChargingIndicator from '../components/ChargingIndicator'
 import Header4 from '../components/Header4'
 import Loading from '../components/loading/'
+import DashboardSection from '../components/DashboardSection'
+import LineBarChart from '../components/charts/LineBarChart'
 
 import { getBaseUrl } from '../utils/'
 
@@ -104,14 +105,15 @@ const ProjectDashboard = ({match}) => {
           }
           {
             (prices && config) &&
-            <ResponsiveChart
-              header={'Last Hour'}
-              barKey={'lmp'}
-              negBarThreshold={config.chargeThreshold}
-              posBarThreshold={config.dischargeThreshold}
-              timeSeries={prices}
-              timeZone={config.timeZone}
-              />
+            <DashboardSection headerContent={'Last Hour'}>
+              <LineBarChart
+                barKey={'lmp'}
+                negBarThreshold={config.chargeThreshold}
+                posBarThreshold={config.dischargeThreshold}
+                data={prices}
+                timeZone={config.timeZone}
+                />
+            </DashboardSection>
           }
           {
             (weather && config) &&
@@ -138,6 +140,9 @@ const styles = {
   root: {
     textAlign: 'left',
   },
+  chart: {
+    padding: '1em 0',
+  }
 }
 
 export default ProjectDashboard
