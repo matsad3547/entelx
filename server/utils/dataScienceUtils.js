@@ -151,6 +151,39 @@ const findMinMax = (
   }
 }
 
+const findInflections = (
+  data,
+  key,
+  period,
+) => {
+
+  const {
+    timeSeries,
+    aggregate,
+  } = data
+
+  const calculation = timeSeries.reduce( (agr, obj) => {
+    const sign = Math.sign(obj.score)
+
+    return agr.sign !== sign ?
+      {
+        inflections: [...agr.inflections, obj.timestamp],
+        sign,
+      }: agr
+  }, {
+    inflections: [],
+    sign: 0,
+  })
+
+  return {
+    ...data,
+    aggregate: {
+      ...aggregate,
+      inflections: calculation.inflections,
+    }
+  }
+}
+
 const scoreValues = pipeData(
   calculateMovingAverage,
   calculateScore,
@@ -164,6 +197,7 @@ const calculateDerivedData = pipeData(
   calculateMovingAverage,
   calculateScore,
   findMinMax,
+  findInflections,
 )
 
 module.exports = {
@@ -173,6 +207,7 @@ module.exports = {
   calculateArbitrage,
   scoreValues,
   findMinMax,
+  findInflections,
   calculateScoreData,
   calculateDerivedData,
 }

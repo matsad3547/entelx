@@ -13,6 +13,7 @@ const ResponsiveChart = ({
   heightProportion = .3,
   timeSeries,
   timeZone,
+  xRefLines,
 }) => {
 
   const [width, setWidth] = useState(500)
@@ -46,6 +47,7 @@ const ResponsiveChart = ({
             timeZone={timeZone}
             width={width}
             height={heightProportion * width}
+            xRefLines={xRefLines}
             />
         </div>
       </DashboardSection>
@@ -68,6 +70,7 @@ ResponsiveChart.propTypes = {
     })
   ).isRequired,
   timeZone: PropTypes.string.isRequired,
+  xRefLines: PropTypes.arrayOf(PropTypes.number),
 }
 
 export default ResponsiveChart
