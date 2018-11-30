@@ -11,6 +11,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ReferenceLine,
 } from 'recharts'
 
 import CustomTooltip from './CustomTooltip'
@@ -35,6 +36,7 @@ const LineBarChart = ({
   posBarThreshold = 0,
   width = 800,
   height = 400,
+  xRefLines = [],
 }) => {
 
   const dataTypes = findRelevantKeys(data)
@@ -110,6 +112,15 @@ const LineBarChart = ({
             />
         )
       }
+      {
+        xRefLines.map( (x, i) =>
+          <ReferenceLine
+            x={x}
+            yAxisId="right"
+            key={`x-${i}`}
+            />
+          )
+      }
       <Legend
         content={
           <CustomLegend />
@@ -130,6 +141,7 @@ LineBarChart.propTypes = {
   posBarThreshold: PropTypes.number,
   negBarThreshold: PropTypes.number,
   timeZone: PropTypes.string.isRequired,
+  xRefLines: PropTypes.arrayOf(PropTypes.number),
 }
 
 export default LineBarChart

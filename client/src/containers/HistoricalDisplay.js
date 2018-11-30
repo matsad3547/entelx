@@ -61,21 +61,19 @@ const HistoricalDisplay = ({match}) => {
         id={projectId}
         >
         {
-          (timeSeries && config) &&
+          (timeSeries && config && aggregate) &&
           <ResponsiveChart
             barKey="lmp"
             header={'Last Week'}
             heightProportion={.5}
             timeSeries={timeSeries}
             timeZone={config.timeZone}
+            xRefLines={aggregate.inflections}
             />
         }
       </ProjectPageTemplate>
     </SubPageTemplate>
   )
 }
-
-// const styles = {
-// }
 
 export default HistoricalDisplay

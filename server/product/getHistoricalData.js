@@ -49,7 +49,8 @@ const getHistoricalData = (
 
     const processedData = calculateDerivedData(data[0], 'lmp', numDays * dayOf5Mins)
 
-    const combinedData = [processedData.timeSeries, data[1]].reduce( (agr, arr) => [...agr, ...arr], [] )
+    const combinedData = [processedData.timeSeries, data[1]]
+      .reduce( (agg, d) => d.error ? agg : [...agg, ...d], [])
       .sort( (a, b) => a.timestamp - b.timestamp )
       .reduce( (agr, obj, i) =>
         i > 0 && obj.timestamp === agr[agr.length - 1].timestamp ?
