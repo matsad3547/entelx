@@ -6,7 +6,7 @@ const {
   deleteTableRows,
 } = require('../utils/')
 
-const { getDerivedData } = require('../product/')
+const { setDerivedData } = require('../product/')
 
 const handleError = err => {
   throw err
@@ -39,11 +39,9 @@ const createProject = (data, res) => {
   const manualData = {
     ...data,
     time_zone: timeZone,
-    charge_threshold: chargeThreshold,
-    discharge_threshold: dischargeThreshold,
   }
 
-  createTableRow('project', manualData)
+  return createTableRow('project', manualData)
     .then( id => id[0] )
     .then( id => findByLatLng(
         'node',
@@ -57,25 +55,17 @@ const createProject = (data, res) => {
             {id,},
             {node_id: node.id},
           )
-          .then( () => getDerivedData(node, timeZone)
-            .then( data => {
-              const { timeSeries } = data
-              const currentAvg = timeSeries[timeSeries.length - 1].mvgAvg
-              return updateTableRow(
-                'node',
-                {id: node.id},
-                {current_avg: currentAvg},
-              )
-              .then( () => res.status(200).json({id,}) )
-              .catch( handleError )
-            })
-            .catch( handleError )
-          )
+          .then( () => setDerivedData(node, id, timeZone)
+            .then( () => res.status(200).json({id,}) )
+            .catch( handleError ) )
           .catch( handleError )
-      })
+        })
       .catch( handleError )
-    )
-    .catch(err => console.error(`Error at createProject: ${err}`))
+      )
+    .catch(err => {
+      console.error(`Error at createProject: ${err}`)
+      next(err)
+    })
 }
 
 module.exports = createNewProject
