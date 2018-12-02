@@ -9,9 +9,10 @@ export const fontSize = {
 
 export const colors = {
   text: '#363D38',
-  gray: '#838383',
-  mediumGray: '#A0A0A0',
   lightGray: '#e2e2e2',
+  mediumGray: '#A0A0A0',
+  gray: '#838383',
+  darkGray: '#3D3D3D',
   white: '#fff',
   lightGreen: '#90DDAA',
   brightGreen: '#23B253', //hsb(140 80 70)

@@ -1,5 +1,4 @@
 export const companyName = 'Entelx'
-
 export const utcFormat = 'YYYY-MM-DDTHH:mm:ss.sss[Z]'
 
 export const dayMonthYearTimeFormat = 'ddd, MMM Do YYYY, h:mm A'
