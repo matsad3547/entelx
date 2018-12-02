@@ -184,6 +184,18 @@ const findInflections = (
   }
 }
 
+const findProfit = (data, key, period, options) => {
+
+  const {
+    timeSeries,
+    aggregate,
+  } = data
+
+  return {
+    ...data,
+  }
+}
+
 const scoreValues = pipeData(
   calculateMovingAverage,
   calculateScore,
@@ -208,6 +220,7 @@ module.exports = {
   scoreValues,
   findMinMax,
   findInflections,
+  findProfit,
   calculateScoreData,
   calculateDerivedData,
 }

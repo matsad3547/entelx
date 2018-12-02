@@ -112,6 +112,7 @@ const ProjectDashboard = ({match}) => {
                 posBarThreshold={config.dischargeThreshold}
                 data={prices}
                 timeZone={config.timeZone}
+                aspect={4}
                 />
             </DashboardSection>
           }

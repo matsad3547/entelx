@@ -84,6 +84,12 @@ const LineBarChart = ({
               />
           }
           />
+        <ReferenceLine
+          y={0}
+          yAxisId="right"
+          stroke={colors.gray}
+          strokeDasharray="3 3"
+          />
         <Bar
           yAxisId="right"
           dataKey={'score'}

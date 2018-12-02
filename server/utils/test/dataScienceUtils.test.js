@@ -8,6 +8,7 @@ const {
   findMinMax,
   calculateDerivedData,
   findInflections,
+  findProfit,
 } = require('../dataScienceUtils')
 
 const testData = [
@@ -363,60 +364,60 @@ describe('findInflections', () => {
 
   const dataSnippet = [
     {
-      "timestamp":1538710500000,
-      "congestionPrc":0,
-      "energyPrc":28.02027,
-      "ghgPrc":0,
-      "lossPrc":-0.38948,
-      "lmp":27.63079,
+      timestamp: 1538710500000,
+      congestionPrc: 0,
+      energyPrc: 28.02027,
+      ghgPrc: 0,
+      lossPrc: -0.38948,
+      lmp: 27.63079,
     },
     {
-      "timestamp":1538710800000,
-      "congestionPrc":0,
-      "energyPrc":26.79269,
-      "ghgPrc":0,
-      "lossPrc":-0.37242,
-      "lmp":26.42027,
+      timestamp: 1538710800000,
+      congestionPrc: 0,
+      energyPrc: 26.79269,
+      ghgPrc: 0,
+      lossPrc: -0.37242,
+      lmp: 26.42027,
     },
     {
-      "timestamp":1538711100000,
-      "congestionPrc":0,
-      "energyPrc":26.83094,
-      "ghgPrc":0,
-      "lossPrc":-0.36758,
-      "lmp":26.46335,
+      timestamp: 1538711100000,
+      congestionPrc: 0,
+      energyPrc: 26.83094,
+      ghgPrc: 0,
+      lossPrc: -0.36758,
+      lmp: 26.46335,
     },
     {
-      "timestamp":1538711400000,
-      "congestionPrc":0,
-      "energyPrc":26.76948,
-      "ghgPrc":0,
-      "lossPrc":-0.36674,
-      "lmp":26.40274,
+      timestamp: 1538711400000,
+      congestionPrc: 0,
+      energyPrc: 26.76948,
+      ghgPrc: 0,
+      lossPrc: -0.36674,
+      lmp: 26.40274,
     },
     {
-      "timestamp":1538711700000,
-      "congestionPrc":0,
-      "energyPrc":27.86177,
-      "ghgPrc":0,
-      "lossPrc":-0.38171,
-      "lmp":27.48006,
+      timestamp: 1538711700000,
+      congestionPrc: 0,
+      energyPrc: 27.86177,
+      ghgPrc: 0,
+      lossPrc: -0.38171,
+      lmp: 27.48006,
     },
     {
-      "timestamp":1538712000000,
-      "congestionPrc":0,
-      "energyPrc":32.1997,
-      "ghgPrc":0,
-      "lossPrc":-0.4025,
-      "lmp":31.79721,
+      timestamp: 1538712000000,
+      congestionPrc: 0,
+      energyPrc: 32.1997,
+      ghgPrc: 0,
+      lossPrc: -0.4025,
+      lmp: 31.79721,
     },
     {
-      "timestamp":1538712300000,
-      "congestionPrc":-25.06595,
-      "energyPrc":47.8386,
-      "ghgPrc":0,
-      "lossPrc":-0.59798,
-      "lmp":22.17467,
+      timestamp: 1538712300000,
+      congestionPrc: -25.06595,
+      energyPrc: 47.8386,
+      ghgPrc: 0,
+      lossPrc: -0.59798,
+      lmp: 22.17467,
     }
   ]
 
@@ -461,40 +462,40 @@ describe('findInflections', () => {
     const actual = Array.isArray(getInflectionData(dataSnippet, 'lmp', period).aggregate.inflections)
     const intermediate = [
       {
-        "timestamp":1538710800000,
-        "lmp":26.42027,
-        "mvgAvg": 27.02553,
-        "score": -0.02239586050671351,
+        timestamp:1538710800000,
+        lmp:26.42027,
+        mvgAvg: 27.02553,
+        score: -0.02239586050671351,
       },
       {
-        "timestamp":1538711100000,
-        "lmp":26.46335,
-        "mvgAvg": 26.838136666666667,
-        "score": -0.013964705199976085,
+        timestamp:1538711100000,
+        lmp:26.46335,
+        mvgAvg: 26.838136666666667,
+        score: -0.013964705199976085,
       },
       {
-        "timestamp":1538711400000,
-        "lmp":26.40274,
-        "mvgAvg": 26.729287499999998,
-        "score": -0.01221684266742975,
+        timestamp:1538711400000,
+        lmp:26.40274,
+        mvgAvg: 26.729287499999998,
+        score: -0.01221684266742975,
       },
       {
-        "timestamp":1538711700000,
-        "lmp":27.48006,
-        "mvgAvg": 26.879442,
-        "score": 0.022344883498697655,
+        timestamp:1538711700000,
+        lmp:27.48006,
+        mvgAvg: 26.879442,
+        score: 0.022344883498697655,
       },
       {
-        "timestamp":1538712000000,
-        "lmp":31.79721,
-        "mvgAvg": 27.712726000000004,
-        "score": 0.14738658333359178
+        timestamp:1538712000000,
+        lmp:31.79721,
+        mvgAvg: 27.712726000000004,
+        score: 0.14738658333359178
       },
       {
-        "timestamp":1538712300000,
-        "lmp":22.17467,
-        "mvgAvg": 26.863605999999997,
-        "score": -0.17454603823477752,
+        timestamp:1538712300000,
+        lmp:22.17467,
+        mvgAvg: 26.863605999999997,
+        score: -0.17454603823477752,
       }
     ]
     expect(actual).toEqual(true)
@@ -504,40 +505,40 @@ describe('findInflections', () => {
     const actual = getInflectionData(dataSnippet, 'lmp', period).aggregate.inflections
     const intermediate = [
       {
-        "timestamp":1538710800000,
-        "lmp":26.42027,
-        "mvgAvg": 27.02553,
-        "score": -0.02239586050671351,
+        timestamp:1538710800000,
+        lmp:26.42027,
+        mvgAvg: 27.02553,
+        score: -0.02239586050671351,
       },
       {
-        "timestamp":1538711100000,
-        "lmp":26.46335,
-        "mvgAvg": 26.838136666666667,
-        "score": -0.013964705199976085,
+        timestamp:1538711100000,
+        lmp:26.46335,
+        mvgAvg: 26.838136666666667,
+        score: -0.013964705199976085,
       },
       {
-        "timestamp":1538711400000,
-        "lmp":26.40274,
-        "mvgAvg": 26.729287499999998,
-        "score": -0.01221684266742975,
+        timestamp:1538711400000,
+        lmp:26.40274,
+        mvgAvg: 26.729287499999998,
+        score: -0.01221684266742975,
       },
       {
-        "timestamp":1538711700000,
-        "lmp":27.48006,
-        "mvgAvg": 26.879442,
-        "score": 0.022344883498697655,
+        timestamp:1538711700000,
+        lmp:27.48006,
+        mvgAvg: 26.879442,
+        score: 0.022344883498697655,
       },
       {
-        "timestamp":1538712000000,
-        "lmp":31.79721,
-        "mvgAvg": 27.712726000000004,
-        "score": 0.14738658333359178
+        timestamp:1538712000000,
+        lmp:31.79721,
+        mvgAvg: 27.712726000000004,
+        score: 0.14738658333359178
       },
       {
-        "timestamp":1538712300000,
-        "lmp":22.17467,
-        "mvgAvg": 26.863605999999997,
-        "score": -0.17454603823477752,
+        timestamp:1538712300000,
+        lmp:22.17467,
+        mvgAvg: 26.863605999999997,
+        score: -0.17454603823477752,
       }
     ]
     const expected = [
@@ -547,6 +548,90 @@ describe('findInflections', () => {
     ]
     expect(actual).toEqual(expected)
   })
+})
 
+describe('findProfit', () => {
+
+  const period = 6
+  const key = 'lmp'
+  const getProfitData = pipeData(
+    calculateMovingAverage,
+    calculateScore,
+    findProfit,
+  )
+
+  const mockData = [
+    {
+      timestamp: 1538710500000,
+      lmp: 4,
+    },
+    {
+      timestamp: 1538710500000,
+      lmp: 3,
+    },
+    {
+      timestamp: 1538710800000,
+      lmp: 2,
+    },
+    {
+      timestamp: 1538711100000,
+      lmp: 1,
+    },
+    {
+      timestamp: 1538711400000,
+      lmp: 5,
+    },
+    {
+      timestamp: 1538711700000,
+      lmp: 6,
+    },
+    {
+      timestamp: 1538712000000,
+      lmp: 7,
+    },
+  ]
+
+  test('should return a `timeSeries` array', () => {
+    const actual = getProfitData(mockData, key, period, {}).timeSeries
+    const expected = [
+      {
+       lmp: 3,
+       mvgAvg: 3.5,
+       score: -0.14285714285714285,
+       timestamp: 1538710500000,
+      },
+      {
+       lmp: 2,
+       mvgAvg: 3,
+       score: -0.3333333333333333,
+       timestamp: 1538710800000,
+      },
+      {
+       lmp: 1,
+       mvgAvg: 2.5,
+       score: -0.6,
+       timestamp: 1538711100000,
+      },
+      {
+       lmp: 5,
+       mvgAvg: 3,
+       score: 0.6666666666666666,
+       timestamp: 1538711400000,
+      },
+      {
+       lmp: 6,
+       mvgAvg: 3.5,
+       score: 0.7142857142857143,
+       timestamp: 1538711700000,
+      },
+      {
+       lmp: 7,
+       mvgAvg: 4,
+       score: 0.75,
+       timestamp: 1538712000000,
+      },
+    ]
+    expect(actual).toEqual(expected)
+  })
 
 })
