@@ -36,6 +36,13 @@ const ProjectDashboard = ({match}) => {
 
   const intervalRef = useRef(null)
 
+/**
+JS Docs - insta documentation
+* turns on the spinner
+* @param {object} config
+* @param {lat: Number}
+
+*/
   const setRefresh = config => {
     intervalRef.current = setInterval( () => refreshDashboard(config), 5 * 60 * 1000)
   }

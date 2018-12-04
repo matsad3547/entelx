@@ -184,15 +184,67 @@ const findInflections = (
   }
 }
 
-const findProfit = (data, key, period, options) => {
+const findRevenue = (data, key, period, options) => {
 
   const {
     timeSeries,
     aggregate,
   } = data
 
+  const {
+    power,
+    energy,
+    dischargeThreshold,
+    chargeThreshold,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  } = options
+
+  // This function assumes 5 minute timeSeries data
+  const fiveMinsAsHour = 5 / 60
+  const chargeEnergy = power * fiveMinsAsHour
+
+  const maxEnergy = (1 - chargeBuffer) * energy
+
+  const minEnergy = dischargeBuffer * energy
+
+  const calculation = timeSeries.reduce( (obj, d, i) => {
+
+    const canCharge = obj.charge + chargeEnergy <= maxEnergy
+
+    const canDischarge = obj.charge - chargeEnergy >= minEnergy
+
+    const charge = canCharge && d[key] < d.mvgAvg - chargeThreshold
+
+    const discharge = canDischarge && d[key] > d.mvgAvg + dischargeThreshold
+
+    if (charge) {
+      return {
+        charge: obj.charge + chargeEnergy,
+        revenue: obj.revenue - (d[key] * chargeEnergy),
+      }
+    }
+    else if (discharge) {
+      return {
+        charge: obj.charge - chargeEnergy,
+        revenue: obj.revenue + (d[key] * rte * chargeEnergy),
+      }
+    }
+    else {
+      return obj
+    }
+  }, {
+    charge: minEnergy,
+    revenue: 0,
+  })
+
   return {
     ...data,
+    aggregate: {
+      ...aggregate,
+      ...calculation,
+    }
   }
 }
 
@@ -220,7 +272,7 @@ module.exports = {
   scoreValues,
   findMinMax,
   findInflections,
-  findProfit,
+  findRevenue,
   calculateScoreData,
   calculateDerivedData,
 }

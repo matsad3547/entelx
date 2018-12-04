@@ -41,7 +41,7 @@ const server = app.listen(app.get('port'), err => {
   console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
 
-app.use(express.static('publick'))
+app.use(express.static('public'))
 
 app.use(bodyParser.json())
 

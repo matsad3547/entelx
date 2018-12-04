@@ -88,7 +88,7 @@ const LineBarChart = ({
           y={0}
           yAxisId="right"
           stroke={colors.gray}
-          strokeDasharray="3 3"
+          strokeDasharray="4 4"
           />
         <Bar
           yAxisId="right"
