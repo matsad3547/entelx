@@ -1,3 +1,5 @@
+import { roundToDigits } from '../utils/'
+
 export const trendColors = [
   '#03CEA4',
   '#78C3FB',
@@ -13,19 +15,19 @@ export const lineDataFormat = {
     unit: '$/Mwh',
     label: 'Locational Marginal Price',
     color: trendColors[0],
-    format: value => Math.round((value * 100))/100,
+    format: value => roundToDigits(value, 2),
   },
   temperature: {
     unit: '°C',
     label: 'Temperature',
     color: trendColors[1],
-    format: value => Math.round(value),
+    format: value => roundToDigits(value, 0),
   },
   windSpeed: {
     unit: ' m/s',
     label: 'Wind Speed',
     color: trendColors[2],
-    format: value => Math.round(value),
+    format: value => roundToDigits(value, 0),
   },
   windBearing: {
     unit: '°',
@@ -37,7 +39,7 @@ export const lineDataFormat = {
     unit: '%',
     label: 'Cloud Cover',
     color: trendColors[4],
-    format: value => value * 100,
+    format: value => roundToDigits(value, 2) * 100,
   },
   mvgAvg: {
     unit: '$/Mwh',
