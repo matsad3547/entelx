@@ -6,11 +6,11 @@ const {
 } = require('./weather/')
 
 const getPriceRequest = require('./getPriceRequest')
+
+const getNodes = require('./getNodes')
+
+
 // const demoProcess = require('./demoProcess')
-
-// const getNodes = require('./getNodes')
-
-
 // const updateNodeData = require('./updateNodeData')
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
   oasisEndpoint,
   aggregateHistoricalWeather,
   getCurrentWeather,
-  // getNodes,
+  getNodes,
   // updateNodeData,
   getPriceRequest,
 }
