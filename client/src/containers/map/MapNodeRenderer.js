@@ -72,6 +72,10 @@ const MapNodeRenderer = ({ map }) => {
 
   const handleError = err => console.error(`there was an error getting nodes: ${err}`)
 
+  console.log('nodes?', nodes);
+
+  return false
+
   // const nodeStream = nodes && Rx.from(nodes)
   //
   // buttonRef.current && Rx.fromEvent(buttonRef.current, 'click')
@@ -89,17 +93,17 @@ const MapNodeRenderer = ({ map }) => {
 //     ref={buttonRef}>CLICK ME</button>
 // )
 
-  return (
-    nodes &&
-    nodes.filter( node => node.control_area == 'APS' ).map( (node, i) =>
-      <MapMarkerRenderer
-        map={map}
-        key={`node-${i}`}
-        lngLat={[node.lng, node.lat]}
-        color={getNodeColor(node)}
-      />
-    )
-  )
+  // return (
+  //   nodes &&
+  //   nodes.filter( node => node.control_area == 'APS' ).map( (node, i) =>
+  //     <MapMarkerRenderer
+  //       map={map}
+  //       key={`node-${i}`}
+  //       lngLat={[node.lng, node.lat]}
+  //       color={getNodeColor(node)}
+  //     />
+  //   )
+  // )
 }
 
 const styles = {

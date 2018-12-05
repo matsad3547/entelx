@@ -22,8 +22,7 @@ const {
   getProjectById,
 } = require('./project/')
 
-//for testing python
-// const { demoProcess } = require('./processes/')
+const { getNodes } = require('./processes/')
 
 const app = express()
 
@@ -52,6 +51,7 @@ app.post('/login', login)
 app.post('/get_init_dashboard', getInitDashboardData)
 app.post('/refresh_dashboard', refreshDashboardData)
 
+app.get('/get_nodes', getNodes)
 app.post('/create_project', createNewProject)
 
 //project page
