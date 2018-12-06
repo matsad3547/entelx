@@ -1,9 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import * as Rx from 'rxjs'
-import * as ops from 'rxjs/operators'
-
-import MapMarkerRenderer from '../../components/map/MapMarkerRenderer'
 
 import {
   singleRequest,
@@ -49,69 +45,147 @@ const getNodeColor = node => {
 
 const MapNodeRenderer = ({ map }) => {
 
-  const bounds = map.getBounds()
-
-  const minLat = bounds._sw.lat
-  const maxLat = bounds._ne.lat
-
-  const minLng = bounds._ne.lng
-  const maxLng = bounds._sw.lng
-
-  console.log('rxjs?', Rx, '\nops?', ops)
-
   const [nodes, setNodes] = useState(null)
-
-  const buttonRef = useRef(null)
 
   useEffect( () => {
     singleRequest('/get_nodes', getRequest('GET', null))
-      .then(parseResponse)
-      .then(setNodes)
-      .catch(handleError)
+    .then(parseResponse)
+    .then( nodes => setNodes(processNodes(nodes)))
+    .catch(handleError)
   }, [])
+
+  const processNodes = nodes =>
+  nodes.reduce( (obj, node) => ({
+      ...obj,
+      features: [
+        ...obj.features,
+        {
+          type: 'Feature',
+          properties: {
+            type: node.type,
+            name: node.name,
+            controlArea: node.control_area,
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [node.lng, node.lat],
+          },
+          id: node.id,
+        },
+      ],
+    }), {
+      type: 'FeatureCollection',
+      features: [],
+    })
 
   const handleError = err => console.error(`there was an error getting nodes: ${err}`)
 
-  console.log('nodes?', nodes);
+  if (nodes) {
+    console.log('nodes', nodes);
+    map.addSource('nodes', {
+      type: "geojson",
+      data: nodes,
+      cluster: true,
+      clusterMaxZoom: 10, // Max zoom to cluster points on
+      clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+    })
+
+    map.addLayer({
+      id: "clusters",
+      type: "circle",
+      source: "nodes",
+      filter: ["has", "point_count"],
+      paint: {
+        // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+        // with three steps to implement three types of circles:
+        //   * Blue, 20px circles when point count is less than 100
+        //   * Yellow, 30px circles when point count is between 100 and 750
+        //   * Pink, 40px circles when point count is greater than or equal to 750
+        "circle-color": [
+            "step",
+            ["get", "point_count"],
+            "#51bbd6",
+            100,
+            "#f1f075",
+            750,
+            "#f28cb1"
+        ],
+        'circle-radius': [
+            "step",
+            ["get", "point_count"],
+            20,
+            100,
+            30,
+            750,
+            40
+        ],
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#000',
+      }
+    })
+
+    map.addLayer({
+        id: "cluster-count",
+        type: "symbol",
+        source: "nodes",
+        filter: ["has", "point_count"],
+        layout: {
+            "text-field": "{point_count_abbreviated}",
+            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+            "text-size": 12
+        }
+    });
+
+    map.addLayer({
+      id: "unclustered-point",
+      type: "circle",
+      source: "nodes",
+      filter: ["!", ["has", "point_count"]],
+      paint: {
+          'circle-color': [
+            'match',
+            ['get', 'controlArea'],
+            'CA', nodeColors[0],
+            'PACW', nodeColors[1],
+            'PGE', nodeColors[2],
+            'PSE', nodeColors[3],
+            'NV', nodeColors[4],
+            'IPCO', nodeColors[5],
+            'PACE', nodeColors[6],
+            'APS', nodeColors[7],
+            colors.gray,
+          ],
+          'circle-radius': 4,
+          'circle-stroke-width': 1,
+          'circle-stroke-color': '#000',
+      }
+    })
+
+    // inspect a cluster on click
+    map.on('click', 'clusters', e => {
+      const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
+      const clusterId = features[0].properties.cluster_id;
+      map.getSource('nodes').getClusterExpansionZoom(clusterId, (err, zoom) => {
+        if (err)
+            return
+
+        map.easeTo({
+            center: features[0].geometry.coordinates,
+            zoom,
+        })
+      })
+    })
+
+    map.on('mouseenter', 'clusters', () => {
+        map.getCanvas().style.cursor = 'pointer'
+    })
+
+    map.on('mouseleave', 'clusters', () => {
+        map.getCanvas().style.cursor = ''
+    })
+  }
 
   return false
-
-  // const nodeStream = nodes && Rx.from(nodes)
-  //
-  // buttonRef.current && Rx.fromEvent(buttonRef.current, 'click')
-  //   .pipe(ops.bufferCount(3))
-  //   .subscribe( () => console.log('clicking, motherfuckers!!!') )
-  //
-  // const nodeStreamF = nodes && nodeStream.pipe(ops.filter( node => node.lat < maxLat && node.lat > minLat && node.lng < maxLng && node.lng > minLng)).subscribe( node => console.log('node:', node) )
-  //
-  // console.log('node stream filtered:', nodeStreamF);
-
-// return (
-//   // false
-//   <button
-//     style={styles.root}
-//     ref={buttonRef}>CLICK ME</button>
-// )
-
-  // return (
-  //   nodes &&
-  //   nodes.filter( node => node.control_area == 'APS' ).map( (node, i) =>
-  //     <MapMarkerRenderer
-  //       map={map}
-  //       key={`node-${i}`}
-  //       lngLat={[node.lng, node.lat]}
-  //       color={getNodeColor(node)}
-  //     />
-  //   )
-  // )
-}
-
-const styles = {
-  root: {
-    position: 'relative',
-    background: 'red',
-    zIndex: 10,
-  }
 }
 
 MapNodeRenderer.propTypes = {
