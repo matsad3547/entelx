@@ -6,7 +6,6 @@ import Map from './map/Map'
 import MapNodeRenderer from './map/MapNodeRenderer'
 
 import MapLocationReader from '../components/map/MapLocationReader'
-import MapISOAreaRenderer from '../components/map/MapISOAreaRenderer'
 
 import LabeledInput from '../components/LabeledInput'
 import Header3 from '../components/Header3'
@@ -199,7 +198,6 @@ const CreateProject = ({
             getLatLng={setLatLng}
             />
           <MapNodeRenderer />
-          <MapISOAreaRenderer />
         </Map>
       </div>
       <div style={styles.button}>

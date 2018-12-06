@@ -31,8 +31,6 @@ export const nodeColors = [
   '#91A6FF',
   '#FF88DC',
   '#FAFF7F',
-  '#003459',
-  '#FF5154',
   '#17BEBB',
   '#CD5334',
   '#004E64',
@@ -44,6 +42,7 @@ export const nodeColors = [
   '#01BAEF',
   '#26081C',
   '#192BC2',
+  '#003459',
   '#0E0E52',
   '#FDE74C',
 ]
