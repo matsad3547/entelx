@@ -32,7 +32,7 @@ const MapISOAreaRenderer = ({ map, getLatLng }) => {
   useEffect( () => {
     setLayers()
     return () => cleanup()
-  })
+  }, [])
 
   return false
 }

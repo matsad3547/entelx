@@ -80,13 +80,16 @@ const MapNodeRenderer = ({ map }) => {
 
   const handleError = err => console.error(`there was an error getting nodes: ${err}`)
 
+  const clusterMaxZoom = 9
+
   const setLayers = () => {
+
     if (nodes) {
       map.addSource('nodes', {
         type: "geojson",
         data: nodes,
         cluster: true,
-        clusterMaxZoom: 7, // Max zoom to cluster points on
+        clusterMaxZoom,
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
       })
 
@@ -160,17 +163,19 @@ const MapNodeRenderer = ({ map }) => {
     }
   }
 
-
   const onClusterClick = e => {
     const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
     const clusterId = features[0].properties.cluster_id
     map.getSource('nodes').getClusterExpansionZoom(clusterId, (err, zoom) => {
-      if (err)
-      return
+      if (err) {
+        return
+      }
+
+      const newZoom = zoom === clusterMaxZoom ? zoom + 1 : zoom
 
       map.easeTo({
         center: features[0].geometry.coordinates,
-        zoom,
+        zoom: newZoom,
       })
     })
   }
