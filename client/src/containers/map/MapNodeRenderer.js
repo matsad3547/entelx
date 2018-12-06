@@ -12,36 +12,36 @@ import {
   colors,
 } from '../../config/styles'
 
-const getNodeColor = node => {
-  switch (node.control_area) {
-    case 'CA':
-      return nodeColors[0]
-
-    case 'PACW':
-      return nodeColors[1]
-
-    case 'PGE':
-      return nodeColors[2]
-
-    case 'PSE':
-      return nodeColors[3]
-
-    case 'NV':
-      return nodeColors[4]
-
-    case 'IPCO':
-      return nodeColors[5]
-
-    case 'PACE':
-      return nodeColors[6]
-
-    case 'APS':
-      return nodeColors[7]
-
-    default:
-      return colors.gray
-  }
-}
+// const getNodeColor = node => {
+//   switch (node.control_area) {
+//     case 'CA':
+//       return nodeColors[0]
+//
+//     case 'PACW':
+//       return nodeColors[1]
+//
+//     case 'PGE':
+//       return nodeColors[2]
+//
+//     case 'PSE':
+//       return nodeColors[3]
+//
+//     case 'NV':
+//       return nodeColors[4]
+//
+//     case 'IPCO':
+//       return nodeColors[5]
+//
+//     case 'PACE':
+//       return nodeColors[6]
+//
+//     case 'APS':
+//       return nodeColors[7]
+//
+//     default:
+//       return colors.gray
+//   }
+// }
 
 const MapNodeRenderer = ({ map }) => {
 
@@ -81,12 +81,11 @@ const MapNodeRenderer = ({ map }) => {
   const handleError = err => console.error(`there was an error getting nodes: ${err}`)
 
   if (nodes) {
-    console.log('nodes', nodes);
     map.addSource('nodes', {
       type: "geojson",
       data: nodes,
       cluster: true,
-      clusterMaxZoom: 10, // Max zoom to cluster points on
+      clusterMaxZoom: 7, // Max zoom to cluster points on
       clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
     })
 
@@ -96,20 +95,7 @@ const MapNodeRenderer = ({ map }) => {
       source: "nodes",
       filter: ["has", "point_count"],
       paint: {
-        // Use step expressions (https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-        // with three steps to implement three types of circles:
-        //   * Blue, 20px circles when point count is less than 100
-        //   * Yellow, 30px circles when point count is between 100 and 750
-        //   * Pink, 40px circles when point count is greater than or equal to 750
-        "circle-color": [
-            "step",
-            ["get", "point_count"],
-            "#51bbd6",
-            100,
-            "#f1f075",
-            750,
-            "#f28cb1"
-        ],
+        "circle-color": 'rgba(1, 186, 239, .5)',
         'circle-radius': [
             "step",
             ["get", "point_count"],
@@ -155,13 +141,12 @@ const MapNodeRenderer = ({ map }) => {
             'APS', nodeColors[7],
             colors.gray,
           ],
-          'circle-radius': 4,
+          'circle-radius': 5,
           'circle-stroke-width': 1,
           'circle-stroke-color': '#000',
       }
     })
 
-    // inspect a cluster on click
     map.on('click', 'clusters', e => {
       const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
       const clusterId = features[0].properties.cluster_id;
