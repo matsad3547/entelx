@@ -1,6 +1,8 @@
 import { useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 
+import mapboxgl from 'mapbox-gl'
+
 import {
   singleRequest,
   getRequest,
@@ -33,6 +35,7 @@ const MapNodeRenderer = ({ map }) => {
           properties: {
             type: node.type,
             name: node.name,
+            maxMw: node.max_mw,
             controlArea: node.control_area,
           },
           geometry: {
@@ -50,6 +53,11 @@ const MapNodeRenderer = ({ map }) => {
   const handleError = err => console.error(`there was an error getting nodes: ${err}`)
 
   const clusterMaxZoom = 9
+
+  const popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+  })
 
   const setLayers = () => {
 
@@ -96,7 +104,7 @@ const MapNodeRenderer = ({ map }) => {
       });
 
       map.addLayer({
-        id: 'unclustered-point',
+        id: 'unclustered-nodes',
         type: "circle",
         source: "nodes",
         filter: ["!", ["has", "point_count"]],
@@ -125,6 +133,68 @@ const MapNodeRenderer = ({ map }) => {
       map.on('mouseleave', 'clusters', onClusterMouseLeave)
 
       map.on('click', 'clusters', onClusterClick)
+
+      map.on('mouseenter', 'unclustered-nodes', e => {
+        map.getCanvas().style.cursor = 'pointer'
+
+        const coordinates = e.features[0].geometry.coordinates.slice()
+
+        const nodeProps = e.features[0].properties
+
+        const popUpHtml = Object.keys(nodeProps).reduce( (str, np, i, keys) => {
+
+          const newLine = `<tr><td><strong>${np}:</strong></td><td>${ nodeProps[np]}</td></tr>`
+
+          if(i < keys.length - 1 ) {
+            let arr = str.split('*')
+            arr = [
+              arr[0],
+              newLine + '*',
+              arr[1],
+            ]
+            return arr.join('')
+          }
+          else {
+            const blah = str.split('*')
+                      .splice(1, 1, 'dicks')
+                    // .join('')
+
+                    console.log('blah??', blah);
+
+            let arr = str.split('*')
+            arr.splice(1, 0, newLine)
+            // arr = [
+            //   arr[0],
+            //   newLine,
+            //   arr[1],
+            // ]
+            return arr.join('')
+          }
+        }, '<table>*</table>')
+
+        console.log('popup html:', popUpHtml);
+
+        const html = `<table><tr><td><strong>Type:</strong></td><td>Load</td></tr></table>`
+
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup.setLngLat(coordinates)
+          .setHTML(popUpHtml)
+          .addTo(map)
+        })
+
+      map.on('mouseleave', 'unclustered-nodes', () => {
+        map.getCanvas().style.cursor = ''
+        popup.remove()
+      })
     }
   }
 
