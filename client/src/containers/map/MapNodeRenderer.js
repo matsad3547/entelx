@@ -180,15 +180,7 @@ const MapNodeRenderer = ({ map }) => {
     })
   }
 
-  const cleanup = () => {
-    if (map && map.getSource('nodes')) {
-      map.removeLayer('clusters')
-      map.removeLayer('cluster-count')
-      map.removeLayer('unclustered-point')
-      map.off('click', 'clusters', onClusterClick)
-      map.removeSource('nodes')
-    }
-  }
+  const cleanup = () => map.off('click', 'clusters', onClusterClick)
 
   useEffect( () => {
     setLayers()
