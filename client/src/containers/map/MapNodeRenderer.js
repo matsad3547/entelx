@@ -12,37 +12,6 @@ import {
   colors,
 } from '../../config/styles'
 
-// const getNodeColor = node => {
-//   switch (node.control_area) {
-//     case 'CA':
-//       return nodeColors[0]
-//
-//     case 'PACW':
-//       return nodeColors[1]
-//
-//     case 'PGE':
-//       return nodeColors[2]
-//
-//     case 'PSE':
-//       return nodeColors[3]
-//
-//     case 'NV':
-//       return nodeColors[4]
-//
-//     case 'IPCO':
-//       return nodeColors[5]
-//
-//     case 'PACE':
-//       return nodeColors[6]
-//
-//     case 'APS':
-//       return nodeColors[7]
-//
-//     default:
-//       return colors.gray
-//   }
-// }
-
 const MapNodeRenderer = ({ map }) => {
 
   const [nodes, setNodes] = useState(null)
@@ -90,7 +59,7 @@ const MapNodeRenderer = ({ map }) => {
         data: nodes,
         cluster: true,
         clusterMaxZoom,
-        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+        clusterRadius: 50,
       })
 
       map.addLayer({
@@ -99,7 +68,7 @@ const MapNodeRenderer = ({ map }) => {
         source: 'nodes',
         filter: ['has', 'point_count'],
         paint: {
-          'circle-color': 'rgba(1, 186, 239, .5)',
+          'circle-color': 'rgba(0, 0, 0, .2)',
           'circle-radius': [
             'step',
             ['get', 'point_count'],
@@ -151,16 +120,20 @@ const MapNodeRenderer = ({ map }) => {
         }
       })
 
-      map.on('mouseenter', 'clusters', () => {
-        map.getCanvas().style.cursor = 'pointer'
-      })
+      map.on('mouseenter', 'clusters', onClusterMouseEnter)
 
-      map.on('mouseleave', 'clusters', () => {
-        map.getCanvas().style.cursor = ''
-      })
+      map.on('mouseleave', 'clusters', onClusterMouseLeave)
 
       map.on('click', 'clusters', onClusterClick)
     }
+  }
+
+  const onClusterMouseEnter = () => {
+    map.getCanvas().style.cursor = 'pointer'
+  }
+
+  const onClusterMouseLeave = () => {
+    map.getCanvas().style.cursor = ''
   }
 
   const onClusterClick = e => {
@@ -180,7 +153,11 @@ const MapNodeRenderer = ({ map }) => {
     })
   }
 
-  const cleanup = () => map.off('click', 'clusters', onClusterClick)
+  const cleanup = () => {
+    map.off('mouseenter', 'clusters', onClusterMouseEnter)
+    map.off('mouseleave', 'clusters', onClusterMouseLeave)
+    map.off('click', 'clusters', onClusterClick)
+  }
 
   useEffect( () => {
     setLayers()
