@@ -15,9 +15,15 @@ const ProjectPageHeader = ({
 
   <div style={styles.root}>
     <GradientBackground
-      addlStyles={styles.content}
+      addlStyles={{
+        ...styles.background,
+        ...styles.placement,
+      }}
       />
-    <div style={styles.content}>
+    <div style={{
+        ...styles.placement,
+        ...styles.items,
+      }}>
       <ProjectMenu
         baseUrl={baseUrl}
         id={id}
@@ -35,19 +41,24 @@ const styles = {
     gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
     gridTemplateRows: '[row1] minmax(4em, max-content) [ws1] 2em',
   },
-  content: {
+  placement: {
     gridColumn: 'leftCol / centerMargin',
     gridRowStart: 'row1',
+  },
+  background: {
+    clipPath: 'polygon(0 0, 100% 0, 98% 100%, 0 100%)'
+  },
+  items: {
     display: 'inline-flex',
     justifyContent: 'space-between',
     color: colors.white,
+    zIndex: 1,
   },
   text: {
     padding: '.5em 2em',
-    // justifySelf: 'end',
     alignSelf: 'flex-end',
     background: 'transparent',
-  }
+  },
 }
 
 ProjectPageHeader.propTypes = {

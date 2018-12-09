@@ -28,7 +28,7 @@ const ProjectNav = ({baseUrl, id}) => {
 
   return (
 
-    <ul style={styles.root}>
+    <ul style={styles}>
       {
         buttons.map( (b, i) => <NavButton
           key={`nav-button${i}`}
@@ -44,16 +44,13 @@ const ProjectNav = ({baseUrl, id}) => {
 }
 
 const styles = {
-  root: {
-    position: 'absolute',
-    zIndex: 2,
-    background: colors.white,
-    width: '13em',
-    padding: '.5em 1em',
-    borderRight: `1px solid ${colors.gray}`,
-    boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)'
-
-  },
+  position: 'absolute',
+  zIndex: 2,
+  background: colors.white,
+  width: '13em',
+  padding: '.5em 1em',
+  borderRight: `1px solid ${colors.gray}`,
+  boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)'
 }
 
 ProjectNav.propTypes = {
