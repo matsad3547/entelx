@@ -1,36 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ProjectNav from './ProjectNav'
+import ProjectPageHeader from './ProjectPageHeader'
 
 const ProjectPageTemplate = ({
+  title,
   baseUrl,
   id,
   children,
 }) => (
 
-  <div style={styles.root}>
-    <ProjectNav
+  <div >
+    <ProjectPageHeader
+      title={title}
       baseUrl={baseUrl}
       id={id}
       />
-    <div style={styles.content}>
-      {children}
-    </div>
+    {children}
   </div>
 )
-
-const styles = {
-  root: {
-    minHeight: '95vh',
-    maxWidth: '100vw',
-    display: 'flex',
-  },
-  content: {
-    margin: '0 0 auto',
-    width: '100%',
-  },
-}
 
 ProjectPageTemplate.propTypes = {
   baseUrl: PropTypes.string.isRequired,

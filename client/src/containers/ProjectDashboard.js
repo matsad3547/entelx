@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import CurrentWeatherDisplay from '../components/CurrentWeatherDisplay'
 import ChargingIndicator from '../components/ChargingIndicator'
@@ -94,53 +93,52 @@ JS Docs - insta documentation
 
   return (
 
-    <SubPageTemplate title={config ? `${config.projectName} - Dashboard` : 'Project Dashboard'}>
+    <ProjectPageTemplate
+      title={config ? `${config.projectName} - Dashboard` : 'Project Dashboard'}
+      baseUrl={cleanUrl}
+      id={projectId}
+      >
       { loading && <Loading message={''} />}
-      <ProjectPageTemplate
-        baseUrl={cleanUrl}
-        id={projectId}
-        >
-        <div style={styles.root}>
-          {
-            (prices && config) &&
-            <ChargingIndicator
-              prices={prices}
+      <div style={styles.root}>
+        {
+          (prices && config) &&
+          <ChargingIndicator
+            prices={prices}
+            timeZone={config.timeZone}
+            chargeThreshold={config.chargeThreshold}
+            dischargeThreshold={config.dischargeThreshold}
+            />
+        }
+        {
+          (prices && config) &&
+          <DashboardSection headerContent={'Last Hour'}>
+            <LineBarChart
+              barKey={'lmp'}
+              negBarThreshold={config.chargeThreshold}
+              posBarThreshold={config.dischargeThreshold}
+              data={prices}
               timeZone={config.timeZone}
-              chargeThreshold={config.chargeThreshold}
-              dischargeThreshold={config.dischargeThreshold}
+              aspect={4}
               />
-          }
-          {
-            (prices && config) &&
-            <DashboardSection headerContent={'Last Hour'}>
-              <LineBarChart
-                barKey={'lmp'}
-                negBarThreshold={config.chargeThreshold}
-                posBarThreshold={config.dischargeThreshold}
-                data={prices}
-                timeZone={config.timeZone}
-                aspect={4}
-                />
-            </DashboardSection>
-          }
-          {
-            (weather && config) &&
-            <CurrentWeatherDisplay
-              weather={weather}
-              timeZone={config.timeZone}
-              />
-          }
-          {
-            stateOfCharge &&
-            <div style={styles.subSection}>
-              <div style={styles.header}>
-                <Header4 content="State of Charge" />
-              </div>
+          </DashboardSection>
+        }
+        {
+          (weather && config) &&
+          <CurrentWeatherDisplay
+            weather={weather}
+            timeZone={config.timeZone}
+            />
+        }
+        {
+          stateOfCharge &&
+          <div style={styles.subSection}>
+            <div style={styles.header}>
+              <Header4 content="State of Charge" />
             </div>
-          }
-        </div>
-      </ProjectPageTemplate>
-    </SubPageTemplate>
+          </div>
+        }
+      </div>
+    </ProjectPageTemplate>
   )
 }
 

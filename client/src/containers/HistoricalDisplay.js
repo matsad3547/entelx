@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 
-import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
 import DashboardSection from '../components/DashboardSection'
@@ -55,26 +54,25 @@ const HistoricalDisplay = ({match}) => {
 
   return (
 
-    <SubPageTemplate title={'Last Week'}>
+    <ProjectPageTemplate
+      title={'Last Week'}
+      baseUrl={cleanUrl}
+      id={projectId}
+      >
       { loading && <Loading message={''} />}
-      <ProjectPageTemplate
-        baseUrl={cleanUrl}
-        id={projectId}
-        >
-        {
-          (timeSeries && config && aggregate) &&
-          <DashboardSection headerContent={'Last Week'}>
-            <LineBarChart
-              barKey={'lmp'}
-              data={timeSeries}
-              timeZone={config.timeZone}
-              xRefLines={aggregate.inflections}
-              aspect={2}
-              />
-          </DashboardSection>
-        }
-      </ProjectPageTemplate>
-    </SubPageTemplate>
+      {
+        (timeSeries && config && aggregate) &&
+        <DashboardSection headerContent={'Last Week'}>
+          <LineBarChart
+            barKey={'lmp'}
+            data={timeSeries}
+            timeZone={config.timeZone}
+            xRefLines={aggregate.inflections}
+            aspect={2}
+            />
+        </DashboardSection>
+      }
+    </ProjectPageTemplate>
   )
 }
 

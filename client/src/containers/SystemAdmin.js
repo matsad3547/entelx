@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import SubPageTemplate from '../components/SubPageTemplate'
+import ProjectPageTemplate from '../components/ProjectPageTemplate'
 
 import Button from '../components/button/'
 import Loading from '../components/loading/'
@@ -59,7 +59,7 @@ const SystemAdmin = () => {
   }
 
   return (
-    <SubPageTemplate title={'System Administration'}>
+    <ProjectPageTemplate title={'System Administration'}>
       { loading && <Loading message={''} />}
       <p>One Time Request</p>
       <Button
@@ -67,7 +67,7 @@ const SystemAdmin = () => {
         type="danger"
         onClick={onRequest}
         />
-    </SubPageTemplate>
+    </ProjectPageTemplate>
   )
 }
 
