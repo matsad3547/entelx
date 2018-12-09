@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import DashboardSection from '../components/DashboardSection'
+import DashboardSectionContent from '../components/DashboardSectionContent'
 import DataTimeDisplay from '../components/DataTimeDisplay'
 import ChargeStatusDisplay from '../components/ChargeStatusDisplay'
 
@@ -19,18 +20,20 @@ const ChargingIndicator = ({
 
   return (
     <DashboardSection headerContent="Status">
-      <div>
-        <DataTimeDisplay
-          millis={latest.timestamp}
-          timeZone={timeZone}
-          />
-        <ChargeStatusDisplay
-          currentPrc={currentPrc}
-          avgPrc={avgPrc}
-          chargeThreshold={chargeThreshold}
-          dischargeThreshold={dischargeThreshold}
-          />
-      </div>
+      <DashboardSectionContent>
+        <div>
+          <DataTimeDisplay
+            millis={latest.timestamp}
+            timeZone={timeZone}
+            />
+          <ChargeStatusDisplay
+            currentPrc={currentPrc}
+            avgPrc={avgPrc}
+            chargeThreshold={chargeThreshold}
+            dischargeThreshold={dischargeThreshold}
+            />
+        </div>
+      </DashboardSectionContent>
     </DashboardSection>
   )
 }

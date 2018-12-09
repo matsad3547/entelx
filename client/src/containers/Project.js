@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { withRouter } from 'react-router'
 
-import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Header4 from '../components/Header4'
 import Label from '../components/Label'
@@ -66,47 +65,46 @@ const Project = ({match, history}) => {
   useEffect( () => getProject(), [])
 
   return (
-    <SubPageTemplate title={project ? `${project.name} - Home` : 'Project Home'}>
+    <ProjectPageTemplate
+      title={project ? `${project.name} - Home` : 'Project Home'}
+      baseUrl={cleanUrl}
+      id={projectId}
+      >
       { loading && <Loading message={''} />}
-      <ProjectPageTemplate
-        baseUrl={cleanUrl}
-        id={projectId}
-        >
-        <div style={styles.root}>
-          <div style={styles.header}>
-            <Header4 content="Project Specifications" />
-          </div>
-          {
-            project &&
-            <div style={styles.specs}>
-              <Label content="Power"/>
-              <DataDisplay content={`${project.power} Mw`}/>
-              <Label content="Energy"/>
-              <DataDisplay content={`${project.energy} Mwh`}/>
-              <Label content="Location"/>
-              {
-                project.address ?
-                <DataDisplay content={`${project.address} - ${project.city} -  ${project.state}`}/>
-                :
-                <div style={styles.latLng}>
-                  <DataDisplay content={project.lat}/>
-                  <Label content="latitude"/>
-                  <DataDisplay content={project.lng}/>
-                  <Label content="longitude"/>
-                </div>
-              }
-            </div>
-          }
-          <div style={styles.button}>
-            <Button
-              value={'DELETE PROJECT'}
-              type="danger"
-              onClick={onDelete}
-              />
-          </div>
+      <div style={styles.root}>
+        <div style={styles.header}>
+          <Header4 content="Project Specifications" />
         </div>
-      </ProjectPageTemplate>
-    </SubPageTemplate>
+        {
+          project &&
+          <div style={styles.specs}>
+            <Label content="Power"/>
+            <DataDisplay content={`${project.power} Mw`}/>
+            <Label content="Energy"/>
+            <DataDisplay content={`${project.energy} Mwh`}/>
+            <Label content="Location"/>
+            {
+              project.address ?
+              <DataDisplay content={`${project.address} - ${project.city} -  ${project.state}`}/>
+              :
+              <div style={styles.latLng}>
+                <DataDisplay content={project.lat}/>
+                <Label content="latitude"/>
+                <DataDisplay content={project.lng}/>
+                <Label content="longitude"/>
+              </div>
+            }
+          </div>
+        }
+        <div style={styles.button}>
+          <Button
+            value={'DELETE PROJECT'}
+            type="danger"
+            onClick={onDelete}
+            />
+        </div>
+      </div>
+    </ProjectPageTemplate>
   )
 }
 

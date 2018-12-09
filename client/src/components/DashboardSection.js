@@ -12,9 +12,7 @@ const DashboardSection = ({
     <div style={styles.header}>
       <Header4 content={headerContent} />
     </div>
-    <div style={styles.content}>
-      {children}
-    </div>
+    {children}
   </div>
 )
 
@@ -26,12 +24,12 @@ const styles = {
   header: {
     padding: '0 0 1em',
   },
-  content: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    padding: '.5em 1em',
-  },
+  // content: {
+  //   display: 'flex',
+  //   flexWrap: 'wrap',
+  //   justifyContent: 'space-between',
+  //   padding: '.5em 1em',
+  // },
 }
 
 DashboardSection.propTypes = {

@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 
-import SubPageTemplate from '../components/SubPageTemplate'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
 
@@ -20,16 +19,14 @@ const ProjectRoi = ({match}) => {
   const [loading] = useState(false)
 
   return (
-
-    <SubPageTemplate title={'Project Return on Investment'}>
+    <ProjectPageTemplate
+      title={'Project Return on Investment'}
+      baseUrl={cleanUrl}
+      id={projectId}
+      >
       { loading && <Loading message={''} />}
-      <ProjectPageTemplate
-        baseUrl={cleanUrl}
-        id={projectId}
-        >
-        <p>Project id: {projectId}</p>
-      </ProjectPageTemplate>
-    </SubPageTemplate>
+      <p>Project id: {projectId}</p>
+    </ProjectPageTemplate>
   )
 }
 

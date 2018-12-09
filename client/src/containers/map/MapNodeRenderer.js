@@ -25,8 +25,7 @@ const MapNodeRenderer = ({ map }) => {
     .catch(handleError)
   }, [])
 
-  const processNodes = nodes =>
-  nodes.reduce( (obj, node) => ({
+  const processNodes = nodes => nodes.reduce( (obj, node) => ({
       ...obj,
       features: [
         ...obj.features,
@@ -48,7 +47,7 @@ const MapNodeRenderer = ({ map }) => {
     }), {
       type: 'FeatureCollection',
       features: [],
-    })
+  })
 
   const formatNodeLabels = nodeKey => {
     switch (nodeKey) {
