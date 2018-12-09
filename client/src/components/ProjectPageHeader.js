@@ -17,18 +17,32 @@ const ProjectPageHeader = ({
 }) => {
 
   const [isCompact, setIsCompact] = useState(false)
+  const [position, setPosition] = useState(null)
 
   const header = useRef(null)
 
   const checkScroll = e => {
     if (header.current) {
-      const top = header.current.getBoundingClientRect().top
-      if(top < 0) {
+      const pos = header.current.getBoundingClientRect().top
+      setPosition(pos)
+      if(position < 0) {
         setIsCompact(true)
       }
-      else if (top > 2) {
+      else if (position > 2) {
         setIsCompact(false)
       }
+    }
+  }
+
+  const setFontSize = () => {
+    if( position >= - 40 && position < 0) {
+      return `${1 + (position * .005)}em`
+    }
+    else if (position < - 40) {
+      return '.8em'
+    }
+    else {
+      return '1em'
     }
   }
 
@@ -38,7 +52,7 @@ const ProjectPageHeader = ({
   })
 
   const switchStyles = isCompact ? {
-    height: 100,
+    height: 120,
   } : {
     height: 2,
   }
@@ -57,7 +71,10 @@ const ProjectPageHeader = ({
     ...styles.items,
   }
 
-  const textStyles = isCompact ? styles.compactText : styles.text
+  const textStyles = isCompact ? {
+    fontSize: setFontSize(),
+    ...styles.compactText
+  } : styles.text
 
   return (
     <div>
@@ -124,7 +141,6 @@ const styles = {
     background: 'transparent',
   },
   compactText: {
-    fontSize: '.8em',
     padding: '.5em 2em',
   },
 }
