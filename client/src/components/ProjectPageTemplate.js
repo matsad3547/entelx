@@ -10,7 +10,7 @@ const ProjectPageTemplate = ({
   children,
 }) => (
 
-  <div >
+  <div>
     <ProjectPageHeader
       title={title}
       baseUrl={baseUrl}

@@ -19,7 +19,7 @@ const DashboardSection = ({
 const styles = {
   root: {
     textAlign: 'left',
-    padding: '0 2em 2em',
+    padding: '0 3em 2em',
   },
   header: {
     padding: '0 0 1em',

@@ -38,8 +38,6 @@ const styles = {
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     padding: '0 5em 0 0',
-    left: 30,
-    top: 10,
   },
   dataType: {
     padding: '.3em',

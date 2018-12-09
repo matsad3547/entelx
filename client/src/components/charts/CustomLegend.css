@@ -1,4 +1,5 @@
 .recharts-legend-wrapper {
+  position: relative !important;
   left: 60px !important;
-  bottom: -15px !important;
+  bottom: 25px !important;
 }

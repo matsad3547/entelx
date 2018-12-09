@@ -5,7 +5,10 @@ import GradientBackground from './GradientBackground'
 import Header3 from './Header3'
 import ProjectMenu from './ProjectMenu'
 
-import { colors } from '../config/styles'
+import {
+  colors,
+  boxShadow,
+} from '../config/styles'
 
 const ProjectPageHeader = ({
   title,
@@ -19,9 +22,14 @@ const ProjectPageHeader = ({
 
   const checkScroll = e => {
     if (header.current) {
-      header.current.getBoundingClientRect().top < 0 ? !isCompact && setIsCompact(true) : isCompact && setIsCompact(false)
+      const top = header.current.getBoundingClientRect().top
+      if(top < 0) {
+        setIsCompact(true)
+      }
+      else if (top > 2) {
+        setIsCompact(false)
+      }
     }
-    console.log('is compact?', isCompact);
   }
 
   useEffect(() => {
@@ -29,28 +37,45 @@ const ProjectPageHeader = ({
     return () => document.removeEventListener('scroll', checkScroll)
   })
 
-  return (
+  const switchStyles = isCompact ? {
+    height: 100,
+  } : {
+    height: 2,
+  }
 
-    <div
-      ref={header}
-      style={styles.root}
-      >
-      <GradientBackground
-        addlStyles={{
-          ...styles.background,
-          ...styles.placement,
-        }}
-        />
-      <div style={{
-          ...styles.placement,
-          ...styles.items,
-        }}>
-        <ProjectMenu
-          baseUrl={baseUrl}
-          id={id}
+  const rootStyles = isCompact ? styles.compactRoot : styles.root
+
+  const gradientStyles = isCompact ? {
+    display: 'none',
+  } : {
+    ...styles.background,
+    ...styles.placement,
+  }
+
+  const itemStyles = isCompact ? styles.compactItems : {
+    ...styles.placement,
+    ...styles.items,
+  }
+
+  const textStyles = isCompact ? styles.compactText : styles.text
+
+  return (
+    <div>
+      <div ref={header} style={switchStyles}></div>
+      <div
+        style={rootStyles}
+        >
+        <GradientBackground
+          addlStyles={gradientStyles}
           />
-        <div style={styles.text}>
-          <Header3 content={title} />
+        <div style={itemStyles}>
+          <ProjectMenu
+            baseUrl={baseUrl}
+            id={id}
+            />
+          <div style={textStyles}>
+            <Header3 content={title} />
+          </div>
         </div>
       </div>
     </div>
@@ -62,6 +87,16 @@ const styles = {
     display: 'grid',
     gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
     gridTemplateRows: '[row1] minmax(4em, max-content) [ws1] 2em',
+  },
+  compactRoot: {
+    display: 'block',
+    width: '100%',
+    position: 'fixed',
+    zIndex: 2,
+    top: 0,
+    background: 'white',
+    boxShadow,
+    transition: 'all 1s'
   },
   placement: {
     gridColumn: 'leftCol / centerMargin',
@@ -76,10 +111,21 @@ const styles = {
     color: colors.white,
     zIndex: 1,
   },
+  compactItems: {
+    display: 'inline-flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    color: colors.gray,
+    alignItems: 'baseline',
+  },
   text: {
     padding: '.5em 2em',
     alignSelf: 'flex-end',
     background: 'transparent',
+  },
+  compactText: {
+    fontSize: '.8em',
+    padding: '.5em 2em',
   },
 }
 
