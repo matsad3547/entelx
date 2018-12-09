@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import GradientBackground from './GradientBackground'
@@ -11,29 +11,51 @@ const ProjectPageHeader = ({
   title,
   baseUrl,
   id,
-}) => (
+}) => {
 
-  <div style={styles.root}>
-    <GradientBackground
-      addlStyles={{
-        ...styles.background,
-        ...styles.placement,
-      }}
-      />
-    <div style={{
-        ...styles.placement,
-        ...styles.items,
-      }}>
-      <ProjectMenu
-        baseUrl={baseUrl}
-        id={id}
+  const [isCompact, setIsCompact] = useState(false)
+
+  const header = useRef(null)
+
+  const checkScroll = e => {
+    if (header.current) {
+      header.current.getBoundingClientRect().top < 0 ? !isCompact && setIsCompact(true) : isCompact && setIsCompact(false)
+    }
+    console.log('is compact?', isCompact);
+  }
+
+  useEffect(() => {
+    document.addEventListener('scroll', checkScroll)
+    return () => document.removeEventListener('scroll', checkScroll)
+  })
+
+  return (
+
+    <div
+      ref={header}
+      style={styles.root}
+      >
+      <GradientBackground
+        addlStyles={{
+          ...styles.background,
+          ...styles.placement,
+        }}
         />
-      <div style={styles.text}>
-        <Header3 content={title} />
+      <div style={{
+          ...styles.placement,
+          ...styles.items,
+        }}>
+        <ProjectMenu
+          baseUrl={baseUrl}
+          id={id}
+          />
+        <div style={styles.text}>
+          <Header3 content={title} />
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 const styles = {
   root: {
