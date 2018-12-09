@@ -10,10 +10,13 @@ const PublicPageHeader = ({title}) => (
 
   <div style={styles.root}>
     <GradientBackground
-      addlStyles={styles.content}
+      addlStyles={{
+        ...styles.placement,
+        ...styles.background,
+      }}
       />
     <div style={{
-        ...styles.content,
+        ...styles.placement,
         ...styles.text,
       }}>
       <Header2 content={title} />
@@ -27,12 +30,15 @@ const styles = {
     gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
     gridTemplateRows: '[row1] 5em [ws1] 1em',
   },
-  content: {
+  placement: {
     gridColumn: 'rightCol / end',
     gridRowStart: 'row1',
   },
+  background: {
+    clipPath: 'polygon(2% 0, 100% 0, 100% 100%, 0 100%)'
+  },
   text: {
-    zIndex: 2,
+    zIndex: 1,
     color: colors.white,
     padding: '.5em 3em',
     justifySelf: 'end',

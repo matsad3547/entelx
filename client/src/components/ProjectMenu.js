@@ -52,6 +52,7 @@ const styles = {
     padding: '.5em',
     height: '97%',
     fontSize: '1.5em',
+    cursor: 'pointer',
   },
 }
 

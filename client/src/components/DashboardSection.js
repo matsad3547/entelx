@@ -24,12 +24,6 @@ const styles = {
   header: {
     padding: '0 0 1em',
   },
-  // content: {
-  //   display: 'flex',
-  //   flexWrap: 'wrap',
-  //   justifyContent: 'space-between',
-  //   padding: '.5em 1em',
-  // },
 }
 
 DashboardSection.propTypes = {
