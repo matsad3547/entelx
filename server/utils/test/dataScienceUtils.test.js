@@ -9,6 +9,7 @@ const {
   calculateDerivedData,
   findInflections,
   findRevenue,
+  findStdDev,
 } = require('../dataScienceUtils')
 
 const testData = [
@@ -770,6 +771,90 @@ describe('findRevenue', () => {
     }
     const actual = findRevenue(data, 'lmp', 6, options).aggregate.revenue
     const expected = .0003167
+    expect(actual).toBeCloseTo(expected, 6)
+  })
+})
+
+describe('findStdDev', () => {
+  const period = 5
+  const key = 'lmp'
+  const getStdDev = pipeData(
+    findStdDev,
+  )
+
+  const dataSnippet = [
+    {
+      timestamp: 1538710500000,
+      congestionPrc: 0,
+      energyPrc: 28.02027,
+      ghgPrc: 0,
+      lossPrc: -0.38948,
+      lmp: 27.63079,
+    },
+    {
+      timestamp: 1538710800000,
+      congestionPrc: 0,
+      energyPrc: 26.79269,
+      ghgPrc: 0,
+      lossPrc: -0.37242,
+      lmp: 26.42027,
+    },
+    {
+      timestamp: 1538711100000,
+      congestionPrc: 0,
+      energyPrc: 26.83094,
+      ghgPrc: 0,
+      lossPrc: -0.36758,
+      lmp: 26.46335,
+    },
+    {
+      timestamp: 1538711400000,
+      congestionPrc: 0,
+      energyPrc: 26.76948,
+      ghgPrc: 0,
+      lossPrc: -0.36674,
+      lmp: 26.40274,
+    },
+    {
+      timestamp: 1538711700000,
+      congestionPrc: 0,
+      energyPrc: 27.86177,
+      ghgPrc: 0,
+      lossPrc: -0.38171,
+      lmp: 27.48006,
+    },
+    {
+      timestamp: 1538712000000,
+      congestionPrc: 0,
+      energyPrc: 32.1997,
+      ghgPrc: 0,
+      lossPrc: -0.4025,
+      lmp: 31.79721,
+    },
+    {
+      timestamp: 1538712300000,
+      congestionPrc: -25.06595,
+      energyPrc: 47.8386,
+      ghgPrc: 0,
+      lossPrc: -0.59798,
+      lmp: 22.17467,
+    }
+  ]
+
+  test('should return the passed in data', () => {
+    const actual = getStdDev(dataSnippet, key, period).timeSeries
+    const expected = dataSnippet
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return a `stdDev` value in the `aggregate` portion', () => {
+    const actual = getStdDev(dataSnippet, key, period).aggregate.stdDev
+    expect(actual).toBeDefined()
+  })
+
+  test('returns a correct value for `stdDev`', () => {
+    const actual = getStdDev(dataSnippet, key, period).aggregate.stdDev
+    const expected = 2.614501392
     expect(actual).toBeCloseTo(expected, 6)
   })
 })

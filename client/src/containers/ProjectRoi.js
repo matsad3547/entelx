@@ -30,11 +30,8 @@ const ProjectRoi = ({match}) => {
   )
 }
 
-const styles = {
-
-  para: {
-    padding: '3em',
-  }
-}
+// const styles = {
+//
+// }
 
 export default ProjectRoi
