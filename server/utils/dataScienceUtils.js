@@ -6,6 +6,10 @@ const pipeData = (...fns) => (data, key, period, options) => {
   return fns.reduce( (v, f) => f(v, key, period, options), res)
 }
 
+const getSum = (a, b) => a + b
+
+const getMean = arr => arr.reduce(getSum)/arr.length
+
 const calculateMovingAverage = (data, key, period) => {
 
   const { timeSeries } = data
@@ -248,6 +252,26 @@ const findRevenue = (data, key, period, options) => {
   }
 }
 
+const findStdDev = (data, key, period, options) => {
+
+  const {
+    timeSeries,
+    aggregate,
+  } = data
+
+  const mean = timeSeries.reduce( (sum, d, i) => sum + d[key], 0)/timeSeries.length
+
+  const stdDev = Math.sqrt(getMean(timeSeries.map( d => (d[key] - mean)**2 )))
+
+  return {
+    ...data,
+    aggregate: {
+      ...aggregate,
+      stdDev,
+    }
+  }
+}
+
 const scoreValues = pipeData(
   calculateMovingAverage,
   calculateScore,
@@ -273,6 +297,7 @@ module.exports = {
   findMinMax,
   findInflections,
   findRevenue,
+  findStdDev,
   calculateScoreData,
   calculateDerivedData,
 }
