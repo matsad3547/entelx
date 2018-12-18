@@ -103,7 +103,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
-    gridTemplateRows: '[row1] minmax(4em, max-content) [ws1] 2em',
+    gridTemplateRows: '[row1] minmax(4em, max-content) [ws1] 3em',
   },
   compactRoot: {
     display: 'block',
