@@ -263,7 +263,9 @@ const findRevenue = (data, key, period, options) => {
 
   const minEnergy = dischargeBuffer * energy
 
-  const calculation = timeSeries.reduce( (obj, d, i) => {
+  const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (obj, d, i) => {
+
+    // console.log('at findRevenue:', obj.charge, i);
 
     const canCharge = obj.charge + chargeEnergy <= maxEnergy
 
@@ -297,7 +299,7 @@ const findRevenue = (data, key, period, options) => {
     ...data,
     aggregate: {
       ...aggregate,
-      ...calculation,
+      ...calculation(dischargeThreshold, chargeThreshold),
     }
   }
 }
@@ -327,7 +329,7 @@ const findThresholds = (data, key, period, options) => {
 
   const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (obj, d, i) => {
 
-    console.log('charge value in reduce?', obj.charge);
+    console.log('at findThresholds?', obj.charge, i, timeSeries.length);
 
     const canCharge = obj.charge + chargeEnergy <= maxEnergy
 
@@ -393,11 +395,13 @@ const findStdDev = (data, key, period, options) => {
   }
 }
 
-const objective1 = x => x**2 + (3*x)
+const objective1 = x => -(x**2) + (3*x)
+
+const forOptimization = x => -objective1(x)
 
 const testOptimization = () => {
 
-  return optimize.minimize_Powell(objective1, [-10])
+  return optimize.minimize_Powell(forOptimization, [-10])
 }
 
 const scoreValues = pipeData(
