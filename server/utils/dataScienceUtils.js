@@ -1,4 +1,5 @@
 const optimize = require('optimization-js')
+const fmin = require('fmin')
 
 console.log('optimize?', optimize);
 
@@ -329,7 +330,7 @@ const findThresholds = (data, key, period, options) => {
 
   const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (obj, d, i) => {
 
-    console.log('at findThresholds?', obj.charge, i, timeSeries.length);
+    console.log('at findThresholds?', obj.charge, i, dischargeThreshold, chargeThreshold);
 
     const canCharge = obj.charge + chargeEnergy <= maxEnergy
 
@@ -359,9 +360,17 @@ const findThresholds = (data, key, period, options) => {
     revenue: 0,
   })
 
-  const forOptimization = (c, d) => -(calculation(c, d).revenue)
+  const maxThreshold = timeSeries[timeSeries.length - 1].mvgAvg
 
-  const optimizedThresholds = optimize.minimize_Powell(forOptimization, [0, 0])
+  const initThresholdVal = maxThreshold / 2
+
+  console.log('max threshold:', maxThreshold);
+
+  const forOptimization = ([c, d]) => -(calculation(c, d).revenue)
+
+  // const optimizedThresholds = optimize.minimize_Powell(forOptimization, [initThresholdVal, initThresholdVal])
+
+  const optimizedThresholds = fmin.nelderMead(forOptimization, [initThresholdVal, initThresholdVal])
 
   console.log(optimizedThresholds);
 
