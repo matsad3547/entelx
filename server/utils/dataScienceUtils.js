@@ -45,6 +45,7 @@ const calculateScore = (data, key) => {
   const { timeSeries } = data
 
   const calculation = timeSeries.map( d => ({
+      ...d,
       timestamp: d.timestamp,
       mvgAvg: d.mvgAvg,
       [key]: d[key],

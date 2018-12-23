@@ -20,6 +20,7 @@ const ProjectRoi = ({match}) => {
   const [data, setData] = useState(null)
 
   const handleData = e => {
+    // TODO Check origin in production and dev per https://html.spec.whatwg.org/multipage/web-messaging.html#authors
     console.log(e);
     setData(JSON.parse(e.data))
   }
