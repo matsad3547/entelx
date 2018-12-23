@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
@@ -17,6 +17,27 @@ const ProjectRoi = ({match}) => {
   const cleanUrl = getBaseUrl(url, 'roi', projectId)
 
   const [loading] = useState(false)
+  const [data, setData] = useState(null)
+
+  const handleData = e => {
+    console.log(e);
+  }
+
+  const handleError = err => console.log('error:', err);
+
+  useEffect( () => {
+    const stream = new EventSource(`/get_roi/${projectId}`)
+
+    stream.addEventListener('message', handleData)
+
+    stream.addEventListener('error', handleError)
+
+    return () => {
+      stream.removeEventListener('message', handleData)
+      stream.addEventListener('error', handleError)
+      stream.close()
+    }
+  }, [])
 
   return (
     <ProjectPageTemplate
