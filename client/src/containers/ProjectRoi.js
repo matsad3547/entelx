@@ -21,9 +21,10 @@ const ProjectRoi = ({match}) => {
 
   const handleData = e => {
     console.log(e);
+    setData(JSON.parse(e.data))
   }
 
-  const handleError = err => console.log('error:', err);
+  const handleError = err => console.error(err);
 
   useEffect( () => {
     const stream = new EventSource(`/get_roi/${projectId}`)
@@ -47,6 +48,10 @@ const ProjectRoi = ({match}) => {
       >
       { loading && <Loading message={''} />}
       <p>Project id: {projectId}</p>
+      {
+        data &&
+        <p>{data.cheese}</p>
+      }
     </ProjectPageTemplate>
   )
 }
