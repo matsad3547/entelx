@@ -1,7 +1,13 @@
 const express = require('express')
+const compression = require('compression')
 require('isomorphic-fetch')
 const dotenv = require('dotenv').config()
 const bodyParser = require('body-parser')
+
+const {
+  sse,
+  getCompressionOptions,
+} = require('./middleware')
 
 const eia = require('./app/eiaRequest')
 
@@ -40,9 +46,15 @@ const server = app.listen(app.get('port'), err => {
   console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
 
+//set up middlewares
+
 app.use(express.static('public'))
 
 app.use(bodyParser.json())
+
+app.use(compression(getCompressionOptions))
+
+app.use(sse)
 
 app.post('/createUser', createUser)
 app.post('/login', login)
@@ -60,3 +72,28 @@ app.delete('/delete_project', deleteProjectById)
 
 // last 3 weeks
 app.post('/get_3_week_data', getThreeWeekData)
+
+app.get('/get_roi/:id', (req, res) => {
+
+  const { id } = req.params
+
+  res.sseSetup()
+
+  let n = 0
+
+  // run to send initial data
+  res.sseSend({cheese: `dicks - ${n}`,})
+
+  n = 1
+
+  const int = setInterval( () => {
+    // run to send follow up data
+    res.sseSend({cheese: `balls - ${n}`,})
+    n++
+  }, 3000)
+
+  req.on('close', () => {
+    clearInterval(int)
+    res.sseClose()
+  })
+})

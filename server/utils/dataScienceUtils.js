@@ -1,8 +1,6 @@
 const optimize = require('optimization-js')
 const fmin = require('fmin')
 
-console.log('optimize?', optimize);
-
 const pipeData = (...fns) => (data, key, period, options) => {
   const res = {
     timeSeries: data,
