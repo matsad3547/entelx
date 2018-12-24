@@ -11,3 +11,11 @@ What is the ROI on the resources?
 Lighting coin? Senza.us
 
 Who else is downloading the OASIS data?
+
+
+timestamp
+lmp
+ghgPrc ghg_prc 
+energyPrc energy_prc
+congestionPrc congestion_prc
+lossPrc loss_prc
