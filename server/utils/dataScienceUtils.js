@@ -329,7 +329,7 @@ const findThresholds = (data, key, period, options) => {
 
   const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (obj, d, i) => {
 
-    console.log('at findThresholds?', obj.charge, i, dischargeThreshold, chargeThreshold);
+    console.log('at findThresholds?', obj.revenue + '$', i, dischargeThreshold, chargeThreshold);
 
     const canCharge = obj.charge + chargeEnergy <= maxEnergy
 
@@ -361,7 +361,8 @@ const findThresholds = (data, key, period, options) => {
 
   const maxThreshold = timeSeries[timeSeries.length - 1].mvgAvg
 
-  const initThresholdVal = maxThreshold / 2
+  // const initThresholdVal = maxThreshold / 2
+  const initThresholdVal = 0
 
   console.log('max threshold:', maxThreshold);
 
