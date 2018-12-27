@@ -24,7 +24,6 @@ const getInitDashboardData = (req, res) => {
       const chargeThreshold = project.charge_threshold
       const dischargeThreshold = project.discharge_threshold
 
-
       return readTableRows(
           'node',
           { id: node_id },

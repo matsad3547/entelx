@@ -14,6 +14,8 @@ const getDashboardData = (
   node
 ) => {
 
+  // TODO ms this will change to just take lat, lng, timeZone, and node and return the weather request as well as the last hour of data for that project
+
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
   const startMillis = now.clone()

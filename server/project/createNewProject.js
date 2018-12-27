@@ -32,7 +32,11 @@ const createProject = (data, res) => {
     lng,
   } = data
 
+  // TODO Get timezone from this way: https://www.mapbox.com/help/create-a-timezone-finder-with-mapbox-tilequery-api/
+
   const timeZone = 'America/Los_Angeles'
+
+  // TODO calculate charge and discharge thresholds from data
   const chargeThreshold = 6.50
   const dischargeThreshold = 6.50
 
