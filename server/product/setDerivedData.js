@@ -5,6 +5,7 @@ const { getPriceRequest } = require('../processes/')
 const {
   calculateDerivedData,
   updateTableRow,
+  createTableRows,
 } = require('../utils/')
 
 const { dayOf5Mins } = require('../config/')
@@ -57,6 +58,14 @@ const setDerivedData = (node, projectId, timeZone) => {
           charge_threshold: chargeThreshold,
           discharge_threshold: dischargeThreshold,
         },
+      ),
+      createTableRows(
+        'price',
+        timeSeries.map( ts => ({
+            ...ts,
+            nodeId: node.id,
+          })
+        )
       ),
     ])
   })
