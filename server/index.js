@@ -56,6 +56,7 @@ app.use(compression(getCompressionOptions))
 
 app.use(sse)
 
+//user
 app.post('/createUser', createUser)
 app.post('/login', login)
 
