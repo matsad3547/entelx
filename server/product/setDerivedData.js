@@ -57,14 +57,14 @@ const setDerivedData = (node, projectId, timeZone) => {
           discharge_threshold: dischargeThreshold,
         },
       ),
-      // createTableRows(
-      //   'price',
-      //   timeSeries.map( ts => ({
-      //       ...ts,
-      //       nodeId: node.id,
-      //     })
-      //   )
-      // ),
+      createTableRows(
+        'price',
+        timeSeries.map( ts => ({
+            ...ts,
+            nodeId: node.id,
+          })
+        )
+      ),
     ])
   })
   .catch( err => {
