@@ -16,17 +16,17 @@ const getInitDashboardData = (req, res) => {
       const {
         lat,
         lng,
-        node_id,
+        nodeId,
+        timeZone,
+        chargeThreshold,
+        dischargeThreshold,
       } = project
 
       const projectName = project.name
-      const timeZone = project.time_zone
-      const chargeThreshold = project.charge_threshold
-      const dischargeThreshold = project.discharge_threshold
 
       return readTableRows(
           'node',
-          { id: node_id },
+          { id: nodeId },
         )
         .then( nodeRes => {
 
