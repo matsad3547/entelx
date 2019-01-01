@@ -75,4 +75,11 @@ describe('convertObj', () => {
     const actual = convertObj(obj)
     expect(actual).toEqual(expected)
   })
+
+  test('should pass through elements that are not objects', () => {
+    const input = 16
+    const expected = 16
+    const actual = convertObj(input)
+    expect(actual).toEqual(expected)
+  })
 })

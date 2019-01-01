@@ -54,7 +54,6 @@ const Project = ({match, history}) => {
       .then(parseResponse)
       .then( res => {
         setProject(res[0])
-        console.log('at project:', res[0]);
         setLoading(false)
       })
       .catch( err => {

@@ -37,7 +37,7 @@ const createProject = (data, res) => {
 
   const manualData = {
     ...data,
-    time_zone: timeZone,
+    timeZone,
   }
 
   return createTableRow('project', manualData)
@@ -52,7 +52,7 @@ const createProject = (data, res) => {
         return updateTableRow(
             'project',
             {id,},
-            {node_id: node.id},
+            {nodeId: node.id},
           )
           .then( () => setDerivedData(node, id, timeZone)
             .then( () => res.status(200).json({id,}) )
