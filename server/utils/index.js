@@ -17,9 +17,12 @@ const { findClosest } = require('./geoUtils')
 const {
   findByLatLng,
   createTableRow,
+  createTableRows,
   readTableRows,
   updateTableRow,
   deleteTableRows,
+  snakeToCamel,
+  camelToSnake,
 } = require('./dbUtils/')
 
 module.exports = {
@@ -32,7 +35,10 @@ module.exports = {
   findClosest,
   findByLatLng,
   createTableRow,
+  createTableRows,
   readTableRows,
   updateTableRow,
   deleteTableRows,
+  snakeToCamel,
+  camelToSnake,
 }
