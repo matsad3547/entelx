@@ -3,7 +3,15 @@ const snakeToCamel = snakeStr => snakeStr.toLowerCase()
 
 const camelToSnake = camelStr => camelStr.replace(/[A-Z]/g, m => ['_', m[0].toLowerCase()].join(''))
 
+const convertObj = snakeObj => Object
+  .keys(snakeObj)
+  .reduce( (obj, k) => ({
+      ...obj,
+      [snakeToCamel(k)]: snakeObj[k]
+    }), {})
+
 module.exports = {
   snakeToCamel,
   camelToSnake,
+  convertObj,
 }

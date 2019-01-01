@@ -1,10 +1,26 @@
 require('dotenv').config({path: '../../.env'})
+//
+// const {
+//   snakeToCamel,
+//   camelToSnake,
+// } = require('../utils/')
+const snakeToCamel = snakeStr => snakeStr.toLowerCase()
+  .replace(/(\_\w)/g, m => m[1].toUpperCase())
+
+
+const camelToSnake = camelStr => camelStr.replace(/[A-Z]/g, m => ['_', m[0].toLowerCase()].join(''))
+
+const convertObj = snakeObj => Object
+  .keys(snakeObj)
+  .reduce( (obj, k) => ({
+      ...obj,
+      [snakeToCamel(k)]: snakeObj[k]
+    }), {})
 
 module.exports = {
   client: process.env.DB_CONNECTION,
   connection: {
     user: process.env.DB_USER,
-    // TODO Password is not brought from env when running migrations
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
   },
@@ -15,4 +31,6 @@ module.exports = {
     min: 0,
     max: 9,
   },
+  wrapIdentifier: value => camelToSnake(value),
+  postProcessResponse: result => Array.isArray(result) ? result.map(row => convertObj(row)) : convertObj(result),
 }

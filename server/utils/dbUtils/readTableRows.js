@@ -1,5 +1,7 @@
 const knex = require('../../store/')
 
+console.log('at read:', knex);
+
 const readTableRows = (table, query) => knex(table)
   .where(query)
   .debug()

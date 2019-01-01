@@ -5,6 +5,12 @@ const readTableRows = require('./readTableRows')
 const updateTableRow = require('./updateTableRow')
 const deleteTableRows = require('./deleteTableRows')
 
+const {
+  snakeToCamel,
+  camelToSnake,
+  convertObj,
+} = require('./conversions')
+
 module.exports = {
   findByLatLng,
   createTableRow,
@@ -12,4 +18,7 @@ module.exports = {
   readTableRows,
   updateTableRow,
   deleteTableRows,
+  snakeToCamel,
+  camelToSnake,
+  convertObj,
 }
