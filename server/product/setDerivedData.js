@@ -42,8 +42,6 @@ const setDerivedData = (node, projectId, timeZone) => {
     const chargeThreshold = 6.23
     const dischargeThreshold = 5.43
 
-    console.log('time series length:', timeSeries.length, 'timeSeries:', timeSeries);
-
     const currentAvg = timeSeries[timeSeries.length - 1].mvgAvg
     return Promise.all([
       updateTableRow(
@@ -59,14 +57,14 @@ const setDerivedData = (node, projectId, timeZone) => {
           discharge_threshold: dischargeThreshold,
         },
       ),
-      createTableRows(
-        'price',
-        timeSeries.map( ts => ({
-            ...ts,
-            nodeId: node.id,
-          })
-        )
-      ),
+      // createTableRows(
+      //   'price',
+      //   timeSeries.map( ts => ({
+      //       ...ts,
+      //       nodeId: node.id,
+      //     })
+      //   )
+      // ),
     ])
   })
   .catch( err => {
