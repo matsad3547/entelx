@@ -1,6 +1,6 @@
 const knex = require('../../store/')
 
-console.log('at createTableRows:', knex);
+// console.log('at createTableRows:', knex);
 
 const createTableRows = (table, dataArr) => knex(table)
   .insert(dataArr)

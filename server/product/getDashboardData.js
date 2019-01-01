@@ -23,6 +23,11 @@ const getDashboardData = (
                       .valueOf()
 
   const {
+    name,
+    currentAvg,
+  } = node
+
+  const {
     req,
     params,
   } = getPriceRequest(node)
@@ -33,7 +38,7 @@ const getDashboardData = (
         ...params,
         startMillis,
         endMillis,
-        node.name,
+        name,
       ),
     ]
     .map( p => p.catch(handleMultiPromiseError) )
@@ -42,11 +47,9 @@ const getDashboardData = (
 
     const dataWithAvg = data[1].map( obj => ({
         ...obj,
-        mvgAvg: node.current_avg,
+        mvgAvg: currentAvg,
       })
     )
-
-    // console.log('dataWithAvg?', dataWithAvg);
 
     const processedData = calculateScoreData(dataWithAvg, 'lmp')
 
