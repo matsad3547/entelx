@@ -10,7 +10,7 @@ const addNode = ({
         .insert({
           name,
           type,
-          control_area,
+          controlArea,
           lat,
           lng,
         })
