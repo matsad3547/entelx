@@ -55,10 +55,7 @@ const createProject = (data, res) => {
             {nodeId: node.id},
           )
           .then( () => setProjectData(node, id, timeZone)
-            .then( () => {
-              // TODO launch functions to load 6 mos of data and to get new data every 5 mins
-              return res.status(200).json({id,})
-            })
+            .then( () => res.status(200).json({id,}) )
             .catch( handleError ) )
           .catch( handleError )
         })

@@ -29,6 +29,7 @@ const getHistoricalData = (
   } = getPriceRequest(node)
 
   return Promise.all([
+    // TODO this will be swapped out for "readTableRows" with a query of node and startMillis/endMillis
       req(
         ...params,
         startMillis,

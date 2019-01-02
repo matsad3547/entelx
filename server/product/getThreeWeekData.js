@@ -8,7 +8,7 @@ const getThreeWeekData = (req, res) => {
 
   const { id } = req.body
 
-  readTableRows('project', { id, })
+  return readTableRows('project', { id, })
     .then( projectRes => {
 
       const project = projectRes[0]
