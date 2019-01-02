@@ -7,7 +7,6 @@ require('dotenv').config({path: '../../.env'})
 const snakeToCamel = snakeStr => snakeStr.toLowerCase()
   .replace(/(\_\w)/g, m => m[1].toUpperCase())
 
-
 const camelToSnake = camelStr => camelStr.replace(/[A-Z]/g, m => ['_', m[0].toLowerCase()].join(''))
 
 const convertObj = snakeObj => typeof snakeObj === 'object' ? Object

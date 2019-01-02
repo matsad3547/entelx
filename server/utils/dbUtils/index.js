@@ -4,6 +4,7 @@ const createTableRows = require('./createTableRows')
 const readTableRows = require('./readTableRows')
 const updateTableRow = require('./updateTableRow')
 const deleteTableRows = require('./deleteTableRows')
+const deleteTableRowsWhereNot = require('./deleteTableRowsWhereNot')
 
 const {
   snakeToCamel,
@@ -18,6 +19,7 @@ module.exports = {
   readTableRows,
   updateTableRow,
   deleteTableRows,
+  deleteTableRowsWhereNot,
   snakeToCamel,
   camelToSnake,
   convertObj,

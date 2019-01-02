@@ -6,7 +6,7 @@ const {
   deleteTableRows,
 } = require('../utils/')
 
-const { setDerivedData } = require('../product/')
+const { setProjectData } = require('../product/')
 
 const handleError = err => {
   throw err
@@ -54,8 +54,11 @@ const createProject = (data, res) => {
             {id,},
             {nodeId: node.id},
           )
-          .then( () => setDerivedData(node, id, timeZone)
-            .then( () => res.status(200).json({id,}) )
+          .then( () => setProjectData(node, id, timeZone)
+            .then( () => {
+              // TODO launch functions to load 6 mos of data and to get new data every 5 mins
+              return res.status(200).json({id,})
+            })
             .catch( handleError ) )
           .catch( handleError )
         })
