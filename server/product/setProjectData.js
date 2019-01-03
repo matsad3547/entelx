@@ -30,7 +30,8 @@ const { dayOf5Mins } = require('../config/')
 
 const setProjectData = (node, projectId, timeZone) => {
 
-  const numDays = 21
+  const numDays = 5
+  // const numDays = 21
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
   const startMillis = now.clone()
@@ -61,18 +62,19 @@ const setProjectData = (node, projectId, timeZone) => {
     const dischargeThreshold = 5.43
 
     const currentAvg = timeSeries[timeSeries.length - 1].mvgAvg
+
     return Promise.all([
       updateTableRow(
         'node',
         {id: node.id},
-        {current_avg: currentAvg},
+        {currentAvg, },
       ),
       updateTableRow(
         'project',
         {id: projectId},
         {
-          charge_threshold: chargeThreshold,
-          discharge_threshold: dischargeThreshold,
+          chargeThreshold,
+          dischargeThreshold,
         },
       ),
       deleteTableRowsWhereNot(
@@ -92,16 +94,21 @@ const setProjectData = (node, projectId, timeZone) => {
   .then( () => {
     const args = JSON.stringify({
       node,
+      timeZone,
     })
 
     const child = spawn('node', ['server/processes/price/updatePriceData.js', args], {
       stdio: 'inherit',
     })
 
-    child.on('error', err => console.error('there was an error:', err) )
+    child.on('error', err => {
+      console.error('There was an error running the `updatePriceData` process:', err)
+      throw new Error(err)
+    })
 
     child.unref();
-    console.log('things are happening');
+    console.log('child values?', child.pid);
+    // TODO Add the pid to the project table
   })
   .catch( err => {
     console.error('There was an error getting the running average:', err)
