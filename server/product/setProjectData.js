@@ -94,11 +94,8 @@ const setProjectData = (node, projectId, timeZone) => {
       node,
     })
 
-    console.log('current working directory?', process.cwd());
-
     const child = spawn('node', ['server/processes/price/updatePriceData.js', args], {
       stdio: 'inherit',
-      cwd: process.cwd(),
     })
 
     child.on('error', err => console.error('there was an error:', err) )
