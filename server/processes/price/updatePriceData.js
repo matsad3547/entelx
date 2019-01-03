@@ -73,7 +73,7 @@ const int = setInterval( () => {
 }, 2 * 1000)
 // }, 5 * 60 * 1000 //5 minutes)
 
-process.on('exit', () => {
+process.on('SIGTERM', () => {
   console.log(`exiting "updatePriceData" for ${name}` );
   clearInterval(int)
 })

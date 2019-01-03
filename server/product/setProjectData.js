@@ -97,18 +97,24 @@ const setProjectData = (node, projectId, timeZone) => {
       timeZone,
     })
 
-    const child = spawn('node', ['server/processes/price/updatePriceData.js', args], {
+    const updateData = spawn('node', ['server/processes/price/updatePriceData.js', args], {
       stdio: 'inherit',
     })
 
-    child.on('error', err => {
+    updateData.on('error', err => {
       console.error('There was an error running the `updatePriceData` process:', err)
+      updateData.exit(1)
       throw new Error(err)
     })
 
-    child.unref();
-    console.log('child values?', child.pid);
+    const pid = updateData.pid
+
     // TODO Add the pid to the project table
+    setTimeout( () => {
+      console.log('gonna kill the process', pid);
+      process.kill(pid)
+    }, 10 * 1000)
+    child.unref();
   })
   .catch( err => {
     console.error('There was an error getting the running average:', err)

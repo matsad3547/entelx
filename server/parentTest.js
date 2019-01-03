@@ -7,8 +7,6 @@ const child = spawn('node', ['processes/price/updatePriceData.js', args], {
   env: process.env,
 })
 
-// py.stdin.write(JSON.stringify({dicks: 'balls'}))
-
 child.on('error', err => console.error('there was an error:', err) )
 
 child.unref();
