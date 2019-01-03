@@ -5,7 +5,9 @@ const {
   getCurrentWeather,
 } = require('./weather/')
 
-const getPriceRequest = require('./getPriceRequest')
+const {
+  getPriceRequest
+} = require('./price/')
 
 const getNodes = require('./getNodes')
 

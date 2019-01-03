@@ -1,4 +1,5 @@
 const moment = require('moment-timezone')
+const { spawn } = require('child_process')
 
 const { getPriceRequest } = require('../processes/')
 
@@ -88,7 +89,23 @@ const setProjectData = (node, projectId, timeZone) => {
       ),
     ])
   })
-  .then( () => console.log('gonna do stuff!'))
+  .then( () => {
+    const args = JSON.stringify({
+      node,
+    })
+
+    console.log('current working directory?', process.cwd());
+
+    const child = spawn('node', ['server/processes/price/updatePriceData.js', args], {
+      stdio: 'inherit',
+      cwd: process.cwd(),
+    })
+
+    child.on('error', err => console.error('there was an error:', err) )
+
+    child.unref();
+    console.log('things are happening');
+  })
   .catch( err => {
     console.error('There was an error getting the running average:', err)
     throw new Error(err)
