@@ -3,7 +3,8 @@ const { spawn } = require('child_process')
 const args = JSON.stringify({node: 'WORDS_THINGS'})
 
 const child = spawn('node', ['processes/price/updatePriceData.js', args], {
-  stdio: 'inherit'
+  stdio: 'inherit',
+  env: process.env,
 })
 
 // py.stdin.write(JSON.stringify({dicks: 'balls'}))
