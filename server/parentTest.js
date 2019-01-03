@@ -1,0 +1,14 @@
+const { spawn } = require('child_process')
+
+const args = JSON.stringify({node: 'WORDS_THINGS'})
+
+const child = spawn('node', ['processes/price/updatePriceData.js', args], {
+  stdio: 'inherit'
+})
+
+// py.stdin.write(JSON.stringify({dicks: 'balls'}))
+
+child.on('error', err => console.error('there was an error:', err) )
+
+child.unref();
+console.log('things are happening');

@@ -1,4 +1,4 @@
-const { oasisEndpoint } = require('./iso/')
+const { oasisEndpoint } = require('../iso/')
 
 const getPriceRequest = node => {
 
