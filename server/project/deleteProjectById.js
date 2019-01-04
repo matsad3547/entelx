@@ -12,7 +12,7 @@ const deleteProjectById = (req, res) => {
 
       const { pid } = project[0]
 
-      const handleError = e => console.error(`Error ending process ${pid}:`, e)
+      const handleError = err => console.error(`Error ending process ${pid}:`, err)
 
       try {
         process.kill(pid)
