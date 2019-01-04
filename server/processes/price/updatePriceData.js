@@ -74,27 +74,32 @@ const int = setInterval( () => {
 }, 2 * 1000)
 // }, 5 * 60 * 1000 //5 minutes)
 
+const pid = process.pid
+
 const cleanUp = code => {
-  console.log(`exiting "updatePriceData" for ${name}; exit code ${code}` );
+  console.log(`exiting "updatePriceData" for ${name}\n exit code: ${code}` );
   clearInterval(int)
 }
 
-const pid = process.pid
+const exitProcess = (signal, code) => {
+  console.log('exiting with:', signal)
+  process.exit(code)
+}
 
 process.on('exit', cleanUp)
 
 //catches ctrl+c event
-process.on('SIGINT', cleanUp)
+process.on('SIGINT', exitProcess)
 
 // catches "process.kill(<pid>)"
-process.on('SIGTERM', cleanUp)
+process.on('SIGTERM', exitProcess)
 
 // catches "kill pid" (for example: nodemon restart)
-process.on('SIGUSR1', cleanUp)
-process.on('SIGUSR2', cleanUp)
+process.on('SIGUSR1', exitProcess)
+process.on('SIGUSR2', exitProcess)
 
 //catches uncaught exceptions
-process.on('uncaughtException', cleanUp)
+process.on('uncaughtException', exitProcess)
 
 return updateTableRow(
   'project',
