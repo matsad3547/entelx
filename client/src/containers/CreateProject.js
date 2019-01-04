@@ -253,7 +253,7 @@ const styles = {
     padding: '1em',
   },
   map: {
-    height: '78vh',
+    height: '55em',
   },
   button: {
     display: 'flex',
