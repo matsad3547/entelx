@@ -30,7 +30,7 @@ const { dayOf5Mins } = require('../config/')
 
 const setProjectData = (node, projectId, timeZone) => {
 
-  const numDays = 5
+  const numDays = 3
   // const numDays = 21
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
@@ -95,6 +95,7 @@ const setProjectData = (node, projectId, timeZone) => {
     const args = JSON.stringify({
       node,
       timeZone,
+      projectId,
     })
 
     const updateData = spawn('node', ['server/processes/price/updatePriceData.js', args], {
@@ -107,14 +108,7 @@ const setProjectData = (node, projectId, timeZone) => {
       throw new Error(err)
     })
 
-    const pid = updateData.pid
-
-    // TODO Add the pid to the project table
-    setTimeout( () => {
-      console.log('gonna kill the process', pid);
-      process.kill(pid)
-    }, 10 * 1000)
-    child.unref();
+    updateData.unref()
   })
   .catch( err => {
     console.error('There was an error getting the running average:', err)

@@ -14,6 +14,7 @@ const args = JSON.parse(process.argv[2])
 const {
   node,
   timeZone,
+  projectId,
 } = args
 
 const {
@@ -73,7 +74,32 @@ const int = setInterval( () => {
 }, 2 * 1000)
 // }, 5 * 60 * 1000 //5 minutes)
 
-process.on('SIGTERM', () => {
-  console.log(`exiting "updatePriceData" for ${name}` );
+const cleanUp = code => {
+  console.log(`exiting "updatePriceData" for ${name}; exit code ${code}` );
   clearInterval(int)
-})
+}
+
+const pid = process.pid
+
+process.on('exit', cleanUp)
+
+//catches ctrl+c event
+process.on('SIGINT', cleanUp)
+
+// catches "process.kill(<pid>)"
+process.on('SIGTERM', cleanUp)
+
+// catches "kill pid" (for example: nodemon restart)
+process.on('SIGUSR1', cleanUp)
+process.on('SIGUSR2', cleanUp)
+
+//catches uncaught exceptions
+process.on('uncaughtException', cleanUp)
+
+return updateTableRow(
+  'project',
+  {id: projectId},
+  {
+    pid,
+  },
+)
