@@ -17,7 +17,7 @@ const {
 } = require('./user/')
 
 const {
-  getInitDashboardData,
+  getDashboardConfig,
   refreshDashboardData,
   getThreeWeekData,
 } = require('./product/')
@@ -61,7 +61,7 @@ app.post('/createUser', createUser)
 app.post('/login', login)
 
 //dashboard
-app.post('/get_init_dashboard', getInitDashboardData)
+app.post('/get_dashboard_config', getDashboardConfig)
 app.post('/refresh_dashboard', refreshDashboardData)
 
 app.get('/get_nodes', getNodes)

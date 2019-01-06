@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
+
+import { connectToServerSideEvent } from '../hooks/'
 
 import { getBaseUrl } from '../utils/'
 
@@ -25,21 +27,9 @@ const ProjectRoi = ({match}) => {
     setData(JSON.parse(e.data))
   }
 
-  const handleError = err => console.error(err);
+  const sseRoute = `/get_roi/${projectId}`
 
-  useEffect( () => {
-    const stream = new EventSource(`/get_roi/${projectId}`)
-
-    stream.addEventListener('message', handleData)
-
-    stream.addEventListener('error', handleError)
-
-    return () => {
-      stream.removeEventListener('message', handleData)
-      stream.addEventListener('error', handleError)
-      stream.close()
-    }
-  }, [])
+  connectToServerSideEvent(sseRoute, handleData)
 
   return (
     <ProjectPageTemplate
