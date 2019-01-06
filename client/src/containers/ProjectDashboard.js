@@ -8,6 +8,8 @@ import Loading from '../components/loading/'
 import DashboardSection from '../components/DashboardSection'
 import LineBarChart from '../components/charts/LineBarChart'
 
+import { connectToServerSideEvent } from '../hooks/'
+
 import { getBaseUrl } from '../utils/'
 
 import {
@@ -50,22 +52,36 @@ JS Docs - insta documentation
 
     setLoading(true)
     const body = JSON.stringify({id: projectId})
-    singleRequest('/get_init_dashboard', getRequest('POST', body))
+    singleRequest('/get_dashboard_config', getRequest('POST', body))
       .then(parseResponse)
       .then( res => {
         console.log('res:', res);
         setLoading(false)
-        setWeather(res.weather)
+        // setWeather(res.weather)
         setConfig(res.config)
-        setPrices(res.prices)
-        setStateOfCharge(null)
-        setRefresh(res.config)
+        // setPrices(res.prices)
+        // setStateOfCharge(null)
+        // setRefresh(res.config)
       })
       .catch( err => {
         setLoading(false)
         console.error(`There was an error retrieving your project: ${err}`)
       })
   }
+
+  const handleData = e => {
+    // TODO Check origin in production and dev per https://html.spec.whatwg.org/multipage/web-messaging.html#authors
+    console.log('data from sse:', e);
+    // const {
+    //   weather,
+    //   prices,
+    // } = JSON.parse(e.data)
+    // setData(JSON.parse(e.data))
+  }
+
+  const sseRoute = `/get_roi/${projectId}`
+
+  connectToServerSideEvent(sseRoute, handleData)
 
   const refreshDashboard = config => {
 

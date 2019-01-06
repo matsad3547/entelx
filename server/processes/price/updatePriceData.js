@@ -58,7 +58,7 @@ return readTableRows('node', {id,})
       )
       .then( data => {
 
-        // THEN calculate timeseries scores with the current average
+        //calculate timeseries scores with the current average
         const dataWithAvg = data.map( obj => ({
           ...obj,
           mvgAvg: currentAvg,
@@ -73,18 +73,11 @@ return readTableRows('node', {id,})
         dataWithAvg
       )
       .then( () => {
-        // THEN delete data more than 6 mos. old
+        console.log('gonna check for data older than 6 mos');
+        //TODO delete data more than 6 mos. old
       })
     })
   }, 5 * 60 * 1000) //5 minutes
-
-  // test process function
-  // let n = 0
-  //
-  // const int = setInterval( () => {
-  //   console.log('doing a thing:', n);
-  //   n++
-  // }, 2 * 1000)
 
     const pid = process.pid
 
