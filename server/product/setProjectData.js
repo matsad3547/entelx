@@ -14,25 +14,8 @@ const {
 
 const { dayOf5Mins } = require('../config/')
 
-// This function needs to do the following:
-// 1. Choose the request to use
-// 2. Request the init 3 weeks of data
-// 3. Calculate timeseries elements from the data
-// 4. Calculate aggregate elements from the data
-// 5. Update the project table
-// 6. Update the node table
-// 7. Remove price data that goes to other nodes
-// 8. Initiate the function that adds data every 5 minutes
-// 9. Initiate the function that will fill out 6 mos of data
-
-// Other required pieces:
-// 1. Get new data every 5 mins and calculate timeseries elements, remove data older than 6 mos
-// 2. Get new data by 3 week blocks and calculate timeseries elements, until there is 6 mos of data
-// 3. Remove all data from the db that has a different node from the one just added
-
 const setProjectData = (node, projectId, timeZone) => {
 
-  // const numDays = 3
   const numDays = 21
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()

@@ -35,7 +35,7 @@ const ProjectDashboard = ({match}) => {
   const [stateOfCharge, setStateOfCharge] = useState(null)
   const [config, setConfig] = useState(null)
 
-  const intervalRef = useRef(null)
+  // const intervalRef = useRef(null)
 
 /**
 JS Docs - insta documentation
@@ -44,9 +44,9 @@ JS Docs - insta documentation
 * @param {lat: Number}
 
 */
-  const setRefresh = config => {
-    intervalRef.current = setInterval( () => refreshDashboard(config), 5 * 60 * 1000)
-  }
+  // const setRefresh = config => {
+  //   intervalRef.current = setInterval( () => refreshDashboard(config), 5 * 60 * 1000)
+  // }
 
   const getInitDashboard = () => {
 
@@ -71,7 +71,7 @@ JS Docs - insta documentation
 
   const handleData = e => {
     // TODO Check origin in production and dev per https://html.spec.whatwg.org/multipage/web-messaging.html#authors
-    console.log('data from sse:', e);
+    console.log('data from sse:', e.data);
     // const {
     //   weather,
     //   prices,
@@ -79,32 +79,32 @@ JS Docs - insta documentation
     // setData(JSON.parse(e.data))
   }
 
-  const sseRoute = `/get_roi/${projectId}`
+  const sseRoute = `/get_dashboard_data/${projectId}`
 
   connectToServerSideEvent(sseRoute, handleData)
 
-  const refreshDashboard = config => {
-
-    console.log('refreshing...')
-
-    const body = JSON.stringify({...config})
-
-    singleRequest('/refresh_dashboard', getRequest('POST', body))
-      .then(parseResponse)
-      .then( res => {
-        setWeather(res.weather)
-        setPrices(res.prices)
-        setStateOfCharge(null)
-      })
-      .catch( err => {
-        setLoading(false)
-        console.error(`There was an error refreshing your project dashboard: ${err}`)
-      })
-  }
+  // const refreshDashboard = config => {
+  //
+  //   console.log('refreshing...')
+  //
+  //   const body = JSON.stringify({...config})
+  //
+  //   singleRequest('/refresh_dashboard', getRequest('POST', body))
+  //     .then(parseResponse)
+  //     .then( res => {
+  //       setWeather(res.weather)
+  //       setPrices(res.prices)
+  //       setStateOfCharge(null)
+  //     })
+  //     .catch( err => {
+  //       setLoading(false)
+  //       console.error(`There was an error refreshing your project dashboard: ${err}`)
+  //     })
+  // }
 
   useEffect( () => {
     getInitDashboard()
-    return () => clearInterval(intervalRef.current)
+    // return () => clearInterval(intervalRef.current)
   }, [])
 
   return (
