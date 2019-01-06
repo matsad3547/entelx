@@ -1,7 +1,9 @@
 const moment = require('moment-timezone')
-const { spawn } = require('child_process')
 
-const { getPriceRequest } = require('../processes/')
+const {
+  getPriceRequest,
+  launchPriceUpdater,
+} = require('../processes/')
 
 const {
   calculateDerivedData,
@@ -91,25 +93,7 @@ const setProjectData = (node, projectId, timeZone) => {
       ),
     ])
   })
-  .then( () => {
-    const args = JSON.stringify({
-      node,
-      timeZone,
-      projectId,
-    })
-
-    const updateData = spawn('node', ['server/processes/price/updatePriceData.js', args], {
-      stdio: 'inherit',
-    })
-
-    updateData.on('error', err => {
-      console.error('There was an error running the `updatePriceData` process:', err)
-      updateData.exit(1)
-      throw new Error(err)
-    })
-
-    updateData.unref()
-  })
+  .then( () => launchPriceUpdater(node, timeZone, projectId) )
   .catch( err => {
     console.error('There was an error getting the running average:', err)
     throw new Error(err)

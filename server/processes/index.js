@@ -6,7 +6,8 @@ const {
 } = require('./weather/')
 
 const {
-  getPriceRequest
+  getPriceRequest,
+  launchPriceUpdater,
 } = require('./price/')
 
 const getNodes = require('./getNodes')
@@ -23,4 +24,5 @@ module.exports = {
   getNodes,
   // updateNodeData,
   getPriceRequest,
+  launchPriceUpdater,
 }
