@@ -51,10 +51,16 @@ const oasisEndpoint = (
           }
           else {
             const parser = getParser(query)
-            const parsed = parser(query, json)
-            console.timeEnd(`CAISO ${query} request`)
-            resolve(parsed)
+            try {
+              const parsed = parser(query, json)
+              resolve(parsed)
+            }
+            catch (err) {
+              console.error(`There was an issue parsing data from ${query}:`, err)
+              console.log('OASIS response:', json)
+            }
           }
+          console.timeEnd(`CAISO ${query} request`)
         })
     )
     .on('error', reject)

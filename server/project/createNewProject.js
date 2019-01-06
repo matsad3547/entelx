@@ -12,7 +12,7 @@ const handleError = err => {
   throw err
 }
 
-const createNewProject = (req, res) => {
+const createNewProject = (req, res, next) => {
   const { type } = req.body
   // TODO add validation for request here
   if(type === 'demo') {

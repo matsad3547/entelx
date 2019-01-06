@@ -32,8 +32,8 @@ const { dayOf5Mins } = require('../config/')
 
 const setProjectData = (node, projectId, timeZone) => {
 
-  const numDays = 3
-  // const numDays = 21
+  // const numDays = 3
+  const numDays = 21
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
   const startMillis = now.clone()
@@ -93,7 +93,12 @@ const setProjectData = (node, projectId, timeZone) => {
       ),
     ])
   })
-  .then( () => launchPriceUpdater(node, timeZone, projectId) )
+  .then( () => launchPriceUpdater({
+      node,
+      timeZone,
+      projectId,
+    })
+  )
   .catch( err => {
     console.error('There was an error getting the running average:', err)
     throw new Error(err)
