@@ -31,6 +31,7 @@ const getInitDashboardData = (req, res) => {
         .then( nodeRes => {
 
           const node = nodeRes[0]
+          // this call can go
 
           return getDashboardData(
               lat,
@@ -41,6 +42,7 @@ const getInitDashboardData = (req, res) => {
             .then( data => {
               return res.status(200).json({
                 ...data,
+                // this bit can stay
                 config: {
                   lat,
                   lng,

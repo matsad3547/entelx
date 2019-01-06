@@ -3,10 +3,11 @@ const moment = require('moment-timezone')
 const getPriceRequest = require('./getPriceRequest')
 
 const {
-  calculateDerivedData,
+  readTableRows,
   updateTableRow,
   createTableRows,
   deleteTableRowsWhereNot,
+  setExitListeners,
 } = require('../../utils/')
 
 const args = JSON.parse(process.argv[2])
@@ -18,9 +19,11 @@ const {
 } = args
 
 const {
-  currentAvg,
+  id,
   name,
 } = node
+
+const key = 'lmp'
 
 const {
   req,
@@ -38,73 +41,67 @@ const startMillis = now.clone()
 const sixMosAgo = now.clone()
                     .subtract(180, 'days')
                     .valueOf()
-let n = 0
 
-const int = setInterval( () => {
+return readTableRows('node', {id,})
+  .then( nodeRes => {
+    const { currentAvg } = nodeRes[0]
 
-  // get data from now to 5 mins ago
-  console.log('doing a thing:', n);
-  n++
-  // req(
-  //   ...params,
-  //   startMillis,
-  //   endMillis,
-  //   name,
-  // ),
-  // .then( data => {
+    const int = setInterval( () => {
+
+      console.log('updating data...');
+      // get data from now to 5 mins ago
+      return req(
+        ...params,
+        startMillis,
+        endMillis,
+        name,
+      )
+      .then( data => {
+
+        // THEN calculate timeseries scores with the current average
+        const dataWithAvg = data.map( obj => ({
+          ...obj,
+          mvgAvg: currentAvg,
+          nodeId: id,
+          score: (obj[key] - currentAvg) / currentAvg,
+        })
+      )
+
+      // put that data into the data base w/ createTableRows
+      return createTableRows(
+        'price',
+        dataWithAvg
+      )
+      .then( () => {
+        // THEN delete data more than 6 mos. old
+      })
+    })
+  }, 5 * 60 * 1000) //5 minutes
+
+  // test process function
+  // let n = 0
   //
-  //   // THEN calculate timeseries scores with the current average
-  //   const dataWithAvg = data.map( obj => ({
-  //       ...obj,
-  //       mvgAvg: currentAvg,
-  //     })
-  //   )
-  //
-  //   const processedData = calculateScoreData(dataWithAvg, 'lmp')
-  //
-  //   console.log('processedData:', processedData );
-  //   // return {
-  //   //   weather: data[0],
-  //   //   prices: processedData.timeSeries,
-  //   //   aggregate: processedData.aggregate,
-  //   // }
-  // })
-  // put that data into the data base w/ createTableRows
-  //THEN delete data more than 6 mos. old
-}, 2 * 1000)
-// }, 5 * 60 * 1000 //5 minutes)
+  // const int = setInterval( () => {
+  //   console.log('doing a thing:', n);
+  //   n++
+  // }, 2 * 1000)
 
-const pid = process.pid
+    const pid = process.pid
 
-const cleanUp = code => {
-  console.log(`exiting "updatePriceData" for ${name}\n exit code: ${code}` );
-  clearInterval(int)
-}
+    const cleanUp = code => {
+      console.log(`exiting "updatePriceData" for ${name}\n exit code: ${code}` );
+      clearInterval(int)
+    }
 
-const exitProcess = (signal, code) => {
-  console.log('exiting with:', signal)
-  process.exit(code)
-}
+    process.on('exit', cleanUp)
 
-process.on('exit', cleanUp)
+    setExitListeners()
 
-//catches ctrl+c event
-process.on('SIGINT', exitProcess)
-
-// catches "process.kill(<pid>)"
-process.on('SIGTERM', exitProcess)
-
-// catches "kill pid" (for example: nodemon restart)
-process.on('SIGUSR1', exitProcess)
-process.on('SIGUSR2', exitProcess)
-
-//catches uncaught exceptions
-process.on('uncaughtException', exitProcess)
-
-return updateTableRow(
-  'project',
-  {id: projectId},
-  {
-    pid,
-  },
-)
+    return updateTableRow(
+      'project',
+      {id: projectId},
+      {
+        pid,
+      },
+    )
+  })

@@ -1,16 +1,8 @@
 const { spawn } = require('child_process')
 
-const launchPriceUpdater = (
-  node,
-  timeZone,
-  projectId,
-) => {
+const launchPriceUpdater = (params) => {
 
-  const args = JSON.stringify({
-    node,
-    timeZone,
-    projectId,
-  })
+  const args = JSON.stringify(params)
 
   const updateData = spawn('node', ['server/processes/price/updatePriceData.js', args], {
     stdio: 'inherit',

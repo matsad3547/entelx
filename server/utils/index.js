@@ -14,6 +14,8 @@ const {
 
 const { findClosest } = require('./geoUtils')
 
+const { setExitListeners } = require('./processUtils')
+
 const {
   findByLatLng,
   createTableRow,
@@ -43,4 +45,5 @@ module.exports = {
   deleteTableRowsWhereNot,
   snakeToCamel,
   camelToSnake,
+  setExitListeners,
 }
