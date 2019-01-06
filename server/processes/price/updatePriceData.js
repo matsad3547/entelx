@@ -30,23 +30,23 @@ const {
   params,
 } = getPriceRequest(node)
 
-const now = moment().tz(timeZone)
-
-const endMillis = now.valueOf()
-
-const startMillis = now.clone()
-                    .subtract(5, 'minutes')
-                    .valueOf()
-
-const sixMosAgo = now.clone()
-                    .subtract(180, 'days')
-                    .valueOf()
-
 return readTableRows('node', {id,})
   .then( nodeRes => {
     const { currentAvg } = nodeRes[0]
 
     const int = setInterval( () => {
+
+      const now = moment().tz(timeZone)
+
+      const endMillis = now.valueOf()
+
+      const startMillis = now.clone()
+                          .subtract(5, 'minutes')
+                          .valueOf()
+
+      const sixMosAgo = now.clone()
+                          .subtract(180, 'days')
+                          .valueOf()
 
       console.log('updating data...');
       // get data from now to 5 mins ago

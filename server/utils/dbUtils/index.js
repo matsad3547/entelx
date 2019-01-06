@@ -2,25 +2,20 @@ const findByLatLng = require('./findByLatLng')
 const createTableRow = require('./createTableRow')
 const createTableRows = require('./createTableRows')
 const readTableRows = require('./readTableRows')
+const readTableRowsWhereBtw = require('./readTableRowsWhereBtw')
 const updateTableRow = require('./updateTableRow')
 const deleteTableRows = require('./deleteTableRows')
 const deleteTableRowsWhereNot = require('./deleteTableRowsWhereNot')
 
-const {
-  snakeToCamel,
-  camelToSnake,
-  convertObj,
-} = require('./conversions')
+const conversions = require('./conversions')
 
 module.exports = {
   findByLatLng,
   createTableRow,
   createTableRows,
   readTableRows,
+  readTableRowsWhereBtw,
   updateTableRow,
   deleteTableRows,
   deleteTableRowsWhereNot,
-  snakeToCamel,
-  camelToSnake,
-  convertObj,
 }

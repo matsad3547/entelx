@@ -2,7 +2,10 @@ const moment = require('moment-timezone')
 
 const { getCurrentWeather } = require('../processes/')
 
-const { readTableRows } = require('../utils/')
+const {
+  readTableRows,
+  readTableRowsWhereBtw,
+} = require('../utils/')
 
 const getDashboardData = (req, res) => {
 
@@ -11,77 +14,56 @@ const getDashboardData = (req, res) => {
   return readTableRows('project', {id,})
     .then( projectRes => {
 
+      const project = projectRes[0]
+
       res.sseSetup()
 
-      const {
-        lat,
-        lng,
-        timeZone,
-        nodeId,
-      } = projectRes[0]
-
-      const now = moment().tz(timeZone)
-      const endMillis = now.valueOf()
-      const startMillis = now.clone()
-        .subtract(1, 'hour')
-        .valueOf()
-
-      let n = 0
-
-      res.sseSend({things: `what - ${n}`,})
+      getData(res, project)
 
       const int = setInterval( () => {
-        // run to send follow up data
-        n++
-        res.sseSend({things: `when - ${n}`,})
-      }, 2 * 1000)
-      // }, 5 * 60 * 1000)
+        getData(res, project)
+      }, 5 * 60 * 1000)
 
       req.on('close', () => {
         clearInterval(int)
         res.sseClose()
       })
     })
+}
 
+const getData = (res, project) => {
 
-  // const {
-  //   name,
-  //   currentAvg,
-  // } = node
-  //
-  // const {
-  //   req,
-  //   params,
-  // } = getPriceRequest(node)
+  const {
+    lat,
+    lng,
+    timeZone,
+    nodeId,
+  } = project
 
-  // return Promise.all([
-  //     getCurrentWeather(lat, lng),
-  //     // req(
-  //     //   ...params,
-  //     //   startMillis,
-  //     //   endMillis,
-  //     //   name,
-  //     // ),
-  //   ]
-  //   .map( p => p.catch(handleMultiPromiseError) )
-  // )
-  // .then( data => {
-  //
-  //   // const dataWithAvg = data[1].map( obj => ({
-  //   //     ...obj,
-  //   //     mvgAvg: currentAvg,
-  //   //   })
-  //   // )
-  //   //
-  //   // const processedData = calculateScoreData(dataWithAvg, 'lmp')
-  //
-  //   return {
-  //     weather: data[0],
-  //     prices: data[1],
-  //     // prices: processedData.timeSeries,
-  //     // aggregate: processedData.aggregate,
-  //   }
-  // })
+  const now = moment().tz(timeZone)
+  const endMillis = now.valueOf()
+  const startMillis = now.clone()
+    .subtract(1, 'hour')
+    .valueOf()
+
+  return Promise.all([
+      getCurrentWeather(lat, lng),
+      readTableRowsWhereBtw(
+        'price',
+        {nodeId,},
+        'timestamp',
+        [startMillis, endMillis],
+      )
+    ]
+    .map( p => p.catch(handleMultiPromiseError) )
+  )
+  .then( data => {
+
+    return res.sseSend({
+      weather: data[0],
+      prices: data[1],
+    })
+  })
 }
 
 const handleMultiPromiseError = err => {

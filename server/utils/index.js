@@ -21,11 +21,10 @@ const {
   createTableRow,
   createTableRows,
   readTableRows,
+  readTableRowsWhereBtw,
   updateTableRow,
   deleteTableRows,
   deleteTableRowsWhereNot,
-  snakeToCamel,
-  camelToSnake,
 } = require('./dbUtils/')
 
 module.exports = {
@@ -40,10 +39,9 @@ module.exports = {
   createTableRow,
   createTableRows,
   readTableRows,
+  readTableRowsWhereBtw,
   updateTableRow,
   deleteTableRows,
   deleteTableRowsWhereNot,
-  snakeToCamel,
-  camelToSnake,
   setExitListeners,
 }

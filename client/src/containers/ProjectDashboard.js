@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import CurrentWeatherDisplay from '../components/CurrentWeatherDisplay'
@@ -35,8 +35,6 @@ const ProjectDashboard = ({match}) => {
   const [stateOfCharge, setStateOfCharge] = useState(null)
   const [config, setConfig] = useState(null)
 
-  // const intervalRef = useRef(null)
-
 /**
 JS Docs - insta documentation
 * turns on the spinner
@@ -44,9 +42,6 @@ JS Docs - insta documentation
 * @param {lat: Number}
 
 */
-  // const setRefresh = config => {
-  //   intervalRef.current = setInterval( () => refreshDashboard(config), 5 * 60 * 1000)
-  // }
 
   const getInitDashboard = () => {
 
@@ -57,11 +52,7 @@ JS Docs - insta documentation
       .then( res => {
         console.log('res:', res);
         setLoading(false)
-        // setWeather(res.weather)
         setConfig(res.config)
-        // setPrices(res.prices)
-        // setStateOfCharge(null)
-        // setRefresh(res.config)
       })
       .catch( err => {
         setLoading(false)
@@ -70,42 +61,29 @@ JS Docs - insta documentation
   }
 
   const handleData = e => {
-    // TODO Check origin in production and dev per https://html.spec.whatwg.org/multipage/web-messaging.html#authors
+    e.preventDefault()
     console.log('data from sse:', e.data);
-    // const {
-    //   weather,
-    //   prices,
-    // } = JSON.parse(e.data)
-    // setData(JSON.parse(e.data))
+    const {
+      weather,
+      prices,
+    } = JSON.parse(e.data)
+
+    setWeather(weather)
+    setPrices(prices)
+    setStateOfCharge(null)
   }
 
   const sseRoute = `/get_dashboard_data/${projectId}`
 
   connectToServerSideEvent(sseRoute, handleData)
 
-  // const refreshDashboard = config => {
-  //
-  //   console.log('refreshing...')
-  //
-  //   const body = JSON.stringify({...config})
-  //
-  //   singleRequest('/refresh_dashboard', getRequest('POST', body))
-  //     .then(parseResponse)
-  //     .then( res => {
-  //       setWeather(res.weather)
-  //       setPrices(res.prices)
-  //       setStateOfCharge(null)
-  //     })
-  //     .catch( err => {
-  //       setLoading(false)
-  //       console.error(`There was an error refreshing your project dashboard: ${err}`)
-  //     })
-  // }
-
   useEffect( () => {
     getInitDashboard()
-    // return () => clearInterval(intervalRef.current)
   }, [])
+
+  const hasPrices = prices && prices.length > 0
+
+  const dataLoaded = loading && !hasPrices
 
   return (
 
@@ -114,10 +92,10 @@ JS Docs - insta documentation
       baseUrl={cleanUrl}
       id={projectId}
       >
-      { loading && <Loading message={''} />}
+      { dataLoaded && <Loading message={''} />}
       <div style={styles.root}>
         {
-          (prices && config) &&
+          (hasPrices && config) &&
           <ChargingIndicator
             prices={prices}
             timeZone={config.timeZone}
@@ -126,7 +104,7 @@ JS Docs - insta documentation
             />
         }
         {
-          (prices && config) &&
+          (hasPrices && config) &&
           <DashboardSection headerContent={'Last Hour'}>
             <LineBarChart
               barKey={'lmp'}
