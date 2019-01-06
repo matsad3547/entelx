@@ -18,7 +18,7 @@ const {
 
 const {
   getDashboardConfig,
-  refreshDashboardData,
+  getDashboardData,
   getThreeWeekData,
 } = require('./product/')
 
@@ -62,7 +62,7 @@ app.post('/login', login)
 
 //dashboard
 app.post('/get_dashboard_config', getDashboardConfig)
-app.post('/refresh_dashboard', refreshDashboardData)
+app.get('/get_dashboard_data/:id', getDashboardData)
 
 app.get('/get_nodes', getNodes)
 app.post('/create_project', createNewProject)
@@ -74,7 +74,7 @@ app.delete('/delete_project', deleteProjectById)
 // last 3 weeks
 app.post('/get_3_week_data', getThreeWeekData)
 
-app.get('/get_roi/:id', (req, res) => {
+const roiTest = (req, res) => {
 
   const { id } = req.params
 
@@ -97,4 +97,6 @@ app.get('/get_roi/:id', (req, res) => {
     clearInterval(int)
     res.sseClose()
   })
-})
+}
+
+app.get('/get_roi/:id', roiTest)

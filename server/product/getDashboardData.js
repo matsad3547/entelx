@@ -1,64 +1,87 @@
 const moment = require('moment-timezone')
 
-const {
-  getCurrentWeather,
-  getPriceRequest,
-} = require('../processes/')
+const { getCurrentWeather } = require('../processes/')
 
-const { calculateScoreData } = require('../utils/')
+const { readTableRows } = require('../utils/')
 
-const getDashboardData = (
-  lat,
-  lng,
-  timeZone,
-  node
-) => {
+const getDashboardData = (req, res) => {
 
-  // TODO ms this will change to just take lat, lng, timeZone, and node and return the weather request as well as the last hour of data for that project
+  const { id } = req.params
 
-  const now = moment().tz(timeZone)
-  const endMillis = now.valueOf()
-  const startMillis = now.clone()
-                      .subtract(1, 'hour')
-                      .valueOf()
+  return readTableRows('project', {id,})
+    .then( projectRes => {
 
-  const {
-    name,
-    currentAvg,
-  } = node
+      res.sseSetup()
 
-  const {
-    req,
-    params,
-  } = getPriceRequest(node)
+      const {
+        lat,
+        lng,
+        timeZone,
+        nodeId,
+      } = projectRes[0]
 
-  return Promise.all([
-      getCurrentWeather(lat, lng),
-      req(
-        ...params,
-        startMillis,
-        endMillis,
-        name,
-      ),
-    ]
-    .map( p => p.catch(handleMultiPromiseError) )
-  )
-  .then( data => {
+      const now = moment().tz(timeZone)
+      const endMillis = now.valueOf()
+      const startMillis = now.clone()
+        .subtract(1, 'hour')
+        .valueOf()
 
-    const dataWithAvg = data[1].map( obj => ({
-        ...obj,
-        mvgAvg: currentAvg,
+      let n = 0
+
+      res.sseSend({things: `what - ${n}`,})
+
+      const int = setInterval( () => {
+        // run to send follow up data
+        n++
+        res.sseSend({things: `when - ${n}`,})
+      }, 2 * 1000)
+      // }, 5 * 60 * 1000)
+
+      req.on('close', () => {
+        clearInterval(int)
+        res.sseClose()
       })
-    )
+    })
 
-    const processedData = calculateScoreData(dataWithAvg, 'lmp')
 
-    return {
-      weather: data[0],
-      prices: processedData.timeSeries,
-      aggregate: processedData.aggregate,
-    }
-  })
+  // const {
+  //   name,
+  //   currentAvg,
+  // } = node
+  //
+  // const {
+  //   req,
+  //   params,
+  // } = getPriceRequest(node)
+
+  // return Promise.all([
+  //     getCurrentWeather(lat, lng),
+  //     // req(
+  //     //   ...params,
+  //     //   startMillis,
+  //     //   endMillis,
+  //     //   name,
+  //     // ),
+  //   ]
+  //   .map( p => p.catch(handleMultiPromiseError) )
+  // )
+  // .then( data => {
+  //
+  //   // const dataWithAvg = data[1].map( obj => ({
+  //   //     ...obj,
+  //   //     mvgAvg: currentAvg,
+  //   //   })
+  //   // )
+  //   //
+  //   // const processedData = calculateScoreData(dataWithAvg, 'lmp')
+  //
+  //   return {
+  //     weather: data[0],
+  //     prices: data[1],
+  //     // prices: processedData.timeSeries,
+  //     // aggregate: processedData.aggregate,
+  //   }
+  // })
 }
 
 const handleMultiPromiseError = err => {
