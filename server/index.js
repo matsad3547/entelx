@@ -93,7 +93,7 @@ const roiTest = (req, res) => {
     // run to send follow up data
     res.sseSend({cheese: `balls - ${n}`,})
     n++
-  }, 3000)
+  }, 3 * 60 * 1000)
 
   req.on('close', () => {
     clearInterval(int)
