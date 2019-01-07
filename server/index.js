@@ -76,6 +76,8 @@ app.post('/get_3_week_data', getThreeWeekData)
 
 const roiTest = (req, res) => {
 
+  console.log('running roi test');
+
   const { id } = req.params
 
   res.sseSetup()

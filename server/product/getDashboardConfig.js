@@ -35,39 +35,6 @@ const getDashboardConfig = (req, res) => {
           dischargeThreshold,
         },
       })
-
-      // return readTableRows(
-      //     'node',
-      //     { id: nodeId },
-      //   )
-      //   .then( nodeRes => {
-      //
-      //     const node = nodeRes[0]
-      //     // this call can go
-      //
-      //     return getDashboardData(
-      //         lat,
-      //         lng,
-      //         timeZone,
-      //         node,
-      //       )
-      //       .then( data => {
-      //         return res.status(200).json({
-      //           ...data,
-      //           // this bit can stay
-      //           config: {
-      //             lat,
-      //             lng,
-      //             node,
-      //             projectName,
-      //             timeZone,
-      //             chargeThreshold,
-      //             dischargeThreshold,
-      //           },
-      //         })
-      //       })
-      //   })
-      //   .catch( err => { throw err })
     })
     .catch( err => {
       console.error('There was an error getting dashboard data', err)
