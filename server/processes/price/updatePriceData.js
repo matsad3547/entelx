@@ -2,13 +2,14 @@ const moment = require('moment-timezone')
 
 const getPriceRequest = require('./getPriceRequest')
 
+const { setExitListeners } = require('../../utils/')
+
 const {
   readTableRows,
   updateTableRow,
   createTableRows,
   deleteTableRowsWhereNot,
-  setExitListeners,
-} = require('../../utils/')
+} = require('../../db/').utils
 
 const args = JSON.parse(process.argv[2])
 

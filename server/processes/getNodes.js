@@ -1,4 +1,4 @@
-const { readTableRows } = require('../utils/')
+const { readTableRows } = require('../db/').utils
 
 const getNodes = (req, res) => {
   const query = req.body.query || {}

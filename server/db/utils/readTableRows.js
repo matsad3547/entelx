@@ -1,7 +1,4 @@
-// const knex = require('../../store/')
-const { knex } = require('../index')
-
-// console.log('at read:', knex);
+const knex = require('../knex')
 
 const readTableRows = (table, query) => knex(table)
   .where(query)
