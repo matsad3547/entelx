@@ -1,4 +1,5 @@
-const knex = require('../../store/')
+// const knex = require('../../store/')
+const { knex } = require('../index')
 
 const createTableRows = (table, dataArr) => knex(table)
   .insert(dataArr)

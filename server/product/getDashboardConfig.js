@@ -2,7 +2,7 @@ const moment = require('moment-timezone')
 
 const getDashboardData = require('./getDashboardData')
 
-const { readTableRows } = require('../utils/')
+const { readTableRows } = require('../db/').utils
 
 const getDashboardConfig = (req, res) => {
 

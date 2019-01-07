@@ -2,7 +2,7 @@ const request = require('supertest')
 const express = require('express')
 const bodyParser = require('body-parser')
 const mockDb = require('mock-knex')
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config({path: '../../.env'})
 
 const knex = require('../store/')
 const {

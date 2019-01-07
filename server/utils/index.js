@@ -16,16 +16,16 @@ const { findClosest } = require('./geoUtils')
 
 const { setExitListeners } = require('./processUtils')
 
-const {
-  findByLatLng,
-  createTableRow,
-  createTableRows,
-  readTableRows,
-  readTableRowsWhereBtw,
-  updateTableRow,
-  deleteTableRows,
-  deleteTableRowsWhereNot,
-} = require('./dbUtils/')
+// const {
+//   findByLatLng,
+//   createTableRow,
+//   createTableRows,
+//   readTableRows,
+//   readTableRowsWhereBtw,
+//   updateTableRow,
+//   deleteTableRows,
+//   deleteTableRowsWhereNot,
+// } = require('./dbUtils/')
 
 module.exports = {
   millisToSeconds,
@@ -35,13 +35,13 @@ module.exports = {
   calculateScoreData,
   calculateDerivedData,
   findClosest,
-  findByLatLng,
-  createTableRow,
-  createTableRows,
-  readTableRows,
-  readTableRowsWhereBtw,
-  updateTableRow,
-  deleteTableRows,
-  deleteTableRowsWhereNot,
+  // findByLatLng,
+  // createTableRow,
+  // createTableRows,
+  // readTableRows,
+  // readTableRowsWhereBtw,
+  // updateTableRow,
+  // deleteTableRows,
+  // deleteTableRowsWhereNot,
   setExitListeners,
 }

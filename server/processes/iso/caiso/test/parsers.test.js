@@ -1,5 +1,6 @@
 const lmp1Hour = require('./mocks/lmp1Hour')
 const lmp1Day = require('./mocks/lmp1Day')
+const lmp5Min = require('./mocks/lmp5Min')
 const apNodes = require('./mocks/apNodes')
 
 const {
@@ -118,13 +119,27 @@ describe('parsePriceData()', () => {
   })
 
   test('should return an array with 288 items', () => {
-    console.time('parse one day')
+    // console.time('parse one day')
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Day
     const expected = 288
     const actual = parsePriceData(query, data).length
-    console.timeEnd('parse one day')
+    // console.timeEnd('parse one day')
 
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return an array with 1 item for 5 minute data, where the values of the `congestionPrc`, `energyPrc`, `lossPrc` and `lmp` properties are numbers', () => {
+    const query = 'PRC_INTVL_LMP'
+    const data = lmp5Min
+    const expected = new Array(1).fill(true)
+    const arr = parsePriceData(query, data)
+    const actual = arr.map( obj =>
+      typeof obj.congestionPrc === 'number' &&
+      typeof obj.energyPrc === 'number' &&
+      typeof obj.lossPrc === 'number' &&
+      typeof obj.lmp === 'number'
+    )
     expect(actual).toEqual(expected)
   })
 })

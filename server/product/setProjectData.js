@@ -10,7 +10,7 @@ const {
   updateTableRow,
   createTableRows,
   deleteTableRowsWhereNot,
-} = require('../utils/')
+} = require('../db/').utils
 
 const { dayOf5Mins } = require('../config/')
 
