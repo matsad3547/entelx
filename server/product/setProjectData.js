@@ -6,11 +6,12 @@ const {
 } = require('../processes/')
 
 const {
-  calculateDerivedData,
   updateTableRow,
   createTableRows,
   deleteTableRowsWhereNot,
 } = require('../db/').utils
+
+const { calculateDerivedData } = require('../utils/')
 
 const { dayOf5Mins } = require('../config/')
 

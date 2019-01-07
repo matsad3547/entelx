@@ -1,5 +1,4 @@
-// const knex = require('../../store/')
-const { knex } = require('../index')
+const knex = require('../knex')
 
 const updateTableRow = (table, identifier, data) => knex(table)
   .where(identifier)

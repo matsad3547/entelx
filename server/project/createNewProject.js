@@ -1,10 +1,11 @@
 const {
   findByLatLng,
-  findClosest,
   createTableRow,
   updateTableRow,
   deleteTableRows,
-} = require('../utils/')
+} = require('../db/').utils
+
+const { findClosest } = require('../utils/')
 
 const { setProjectData } = require('../product/')
 
