@@ -1,4 +1,4 @@
-const knex = require('../../store/')
+const { knex } = require('../../db/')
 
 const addNode = ({
   name,

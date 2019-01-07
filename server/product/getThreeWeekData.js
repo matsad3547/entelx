@@ -2,7 +2,7 @@ const moment = require('moment-timezone')
 
 const getHistoricalData = require('./getHistoricalData')
 
-const { readTableRows } = require('../utils/')
+const { readTableRows } = require('../db/').utils
 
 const getThreeWeekData = (req, res) => {
 

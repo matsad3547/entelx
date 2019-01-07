@@ -1,4 +1,5 @@
-const knex = require('../../store/')
+// const knex = require('../../store/')
+const { knex } = require('../index')
 
 const readTableRowsWhereBtw = (
   table,

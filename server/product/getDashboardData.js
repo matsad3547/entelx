@@ -5,7 +5,7 @@ const { getCurrentWeather } = require('../processes/')
 const {
   readTableRows,
   readTableRowsWhereBtw,
-} = require('../utils/')
+} = require('../db/').utils
 
 const getDashboardData = (req, res) => {
 

@@ -1,4 +1,5 @@
-const knex = require('../../store/')
+// const knex = require('../../store/')
+const { knex } = require('../index')
 
 const deleteTableRows = (table, identifier) => knex(table)
   .where(identifier)
