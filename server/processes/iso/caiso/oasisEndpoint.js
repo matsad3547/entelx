@@ -8,12 +8,12 @@ const {
 } = require('./utils')
 
 const oasisEndpoint = (
-    query,
-    marketType,
-    startMillis,
-    endMillis,
-    node,
-  ) => new Promise( (resolve, reject) => {
+  query,
+  marketType,
+  startMillis,
+  endMillis,
+  node,
+) => new Promise( (resolve, reject) => {
 
   console.time(`CAISO ${query} request`)
 
@@ -51,6 +51,7 @@ const oasisEndpoint = (
           }
           else {
             const parser = getParser(query)
+            console.log('OASIS response:', json)
             try {
               const parsed = parser(query, json)
               resolve(parsed)
