@@ -13,7 +13,7 @@ const getDashboardData = (req, res) => {
 
   let int
 
-  
+  console.log('running get dashboard:', int);
 
   return readTableRows('project', {id,})
     .then( projectRes => {
@@ -24,18 +24,17 @@ const getDashboardData = (req, res) => {
 
       getData(res, project)
 
-
-      const int = setInterval( () => {
+      int = setInterval( () => {
         console.log('starting interval over');
         getData(res, project)
       }, 5 * 60 * 1000)
 
-      req.on('close', () => {
-        console.log('Closing dashboard data connection')
-        clearInterval(int)
-        res.sseClose()
-      })
     })
+  req.on('close', () => {
+    console.log('Closing dashboard data connection')
+    int && clearInterval(int)
+    res.sseClose()
+  })
 }
 
 const getData = (res, project) => {
