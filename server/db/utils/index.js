@@ -1,4 +1,5 @@
 const findByLatLng = require('./findByLatLng')
+const findMax = require('./findMax')
 const createTableRow = require('./createTableRow')
 const createTableRows = require('./createTableRows')
 const readTableRows = require('./readTableRows')
@@ -11,6 +12,7 @@ const conversions = require('./conversions')
 
 module.exports = {
   findByLatLng,
+  findMax,
   createTableRow,
   createTableRows,
   readTableRows,

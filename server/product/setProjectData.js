@@ -2,7 +2,7 @@ const moment = require('moment-timezone')
 
 const {
   getPriceRequest,
-  launchPriceUpdater,
+  launchPriceUpdates,
 } = require('../processes/')
 
 const {
@@ -19,7 +19,7 @@ const setProjectData = (node, projectId, timeZone) => {
 
   const numDays = 21
   const now = moment().tz(timeZone)
-  const endMillis = now.valueOf()
+  const endMillis = now.valueOf() + (5 * 60 * 1000)
   const startMillis = now.clone()
                       .subtract(numDays, 'days')
                       .valueOf()
@@ -77,7 +77,7 @@ const setProjectData = (node, projectId, timeZone) => {
       ),
     ])
   })
-  .then( () => launchPriceUpdater({
+  .then( () => launchPriceUpdates({
       node,
       timeZone,
       projectId,
