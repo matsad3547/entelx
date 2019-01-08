@@ -7,7 +7,7 @@ const {
 
 const {
   getPriceRequest,
-  launchPriceUpdater,
+  launchPriceUpdates,
 } = require('./price/')
 
 const getNodes = require('./getNodes')
@@ -24,5 +24,5 @@ module.exports = {
   getNodes,
   // updateNodeData,
   getPriceRequest,
-  launchPriceUpdater,
+  launchPriceUpdates,
 }

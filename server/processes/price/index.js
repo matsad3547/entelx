@@ -1,7 +1,7 @@
 const getPriceRequest = require('./getPriceRequest')
-const launchPriceUpdater = require('./launchPriceUpdater')
+const launchPriceUpdates = require('./launchPriceUpdates')
 
 module.exports = {
   getPriceRequest,
-  launchPriceUpdater,
+  launchPriceUpdates,
 }

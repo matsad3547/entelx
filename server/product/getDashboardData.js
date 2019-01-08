@@ -1,17 +1,20 @@
 const moment = require('moment-timezone')
 
+const { fiveMinutes } = require('../config/')
+
 const { getCurrentWeather } = require('../processes/')
 
 const {
   readTableRows,
   readTableRowsWhereBtw,
+  findMax,
 } = require('../db/').utils
 
 const getDashboardData = (req, res) => {
 
   const { id } = req.params
 
-  let int
+  let int, timeout
 
   console.log('running get dashboard:', Date.now() );
 
@@ -20,18 +23,42 @@ const getDashboardData = (req, res) => {
 
       const project = projectRes[0]
 
-      res.sseSetup()
+      const {
+        nodeId,
+        timeZone,
+      } = project
 
-      getData(res, project)
+      return findMax(
+        'price',
+        'timestamp',
+        {nodeId,}
+      )
+      .then( maxRes => {
+        const mostRecent = maxRes[0]['max(timestamp)']
 
-      int = setInterval( () => {
-        getData(res, project)
-      }, 5 * 60 * 1000)
+        const start = moment().tz(timeZone).valueOf()
+
+        const firstUpdate = fiveMinutes - (start - mostRecent) + (5 * 1000)
+
+        res.sseSetup()
+
+        return getData(res, project)
+          .then( () => {
+            console.log('most recent???', firstUpdate, '\nminutes?', firstUpdate/(60 * 1000))
+            timeout = setTimeout( () => getData(res, project)
+              .then( () => {
+                int = setInterval( () => {
+                  return getData(res, project)
+                }, fiveMinutes)
+              }), firstUpdate)
+          })
+      })
     })
 
   req.on('close', () => {
     console.log('Closing dashboard data connection')
     int && clearInterval(int)
+    timeout && clearTimeout(timeout)
     res.sseClose()
   })
 }
@@ -50,6 +77,8 @@ const getData = (res, project) => {
   const startMillis = now.clone()
     .subtract(1, 'hour')
     .valueOf()
+
+  console.log('getting updated data at', endMillis)
 
   return Promise.all([
       getCurrentWeather(lat, lng),

@@ -51,7 +51,7 @@ const oasisEndpoint = (
           }
           else {
             const parser = getParser(query)
-            // console.log('OASIS response:', JSON.stringify(json))
+            
             try {
               const parsed = parser(query, json)
               resolve(parsed)
