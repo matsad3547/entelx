@@ -5,7 +5,7 @@ const {
   getPriceRequest,
 } = require('../processes/')
 
-const { calculateDerivedData } = require('../utils/')
+const { calculateDerivedData } = require('../db/')
 
 const { dayOf5Mins } = require('../config/')
 
@@ -29,6 +29,7 @@ const getHistoricalData = (
   } = getPriceRequest(node)
 
   return Promise.all([
+    // TODO this will be swapped out for "readTableRows" with a query of node and startMillis/endMillis
       req(
         ...params,
         startMillis,

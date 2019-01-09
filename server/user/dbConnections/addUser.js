@@ -1,10 +1,10 @@
-const db = require('../../store')
+const { knex } = require('../../db')
 const { saltHashPassword } = require('../utils')
 
 const addUser = ({ username, password }) => {
   console.log(`Add user ${username}`)
   const { salt, hash } = saltHashPassword({password})
-  return db('user')
+  return knex('user')
           .insert({
             salt,
             encrypted_password: hash,

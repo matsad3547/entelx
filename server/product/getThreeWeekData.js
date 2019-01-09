@@ -2,13 +2,13 @@ const moment = require('moment-timezone')
 
 const getHistoricalData = require('./getHistoricalData')
 
-const { readTableRows } = require('../utils/')
+const { readTableRows } = require('../db/')
 
 const getThreeWeekData = (req, res) => {
 
   const { id } = req.body
 
-  readTableRows('project', { id, })
+  return readTableRows('project', { id, })
     .then( projectRes => {
 
       const project = projectRes[0]

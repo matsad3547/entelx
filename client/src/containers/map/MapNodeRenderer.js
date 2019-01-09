@@ -34,8 +34,8 @@ const MapNodeRenderer = ({ map }) => {
           properties: {
             type: node.type,
             name: node.name,
-            maxMw: node.max_mw,
-            controlArea: node.control_area,
+            maxMw: node.maxMw,
+            controlArea: node.controlArea,
           },
           geometry: {
             type: 'Point',

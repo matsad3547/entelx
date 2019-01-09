@@ -8,7 +8,7 @@ const { tsToMillis } = require('../../../utils')
 const parsePriceData = (query, data) => {
   const reportItems = data.OASISReport.MessagePayload.RTO.REPORT_ITEM
 
-  return reportItems.reduce( (arr, item) => [...arr, ...item.REPORT_DATA], [] )
+  return reportItems.reduce( (arr, item) => Array.isArray(item.REPORT_DATA) ? [...arr, ...item.REPORT_DATA] : [...arr, item.REPORT_DATA], [] )
   .map( rd => {
     const dataItem = rd.DATA_ITEM._text
     const dataItemFormat = caisoDataItems[query][dataItem]
@@ -40,16 +40,16 @@ const parsePriceData = (query, data) => {
 const parseNodeData = json => json.l[2].m.map( obj => ({
       name: obj.n,
       type: obj.p,
-      control_area: obj.a,
+      controlArea: obj.a,
       lat: obj.c[0],
       lng: obj.c[1],
     })
   )
 
 const parseControlAreaData = json => json.control_areas.map( obj => ({
-      control_area: obj.short,
+      controlArea: obj.short,
       name: obj.name,
-      full_name: obj.fullname,
+      fullName: obj.fullname,
       lat: obj.lat,
       lng: obj.long,
     })

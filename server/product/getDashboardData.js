@@ -1,58 +1,100 @@
 const moment = require('moment-timezone')
 
+const { fiveMinutes } = require('../config/')
+
+const { getCurrentWeather } = require('../processes/')
+
 const {
-  getCurrentWeather,
-  getPriceRequest,
-} = require('../processes/')
+  readTableRows,
+  readTableRowsWhereBtw,
+  findMax,
+} = require('../db/')
 
-const { calculateScoreData } = require('../utils/')
+const getDashboardData = (req, res) => {
 
-const getDashboardData = (
-  lat,
-  lng,
-  timeZone,
-  node
-) => {
+  const { id } = req.params
+
+  let int, timeout
+
+  console.log('running get dashboard:', Date.now() );
+
+  return readTableRows('project', {id,})
+    .then( projectRes => {
+
+      const project = projectRes[0]
+
+      const {
+        nodeId,
+        timeZone,
+      } = project
+
+      return findMax(
+        'price',
+        'timestamp',
+        {nodeId,}
+      )
+      .then( maxRes => {
+        const mostRecent = maxRes[0]['max(timestamp)']
+
+        const start = moment().tz(timeZone).valueOf()
+
+        const firstUpdate = fiveMinutes - (start - mostRecent) + (5 * 1000)
+
+        res.sseSetup()
+
+        return getData(res, project)
+          .then( () => {
+            console.log('most recent???', firstUpdate, '\nminutes?', firstUpdate/(60 * 1000))
+            timeout = setTimeout( () => getData(res, project)
+              .then( () => {
+                int = setInterval( () => getData(res, project), fiveMinutes)
+              }), firstUpdate)
+          })
+      })
+    })
+
+  req.on('close', () => {
+    console.log('Closing dashboard data connection')
+    int && clearInterval(int)
+    timeout && clearTimeout(timeout)
+    res.sseClose()
+  })
+}
+
+const getData = (res, project) => {
+
+  const {
+    lat,
+    lng,
+    timeZone,
+    nodeId,
+  } = project
 
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
   const startMillis = now.clone()
-                      .subtract(1, 'hour')
-                      .valueOf()
+    .subtract(1, 'hour')
+    .valueOf()
 
-  const {
-    req,
-    params,
-  } = getPriceRequest(node)
+  console.log('getting updated data at', endMillis)
 
   return Promise.all([
       getCurrentWeather(lat, lng),
-      req(
-        ...params,
-        startMillis,
-        endMillis,
-        node.name,
-      ),
+      readTableRowsWhereBtw(
+        'price',
+        {nodeId,},
+        'timestamp',
+        [startMillis, endMillis],
+      )
     ]
     .map( p => p.catch(handleMultiPromiseError) )
   )
   .then( data => {
 
-    const dataWithAvg = data[1].map( obj => ({
-        ...obj,
-        mvgAvg: node.current_avg,
-      })
-    )
-
-    // console.log('dataWithAvg?', dataWithAvg);
-
-    const processedData = calculateScoreData(dataWithAvg, 'lmp')
-
-    return {
+    return res.sseSend({
       weather: data[0],
-      prices: processedData.timeSeries,
-      aggregate: processedData.aggregate,
-    }
+      prices: data[1],
+    })
   })
 }
 
