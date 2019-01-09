@@ -1,3 +1,6 @@
+const optimize = require('optimization-js')
+const fmin = require('fmin')
+
 const pipeData = (...fns) => (data, key, period, options) => {
   const res = {
     timeSeries: data,
@@ -42,6 +45,7 @@ const calculateScore = (data, key) => {
   const { timeSeries } = data
 
   const calculation = timeSeries.map( d => ({
+      ...d,
       timestamp: d.timestamp,
       mvgAvg: d.mvgAvg,
       [key]: d[key],
@@ -55,12 +59,7 @@ const calculateScore = (data, key) => {
   }
 }
 
-const calculateArbitrage = (
-  data,
-  key,
-  period,
-  options,
-) => {
+const calculateArbitrage = (data, key, period, options) => {
 
   const {
     chargeThreshold,
@@ -130,11 +129,7 @@ const calculateArbitrage = (
   }
 }
 
-const findMinMax = (
-  data,
-  key,
-  period,
-) => {
+const findMinMax = (data, key, period) => {
 
   const {
     timeSeries,
@@ -155,11 +150,7 @@ const findMinMax = (
   }
 }
 
-const findInflections = (
-  data,
-  key,
-  period,
-) => {
+const findInflections = (data, key, period) => {
 
   const {
     timeSeries,
@@ -188,7 +179,7 @@ const findInflections = (
   }
 }
 
-const findRevenue = (data, key, period, options) => {
+const getRevenue = (data, key, period, options) => {
 
   const {
     timeSeries,
@@ -198,8 +189,6 @@ const findRevenue = (data, key, period, options) => {
   const {
     power,
     energy,
-    dischargeThreshold,
-    chargeThreshold,
     rte,
     dischargeBuffer,
     chargeBuffer,
@@ -213,7 +202,70 @@ const findRevenue = (data, key, period, options) => {
 
   const minEnergy = dischargeBuffer * energy
 
-  const calculation = timeSeries.reduce( (obj, d, i) => {
+  return (chargeThreshold, dischargeThreshold) => timeSeries.reduce( (obj, d, i) => {
+
+    const canCharge = obj.charge + chargeEnergy <= maxEnergy
+
+    const canDischarge = obj.charge - chargeEnergy >= minEnergy
+
+    const charge = canCharge && d[key] < d.mvgAvg - chargeThreshold
+
+    const discharge = canDischarge && d[key] > d.mvgAvg + dischargeThreshold
+
+    if (charge) {
+      return {
+        charge: obj.charge + chargeEnergy,
+        revenue: obj.revenue - (d[key] * chargeEnergy),
+      }
+    }
+    else if (discharge) {
+      return {
+        charge: obj.charge - chargeEnergy,
+        revenue: obj.revenue + (d[key] * rte * chargeEnergy),
+      }
+    }
+    else {
+      return obj
+    }
+  }, {
+    charge: minEnergy,
+    revenue: 0,
+  })
+}
+
+// const findRevenue = getRevenue(data, key, period, options)(data.aggregate.chargeThreshold, data.aggregate.dischargeThreshold)
+
+const findRevenue = (data, key, period, options) => {
+
+  const {
+    timeSeries,
+    aggregate,
+  } = data
+
+  const {
+    dischargeThreshold,
+    chargeThreshold,
+  } = aggregate
+
+  const {
+    power,
+    energy,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  } = options
+
+  // This function assumes 5 minute timeSeries data
+  const fiveMinsAsHour = 5 / 60
+  const chargeEnergy = power * fiveMinsAsHour
+
+  const maxEnergy = (1 - chargeBuffer) * energy
+
+  const minEnergy = dischargeBuffer * energy
+
+  const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (obj, d, i) => {
+
+    // console.log('at findRevenue:', obj.charge, i);
 
     const canCharge = obj.charge + chargeEnergy <= maxEnergy
 
@@ -247,7 +299,87 @@ const findRevenue = (data, key, period, options) => {
     ...data,
     aggregate: {
       ...aggregate,
-      ...calculation,
+      ...calculation(dischargeThreshold, chargeThreshold),
+    }
+  }
+}
+
+const findThresholds = (data, key, period, options) => {
+
+  const {
+    timeSeries,
+    aggregate,
+  } = data
+
+  const {
+    power,
+    energy,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  } = options
+
+  // This function assumes 5 minute timeSeries data
+  const fiveMinsAsHour = 5 / 60
+  const chargeEnergy = power * fiveMinsAsHour
+
+  const maxEnergy = (1 - chargeBuffer) * energy
+
+  const minEnergy = dischargeBuffer * energy
+
+  const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (obj, d, i) => {
+
+    console.log('at findThresholds?', obj.revenue + '$', i, dischargeThreshold, chargeThreshold);
+
+    const canCharge = obj.charge + chargeEnergy <= maxEnergy
+
+    const canDischarge = obj.charge - chargeEnergy >= minEnergy
+
+    const charge = canCharge && d[key] < d.mvgAvg - chargeThreshold
+
+    const discharge = canDischarge && d[key] > d.mvgAvg + dischargeThreshold
+
+    if (charge) {
+      return {
+        charge: obj.charge + chargeEnergy,
+        revenue: obj.revenue - (d[key] * chargeEnergy),
+      }
+    }
+    else if (discharge) {
+      return {
+        charge: obj.charge - chargeEnergy,
+        revenue: obj.revenue + (d[key] * rte * chargeEnergy),
+      }
+    }
+    else {
+      return obj
+    }
+  }, {
+    charge: minEnergy,
+    revenue: 0,
+  })
+
+  const maxThreshold = timeSeries[timeSeries.length - 1].mvgAvg
+
+  // const initThresholdVal = maxThreshold / 2
+  const initThresholdVal = 0
+
+  console.log('max threshold:', maxThreshold);
+
+  const forOptimization = ([c, d]) => -(calculation(c, d).revenue)
+
+  // const optimizedThresholds = optimize.minimize_Powell(forOptimization, [initThresholdVal, initThresholdVal])
+
+  const optimizedThresholds = fmin.nelderMead(forOptimization, [initThresholdVal, initThresholdVal])
+
+  console.log(optimizedThresholds);
+
+  return {
+    ...data,
+    aggregate: {
+      ...aggregate,
+      dischargeThreshold: optimizedThresholds.argument[0],
+      chargeThreshold: optimizedThresholds.argument[1],
     }
   }
 }
@@ -272,6 +404,15 @@ const findStdDev = (data, key, period, options) => {
   }
 }
 
+const objective1 = x => -(x**2) + (3*x)
+
+const forOptimization = x => -objective1(x)
+
+const testOptimization = () => {
+
+  return optimize.minimize_Powell(forOptimization, [-10])
+}
+
 const scoreValues = pipeData(
   calculateMovingAverage,
   calculateScore,
@@ -290,6 +431,7 @@ const calculateDerivedData = pipeData(
 
 module.exports = {
   pipeData,
+  testOptimization,
   calculateMovingAverage,
   calculateScore,
   calculateArbitrage,
@@ -297,6 +439,7 @@ module.exports = {
   findMinMax,
   findInflections,
   findRevenue,
+  findThresholds,
   findStdDev,
   calculateScoreData,
   calculateDerivedData,

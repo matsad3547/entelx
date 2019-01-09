@@ -14,13 +14,7 @@ const {
 
 const { findClosest } = require('./geoUtils')
 
-const {
-  findByLatLng,
-  createTableRow,
-  readTableRows,
-  updateTableRow,
-  deleteTableRows,
-} = require('./dbUtils/')
+const { setExitListeners } = require('./processUtils')
 
 module.exports = {
   millisToSeconds,
@@ -30,9 +24,5 @@ module.exports = {
   calculateScoreData,
   calculateDerivedData,
   findClosest,
-  findByLatLng,
-  createTableRow,
-  readTableRows,
-  updateTableRow,
-  deleteTableRows,
+  setExitListeners,
 }

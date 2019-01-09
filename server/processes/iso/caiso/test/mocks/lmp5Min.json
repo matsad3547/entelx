@@ -1,0 +1,278 @@
+{
+  "_declaration": {
+    "_attributes": {
+      "version":"1.0",
+      "encoding":"UTF-8"
+    }
+  },
+  "OASISReport": {
+    "_attributes": {
+      "xmlns":"http://www.caiso.com/soa/OASISReport_v2.xsd"
+    },
+    "MessageHeader": {
+      "TimeDate": {
+        "_text": "2019-01-07T05:56:28-00:00"
+      },
+      "Source": {
+        "_text": "OASIS"
+      },
+      "Version": {
+        "_text": "v20141001"
+      }
+    },
+    "MessagePayload": {
+      "RTO": {
+        "name": {
+          "_text": "CAISO"
+        },
+        "REPORT_ITEM": [
+          {
+            "REPORT_HEADER": {
+              "SYSTEM": {
+                "_text": "OASIS"
+              },
+              "TZ": {
+                "_text": "GMT"
+              },
+              "REPORT": {
+                "_text": "PRC_INTVL_LMP"
+              },
+              "MKT_TYPE": {
+                "_text": "RTM"
+              },
+              "UOM": {
+                "_text": "US$/MWh"
+              },
+              "INTERVAL": {
+                "_text": "BEGINNING"
+              },
+              "SEC_PER_INTERVAL": {
+                "_text": "300"
+              }
+            },
+            "REPORT_DATA": {
+              "DATA_ITEM": {
+                "_text": "LMP_CONG_PRC"
+              },
+              "RESOURCE_NAME": {
+                "_text": "KERNOIL_1_N001"
+              },
+              "OPR_DATE": {
+                "_text": "2019-01-06"
+              },
+              "INTERVAL_NUM": {
+                "_text": "264"
+              },
+              "INTERVAL_START_GMT": {
+                "_text": "2019-01-07T05:55:00-00:00"
+              },
+              "INTERVAL_END_GMT": {
+                "_text": "2019-01-07T06:00:00-00:00"
+              },
+              "VALUE": {
+                "_text":"0"
+              }
+            }
+          },
+          {
+            "REPORT_HEADER": {
+              "SYSTEM": {
+                "_text": "OASIS"
+              },
+              "TZ": {
+                "_text": "GMT"
+              },
+              "REPORT": {
+                "_text": "PRC_INTVL_LMP"
+              },
+              "MKT_TYPE": {
+                "_text": "RTM"
+              },
+              "UOM": {
+                "_text": "US$/MWh"
+              },
+              "INTERVAL": {
+                "_text": "BEGINNING"
+              },
+              "SEC_PER_INTERVAL": {
+                "_text": "300"
+              }
+            },
+            "REPORT_DATA": {
+              "DATA_ITEM": {
+                "_text": "LMP_ENE_PRC"
+              },
+              "RESOURCE_NAME": {
+                "_text": "KERNOIL_1_N001"
+              },
+              "OPR_DATE": {
+                "_text": "2019-01-06"
+              },
+              "INTERVAL_NUM": {
+                "_text": "264"
+              },
+              "INTERVAL_START_GMT": {
+                "_text": "2019-01-07T05:55:00-00:00"
+              },
+              "INTERVAL_END_GMT": {
+                "_text": "2019-01-07T06:00:00-00:00"
+                },
+              "VALUE": {
+                "_text": "25.96915"
+              }
+            }
+          },
+          {
+            "REPORT_HEADER": {
+              "SYSTEM": {
+                "_text": "OASIS"
+              },
+              "TZ": {
+                "_text": "GMT"
+              },
+              "REPORT": {
+                "_text": "PRC_INTVL_LMP"
+              },
+              "MKT_TYPE": {
+                "_text": "RTM"
+              },
+              "UOM": {
+                "_text": "US$/MWh"
+              },
+              "INTERVAL": {
+                "_text": "BEGINNING"
+              },
+              "SEC_PER_INTERVAL": {
+                "_text": "300"
+              }
+            },
+            "REPORT_DATA": {
+              "DATA_ITEM": {
+                "_text": "LMP_GHG_PRC"
+              },
+              "RESOURCE_NAME": {
+                "_text": "KERNOIL_1_N001"
+              },
+              "OPR_DATE": {
+                "_text":"2019-01-06"
+              },
+              "INTERVAL_NUM": {
+                "_text": "264"
+              },
+              "INTERVAL_START_GMT": {
+                "_text": "2019-01-07T05:55:00-00:00"
+              },
+              "INTERVAL_END_GMT": {
+                "_text": "2019-01-07T06:00:00-00:00"
+              },
+              "VALUE": {
+                "_text": "0"
+              }
+            }
+          },
+          {
+            "REPORT_HEADER": {
+              "SYSTEM": {
+                "_text": "OASIS"
+              },
+              "TZ": {
+                "_text": "GMT"
+              },
+              "REPORT": {
+                "_text": "PRC_INTVL_LMP"
+              },
+              "MKT_TYPE": {
+                "_text": "RTM"
+              },
+              "UOM": {
+                "_text": "US$/MWh"
+              },
+              "INTERVAL": {
+                "_text": "BEGINNING"
+              },
+              "SEC_PER_INTERVAL": {
+                "_text": "300"
+              }
+            },
+            "REPORT_DATA": {
+              "DATA_ITEM": {
+                "_text": "LMP_LOSS_PRC"
+              },
+              "RESOURCE_NAME": {
+                "_text": "KERNOIL_1_N001"
+              },
+              "OPR_DATE": {
+                "_text": "2019-01-06"
+              },
+              "INTERVAL_NUM": {
+                "_text": "264"
+              },
+              "INTERVAL_START_GMT": {
+                "_text": "2019-01-07T05:55:00-00:00"
+              },
+              "INTERVAL_END_GMT": {
+                "_text": "2019-01-07T06:00:00-00:00"
+              },
+              "VALUE": {
+                "_text": "0.62326"
+              }
+            }
+          },
+          {
+            "REPORT_HEADER": {
+              "SYSTEM": {
+                "_text": "OASIS"
+              },
+              "TZ": {
+                "_text": "GMT"
+              },
+              "REPORT": {
+                "_text": "PRC_INTVL_LMP"
+              },
+              "MKT_TYPE": {
+                "_text": "RTM"
+              },
+              "UOM": {
+                "_text": "US$/MWh"
+              },
+              "INTERVAL": {
+                "_text": "BEGINNING"
+              },
+              "SEC_PER_INTERVAL": {
+                "_text":"300"
+              }
+            },
+            "REPORT_DATA": {
+              "DATA_ITEM": {
+                "_text": "LMP_PRC"
+              },
+              "RESOURCE_NAME": {
+                "_text": "KERNOIL_1_N001"
+              },
+              "OPR_DATE": {
+                "_text": "2019-01-06"
+              },
+              "INTERVAL_NUM": {
+                "_text": "264"
+              },
+              "INTERVAL_START_GMT": {
+                "_text": "2019-01-07T05:55:00-00:00"
+              },
+              "INTERVAL_END_GMT": {
+                "_text": "2019-01-07T06:00:00-00:00"
+              },
+              "VALUE": {
+                "_text": "26.59241"
+              }
+            }
+          }
+        ],
+        "DISCLAIMER_ITEM": {
+          "DISCLAIMER": {
+            "_text": "The contents of these pages are subject to change without notice.  Decisions based on information contained within the California ISO's web site are the visitor's sole responsibility."
+          }
+        }
+      }
+    }
+  }
+}

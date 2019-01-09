@@ -1,18 +1,19 @@
 const {
   findByLatLng,
-  findClosest,
   createTableRow,
   updateTableRow,
   deleteTableRows,
-} = require('../utils/')
+} = require('../db/')
 
-const { setDerivedData } = require('../product/')
+const { findClosest } = require('../utils/')
+
+const { setProjectData } = require('../product/')
 
 const handleError = err => {
   throw err
 }
 
-const createNewProject = (req, res) => {
+const createNewProject = (req, res, next) => {
   const { type } = req.body
   // TODO add validation for request here
   if(type === 'demo') {
@@ -32,13 +33,12 @@ const createProject = (data, res) => {
     lng,
   } = data
 
+  // TODO Get timezone from this way: https://www.mapbox.com/help/create-a-timezone-finder-with-mapbox-tilequery-api/
   const timeZone = 'America/Los_Angeles'
-  const chargeThreshold = 6.50
-  const dischargeThreshold = 6.50
 
   const manualData = {
     ...data,
-    time_zone: timeZone,
+    timeZone,
   }
 
   return createTableRow('project', manualData)
@@ -53,9 +53,9 @@ const createProject = (data, res) => {
         return updateTableRow(
             'project',
             {id,},
-            {node_id: node.id},
+            {nodeId: node.id},
           )
-          .then( () => setDerivedData(node, id, timeZone)
+          .then( () => setProjectData(node, id, timeZone)
             .then( () => res.status(200).json({id,}) )
             .catch( handleError ) )
           .catch( handleError )
@@ -64,7 +64,7 @@ const createProject = (data, res) => {
       )
     .catch(err => {
       console.error(`Error at createProject: ${err}`)
-      next(err)
+      res.next(err)
     })
 }
 

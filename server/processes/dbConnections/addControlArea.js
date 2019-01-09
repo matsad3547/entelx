@@ -1,4 +1,4 @@
-const knex = require('../../store/')
+const { knex } = require('../../db/')
 
 const addControlArea = ({
   control_area,
@@ -8,9 +8,9 @@ const addControlArea = ({
   lng,
 }) => knex('control_area')
         .insert({
-          control_area,
+          controlArea,
           name,
-          full_name,
+          fullName,
           lat,
           lng,
         })

@@ -18,7 +18,7 @@ export const lineDataFormat = {
     format: value => roundToDigits(value, 2),
   },
   temperature: {
-    unit: '°C',
+    unit: '°F',
     label: 'Temperature',
     color: trendColors[1],
     format: value => roundToDigits(value, 0),
