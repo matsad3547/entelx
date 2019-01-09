@@ -1,7 +1,7 @@
 const {
   deleteTableRows,
   readTableRows,
-} = require('../db/').utils
+} = require('../db/')
 
 const deleteProjectById = (req, res) => {
 

@@ -8,7 +8,7 @@ const {
   readTableRows,
   readTableRowsWhereBtw,
   findMax,
-} = require('../db/').utils
+} = require('../db/')
 
 const getDashboardData = (req, res) => {
 
@@ -47,9 +47,7 @@ const getDashboardData = (req, res) => {
             console.log('most recent???', firstUpdate, '\nminutes?', firstUpdate/(60 * 1000))
             timeout = setTimeout( () => getData(res, project)
               .then( () => {
-                int = setInterval( () => {
-                  return getData(res, project)
-                }, fiveMinutes)
+                int = setInterval( () => getData(res, project), fiveMinutes)
               }), firstUpdate)
           })
       })

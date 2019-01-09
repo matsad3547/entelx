@@ -9,7 +9,9 @@ const {
   updateTableRow,
   createTableRows,
   deleteTableRowsWhereNot,
-} = require('../../db/').utils
+} = require('../../db/')
+
+const { fiveMinutes } = require('../../config/')
 
 const updatePriceData = (
   currentAvg,
@@ -19,7 +21,7 @@ const updatePriceData = (
   const endMillis = now.valueOf() + (5 * 60 * 1000)
 
   const startMillis = now.clone()
-                      .subtract(5, 'minutes')
+                      .subtract(1, 'minutes')
                       .valueOf()
 
   console.log(`${now.valueOf()} updating data...`);
@@ -53,6 +55,7 @@ const {
   node,
   timeZone,
   projectId,
+  mostRecent,
 } = args
 
 const {
@@ -69,34 +72,45 @@ const {
 
 return readTableRows('node', {id,})
   .then( nodeRes => {
+
+    let int, timeout
+
     const { currentAvg } = nodeRes[0]
 
-    let now = moment().tz(timeZone)
+    const start = moment().tz(timeZone).valueOf()
 
-    // updatePriceData(currentAvg, now, 0)
+    const firstUpdate = fiveMinutes - (start - mostRecent) + (2 * 1000)
 
-    const int = setInterval( () => {
-      console.log('entering the interval...');
+    timeout = setTimeout( () => {
+      let now = moment().tz(timeZone)
 
-      now = moment().tz(timeZone)
-
-    return updatePriceData(currentAvg, now)
+      return updatePriceData(currentAvg, now, 0)
         .then( () => {
 
-        const sixMosAgo = now.clone()
-                            .subtract(180, 'days')
-                            .valueOf()
+          int = setInterval( () => {
 
-          console.log('gonna check for data older than 6 mos');
-        //TODO delete data more than 6 mos. old
-      })
-    }, 5 * 60 * 1000) //5 minutes
+            now = moment().tz(timeZone)
+
+            return updatePriceData(currentAvg, now)
+            .then( () => {
+
+              const sixMosAgo = now.clone()
+              .subtract(180, 'days')
+              .valueOf()
+
+              console.log('gonna check for data older than 6 mos');
+              //TODO delete data more than 6 mos. old
+            })
+          }, fiveMinutes)
+        })
+    }, firstUpdate)
 
     const pid = process.pid
 
     const cleanUp = code => {
       console.log(`exiting "updatePriceData" for ${name}\n exit code: ${code}` );
       clearInterval(int)
+      clearTimeout(timeout)
     }
 
     process.on('exit', cleanUp)

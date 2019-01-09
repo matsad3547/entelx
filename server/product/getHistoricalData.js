@@ -5,7 +5,7 @@ const {
   getPriceRequest,
 } = require('../processes/')
 
-const { calculateDerivedData } = require('../db/').utils
+const { calculateDerivedData } = require('../db/')
 
 const { dayOf5Mins } = require('../config/')
 

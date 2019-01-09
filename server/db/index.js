@@ -1,7 +1,3 @@
-const knex = require('./knex')
-const utils = require('./utils/')
+const connections = require('./connections/')
 
-module.exports = {
-  knex,
-  utils,
-}
+module.exports = connections
