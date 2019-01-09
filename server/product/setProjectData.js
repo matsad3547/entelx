@@ -9,7 +9,7 @@ const {
   updateTableRow,
   createTableRows,
   deleteTableRowsWhereNot,
-} = require('../db/').utils
+} = require('../db/')
 
 const { calculateDerivedData } = require('../utils/')
 

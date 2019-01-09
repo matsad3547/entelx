@@ -3,7 +3,7 @@ const {
   createTableRow,
   updateTableRow,
   deleteTableRows,
-} = require('../db/').utils
+} = require('../db/')
 
 const { findClosest } = require('../utils/')
 
@@ -64,7 +64,7 @@ const createProject = (data, res) => {
       )
     .catch(err => {
       console.error(`Error at createProject: ${err}`)
-      next(err)
+      res.next(err)
     })
 }
 

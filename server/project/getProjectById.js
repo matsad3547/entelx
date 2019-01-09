@@ -1,4 +1,4 @@
-const { readTableRows } = require('../db/').utils
+const { readTableRows } = require('../db/')
 
 const getProjectById = (req, res) => {
 
