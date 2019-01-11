@@ -19,10 +19,10 @@ const createNewProject = (req, res, next) => {
   if(type === 'demo') {
     //just want to have just one demo project at a time
     return deleteTableRows('project', {type: 'demo'})
-      .then( () => createProject(req.body, res) )
+      .then( () => createProject(req.body, res, next) )
   }
   else {
-    return createProject(req.body, res)
+    return createProject(req.body, res, next)
   }
 }
 
@@ -64,7 +64,7 @@ const createProject = (data, res) => {
       )
     .catch(err => {
       console.error(`Error at createProject: ${err}`)
-      res.next(err)
+      next(err)
     })
 }
 
