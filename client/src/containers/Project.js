@@ -82,6 +82,8 @@ const Project = ({match, history}) => {
             <DataDisplay content={`${project.power} Mw`}/>
             <Label content="Energy"/>
             <DataDisplay content={`${project.energy} Mwh`}/>
+            <Label content="Round Trip Efficiency"/>
+            <DataDisplay content={`${project.rte * 100}%`}/>
             <Label content="Location"/>
             {
               project.address ?

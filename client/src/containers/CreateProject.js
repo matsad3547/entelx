@@ -38,6 +38,7 @@ const CreateProject = ({
   const [name, setProjectName] = useState('')
   const [energy, setEnergyCapacity] = useState(5)
   const [power, setPowerCapacity] = useState(2.5)
+  const [rte, setRte] = useState(.85)
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
   const [state, setState] = useState('CA')
@@ -64,6 +65,7 @@ const CreateProject = ({
       energy,
       lat,
       lng,
+      rte,
       type: match.url.includes('demo') ? 'demo' : 'test'
     })
 
@@ -86,6 +88,11 @@ const CreateProject = ({
         setLoading(false)
         setError(err)
       })
+  }
+
+  const rteOnchange = e => {
+    e.preventDefault()
+    setRte(e.target.value/100)
   }
 
   return (
@@ -129,6 +136,18 @@ const CreateProject = ({
             min={0}
             step={0.1}
             onChange={e => setField(e, setPowerCapacity)}
+            />
+          <LabeledInput
+            name={'rte'}
+            label={'Round Trip Efficiency'}
+            type={'number'}
+            value={roundToDigits(rte * 100, 1)}
+            inputWidth={'2.5em'}
+            unit={'%'}
+            min={0}
+            max={99}
+            step={1}
+            onChange={rteOnchange}
             />
         </div>
         <div style={styles.subSection}>
