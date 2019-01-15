@@ -23,7 +23,7 @@ const apNodeTypes = [
 
 const atlasRequests = [
   'ATL_APNODE&APnode_type=ALL', //ap nodes do not correspond with location nodes
-  'ATL_LAP', //correspond to CA location nodes
+  'ATL_LAP', //correspond to CA location nodes - start and end times - not particularly useful
   'ATL_HUB', //only 3 hub nodes
   'ATL_RUC_ZONE_MAP', //Residual Unit Commitment (RUC) - for the day ahead market - 2539 items
   'ATL_TAC_AREA_MAP', //Transmission Access Charge (TAC) - 2528 items
@@ -143,7 +143,7 @@ const caisoDataItems = {
       key: 'name',
       format: val => val,
     },
-    'TIE_NAME': {
+    'TIE_NAME': { //no worky
       key: 'tie_name',
       format: val => val,
     },

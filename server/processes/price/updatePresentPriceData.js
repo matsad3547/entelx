@@ -24,7 +24,7 @@ const updatePriceData = (
                       .subtract(1, 'minutes')
                       .valueOf()
 
-  console.log(`${now.valueOf()} updating data...`);
+  console.log(`updating data at ${now.valueOf()}`)
 
   return req(
     ...params,
@@ -86,6 +86,8 @@ return readTableRows('node', {id,})
     timeout = setTimeout( () => {
       let now = moment().tz(timeZone)
 
+      console.log(`starting to update data at ${now.valueOf()}`)
+
       return updatePriceData(currentAvg, now, 0)
         .then( () => {
 
@@ -109,6 +111,9 @@ return readTableRows('node', {id,})
 
     const pid = process.pid
 
+    //Ignore SIGUSR2 from nodemon restart
+    process.on('SIGUSR2', () => true )
+
     const cleanUp = code => {
       console.log(`exiting "updatePriceData" for ${name}\n exit code: ${code}` );
       clearInterval(int)
@@ -116,6 +121,7 @@ return readTableRows('node', {id,})
     }
 
     process.on('exit', cleanUp)
+
 
     setExitListeners()
 
