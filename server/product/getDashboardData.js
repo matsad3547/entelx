@@ -44,7 +44,6 @@ const getDashboardData = (req, res) => {
 
         return getData(res, project)
           .then( () => {
-            console.log('most recent???', firstUpdate, '\nminutes?', firstUpdate/(60 * 1000))
             timeout = setTimeout( () => getData(res, project)
               .then( () => {
                 int = setInterval( () => getData(res, project), fiveMinutes)
