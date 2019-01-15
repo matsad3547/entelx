@@ -13,7 +13,10 @@ module.exports = {
     database: process.env.DB_NAME,
   },
   migrations: {
-    directory: '../migrations',
+    directory: './migrations',
+  },
+  seeds: {
+    directory: './seeds',
   },
   pool: {
     min: 0,

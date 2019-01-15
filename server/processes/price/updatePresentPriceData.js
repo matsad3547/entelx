@@ -81,6 +81,8 @@ return readTableRows('node', {id,})
 
     const firstUpdate = fiveMinutes - (start - mostRecent) + (2 * 1000)
 
+    // TODO Add update to get past data for backfill
+
     timeout = setTimeout( () => {
       let now = moment().tz(timeZone)
 
