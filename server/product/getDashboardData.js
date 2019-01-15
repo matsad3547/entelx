@@ -16,7 +16,7 @@ const getDashboardData = (req, res) => {
 
   let int, timeout
 
-  console.log('running get dashboard:', Date.now() );
+  console.log('Running get dashboard at', Date.now() );
 
   return readTableRows('project', {id,})
     .then( projectRes => {
@@ -75,7 +75,7 @@ const getData = (res, project) => {
     .subtract(1, 'hour')
     .valueOf()
 
-  console.log('getting updated data at', endMillis)
+  console.log('refreshing dashboard data at', endMillis)
 
   return Promise.all([
       getCurrentWeather(lat, lng),

@@ -20,7 +20,7 @@ const getDateString = (startMillis, endMillis) => {
 
 const getVersion = query => {
   switch (query) {
-    case 'ATL_APNODE&APnode_type=ALL':
+    // case 'ATL_APNODE&APnode_type=ALL':
     case 'ATL_CBNODE':
     case 'PRC_INTVL_LMP':
       return 2

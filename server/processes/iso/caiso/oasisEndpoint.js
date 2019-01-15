@@ -25,6 +25,8 @@ const oasisEndpoint = (
     node,
   )
 
+  // console.log('url:', url);
+
   const xmlOptions = {
     compact: true,
     spaces: 2
@@ -51,7 +53,7 @@ const oasisEndpoint = (
           }
           else {
             const parser = getParser(query)
-            
+
             try {
               const parsed = parser(query, json)
               resolve(parsed)

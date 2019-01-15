@@ -5,7 +5,7 @@ const exitSignals = [
   'SIGTERM',
   //catches "kill pid" (for example: nodemon restart)
   'SIGUSR1',
-  'SIGUSR2',
+  // 'SIGUSR2', //prevent kill on nodemon restart
   'uncaughtException',
 ]
 

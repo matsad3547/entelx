@@ -32,6 +32,8 @@ const launchPriceUpdates = params => {
       throw new Error(err)
     })
 
+    console.log('at launchPriceUpdates:', process.pid);
+
     updateData.unref()
   })
 }
