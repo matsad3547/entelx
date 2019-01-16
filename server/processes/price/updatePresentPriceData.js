@@ -4,6 +4,14 @@ const getPriceRequest = require('./getPriceRequest')
 
 const { setExitListeners } = require('../../utils/')
 
+const { fiveMinutes } = require('../../config/')
+
+const {
+  getFiveMinutesFromNow,
+  getOneMinuteAgo,
+  getFirstUpdate,
+} = require('./utils/')
+
 const {
   readTableRows,
   updateTableRow,
@@ -12,42 +20,6 @@ const {
 } = require('../../db/')
 
 const { fiveMinutes } = require('../../config/')
-
-const updatePriceData = (
-  currentAvg,
-  now,
-) => {
-
-  const endMillis = now.valueOf() + (5 * 60 * 1000)
-
-  const startMillis = now.clone()
-                      .subtract(1, 'minutes')
-                      .valueOf()
-
-  console.log(`updating data at ${now.valueOf()}`)
-
-  return req(
-    ...params,
-    startMillis,
-    endMillis,
-    name,
-  )
-  .then( data => {
-
-    const dataWithAvg = data.map( obj => ({
-        ...obj,
-        mvgAvg: currentAvg,
-        nodeId: id,
-        score: (obj[key] - currentAvg) / currentAvg,
-      })
-    )
-
-    return createTableRows(
-      'price',
-      dataWithAvg
-    )
-  })
-}
 
 const args = JSON.parse(process.argv[2])
 
@@ -73,41 +45,114 @@ const {
 return readTableRows('node', {id,})
   .then( nodeRes => {
 
-    let int, timeout
+    let int, timeout, endMillis, startMillis, firstUpdate
 
     const { currentAvg } = nodeRes[0]
 
     const start = moment().tz(timeZone).valueOf()
 
-    const firstUpdate = fiveMinutes - (start - mostRecent) + (2 * 1000)
+    const lastDataAgo = start - mostRecent
 
-    // TODO Add update to get past data for backfill
+    if (lastDataAgo > fiveMinutes ) {
+      // TODO Add update to get past data for backfill
 
-    timeout = setTimeout( () => {
-      let now = moment().tz(timeZone)
+    }
+    else {
+      firstUpdate = getFirstUpdate(lastDataAgo) + (2 * 1000)
 
-      console.log(`starting to update data at ${now.valueOf()}`)
+      return scheduleUpdatePriceData(
+        req,
+        key,
+        nodeName,
+        currentAvg,
+        firstUpdate,
+      )
+    }
 
-      return updatePriceData(currentAvg, now, 0)
+const updatePriceData = (
+  req,
+  key,
+  nodeName,
+  currentAvg,
+  endMillis,
+  startMillis,
+) => req(
+    ...params,
+    startMillis,
+    endMillis,
+    nodeName,
+  )
+  .then( data => {
+
+    const dataWithAvg = data.map( obj => ({
+        ...obj,
+        mvgAvg: currentAvg,
+        nodeId: id,
+        score: (obj[key] - currentAvg) / currentAvg,
+      })
+    )
+
+    return createTableRows(
+      'price',
+      dataWithAvg
+    )
+  })
+
+const scheduleUpdatePriceData = (
+  req,
+  key,
+  nodeName,
+  currentAvg,
+  firstUpdate,
+) => {
+  timeout = setTimeout( () => {
+    let now = moment().tz(timeZone)
+
+    console.log(`starting price data update at ${now.valueOf()}`)
+
+    endMillis = getFiveMinutesFromNow(now)
+    startMillis = getOneMinuteAgo(now)
+
+    return updatePriceData(
+      req,
+      key,
+      name,
+      currentAvg,
+      endMillis,
+      startMillis,
+    )
+    .then( () => {
+
+      int = setInterval( () => {
+
+        now = moment().tz(timeZone)
+
+        console.log(`price data update at ${now.valueOf()}`)
+
+        endMillis = getFiveMinutesFromNow(now)
+        startMillis = getOneMinuteAgo(now)
+
+        return updatePriceData(
+          req,
+          key,
+          name,
+          currentAvg,
+          endMillis,
+          startMillis,
+        )
         .then( () => {
 
-          int = setInterval( () => {
+          const sixMosAgo = now.clone()
+          .subtract(180, 'days')
+          .valueOf()
 
-            now = moment().tz(timeZone)
-
-            return updatePriceData(currentAvg, now)
-            .then( () => {
-
-              const sixMosAgo = now.clone()
-              .subtract(180, 'days')
-              .valueOf()
-
-              console.log('gonna check for data older than 6 mos');
-              //TODO delete data more than 6 mos. old
-            })
-          }, fiveMinutes)
+          console.log('gonna check for data older than 6 mos');
+          //TODO delete data more than 6 mos. old
         })
-    }, firstUpdate)
+      }, fiveMinutes)
+    })
+  }, firstUpdate)
+}
 
     const pid = process.pid
 
