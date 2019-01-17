@@ -56,6 +56,7 @@ const oasisEndpoint = (
 
             try {
               const parsed = parser(query, json)
+              console.timeEnd(`CAISO ${query} request`)
               resolve(parsed)
             }
             catch (err) {
@@ -63,7 +64,6 @@ const oasisEndpoint = (
               console.log('OASIS response:', json)
             }
           }
-          console.timeEnd(`CAISO ${query} request`)
         })
     )
     .on('error', reject)
