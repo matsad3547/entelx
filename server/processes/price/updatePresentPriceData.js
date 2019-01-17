@@ -1,7 +1,5 @@
 const moment = require('moment-timezone')
 
-const getPriceRequest = require('./getPriceRequest')
-
 const { setExitListeners } = require('../../utils/')
 
 const { fiveMinutes } = require('../../config/')
@@ -15,11 +13,67 @@ const {
 const {
   readTableRows,
   updateTableRow,
-  createTableRows,
   deleteTableRowsWhereNot,
 } = require('../../db/')
 
-const { fiveMinutes } = require('../../config/')
+const updatePriceData = require('./updatePriceData')
+
+const scheduleUpdatePriceData = (
+  nodeData,
+  firstUpdate,
+) => {
+  timeout = setTimeout( () => {
+    let now = moment().tz(timeZone)
+
+    endMillis = getFiveMinutesFromNow(now)
+    startMillis = getOneMinuteAgo(now)
+
+    console.log(`starting price data update at ${now.valueOf()}`, startMillis, endMillis)
+
+    return updatePriceData(
+      nodeData,
+      endMillis,
+      startMillis,
+    )
+    .then( mostRecent => {
+
+      interval = setInterval( () => {
+
+        now = moment().tz(timeZone)
+
+        console.log(`price data update at ${now.valueOf()}`)
+
+        endMillis = getFiveMinutesFromNow(now)
+        startMillis = getOneMinuteAgo(now)
+
+        console.log('endMillis:', endMillis, '\nstartMillis:', startMillis, '\nmost recent:', mostRecent);
+
+        return updatePriceData(
+          nodeData,
+          endMillis,
+          startMillis,
+        )
+        .then( () => {
+
+          const sixMosAgo = now.clone()
+          .subtract(180, 'days')
+          .valueOf()
+
+          console.log('gonna check for data older than 6 mos');
+          //TODO delete data more than 6 mos. old
+        })
+        .catch( err => {
+          console.error(`There was an error updating price data at ${now.valueOf()}:`, err)
+          if (err) throw err
+        })
+      }, fiveMinutes)
+    })
+    .catch( err => {
+      console.error(`There was an error on the first price data update at ${now.valueOf()}:`, err)
+      if (err) throw err
+    })
+  }, firstUpdate)
+}
 
 const args = JSON.parse(process.argv[2])
 
@@ -35,146 +89,72 @@ const {
   name,
 } = node
 
-const key = 'lmp'
+const pid = process.pid
 
-const {
-  req,
-  params,
-} = getPriceRequest(node)
+setExitListeners()
+
+//Ignore SIGUSR2 from nodemon restart
+process.on('SIGUSR2', () => true )
+
+let interval, timeout, endMillis, startMillis, firstUpdate
+
+const cleanUp = code => {
+  console.log(`exiting "updatePriceData" for ${name}\n exit code: ${code}` );
+  clearInterval(interval)
+  clearTimeout(timeout)
+}
+
+process.on('exit', cleanUp)
 
 return readTableRows('node', {id,})
   .then( nodeRes => {
 
-    let int, timeout, endMillis, startMillis, firstUpdate
-
-    const { currentAvg } = nodeRes[0]
+    const nodeData = nodeRes[0]
 
     const start = moment().tz(timeZone).valueOf()
 
     const lastDataAgo = start - mostRecent
 
     if (lastDataAgo > fiveMinutes ) {
-      // TODO Add update to get past data for backfill
+      console.log('backfilling previous data...')
 
+      endMillis = start + 5 * 60 * 1000
+      startMillis = lastDataAgo + 1 * 60 * 1000
+
+      return updatePriceData(
+        nodeData,
+        endMillis,
+        startMillis,
+      )
+      .then( mostRecent => {
+
+        firstUpdate = getFirstUpdate(mostRecent) + (2 * 1000)
+
+        scheduleUpdatePriceData(
+          nodeData,
+          firstUpdate,
+        )
+      })
     }
     else {
       firstUpdate = getFirstUpdate(lastDataAgo) + (2 * 1000)
 
-      return scheduleUpdatePriceData(
-        req,
-        key,
-        nodeName,
-        currentAvg,
+      scheduleUpdatePriceData(
+        nodeData,
         firstUpdate,
       )
     }
-
-const updatePriceData = (
-  req,
-  key,
-  nodeName,
-  currentAvg,
-  endMillis,
-  startMillis,
-) => req(
-    ...params,
-    startMillis,
-    endMillis,
-    nodeName,
-  )
-  .then( data => {
-
-    const dataWithAvg = data.map( obj => ({
-        ...obj,
-        mvgAvg: currentAvg,
-        nodeId: id,
-        score: (obj[key] - currentAvg) / currentAvg,
-      })
-    )
-
-    return createTableRows(
-      'price',
-      dataWithAvg
-    )
-  })
-
-const scheduleUpdatePriceData = (
-  req,
-  key,
-  nodeName,
-  currentAvg,
-  firstUpdate,
-) => {
-  timeout = setTimeout( () => {
-    let now = moment().tz(timeZone)
-
-    console.log(`starting price data update at ${now.valueOf()}`)
-
-    endMillis = getFiveMinutesFromNow(now)
-    startMillis = getOneMinuteAgo(now)
-
-    return updatePriceData(
-      req,
-      key,
-      name,
-      currentAvg,
-      endMillis,
-      startMillis,
-    )
-    .then( () => {
-
-      int = setInterval( () => {
-
-        now = moment().tz(timeZone)
-
-        console.log(`price data update at ${now.valueOf()}`)
-
-        endMillis = getFiveMinutesFromNow(now)
-        startMillis = getOneMinuteAgo(now)
-
-        return updatePriceData(
-          req,
-          key,
-          name,
-          currentAvg,
-          endMillis,
-          startMillis,
-        )
-        .then( () => {
-
-          const sixMosAgo = now.clone()
-          .subtract(180, 'days')
-          .valueOf()
-
-          console.log('gonna check for data older than 6 mos');
-          //TODO delete data more than 6 mos. old
-        })
-      }, fiveMinutes)
-    })
-  }, firstUpdate)
-}
-
-    const pid = process.pid
-
-    //Ignore SIGUSR2 from nodemon restart
-    process.on('SIGUSR2', () => true )
-
-    const cleanUp = code => {
-      console.log(`exiting "updatePriceData" for ${name}\n exit code: ${code}` );
-      clearInterval(int)
-      clearTimeout(timeout)
-    }
-
-    process.on('exit', cleanUp)
-
-
-    setExitListeners()
-
     return updateTableRow(
       'project',
       {id: projectId},
-      {
-        pid,
-      },
+      {pid,},
     )
+    .catch( err => {
+      console.error('There was an error setting the pid at updatePriceData:', err)
+      if (err) throw err
+    })
+  })
+  .catch( err => {
+    console.error('There was an error reading the node table at updatePriceData:', err)
+    if (err) throw err
   })
