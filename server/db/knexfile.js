@@ -6,7 +6,7 @@ const {
 } = require('./utils/').conversions
 
 module.exports = {
-  client: process.env.DB_CONNECTION,
+  client: process.env.DB_CONNECTION || 'mysql',
   connection: {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
