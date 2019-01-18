@@ -1,4 +1,4 @@
-const { fiveMinutes } = require('../../../config/')
+const { fiveMinutesMillis } = require('../../../config/')
 
 const getFiveMinutesFromNow = nowMoment => nowMoment.clone()
   .add(5, 'minutes')
@@ -8,10 +8,10 @@ const getOneMinuteAgo = nowMoment => nowMoment.clone()
   .subtract(1, 'minutes')
   .valueOf()
 
-const getFirstUpdate = lastDataAgo => lastDataAgo % fiveMinutes
+const getFirstUpdateMillis = lastDataAgoMillis => lastDataAgoMillis % fiveMinutesMillis
 
 module.exports = {
   getFiveMinutesFromNow,
   getOneMinuteAgo,
-  getFirstUpdate,
+  getFirstUpdateMillis,
 }

@@ -1,6 +1,6 @@
 const moment = require('moment-timezone')
 
-const { fiveMinutes } = require('../config/')
+const { fiveMinutesMillis } = require('../config/')
 
 const { getCurrentWeather } = require('../processes/')
 
@@ -38,7 +38,7 @@ const getDashboardData = (req, res) => {
 
         const start = moment().tz(timeZone).valueOf()
 
-        const firstUpdate = fiveMinutes - (start - mostRecent) + (5 * 1000)
+        const firstUpdate = fiveMinutesMillis - (start - mostRecent) + (5 * 1000)
 
         res.sseSetup()
 
@@ -46,7 +46,7 @@ const getDashboardData = (req, res) => {
           .then( () => {
             timeout = setTimeout( () => getData(res, project)
               .then( () => {
-                int = setInterval( () => getData(res, project), fiveMinutes)
+                int = setInterval( () => getData(res, project), fiveMinutesMillis)
               }), firstUpdate)
           })
       })

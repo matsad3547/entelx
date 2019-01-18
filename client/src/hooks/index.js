@@ -13,7 +13,8 @@ export const connectToServerSideEvent = (route, handleData) => useEffect( () => 
 
     return () => {
       stream.removeEventListener('message', handleData)
-      stream.addEventListener('error', handleError)
+      stream.removeEventListener('ping', handlePing)
+      stream.removeEventListener('error', handleError)
       stream.close()
     }
   }, [])
