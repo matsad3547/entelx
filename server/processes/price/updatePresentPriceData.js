@@ -2,12 +2,12 @@ const moment = require('moment-timezone')
 
 const { setExitListeners } = require('../../utils/')
 
-const { fiveMinutes } = require('../../config/')
+const { fiveMinutesMillis } = require('../../config/')
 
 const {
-  getFiveMinutesFromNow,
+  getfiveMinutesFromNow,
   getOneMinuteAgo,
-  getFirstUpdate,
+  getFirstUpdateMillis,
 } = require('./utils/')
 
 const {
@@ -22,13 +22,16 @@ const scheduleUpdatePriceData = (
   nodeData,
   firstUpdate,
 ) => {
+
+  console.log('firstUpdate:', firstUpdate, '\nnow:', moment().tz(timeZone).valueOf())
+  
   timeout = setTimeout( () => {
     let now = moment().tz(timeZone)
 
     endMillis = getFiveMinutesFromNow(now)
     startMillis = getOneMinuteAgo(now)
 
-    console.log(`starting price data update at ${now.valueOf()}`, startMillis, endMillis)
+    console.log(`starting price data update at ${now.valueOf()}`)
 
     return updatePriceData(
       nodeData,
@@ -45,8 +48,6 @@ const scheduleUpdatePriceData = (
 
         endMillis = getFiveMinutesFromNow(now)
         startMillis = getOneMinuteAgo(now)
-
-        console.log('endMillis:', endMillis, '\nstartMillis:', startMillis, '\nmost recent:', mostRecent);
 
         return updatePriceData(
           nodeData,
@@ -66,7 +67,7 @@ const scheduleUpdatePriceData = (
           console.error(`There was an error updating price data at ${now.valueOf()}:`, err)
           if (err) throw err
         })
-      }, fiveMinutes)
+      }, fiveMinutesMillis)
     })
     .catch( err => {
       console.error(`There was an error on the first price data update at ${now.valueOf()}:`, err)
@@ -111,15 +112,15 @@ return readTableRows('node', {id,})
 
     const nodeData = nodeRes[0]
 
-    const start = moment().tz(timeZone).valueOf()
+    const nowMillis = moment().tz(timeZone).valueOf()
 
-    const lastDataAgo = start - mostRecent
+    const lastDataAgoMillis = nowMillis - mostRecent
 
-    if (lastDataAgo > fiveMinutes ) {
+    if (lastDataAgoMillis > fiveMinutesMillis ) {
       console.log('backfilling previous data...')
 
-      endMillis = start + 5 * 60 * 1000
-      startMillis = lastDataAgo + 1 * 60 * 1000
+      endMillis = nowMillis + fiveMinutesMillis
+      startMillis = lastDataAgoMillis + 1 * 60 * 1000
 
       return updatePriceData(
         nodeData,
@@ -128,7 +129,7 @@ return readTableRows('node', {id,})
       )
       .then( mostRecent => {
 
-        firstUpdate = getFirstUpdate(mostRecent) + (2 * 1000)
+        firstUpdate = getFirstUpdateMillis(mostRecent) + (2 * 1000)
 
         scheduleUpdatePriceData(
           nodeData,
@@ -137,7 +138,11 @@ return readTableRows('node', {id,})
       })
     }
     else {
-      firstUpdate = getFirstUpdate(lastDataAgo) + (2 * 1000)
+      // firstUpdate = getFirstUpdateMillis(lastDataAgoMillis) + (2 * 1000)
+      // firstUpdate = fiveMinutesMillis - lastDataAgoMillis + (2 * 1000)
+      firstUpdate = fiveMinutesMillis - (nowMillis - mostRecent) + (2 * 1000)
+
+      console.log('first update:', firstUpdate, '\nalt method:', fiveMinutesMillis - lastDataAgoMillis + (2 * 1000));
 
       scheduleUpdatePriceData(
         nodeData,

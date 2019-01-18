@@ -1,24 +1,24 @@
-const { getFirstUpdate } = require('../index')
+const { getFirstUpdateMillis } = require('../index')
 
-describe('getFirstUpdate', () => {
-  test('should return 1 minute if `lastDataAgo` = 6 minutes', () => {
-    const lastDataAgo = 6 * 60 * 1000
+describe('getFirstUpdateMillis', () => {
+  test('should return 1 minute if `lastDataAgoMillis` = 6 minutes', () => {
+    const lastDataAgoMillis = 6 * 60 * 1000
     const expected = 1 * 60 * 1000
-    const actual = getFirstUpdate(lastDataAgo)
+    const actual = getFirstUpdateMillis(lastDataAgoMillis)
     expect(actual).toEqual(expected)
   })
 
-  test('should return 1 minute if `lastDataAgo` = 16 minutes', () => {
-    const lastDataAgo = 16 * 60 * 1000
+  test('should return 1 minute if `lastDataAgoMillis` = 16 minutes', () => {
+    const lastDataAgoMillis = 16 * 60 * 1000
     const expected = 1 * 60 * 1000
-    const actual = getFirstUpdate(lastDataAgo)
+    const actual = getFirstUpdateMillis(lastDataAgoMillis)
     expect(actual).toEqual(expected)
   })
 
-  test('should return 1 minute if `lastDataAgo` = 1 minute', () => {
-    const lastDataAgo = 1 * 60 * 1000
+  test('should return 1 minute if `lastDataAgoMillis` = 1 minute', () => {
+    const lastDataAgoMillis = 1 * 60 * 1000
     const expected = 1 * 60 * 1000
-    const actual = getFirstUpdate(lastDataAgo)
+    const actual = getFirstUpdateMillis(lastDataAgoMillis)
     expect(actual).toEqual(expected)
   })
 })
