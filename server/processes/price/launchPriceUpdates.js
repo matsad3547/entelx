@@ -39,3 +39,16 @@ const launchPriceUpdates = params => {
 }
 
 module.exports = launchPriceUpdates
+
+// export const doThings = catchErrorsWithMessage('something broke', async (...args) => {
+//   // actual logic
+// })
+//
+// function catchErrorsWithMessage(msg, fn) {
+//   return (...args) => {
+//     return fn(...args).catch(error => {
+//       console.error(msg, error)
+//       throw error
+//     })
+//   }
+// }

@@ -199,11 +199,6 @@ return readTableRows('node', {id,})
               //TODO delete data more than 6 mos. old
             })
             .then( () => getPriceDataOnInterval() )
-            .catch( err => {
-              console.error(`There was an error updating price data at ${now.valueOf()}:`, err)
-              if (err) throw err
-            })
-
           },fiveMinutesMillis)
         }
         getPriceDataOnInterval()
