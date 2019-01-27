@@ -57,10 +57,12 @@ app.use(compression(getCompressionOptions))
 app.use(sse)
 
 //user
+// TODO make route snake case
 app.post('/createUser', createUser)
 app.post('/login', login)
 
 //dashboard
+// TODO change to '/dashboard/:id/config'
 app.post('/get_dashboard_config', getDashboardConfig)
 app.get('/get_dashboard_data/:id', getDashboardData)
 
@@ -93,7 +95,7 @@ const roiTest = (req, res) => {
     // run to send follow up data
     res.sseSend({cheese: `balls - ${n}`,})
     n++
-  }, 3 * 60 * 1000)
+  }, 5 * 1000)
 
   req.on('close', () => {
     clearInterval(int)

@@ -24,7 +24,7 @@ const sse = (req, res, next) => {
 
   res.sseClose = () => {
     res.end()
-    int && clearInterval(int)
+    clearInterval(int)
     console.log('Connection is closed');
   }
 

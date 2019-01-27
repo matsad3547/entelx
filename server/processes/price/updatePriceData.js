@@ -39,7 +39,11 @@ const updatePriceData = (
       'price',
       dataWithAvg
     )
-    .then( () => data[data.length - 1].timestamp )
+    .then( () => ({
+        start: data[0].timestamp,
+        end: data[data.length - 1].timestamp,
+      })
+    )
     .catch( err => {
       console.error(`There was an error adding rows for data from ${startMillis} to ${endMillis}:`, err)
       if (err) throw err

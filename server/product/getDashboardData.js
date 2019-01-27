@@ -10,51 +10,43 @@ const {
   findMax,
 } = require('../db/')
 
-const getDashboardData = (req, res) => {
+const getDashboardData = async (req, res) => {
 
   const { id } = req.params
 
-  let int, timeout
+  let interval, timeout
 
-  console.log('Running get dashboard at', Date.now() );
+  console.log('Running get dashboard at', Date.now() )
 
-  return readTableRows('project', {id,})
-    .then( projectRes => {
+  const [project] = await readTableRows('project', {id,})
 
-      const project = projectRes[0]
+  const {
+    nodeId,
+    timeZone,
+  } = project
 
-      const {
-        nodeId,
-        timeZone,
-      } = project
+  const maxRes = await findMax('price', 'timestamp', {nodeId,})
 
-      return findMax(
-        'price',
-        'timestamp',
-        {nodeId,}
-      )
-      .then( maxRes => {
-        const mostRecent = maxRes[0]['max(timestamp)']
+  const mostRecent = maxRes[0]['max(timestamp)']
 
-        const start = moment().tz(timeZone).valueOf()
+  const start = moment().tz(timeZone).valueOf()
 
-        const firstUpdate = fiveMinutesMillis - (start - mostRecent) + (5 * 1000)
+  const firstUpdate = fiveMinutesMillis - (start - mostRecent) + (5 * 1000)
 
-        res.sseSetup()
+  res.sseSetup()
 
-        return getData(res, project)
-          .then( () => {
-            timeout = setTimeout( () => getData(res, project)
-              .then( () => {
-                int = setInterval( () => getData(res, project), fiveMinutesMillis)
-              }), firstUpdate)
-          })
-      })
-    })
+  await getData(res, project)
+
+  timeout = setTimeout( async () => {
+
+    await getData(res, project)
+
+    interval = setInterval( () => getData(res, project), fiveMinutesMillis)
+  }, firstUpdate)
 
   req.on('close', () => {
     console.log('Closing dashboard data connection')
-    int && clearInterval(int)
+    interval && clearInterval(interval)
     timeout && clearTimeout(timeout)
     res.sseClose()
   })
