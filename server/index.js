@@ -57,7 +57,6 @@ app.use(compression(getCompressionOptions))
 app.use(sse)
 
 //user
-// TODO make route snake case
 app.post('/user/create', createUser)
 app.post('/user/login', login)
 
