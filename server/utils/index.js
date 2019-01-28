@@ -1,6 +1,7 @@
 const {
   millisToSeconds,
   tsToMillis,
+  getUpdateTimeout,
 } = require('./dateTimeUtils')
 
 const { checkStatus } = require('./requestUtils')
@@ -19,6 +20,7 @@ const { setExitListeners } = require('./processUtils')
 module.exports = {
   millisToSeconds,
   tsToMillis,
+  getUpdateTimeout,
   checkStatus,
   writeToFile,
   calculateScoreData,

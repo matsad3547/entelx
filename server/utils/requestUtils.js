@@ -8,6 +8,20 @@ const checkStatus = res => {
   throw error
 }
 
+// export const doThings = catchErrorsWithMessage('something broke', async (...args) => {
+//   // actual logic
+// })
+//
+const catchErrorsWithMessage = (msg, fn) => {
+  return (...args) => {
+    return fn(...args).catch(err => {
+      console.error(msg, err)
+      throw error
+    })
+  }
+}
+
 module.exports = {
   checkStatus,
+  catchErrorsWithMessage,
 }
