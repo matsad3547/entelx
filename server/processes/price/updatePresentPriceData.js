@@ -5,6 +5,7 @@
   const {
     setExitListeners,
     getUpdateTimeout,
+    catchErrorsWithMessage
   } = require('../../utils/')
 
   const { fiveMinutesMillis } = require('../../config/')
@@ -39,10 +40,7 @@
 
   let firstUpdateTimeout, continuousTimeout, firstUpdate
 
-  const [nodeData] = await readTableRows('node', {id,}).catch( err => {
-    console.error('there was an error getting initial node data:', err)
-    throw err
-  })
+  const [nodeData] = await catchErrorsWithMessage('There was an error getting initial node data', readTableRows)('node', {id,})
 
   firstUpdate = getUpdateTimeout(mostRecent)
 
@@ -54,10 +52,7 @@
     let endMillis = getFiveMinutesFromNow(now)
     let startMillis = getOneMinuteAgo(now)
 
-    const {end} = await updatePriceData(nodeData, endMillis, startMillis).catch( err => {
-      console.error('there was an error getting the initial price update:', err)
-      throw err
-    })
+    const {end} = await catchErrorsWithMessage('There was an error getting the initial price update', updatePriceData)(nodeData, endMillis, startMillis)
 
     let nextTimeoutMillis = getUpdateTimeout(end)
 
@@ -71,10 +66,7 @@
 
         console.log(`price data update at ${now.valueOf()}`)
 
-        const {end} = await updatePriceData(nodeData, endMillis, startMillis).catch( err => {
-          console.error('there was an error getting continuous price updates:', err)
-          throw err
-        })
+        const {end} = await catchErrorsWithMessage('There was an error getting continuous price updates', updatePriceData)(nodeData, endMillis, startMillis)
 
         nextTimeoutMillis = getUpdateTimeout(end)
 
@@ -94,10 +86,7 @@
 
   const pid = process.pid
 
-  await updateTableRow('project', {id: projectId}, {pid,}).catch( err => {
-    console.error('there was an error setting the process id for present price updates:', err)
-    throw err
-  })
+  await catchErrorsWithMessage('There was an error setting the process id for present price updates', updateTableRow)('project', {id: projectId}, {pid,})
 
   setExitListeners()
 

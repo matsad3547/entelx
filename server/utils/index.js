@@ -4,7 +4,10 @@ const {
   getUpdateTimeout,
 } = require('./dateTimeUtils')
 
-const { checkStatus } = require('./requestUtils')
+const {
+  checkStatus,
+  catchErrorsWithMessage,
+} = require('./requestUtils')
 
 const { writeToFile } = require('./fileUtils')
 
@@ -22,6 +25,7 @@ module.exports = {
   tsToMillis,
   getUpdateTimeout,
   checkStatus,
+  catchErrorsWithMessage,
   writeToFile,
   calculateScoreData,
   calculateDerivedData,

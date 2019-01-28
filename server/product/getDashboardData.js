@@ -31,7 +31,7 @@ const getDashboardData = async (req, res) => {
 
   const start = moment().tz(timeZone).valueOf()
 
-  const firstUpdate = fiveMinutesMillis - (start - mostRecent) + (5 * 1000)
+  const firstUpdate = fiveMinutesMillis - (start - mostRecent) + (2 * 1000)
 
   res.sseSetup()
 
@@ -46,8 +46,8 @@ const getDashboardData = async (req, res) => {
 
   req.on('close', () => {
     console.log('Closing dashboard data connection')
-    interval && clearInterval(interval)
-    timeout && clearTimeout(timeout)
+    clearInterval(interval)
+    clearTimeout(timeout)
     res.sseClose()
   })
 }
