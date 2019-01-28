@@ -6,7 +6,7 @@ const { readTableRows } = require('../db/')
 
 const getDashboardConfig = (req, res) => {
 
-  const { id } = req.body
+  const { id } = req.params
 
   return readTableRows('project', { id, })
     .then( projectRes => {

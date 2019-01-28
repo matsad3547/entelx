@@ -34,9 +34,7 @@ const Project = ({match, history}) => {
 
     setLoading(true)
 
-    const body = JSON.stringify({id: params.projectId})
-
-    singleRequest('/delete_project', getRequest('DELETE', body))
+    singleRequest(`/project/${projectId}`, getRequest('DELETE'))
       .then( res => {
         setLoading(false)
         history.push(`${cleanUrl}`)
@@ -49,8 +47,7 @@ const Project = ({match, history}) => {
 
   const getProject = () => {
     setLoading(true)
-    const body = JSON.stringify({id: projectId})
-    singleRequest('/get_project', getRequest('POST', body))
+    singleRequest(`/project/${projectId}`, getRequest('GET'))
       .then(parseResponse)
       .then( res => {
         setProject(res[0])

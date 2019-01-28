@@ -19,7 +19,7 @@ const MapNodeRenderer = ({ map }) => {
   const [nodes, setNodes] = useState(null)
 
   useEffect( () => {
-    singleRequest('/get_nodes', getRequest('GET', null))
+    singleRequest('/nodes', getRequest('GET', null))
     .then(parseResponse)
     .then( nodes => setNodes(processNodes(nodes)))
     .catch(handleError)

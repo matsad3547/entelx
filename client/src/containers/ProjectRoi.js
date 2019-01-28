@@ -27,7 +27,7 @@ const ProjectRoi = ({match}) => {
     setData(JSON.parse(e.data))
   }
 
-  const sseRoute = `/get_roi/${projectId}`
+  const sseRoute = `/roi/${projectId}`
 
   connectToServerSideEvent(sseRoute, handleData)
 

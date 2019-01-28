@@ -46,8 +46,7 @@ JS Docs - insta documentation
   const getInitDashboard = () => {
 
     setLoading(true)
-    const body = JSON.stringify({id: projectId})
-    singleRequest('/get_dashboard_config', getRequest('POST', body))
+    singleRequest(`/dashboard/${projectId}/config`, getRequest('GET'))
       .then(parseResponse)
       .then( res => {
         console.log('res:', res);
@@ -73,7 +72,7 @@ JS Docs - insta documentation
     setStateOfCharge(null)
   }
 
-  const sseRoute = `/get_dashboard_data/${projectId}`
+  const sseRoute = `/dashboard/${projectId}/data`
 
   connectToServerSideEvent(sseRoute, handleData)
 

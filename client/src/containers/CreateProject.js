@@ -78,7 +78,7 @@ const CreateProject = ({
       body,
     }
 
-    singleRequest('/create_project', request)
+    singleRequest('/project/create', request)
       .then(parseResponse)
       .then( res => {
         setLoading(false)

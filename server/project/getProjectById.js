@@ -2,7 +2,7 @@ const { readTableRows } = require('../db/')
 
 const getProjectById = (req, res) => {
 
-  const { id } = req.body
+  const { id } = req.params
 
   return readTableRows('project', {id,})
     .then( project => project ? res.status(200).json(project) : res.sendStatus(404) )

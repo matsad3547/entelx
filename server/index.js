@@ -58,20 +58,19 @@ app.use(sse)
 
 //user
 // TODO make route snake case
-app.post('/createUser', createUser)
-app.post('/login', login)
+app.post('/user/create', createUser)
+app.post('/user/login', login)
 
 //dashboard
-// TODO change to '/dashboard/:id/config'
-app.post('/get_dashboard_config', getDashboardConfig)
-app.get('/get_dashboard_data/:id', getDashboardData)
+app.get('/dashboard/:id/config', getDashboardConfig)
+app.get('/dashboard/:id/data', getDashboardData)
 
-app.get('/get_nodes', getNodes)
-app.post('/create_project', createNewProject)
+app.get('/nodes', getNodes)
 
 //project page
-app.post('/get_project', getProjectById)
-app.delete('/delete_project', deleteProjectById)
+app.post('/project/create', createNewProject)
+app.get('/project/:id', getProjectById)
+app.delete('/project/:id', deleteProjectById)
 
 // last 3 weeks
 app.post('/get_3_week_data', getThreeWeekData)
@@ -103,4 +102,4 @@ const roiTest = (req, res) => {
   })
 }
 
-app.get('/get_roi/:id', roiTest)
+app.get('/roi/:id', roiTest)
