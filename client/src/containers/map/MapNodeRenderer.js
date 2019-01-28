@@ -21,33 +21,9 @@ const MapNodeRenderer = ({ map }) => {
   useEffect( () => {
     singleRequest('/nodes', getRequest('GET', null))
     .then(parseResponse)
-    .then( nodes => setNodes(processNodes(nodes)))
+    .then( nodes => setNodes(nodes))
     .catch(handleError)
   }, [])
-
-  const processNodes = nodes => nodes.reduce( (obj, node) => ({
-      ...obj,
-      features: [
-        ...obj.features,
-        {
-          type: 'Feature',
-          properties: {
-            type: node.type,
-            name: node.name,
-            maxMw: node.maxMw,
-            controlArea: node.controlArea,
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [node.lng, node.lat],
-          },
-          id: node.id,
-        },
-      ],
-    }), {
-      type: 'FeatureCollection',
-      features: [],
-  })
 
   const formatNodeLabels = nodeKey => {
     switch (nodeKey) {
