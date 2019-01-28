@@ -2,7 +2,9 @@ const getPriceRequest = require('./getPriceRequest')
 
 const { createTableRows } = require('../../db/')
 
-const updatePriceData = (
+const { catchErrorsWithMessage } = require('../../utils/')
+
+const updatePriceData = async (
   nodeData,
   endMillis,
   startMillis,
@@ -19,40 +21,22 @@ const updatePriceData = (
     params,
   } = getPriceRequest(nodeData)
 
-  return req(
-      ...params,
-      startMillis,
-      endMillis,
-      name,
-    )
-    .then( data => {
+  const data = await catchErrorsWithMessage(`There was an error getting data from ${startMillis} to ${endMillis}`, req)(...params, startMillis, endMillis, name)
 
-      const dataWithAvg = data.map( obj => ({
-        ...obj,
-        mvgAvg: currentAvg,
-        nodeId: id,
-        score: (obj.lmp - currentAvg) / currentAvg,
-      })
-    )
-
-    return createTableRows(
-      'price',
-      dataWithAvg
-    )
-    .then( () => ({
-        start: data[0].timestamp,
-        end: data[data.length - 1].timestamp,
-      })
-    )
-    .catch( err => {
-      console.error(`There was an error adding rows for data from ${startMillis} to ${endMillis}:`, err)
-      if (err) throw err
+  const dataWithAvg = data.map( obj => ({
+      ...obj,
+      mvgAvg: currentAvg,
+      nodeId: id,
+      score: (obj.lmp - currentAvg) / currentAvg,
     })
-  })
-  .catch( err => {
-    console.error(`There was an error getting data from ${startMillis} to ${endMillis}:`, err)
-    if (err) throw err
-  })
+  )
+
+  await catchErrorsWithMessage(`There was an error adding rows for data from ${startMillis} to ${endMillis}`, createTableRows)('price', dataWithAvg)
+
+  return {
+    start: data[0].timestamp,
+    end: data[data.length - 1].timestamp,
+  }
 }
 
 module.exports = updatePriceData
