@@ -954,26 +954,26 @@ describe('findThresholds', () => {
   //   expect(actual).toEqual(expected)
   // })
 
-  test('should return reasonable `chargeThreshold` and `dischargeThreshold` values on the `aggregate` object', () => {
-
-    const data = {
-      timeSeries: staticAvg,
-      aggregate: {},
-    }
-    const options = {
-      power: .001,
-      energy: (1/6) * .001,
-      rte: 1,
-      dischargeBuffer: 0,
-      chargeBuffer: 0,
-    }
-    const actual = findThresholds(data, key, period, options).aggregate
-    const expected = {
-      chargeThreshold: 2,
-      dischargeThreshold: 2,
-    }
-    expect(actual).toEqual(expected)
-  })
+  // test('should return reasonable `chargeThreshold` and `dischargeThreshold` values on the `aggregate` object', () => {
+  //
+  //   const data = {
+  //     timeSeries: staticAvg,
+  //     aggregate: {},
+  //   }
+  //   const options = {
+  //     power: .001,
+  //     energy: (1/6) * .001,
+  //     rte: 1,
+  //     dischargeBuffer: 0,
+  //     chargeBuffer: 0,
+  //   }
+  //   const actual = findThresholds(data, key, period, options).aggregate
+  //   const expected = {
+  //     chargeThreshold: 2,
+  //     dischargeThreshold: 2,
+  //   }
+  //   expect(actual).toEqual(expected)
+  // })
 })
 
 describe('findStdDev', () => {

@@ -179,61 +179,55 @@ const findInflections = (data, key, period) => {
   }
 }
 
-const getRevenue = (data, key, period, options) => {
+const getRevenueAndSoc = (
+  dischargeThreshold,
+  chargeThreshold,
+  power,
+  energy,
+  rte,
+  dischargeBuffer,
+  chargeBuffer,
+  currentState,
+  currentAvg,
+  data,
+  key,
+) => {
 
   const {
-    timeSeries,
-    aggregate,
-  } = data
+    soc,
+    revenue,
+  } = currentState
 
-  const {
-    power,
-    energy,
-    rte,
-    dischargeBuffer,
-    chargeBuffer,
-  } = options
-
-  // This function assumes 5 minute timeSeries data
-  const fiveMinsAsHour = 5 / 60
   const chargeEnergy = power * fiveMinsAsHour
 
   const maxEnergy = (1 - chargeBuffer) * energy
 
   const minEnergy = dischargeBuffer * energy
 
-  return (chargeThreshold, dischargeThreshold) => timeSeries.reduce( (obj, d, i) => {
+  const canCharge = soc + chargeEnergy <= maxEnergy
 
-    const canCharge = obj.charge + chargeEnergy <= maxEnergy
+  const canDischarge = soc - chargeEnergy >= minEnergy
 
-    const canDischarge = obj.charge - chargeEnergy >= minEnergy
+  const charge = canCharge && data[key] < currentAvg - chargeThreshold
 
-    const charge = canCharge && d[key] < d.mvgAvg - chargeThreshold
+  const discharge = canDischarge && data[key] > currentAvg + dischargeThreshold
 
-    const discharge = canDischarge && d[key] > d.mvgAvg + dischargeThreshold
-
-    if (charge) {
-      return {
-        charge: obj.charge + chargeEnergy,
-        revenue: obj.revenue - (d[key] * chargeEnergy),
-      }
+  if (charge) {
+    return {
+      soc: soc + chargeEnergy,
+      revenue: revenue - (d[key] * chargeEnergy),
     }
-    else if (discharge) {
-      return {
-        charge: obj.charge - chargeEnergy,
-        revenue: obj.revenue + (d[key] * rte * chargeEnergy),
-      }
+  }
+  else if (discharge) {
+    return {
+      soc: soc - chargeEnergy,
+      revenue: revenue + (d[key] * rte * chargeEnergy),
     }
-    else {
-      return obj
-    }
-  }, {
-    charge: minEnergy,
-    revenue: 0,
-  })
+  }
+  else {
+    return currentState
+  }
 }
-
-// const findRevenue = getRevenue(data, key, period, options)(data.aggregate.chargeThreshold, data.aggregate.dischargeThreshold)
 
 const findRevenue = (data, key, period, options) => {
 
@@ -256,7 +250,6 @@ const findRevenue = (data, key, period, options) => {
   } = options
 
   // This function assumes 5 minute timeSeries data
-  const fiveMinsAsHour = 5 / 60
   const chargeEnergy = power * fiveMinsAsHour
 
   const maxEnergy = (1 - chargeBuffer) * energy
@@ -329,7 +322,7 @@ const findThresholds = (data, key, period, options) => {
 
   const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (obj, d, i) => {
 
-    console.log('at findThresholds?', obj.revenue + '$', i, dischargeThreshold, chargeThreshold);
+    // console.log('at findThresholds?', obj.revenue + '$', i, dischargeThreshold, chargeThreshold);
 
     const canCharge = obj.charge + chargeEnergy <= maxEnergy
 
