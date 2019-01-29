@@ -14,7 +14,7 @@ const { writeToFile } = require('./fileUtils')
 const {
   calculateScoreData,
   calculateDerivedData,
-} = require('./dataScienceUtils')
+} = require('./calculationUtils')
 
 const { findClosest } = require('./geoUtils')
 

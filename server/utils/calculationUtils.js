@@ -1,7 +1,8 @@
 const optimize = require('optimization-js')
 const fmin = require('fmin')
+const { fiveMinsAsHour } = require('../config/')
 
-const pipeData = (...fns) => (data, key, period, options) => {
+const composeData = (...fns) => (data, key, period, options) => {
   const res = {
     timeSeries: data,
     aggregate: {},
@@ -180,18 +181,20 @@ const findInflections = (data, key, period) => {
 }
 
 const getRevenueAndSoc = (
-  dischargeThreshold,
-  chargeThreshold,
-  power,
-  energy,
-  rte,
-  dischargeBuffer,
-  chargeBuffer,
-  currentState,
-  currentAvg,
   data,
   key,
-) => {
+  batterySpecs,
+  currentAvg,
+  currentState,
+) => (dischargeThreshold, chargeThreshold) => {
+
+  const {
+    power,
+    energy,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  } = batterySpecs
 
   const {
     soc,
@@ -215,13 +218,13 @@ const getRevenueAndSoc = (
   if (charge) {
     return {
       soc: soc + chargeEnergy,
-      revenue: revenue - (d[key] * chargeEnergy),
+      revenue: revenue - (data[key] * chargeEnergy),
     }
   }
   else if (discharge) {
     return {
       soc: soc - chargeEnergy,
-      revenue: revenue + (d[key] * rte * chargeEnergy),
+      revenue: revenue + (data[key] * rte * chargeEnergy),
     }
   }
   else {
@@ -229,7 +232,7 @@ const getRevenueAndSoc = (
   }
 }
 
-const findRevenue = (data, key, period, options) => {
+const findRevenue = (data, key, period, batterySpecs) => {
 
   const {
     timeSeries,
@@ -242,49 +245,14 @@ const findRevenue = (data, key, period, options) => {
   } = aggregate
 
   const {
-    power,
     energy,
-    rte,
     dischargeBuffer,
-    chargeBuffer,
-  } = options
+  } = batterySpecs
 
-  // This function assumes 5 minute timeSeries data
-  const chargeEnergy = power * fiveMinsAsHour
+  const initEnergy = dischargeBuffer * energy
 
-  const maxEnergy = (1 - chargeBuffer) * energy
-
-  const minEnergy = dischargeBuffer * energy
-
-  const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (obj, d, i) => {
-
-    // console.log('at findRevenue:', obj.charge, i);
-
-    const canCharge = obj.charge + chargeEnergy <= maxEnergy
-
-    const canDischarge = obj.charge - chargeEnergy >= minEnergy
-
-    const charge = canCharge && d[key] < d.mvgAvg - chargeThreshold
-
-    const discharge = canDischarge && d[key] > d.mvgAvg + dischargeThreshold
-
-    if (charge) {
-      return {
-        charge: obj.charge + chargeEnergy,
-        revenue: obj.revenue - (d[key] * chargeEnergy),
-      }
-    }
-    else if (discharge) {
-      return {
-        charge: obj.charge - chargeEnergy,
-        revenue: obj.revenue + (d[key] * rte * chargeEnergy),
-      }
-    }
-    else {
-      return obj
-    }
-  }, {
-    charge: minEnergy,
+  const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (currentState, d) => getRevenueAndSoc(d, key, batterySpecs, d.mvgAvg, currentState)(dischargeThreshold, chargeThreshold) , {
+    soc: initEnergy,
     revenue: 0,
   })
 
@@ -406,16 +374,16 @@ const testOptimization = () => {
   return optimize.minimize_Powell(forOptimization, [-10])
 }
 
-const scoreValues = pipeData(
+const scoreValues = composeData(
   calculateMovingAverage,
   calculateScore,
 )
 
-const calculateScoreData = pipeData(
+const calculateScoreData = composeData(
   calculateScore,
 )
 
-const calculateDerivedData = pipeData(
+const calculateDerivedData = composeData(
   calculateMovingAverage,
   calculateScore,
   findMinMax,
@@ -423,7 +391,7 @@ const calculateDerivedData = pipeData(
 )
 
 module.exports = {
-  pipeData,
+  composeData,
   testOptimization,
   calculateMovingAverage,
   calculateScore,

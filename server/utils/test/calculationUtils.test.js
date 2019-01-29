@@ -1,7 +1,7 @@
 const { timeSeriesData } = require('./mocks/timeSeries')
 
 const {
-  pipeData,
+  composeData,
   testOptimization,
   calculateMovingAverage,
   calculateScore,
@@ -12,7 +12,7 @@ const {
   findRevenue,
   findStdDev,
   findThresholds,
-} = require('../dataScienceUtils')
+} = require('../calculationUtils')
 
 const testData = [
   //centered on 3
@@ -42,9 +42,9 @@ const testData = [
   },
 ]
 
-test('pipeData should return an object with `timeSeries` and `aggregate` properties', () => {
+test('composeData should return an object with `timeSeries` and `aggregate` properties', () => {
   const st = data => data
-  const composed = pipeData(st)
+  const composed = composeData(st)
   const actual = composed(testData)
   const expected = {
     timeSeries: testData,
@@ -55,7 +55,7 @@ test('pipeData should return an object with `timeSeries` and `aggregate` propert
 
 describe('calculateMovingAverage', () => {
 
-  const getAvgData = pipeData(calculateMovingAverage)
+  const getAvgData = composeData(calculateMovingAverage)
 
   test('should return an array', () => {
     const data = timeSeriesData
@@ -114,7 +114,7 @@ describe('calculateScore', () => {
   const period = 5
   const key = 'val'
 
-  const getScoreData = pipeData(
+  const getScoreData = composeData(
     calculateMovingAverage,
     calculateScore,
   )
@@ -221,7 +221,7 @@ describe('calculateArbitrage', () => {
 
   const period = 5
   const key = 'val'
-  const getArbitrageData = pipeData(
+  const getArbitrageData = composeData(
     calculateMovingAverage,
     calculateScore,
     calculateArbitrage,
@@ -293,7 +293,7 @@ describe('findMinMax', () => {
 
   const period = 5
   const key = 'val'
-  const getMinMaxData = pipeData(
+  const getMinMaxData = composeData(
     calculateMovingAverage,
     calculateScore,
     findMinMax,
@@ -359,7 +359,7 @@ describe('findInflections', () => {
 
   const period = 5
   const key = 'val'
-  const getInflectionData = pipeData(
+  const getInflectionData = composeData(
     calculateMovingAverage,
     calculateScore,
     findInflections,
@@ -557,7 +557,7 @@ describe('findRevenue', () => {
 
   const period = 6
   const key = 'lmp'
-  const getRevenueData = pipeData(
+  const getRevenueData = composeData(
     calculateMovingAverage,
     calculateScore,
     findRevenue,
@@ -713,7 +713,7 @@ describe('findRevenue', () => {
       dischargeBuffer: 0,
       chargeBuffer: 0,
     }
-    const actual = findRevenue(data, 'lmp', 6, options).aggregate.charge
+    const actual = findRevenue(data, 'lmp', 6, options).aggregate.soc
     const expected = 0
     expect(actual).toEqual(expected)
   })
@@ -786,7 +786,7 @@ describe('findThresholds', () => {
 
   const period = 6
   const key = 'lmp'
-  const getThresholdData = pipeData(
+  const getThresholdData = composeData(
     calculateMovingAverage,
     calculateScore,
     findThresholds,
@@ -979,7 +979,7 @@ describe('findThresholds', () => {
 describe('findStdDev', () => {
   const period = 5
   const key = 'lmp'
-  const getStdDev = pipeData(
+  const getStdDev = composeData(
     findStdDev,
   )
 
