@@ -1,4 +1,5 @@
 const getPriceRequest = require('./getPriceRequest')
+const updateRevenueAndSoc = require('./updateRevenueAndSoc')
 
 const { createTableRows } = require('../../db/')
 
@@ -8,6 +9,7 @@ const updatePriceData = async (
   nodeData,
   endMillis,
   startMillis,
+  project = null,
 ) => {
 
   const {
@@ -32,6 +34,10 @@ const updatePriceData = async (
   )
 
   await catchErrorsWithMessage(`There was an error adding rows for data from ${startMillis} to ${endMillis}`, createTableRows)('price', dataWithAvg)
+
+  if (project) {
+    await catchErrorsWithMessage('There was an error updating state of charge and revenue', updateRevenueAndSoc)(dataWithAvg, 'lmp', project)
+  }
 
   return {
     start: data[0].timestamp,

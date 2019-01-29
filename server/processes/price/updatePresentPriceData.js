@@ -40,7 +40,9 @@
 
   let firstUpdateTimeout, continuousTimeout, firstUpdate
 
-  const [nodeData] = await catchErrorsWithMessage('There was an error getting initial node data', readTableRows)('node', {id,})
+  const [nodeData] = await readTableRows('node', {id,})
+
+  const [project] = await readTableRows('project', {id: projectId})
 
   firstUpdate = getUpdateTimeout(mostRecent)
 
@@ -52,7 +54,7 @@
     let endMillis = getFiveMinutesFromNow(now)
     let startMillis = getOneMinuteAgo(now)
 
-    const {end} = await catchErrorsWithMessage('There was an error getting the initial price update', updatePriceData)(nodeData, endMillis, startMillis)
+    const {end} = await catchErrorsWithMessage('There was an error getting the initial price update', updatePriceData)(nodeData, endMillis, startMillis, project)
 
     let nextTimeoutMillis = getUpdateTimeout(end)
 
@@ -66,7 +68,7 @@
 
         console.log(`price data update at ${now.valueOf()}`)
 
-        const {end} = await catchErrorsWithMessage('There was an error getting continuous price updates', updatePriceData)(nodeData, endMillis, startMillis)
+        const {end} = await catchErrorsWithMessage('There was an error getting continuous price updates', updatePriceData)(nodeData, endMillis, startMillis, project)
 
         nextTimeoutMillis = getUpdateTimeout(end)
 

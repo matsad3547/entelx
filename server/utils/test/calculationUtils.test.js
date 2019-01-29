@@ -9,7 +9,7 @@ const {
   findMinMax,
   calculateDerivedData,
   findInflections,
-  findRevenue,
+  findAggregateRevenue,
   findStdDev,
   findThresholds,
 } = require('../calculationUtils')
@@ -553,14 +553,14 @@ describe('findInflections', () => {
   })
 })
 
-describe('findRevenue', () => {
+describe('findAggregateRevenue', () => {
 
   const period = 6
   const key = 'lmp'
   const getRevenueData = composeData(
     calculateMovingAverage,
     calculateScore,
-    findRevenue,
+    findAggregateRevenue,
   )
 
   const mockData = [
@@ -692,7 +692,7 @@ describe('findRevenue', () => {
       dischargeBuffer: 0,
       chargeBuffer: 0,
     }
-    const actual = findRevenue(data, 'lmp', 6, options).aggregate.revenue
+    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.revenue
     const expected = .0005
     expect(actual).toEqual(expected)
   })
@@ -713,7 +713,7 @@ describe('findRevenue', () => {
       dischargeBuffer: 0,
       chargeBuffer: 0,
     }
-    const actual = findRevenue(data, 'lmp', 6, options).aggregate.soc
+    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.soc
     const expected = 0
     expect(actual).toEqual(expected)
   })
@@ -734,7 +734,7 @@ describe('findRevenue', () => {
       dischargeBuffer: 0,
       chargeBuffer: 0,
     }
-    const actual = findRevenue(data, 'lmp', 6, options).aggregate.revenue
+    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.revenue
     const expected = .00083
     expect(actual).toBeCloseTo(expected, 5)
   })
@@ -752,10 +752,10 @@ describe('findRevenue', () => {
       power: .001,
       energy: 1.25 * (1/6) * .001,
       rte: 1,
-      dischargeBuffer: .1,
+      dischargeBuffer: .1, //percentages of battery energy
       chargeBuffer: .1,
     }
-    const actual = findRevenue(data, 'lmp', 6, options).aggregate.revenue
+    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.revenue
     const expected = .0005
     expect(actual).toEqual(expected)
   })
@@ -776,7 +776,7 @@ describe('findRevenue', () => {
       dischargeBuffer: .1,
       chargeBuffer: .1,
     }
-    const actual = findRevenue(data, 'lmp', 6, options).aggregate.revenue
+    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.revenue
     const expected = .0003167
     expect(actual).toBeCloseTo(expected, 6)
   })

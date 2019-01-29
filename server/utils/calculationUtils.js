@@ -180,13 +180,14 @@ const findInflections = (data, key, period) => {
   }
 }
 
-const getRevenueAndSoc = (
-  data,
+const findRevenueAndSoc = (
+  data, //array
   key,
   batterySpecs,
-  currentAvg,
   currentState,
-) => (dischargeThreshold, chargeThreshold) => {
+  dischargeThreshold,
+  chargeThreshold,
+) => {
 
   const {
     power,
@@ -207,32 +208,35 @@ const getRevenueAndSoc = (
 
   const minEnergy = dischargeBuffer * energy
 
-  const canCharge = soc + chargeEnergy <= maxEnergy
+  return data.reduce( (state, d) => {
 
-  const canDischarge = soc - chargeEnergy >= minEnergy
+    const canCharge = state.soc + chargeEnergy <= maxEnergy
 
-  const charge = canCharge && data[key] < currentAvg - chargeThreshold
+    const canDischarge = state.soc - chargeEnergy >= minEnergy
 
-  const discharge = canDischarge && data[key] > currentAvg + dischargeThreshold
+    const charge = canCharge && d[key] < d.mvgAvg - chargeThreshold
 
-  if (charge) {
-    return {
-      soc: soc + chargeEnergy,
-      revenue: revenue - (data[key] * chargeEnergy),
+    const discharge = canDischarge && d[key] > d.mvgAvg + dischargeThreshold
+
+    if (charge) {
+      return {
+        soc: state.soc + chargeEnergy,
+        revenue: state.revenue - (d[key] * chargeEnergy),
+      }
     }
-  }
-  else if (discharge) {
-    return {
-      soc: soc - chargeEnergy,
-      revenue: revenue + (data[key] * rte * chargeEnergy),
+    else if (discharge) {
+      return {
+        soc: state.soc - chargeEnergy,
+        revenue: state.revenue + (d[key] * rte * chargeEnergy),
+      }
     }
-  }
-  else {
-    return currentState
-  }
+    else {
+      return state
+    }
+  }, currentState)
 }
 
-const findRevenue = (data, key, period, batterySpecs) => {
+const findAggregateRevenue = (data, key, period, batterySpecs) => {
 
   const {
     timeSeries,
@@ -251,10 +255,16 @@ const findRevenue = (data, key, period, batterySpecs) => {
 
   const initEnergy = dischargeBuffer * energy
 
-  const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (currentState, d) => getRevenueAndSoc(d, key, batterySpecs, d.mvgAvg, currentState)(dischargeThreshold, chargeThreshold) , {
+  const initState = {
     soc: initEnergy,
     revenue: 0,
-  })
+  }
+
+  const calculation = (dischargeThreshold, chargeThreshold) => findRevenueAndSoc(timeSeries, key, batterySpecs, initState, dischargeThreshold, chargeThreshold)
+  // const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (currentState, d) => findRevenueAndSoc(d, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold), {
+  //   soc: initEnergy,
+  //   revenue: 0,
+  // })
 
   return {
     ...data,
@@ -399,7 +409,8 @@ module.exports = {
   scoreValues,
   findMinMax,
   findInflections,
-  findRevenue,
+  findRevenueAndSoc,
+  findAggregateRevenue,
   findThresholds,
   findStdDev,
   calculateScoreData,

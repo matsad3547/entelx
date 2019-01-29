@@ -14,6 +14,7 @@ const { writeToFile } = require('./fileUtils')
 const {
   calculateScoreData,
   calculateDerivedData,
+  findRevenueAndSoc,
 } = require('./calculationUtils')
 
 const { findClosest } = require('./geoUtils')
@@ -29,6 +30,7 @@ module.exports = {
   writeToFile,
   calculateScoreData,
   calculateDerivedData,
+  findRevenueAndSoc,
   findClosest,
   setExitListeners,
 }

@@ -39,10 +39,18 @@ const createProject = async (data, res, next) => {
 
   // TODO Get timezone from this way: https://www.mapbox.com/help/create-a-timezone-finder-with-mapbox-tilequery-api/
   const timeZone = 'America/Los_Angeles'
+  const dischargeBuffer = 0
+  const chargeBuffer = 0
+  const soc = 0
+  const revenue = 0
 
   const manualData = {
     ...data,
     timeZone,
+    dischargeBuffer,
+    chargeBuffer,
+    soc,
+    revenue,
   }
 
   const [ id ] = await createTableRow('project', manualData)
