@@ -12,6 +12,7 @@ const {
   findAggregateRevenue,
   findStdDev,
   findThresholds,
+  findRevenueAndSoc,
 } = require('../calculationUtils')
 
 const testData = [
@@ -1071,5 +1072,43 @@ describe('testOptimization', () => {
     const actual = testOptimization().fncvalue
     const expected = -2.25
     expect(actual).toBeCloseTo(expected, 5)
+  })
+})
+
+describe('findRevenueAndSoc', () => {
+  test('should do something', () => {
+    const data = [
+      {
+        timestamp: 1548788100000,
+        lmp: 30.81711,
+        lossPrc: 1.31858,
+        ghgPrc: 0,
+        energyPrc: 29.49853,
+        congestionPrc: 0,
+        mvgAvg: 40.3,
+        nodeId: 3969,
+        score: -0.23530744416873445
+      }
+    ]
+    const key = 'lmp'
+    const batterySpecs = {
+      power: 2.5,
+      energy: 5,
+      rte: 0.85,
+      dischargeBuffer: 0,
+      chargeBuffer: 0 ,
+    }
+    const currentState = {
+      soc: 0,
+      revenue: 0,
+    }
+    const dischargeThreshold = 0
+    const chargeThreshold = 0
+    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const expected = {
+      soc: 0.20833333333333331,
+      revenue: -6.42023125,
+    }
+    expect(actual).toEqual(expected)
   })
 })

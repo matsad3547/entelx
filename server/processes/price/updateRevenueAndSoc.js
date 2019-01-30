@@ -33,18 +33,9 @@ const updateRevenueAndSoc = (data, key, project) => {
     revenue,
   }
 
-  const {
-    newSoc,
-    newRevenue,
-  } = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+  const newVals = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
 
-  console.log('does findRevenueAndSoc work?',
-  project, data,
-  currentState,
-  newSoc,
-  newRevenue);
-
-  return updateTableRow('project', {id,}, {soc: newSoc, revenue: newRevenue})
+  return updateTableRow('project', {id,}, {soc: newVals.soc , revenue: newVals.revenue })
 }
 
 module.exports = updateRevenueAndSoc
