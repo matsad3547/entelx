@@ -25,7 +25,11 @@ const getDashboardData = async (req, res) => {
   const {
     nodeId,
     timeZone,
+    soc,
+    revenue,
   } = project
+
+  const projectId = project.id
 
   const maxRes = await catchErrorsWithMessage(`There was an error finding the max timestamp associated with node ${nodeId}`, findMax)('price', 'timestamp', {nodeId,})
 
@@ -54,14 +58,15 @@ const getDashboardData = async (req, res) => {
   })
 }
 
-const getData = (res, project) => {
+const getData = async (res, projectSpecs) => {
 
   const {
+    id,
     lat,
     lng,
     timeZone,
     nodeId,
-  } = project
+  } = projectSpecs
 
   const now = moment().tz(timeZone)
   const endMillis = now.valueOf()
@@ -71,24 +76,39 @@ const getData = (res, project) => {
 
   console.log('refreshing dashboard data at', endMillis)
 
-  return Promise.all([
+  const data = await Promise.all([
       getCurrentWeather(lat, lng),
-      readTableRowsWhereBtw(
-        'price',
-        {nodeId,},
-        'timestamp',
-        [startMillis, endMillis],
-      )
-    ]
-    .map( p => p.catch(handleMultiPromiseError) )
+      readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis]),
+      readTableRows('project', {id,})
+    ].map( p => p.catch(handleMultiPromiseError) )
   )
-  .then( data => {
 
-    return res.sseSend({
-      weather: data[0],
-      prices: data[1],
-    })
+  const [weather, prices, [project]] = data
+
+  return res.sseSend({
+    weather,
+    prices,
+    revenue: project.revenue,
+    soc: project.soc,
   })
+
+  // return Promise.all([
+  //     getCurrentWeather(lat, lng),
+  //     readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis]),
+  //     readTableRows('project', {id,})
+  //   ].map( p => p.catch(handleMultiPromiseError) )
+  // )
+  // .then( data => {
+  //
+  //   const [weather, prices, [project]] = data
+  //
+  //   return res.sseSend({
+  //     weather,
+  //     prices,
+  //     revenue: project.revenue,
+  //     soc: project.soc,
+  //   })
+  // })
 }
 
 const handleMultiPromiseError = err => {

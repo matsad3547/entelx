@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import CurrentWeatherDisplay from '../components/CurrentWeatherDisplay'
-import ChargingIndicator from '../components/ChargingIndicator'
-import Header4 from '../components/Header4'
+import Status from '../components/Status'
 import Loading from '../components/loading/'
 import DashboardSection from '../components/DashboardSection'
 import LineBarChart from '../components/charts/LineBarChart'
@@ -32,7 +31,8 @@ const ProjectDashboard = ({match}) => {
   const [loading, setLoading] = useState(false)
   const [weather, setWeather] = useState(null)
   const [prices, setPrices] = useState(null)
-  const [stateOfCharge, setStateOfCharge] = useState(null)
+  const [revenue, setRevenue] = useState(null)
+  const [soc, setSoc] = useState(null)
   const [config, setConfig] = useState(null)
 
 /**
@@ -61,15 +61,17 @@ JS Docs - insta documentation
 
   const handleData = e => {
     e.preventDefault()
-    console.log('data from sse:', e.data);
     const {
       weather,
       prices,
+      revenue,
+      soc,
     } = JSON.parse(e.data)
 
     setWeather(weather)
     setPrices(prices)
-    setStateOfCharge(null)
+    setRevenue(revenue)
+    setSoc(soc)
   }
 
   const sseRoute = `/dashboard/${projectId}/data`
@@ -84,6 +86,9 @@ JS Docs - insta documentation
 
   const dataLoaded = loading && !hasPrices
 
+  const hasSoc = soc !== null && revenue !== null
+
+
   return (
 
     <ProjectPageTemplate
@@ -94,12 +99,14 @@ JS Docs - insta documentation
       { dataLoaded && <Loading message={''} />}
       <div style={styles.root}>
         {
-          (hasPrices && config) &&
-          <ChargingIndicator
+          (hasPrices && config && hasSoc) &&
+          <Status
             prices={prices}
             timeZone={config.timeZone}
             chargeThreshold={config.chargeThreshold}
             dischargeThreshold={config.dischargeThreshold}
+            soc={soc}
+            revenue={revenue}
             />
         }
         {
@@ -121,14 +128,6 @@ JS Docs - insta documentation
             weather={weather}
             timeZone={config.timeZone}
             />
-        }
-        {
-          stateOfCharge &&
-          <div style={styles.subSection}>
-            <div style={styles.header}>
-              <Header4 content="State of Charge" />
-            </div>
-          </div>
         }
       </div>
     </ProjectPageTemplate>

@@ -3,22 +3,22 @@ import PropTypes from 'prop-types'
 
 import { fontSize } from '../config/styles'
 
-const Label = ({ content }) => (
+const HeadingLabel = ({ content }) => (
 
-  <span style={labelStyle}>
+  <span style={styles}>
     {content}
   </span>
 )
 
-export const labelStyle = {
+const styles = {
   display: 'block',
-  padding: '1em 0',
+  padding: '0 0 1em',
   fontStyle: 'italic',
-  fontSize: fontSize.label,
+  fontSize: fontSize.h4,
 }
 
-Label.propTypes = {
+HeadingLabel.propTypes = {
   content: PropTypes.string,
 }
 
-export default Label
+export default HeadingLabel
