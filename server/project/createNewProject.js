@@ -41,7 +41,7 @@ const createProject = async (data, res, next) => {
   const timeZone = 'America/Los_Angeles'
   const dischargeBuffer = 0
   const chargeBuffer = 0
-  const soc = 0
+  const charge = 0
   const revenue = 0
 
   const manualData = {
@@ -49,7 +49,7 @@ const createProject = async (data, res, next) => {
     timeZone,
     dischargeBuffer,
     chargeBuffer,
-    soc,
+    charge,
     revenue,
   }
 

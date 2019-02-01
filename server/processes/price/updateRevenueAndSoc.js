@@ -1,5 +1,5 @@
 const {
-  findRevenueAndSoc,
+  findRevenueAndCharge,
   catchErrorsWithMessage,
 } = require('../../utils/')
 
@@ -16,7 +16,7 @@ const updateRevenueAndSoc = (data, key, project) => {
     chargeBuffer,
     dischargeThreshold,
     chargeThreshold,
-    soc,
+    charge,
     revenue,
   } = project
 
@@ -29,13 +29,13 @@ const updateRevenueAndSoc = (data, key, project) => {
   }
 
   const currentState = {
-    soc,
+    charge,
     revenue,
   }
 
-  const newVals = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+  const newVals = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
 
-  return updateTableRow('project', {id,}, {soc: newVals.soc , revenue: newVals.revenue })
+  return updateTableRow('project', {id,}, {charge: newVals.charge , revenue: newVals.revenue })
 }
 
 module.exports = updateRevenueAndSoc

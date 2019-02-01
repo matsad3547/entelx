@@ -1,4 +1,4 @@
-const moment = require('moment-timezone')
+chargeconst moment = require('moment-timezone')
 
 const { fiveMinutesMillis } = require('../config/')
 
@@ -25,7 +25,7 @@ const getDashboardData = async (req, res) => {
   const {
     nodeId,
     timeZone,
-    soc,
+    charge,
     revenue,
   } = project
 
@@ -89,7 +89,7 @@ const getData = async (res, projectSpecs) => {
     weather,
     prices,
     revenue: project.revenue,
-    soc: project.soc,
+    charge: project.charge,
   })
 
   // return Promise.all([

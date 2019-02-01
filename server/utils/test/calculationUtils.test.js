@@ -12,7 +12,7 @@ const {
   findAggregateRevenue,
   findStdDev,
   findThresholds,
-  findRevenueAndSoc,
+  findRevenueAndCharge,
 } = require('../calculationUtils')
 
 const testData = [
@@ -714,7 +714,7 @@ describe('findAggregateRevenue', () => {
       dischargeBuffer: 0,
       chargeBuffer: 0,
     }
-    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.soc
+    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.charge
     const expected = 0
     expect(actual).toEqual(expected)
   })
@@ -1075,7 +1075,7 @@ describe('testOptimization', () => {
   })
 })
 
-describe('findRevenueAndSoc', () => {
+describe('findRevenueAndCharge', () => {
   test('should do something with real data', () => {
     const data = [
       {
@@ -1099,14 +1099,14 @@ describe('findRevenueAndSoc', () => {
       chargeBuffer: 0 ,
     }
     const currentState = {
-      soc: 0,
+      charge: 0,
       revenue: 0,
     }
     const dischargeThreshold = 0
     const chargeThreshold = 0
-    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
     const expected = {
-      soc: 0.20833333333333331,
+      charge: 0.20833333333333331,
       revenue: -6.42023125,
     }
     expect(actual).toEqual(expected)
@@ -1129,18 +1129,18 @@ describe('findRevenueAndSoc', () => {
       chargeBuffer: 0 ,
     }
     const currentState = {
-      soc: 0,
+      charge: 0,
       revenue: 0,
     }
     const dischargeThreshold = 0
     const chargeThreshold = 0
-    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
     const expected = {
-      soc: 2.5/12,
+      charge: 2.5/12,
       revenue: -2.5 * (30/12),
     }
     expect(actual.revenue).toBeCloseTo(expected.revenue, 10)
-    expect(actual.soc).toBeCloseTo(expected.soc, 10)
+    expect(actual.charge).toBeCloseTo(expected.charge, 10)
   })
 
   test('should charge from zero correctly', () => {
@@ -1160,14 +1160,14 @@ describe('findRevenueAndSoc', () => {
       chargeBuffer: 0 ,
     }
     const currentState = {
-      soc: 0, //MWh
+      charge: 0, //MWh
       revenue: 0, //$
     }
     const dischargeThreshold = 0
     const chargeThreshold = 0
-    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
     const expected = {
-      soc: 1/12,
+      charge: 1/12,
       revenue: -30/12,
     }
     expect(actual).toEqual(expected)
@@ -1190,14 +1190,14 @@ describe('findRevenueAndSoc', () => {
       chargeBuffer: 0 ,
     }
     const currentState = {
-      soc: 1/12,
+      charge: 1/12,
       revenue: -30/12,
     }
     const dischargeThreshold = 0
     const chargeThreshold = 0
-    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
     const expected = {
-      soc: 1/6,
+      charge: 1/6,
       revenue: -30/6,
     }
     expect(actual).toEqual(expected)
@@ -1220,14 +1220,14 @@ describe('findRevenueAndSoc', () => {
       chargeBuffer: 0 ,
     }
     const currentState = {
-      soc: 0, //%
+      charge: 0, //%
       revenue: 0, //$
     }
     const dischargeThreshold = 5
     const chargeThreshold = 5
-    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
     const expected = {
-      soc: 0,
+      charge: 0,
       revenue: 0,
     }
     expect(actual).toEqual(expected)
@@ -1250,14 +1250,14 @@ describe('findRevenueAndSoc', () => {
       chargeBuffer: 0 ,
     }
     const currentState = {
-      soc: 1/12,
+      charge: 1/12,
       revenue: -30/12,
     }
     const dischargeThreshold = 5
     const chargeThreshold = 5
-    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
     const expected = {
-      soc: 1/12,
+      charge: 1/12,
       revenue: -30/12,
     }
     expect(actual).toEqual(expected)
@@ -1280,14 +1280,14 @@ describe('findRevenueAndSoc', () => {
       chargeBuffer: 0 ,
     }
     const currentState = {
-      soc: 0,
+      charge: 0,
       revenue: -30/12,
     }
     const dischargeThreshold = 5
     const chargeThreshold = 5
-    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
     const expected = {
-      soc: 0,
+      charge: 0,
       revenue: -30/12,
     }
     expect(actual).toEqual(expected)
@@ -1310,14 +1310,14 @@ describe('findRevenueAndSoc', () => {
       chargeBuffer: 0 ,
     }
     const currentState = {
-      soc: 2/12,
+      charge: 2/12,
       revenue: -30/12,
     }
     const dischargeThreshold = 5
     const chargeThreshold = 5
-    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
     const expected = {
-      soc: 2/12,
+      charge: 2/12,
       revenue: -30/12,
     }
     expect(actual).toEqual(expected)
@@ -1340,17 +1340,17 @@ describe('findRevenueAndSoc', () => {
       chargeBuffer: 0 ,
     }
     const currentState = {
-      soc: 2/12,
+      charge: 2/12,
       revenue: -30/12,
     }
     const dischargeThreshold = 5
     const chargeThreshold = 5
-    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
     const expected = {
-      soc: 1/12,
+      charge: 1/12,
       revenue: 16/12,
     }
-    expect(actual.soc).toBeCloseTo(expected.soc, 10)
+    expect(actual.charge).toBeCloseTo(expected.charge, 10)
     expect(actual.revenue).toBeCloseTo(expected.revenue, 10)
   })
 })
