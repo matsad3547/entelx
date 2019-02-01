@@ -14,7 +14,7 @@ const Status = ({
   timeZone,
   chargeThreshold,
   dischargeThreshold,
-  soc,
+  charge,
   revenue,
   energy,
 }) => {
@@ -41,7 +41,7 @@ const Status = ({
         </div>
         <div style={styles.followingSection}>
           <HeadingLabel content="State of Charge" />
-          <DataDisplay content={`${roundToDigits((soc/energy) * 100, 1)} %`}/>
+          <DataDisplay content={`${roundToDigits((charge/energy) * 100, 1)} %`}/>
         </div>
         <div style={styles.followingSection}>
           <HeadingLabel content="Revenue" />
@@ -70,7 +70,7 @@ Status.propTypes = {
       timestamp: PropTypes.number,
     })
   ).isRequired,
-  soc: PropTypes.number.isRequired,
+  charge: PropTypes.number.isRequired,
   revenue: PropTypes.number.isRequired,
   timeZone: PropTypes.string.isRequired,
 }

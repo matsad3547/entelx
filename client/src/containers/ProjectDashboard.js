@@ -32,7 +32,7 @@ const ProjectDashboard = ({match}) => {
   const [weather, setWeather] = useState(null)
   const [prices, setPrices] = useState(null)
   const [revenue, setRevenue] = useState(null)
-  const [soc, setSoc] = useState(null)
+  const [charge, setCharge] = useState(null)
   const [config, setConfig] = useState(null)
 
 /**
@@ -65,13 +65,13 @@ JS Docs - insta documentation
       weather,
       prices,
       revenue,
-      soc,
+      charge,
     } = JSON.parse(e.data)
 
     setWeather(weather)
     setPrices(prices)
     setRevenue(revenue)
-    setSoc(soc)
+    setCharge(charge)
   }
 
   const sseRoute = `/dashboard/${projectId}/data`
@@ -86,8 +86,7 @@ JS Docs - insta documentation
 
   const dataLoaded = loading && !hasPrices
 
-  const hasSoc = soc !== null && revenue !== null
-
+  const hasSoc = charge !== null && revenue !== null
 
   return (
 
@@ -105,7 +104,7 @@ JS Docs - insta documentation
             timeZone={config.timeZone}
             chargeThreshold={config.chargeThreshold}
             dischargeThreshold={config.dischargeThreshold}
-            soc={soc}
+            charge={charge}
             revenue={revenue}
             energy={config.energy}
             />

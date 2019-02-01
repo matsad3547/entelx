@@ -1,4 +1,4 @@
-chargeconst moment = require('moment-timezone')
+const moment = require('moment-timezone')
 
 const { fiveMinutesMillis } = require('../config/')
 

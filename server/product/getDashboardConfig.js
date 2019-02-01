@@ -1,7 +1,5 @@
 const moment = require('moment-timezone')
 
-const getDashboardData = require('./getDashboardData')
-
 const { readTableRows } = require('../db/')
 
 const getDashboardConfig = (req, res) => {
