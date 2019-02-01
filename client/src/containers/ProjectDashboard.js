@@ -107,6 +107,7 @@ JS Docs - insta documentation
             dischargeThreshold={config.dischargeThreshold}
             soc={soc}
             revenue={revenue}
+            energy={config.energy}
             />
         }
         {

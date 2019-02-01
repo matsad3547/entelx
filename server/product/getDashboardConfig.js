@@ -20,6 +20,7 @@ const getDashboardConfig = (req, res) => {
         timeZone,
         chargeThreshold,
         dischargeThreshold,
+        energy,
       } = project
 
       const projectName = project.name
@@ -33,6 +34,7 @@ const getDashboardConfig = (req, res) => {
           timeZone,
           chargeThreshold,
           dischargeThreshold,
+          energy,
         },
       })
     })

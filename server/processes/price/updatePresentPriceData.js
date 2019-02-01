@@ -42,8 +42,6 @@
 
   const [nodeData] = await readTableRows('node', {id,})
 
-  const [project] = await readTableRows('project', {id: projectId})
-
   firstUpdate = getUpdateTimeout(mostRecent)
 
   firstUpdateTimeout = setTimeout( async () => {
@@ -53,6 +51,8 @@
 
     let endMillis = getFiveMinutesFromNow(now)
     let startMillis = getOneMinuteAgo(now)
+
+    const [project] = await readTableRows('project', {id: projectId})
 
     const {end} = await catchErrorsWithMessage('There was an error getting the initial price update', updatePriceData)(nodeData, endMillis, startMillis, project)
 
@@ -65,6 +65,8 @@
 
         endMillis = getFiveMinutesFromNow(now)
         startMillis = getOneMinuteAgo(now)
+
+        const [project] = await readTableRows('project', {id: projectId})
 
         console.log(`price data update at ${now.valueOf()}`)
 

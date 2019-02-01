@@ -1076,7 +1076,7 @@ describe('testOptimization', () => {
 })
 
 describe('findRevenueAndSoc', () => {
-  test('should do something', () => {
+  test('should do something with real data', () => {
     const data = [
       {
         timestamp: 1548788100000,
@@ -1110,5 +1110,247 @@ describe('findRevenueAndSoc', () => {
       revenue: -6.42023125,
     }
     expect(actual).toEqual(expected)
+  })
+
+  test('should return realistic charge values', () => {
+    const data = [
+      {
+        timestamp: 1548788100000,
+        lmp: 30,
+        mvgAvg: 40,
+      }
+    ]
+    const key = 'lmp'
+    const batterySpecs = {
+      power: 2.5,
+      energy: 5,
+      rte: 0.85,
+      dischargeBuffer: 0,
+      chargeBuffer: 0 ,
+    }
+    const currentState = {
+      soc: 0,
+      revenue: 0,
+    }
+    const dischargeThreshold = 0
+    const chargeThreshold = 0
+    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const expected = {
+      soc: 2.5/12,
+      revenue: -2.5 * (30/12),
+    }
+    expect(actual.revenue).toBeCloseTo(expected.revenue, 10)
+    expect(actual.soc).toBeCloseTo(expected.soc, 10)
+  })
+
+  test('should charge from zero correctly', () => {
+    const data = [
+      {
+        timestamp: 1548788100000,
+        lmp: 30, //$/MWh
+        mvgAvg: 40,
+      }
+    ]
+    const key = 'lmp'
+    const batterySpecs = {
+      power: 1, //MW
+      energy: 1, //MWh
+      rte: 1, //%
+      dischargeBuffer: 0,
+      chargeBuffer: 0 ,
+    }
+    const currentState = {
+      soc: 0, //MWh
+      revenue: 0, //$
+    }
+    const dischargeThreshold = 0
+    const chargeThreshold = 0
+    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const expected = {
+      soc: 1/12,
+      revenue: -30/12,
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  test('should charge from an existing level correctly', () => {
+    const data = [
+      {
+        timestamp: 1548788100000,
+        lmp: 30, //$/MWh
+        mvgAvg: 40,
+      }
+    ]
+    const key = 'lmp'
+    const batterySpecs = {
+      power: 1, //MW
+      energy: 1, //MWh
+      rte: 1, //%
+      dischargeBuffer: 0,
+      chargeBuffer: 0 ,
+    }
+    const currentState = {
+      soc: 1/12,
+      revenue: -30/12,
+    }
+    const dischargeThreshold = 0
+    const chargeThreshold = 0
+    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const expected = {
+      soc: 1/6,
+      revenue: -30/6,
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  test('should not charge from zero if the price is not below the charge threshold', () => {
+    const data = [
+      {
+        timestamp: 1548788100000,
+        lmp: 36, //$/MWh
+        mvgAvg: 40,
+      }
+    ]
+    const key = 'lmp'
+    const batterySpecs = {
+      power: 1, //MW
+      energy: 1, //MWh
+      rte: 1, //%
+      dischargeBuffer: 0,
+      chargeBuffer: 0 ,
+    }
+    const currentState = {
+      soc: 0, //%
+      revenue: 0, //$
+    }
+    const dischargeThreshold = 5
+    const chargeThreshold = 5
+    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const expected = {
+      soc: 0,
+      revenue: 0,
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  test('should not charge from a non-zero level if the price is not below the charge threshold', () => {
+    const data = [
+      {
+        timestamp: 1548788100000,
+        lmp: 36, //$/MWh
+        mvgAvg: 40,
+      }
+    ]
+    const key = 'lmp'
+    const batterySpecs = {
+      power: 1, //MW
+      energy: 1, //MWh
+      rte: 1, //%
+      dischargeBuffer: 0,
+      chargeBuffer: 0 ,
+    }
+    const currentState = {
+      soc: 1/12,
+      revenue: -30/12,
+    }
+    const dischargeThreshold = 5
+    const chargeThreshold = 5
+    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const expected = {
+      soc: 1/12,
+      revenue: -30/12,
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  test('should not discharge from zero', () => {
+    const data = [
+      {
+        timestamp: 1548788100000,
+        lmp: 46, //$/MWh
+        mvgAvg: 40,
+      }
+    ]
+    const key = 'lmp'
+    const batterySpecs = {
+      power: 1, //MW
+      energy: 1, //MWh
+      rte: 1, //%
+      dischargeBuffer: 0,
+      chargeBuffer: 0 ,
+    }
+    const currentState = {
+      soc: 0,
+      revenue: -30/12,
+    }
+    const dischargeThreshold = 5
+    const chargeThreshold = 5
+    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const expected = {
+      soc: 0,
+      revenue: -30/12,
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  test('should not discharge from a non-zero level if the price is not above the discharge threshold', () => {
+    const data = [
+      {
+        timestamp: 1548788100000,
+        lmp: 44, //$/MWh
+        mvgAvg: 40,
+      }
+    ]
+    const key = 'lmp'
+    const batterySpecs = {
+      power: 1, //MW
+      energy: 1, //MWh
+      rte: 1, //%
+      dischargeBuffer: 0,
+      chargeBuffer: 0 ,
+    }
+    const currentState = {
+      soc: 2/12,
+      revenue: -30/12,
+    }
+    const dischargeThreshold = 5
+    const chargeThreshold = 5
+    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const expected = {
+      soc: 2/12,
+      revenue: -30/12,
+    }
+    expect(actual).toEqual(expected)
+  })
+
+  test('should discharge from a non-zero level if the price is above the discharge threshold', () => {
+    const data = [
+      {
+        timestamp: 1548788100000,
+        lmp: 46, //$/MWh
+        mvgAvg: 40,
+      }
+    ]
+    const key = 'lmp'
+    const batterySpecs = {
+      power: 1, //MW
+      energy: 1, //MWh
+      rte: 1, //%
+      dischargeBuffer: 0,
+      chargeBuffer: 0 ,
+    }
+    const currentState = {
+      soc: 2/12,
+      revenue: -30/12,
+    }
+    const dischargeThreshold = 5
+    const chargeThreshold = 5
+    const actual = findRevenueAndSoc(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const expected = {
+      soc: 1/12,
+      revenue: 16/12,
+    }
+    expect(actual.soc).toBeCloseTo(expected.soc, 10)
+    expect(actual.revenue).toBeCloseTo(expected.revenue, 10)
   })
 })

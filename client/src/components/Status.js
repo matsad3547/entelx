@@ -16,6 +16,7 @@ const Status = ({
   dischargeThreshold,
   soc,
   revenue,
+  energy,
 }) => {
 
   const latest = prices[prices.length - 1]
@@ -40,7 +41,7 @@ const Status = ({
         </div>
         <div style={styles.followingSection}>
           <HeadingLabel content="State of Charge" />
-          <DataDisplay content={`${roundToDigits(soc * 100, 1)} %`}/>
+          <DataDisplay content={`${roundToDigits((soc/energy) * 100, 1)} %`}/>
         </div>
         <div style={styles.followingSection}>
           <HeadingLabel content="Revenue" />
