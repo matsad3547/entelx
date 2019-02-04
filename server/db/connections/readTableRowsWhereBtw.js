@@ -9,6 +9,6 @@ const readTableRowsWhereBtw = (
   .where(queryObj)
   .whereBetween(wbColumn, wbArr)
   .debug()
-  .catch( err => console.error(`Error reading from table ${table} by ${query} and where ${wbColumn} is between ${wbArr}:`, err))
+  .catch( err => console.error(`Error reading from '${table}' table by ${queryObj} and where '${wbColumn}' is between ${wbArr}:`, err))
 
 module.exports = readTableRowsWhereBtw

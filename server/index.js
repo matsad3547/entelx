@@ -19,7 +19,7 @@ const {
 const {
   getDashboardConfig,
   getDashboardData,
-  getThreeWeekData,
+  getHistoricalData,
 } = require('./product/')
 
 const {
@@ -71,8 +71,8 @@ app.post('/project/create', createNewProject)
 app.get('/project/:id', getProjectById)
 app.delete('/project/:id', deleteProjectById)
 
-// last 3 weeks
-app.post('/get_3_week_data', getThreeWeekData)
+// historical
+app.post('/historical/', getHistoricalData)
 
 const roiTest = (req, res) => {
 

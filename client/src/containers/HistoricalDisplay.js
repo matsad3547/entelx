@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import moment from 'moment-timezone'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
@@ -25,22 +26,39 @@ const HistoricalDisplay = ({match}) => {
   const cleanUrl = getBaseUrl(url, 'historical', projectId)
 
   const [loading, setLoading] = useState(false)
-  const [timeSeries, setTimeSeries] = useState(null)
-  const [aggregate, setAggregate] = useState(null)
+  const [timeseries, setTimeseries] = useState(null)
+  // const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
 
-  const getData = () => {
+  const getInitTimes = () => {
+    const now = moment()
+    const endMillis = now.valueOf()
+    const startMillis = now.clone()
+                        .subtract(7, 'days')
+                        .valueOf()
+    return {
+      endMillis,
+      startMillis,
+    }
+  }
+
+  const getData = (endMillis, startMillis, weather = false) => {
+
+    const body = {
+      id: projectId,
+      endMillis,
+      startMillis,
+    }
 
     setLoading(true)
-    const body = JSON.stringify({id: projectId})
-    singleRequest('/get_3_week_data', getRequest('POST', body))
+    singleRequest('/historical/', getRequest('POST', JSON.stringify(body)))
       .then(parseResponse)
       .then( res => {
         console.log('res:', res);
         setLoading(false)
         setConfig(res.config)
-        setTimeSeries(res.timeSeries)
-        setAggregate(res.aggregate)
+        setTimeseries(res.timeseries)
+        // setAggregate(res.aggregate)
       })
       .catch( err => {
         setLoading(false)
@@ -49,7 +67,13 @@ const HistoricalDisplay = ({match}) => {
   }
 
   useEffect( () => {
-    getData()
+
+    const {
+      endMillis,
+      startMillis,
+    } = getInitTimes()
+
+    getData(endMillis, startMillis)
   }, [])
 
   return (
@@ -61,14 +85,13 @@ const HistoricalDisplay = ({match}) => {
       >
       { loading && <Loading message={''} />}
       {
-        (timeSeries && config && aggregate) &&
+        (timeseries && config) &&
         <DashboardSection headerContent={'Last Week'}>
           <LineBarChart
             barKey={'lmp'}
-            data={timeSeries}
+            data={timeseries}
             timeZone={config.timeZone}
-            xRefLines={aggregate.inflections}
-            aspect={2}
+            aspect={3}
             />
         </DashboardSection>
       }
@@ -77,3 +100,5 @@ const HistoricalDisplay = ({match}) => {
 }
 
 export default HistoricalDisplay
+
+// xRefLines={aggregate.inflections}

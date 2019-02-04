@@ -1,11 +1,11 @@
 const getDashboardConfig = require('./getDashboardConfig')
 const getDashboardData = require('./getDashboardData')
-const getThreeWeekData = require('./getThreeWeekData')
+const getHistoricalData = require('./getHistoricalData')
 const setProjectData = require('./setProjectData')
 
 module.exports = {
   getDashboardConfig,
   getDashboardData,
-  getThreeWeekData,
+  getHistoricalData,
   setProjectData,
 }
