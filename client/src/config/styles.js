@@ -48,6 +48,10 @@ export const nodeColors = [
 ]
 
 export const buttons = {
+  primary: {
+    color: colors.white,
+    background: colors.darkBlue,
+  },
   success: {
     color: colors.white,
     background: colors.brightGreen,

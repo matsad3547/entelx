@@ -1,17 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Button from './Button'
+import Button from './button/'
 
-import { dayMonthYearTimeFormat } from '../config/'
+import {
+  dayMonthYearTimeFormat,
+  timeIncrements,
+} from '../config/'
 
 const DateControl = ({
   date,
   title,
-  disabled = false,
+  increment,
   onIncrement,
   onDecrement,
-  tz,
+  timeZone,
+  disabled = false,
 }) => (
 
   <div>
@@ -20,13 +24,15 @@ const DateControl = ({
       {date.format(dayMonthYearTimeFormat)}
       <div style={styles.buttons}>
         <Button
-          name="+ Hour"
+          value={`+ ${timeIncrements[increment].label}`}
           disabled={disabled}
+          type="primary"
           onClick={onIncrement}
         />
         <Button
-          name="- Hour"
+          value={`- ${timeIncrements[increment].label}`}
           disabled={disabled}
+          type="primary"
           onClick={onDecrement}
         />
       </div>
@@ -44,7 +50,7 @@ const styles = {
   buttons: {
     display: 'flex',
     flexDirection: 'column',
-    width: '4em',
+    // width: '4em',
   },
 }
 
@@ -52,7 +58,7 @@ DateControl.propTypes = {
   date: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  tz: PropTypes.string.isRequired, //timeZone
+  timeZone: PropTypes.string.isRequired, //timeZone
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
 }

@@ -5,9 +5,9 @@ import { buttons } from '../../config/styles'
 
 const Button = ({
   value,
-  disabled = false,
   type,
   onClick,
+  disabled = false,
 }) => (
 
   <input

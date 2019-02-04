@@ -4,6 +4,7 @@ import moment from 'moment-timezone'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
 import DashboardSection from '../components/DashboardSection'
+import DateControl from '../components/DateControl'
 import LineBarChart from '../components/charts/LineBarChart'
 
 import { getBaseUrl } from '../utils/'
@@ -13,6 +14,8 @@ import {
   parseResponse,
   getRequest,
 } from '../utils/requestUtils'
+
+import {timeIncrements} from '../config/'
 
 const HistoricalDisplay = ({match}) => {
 
@@ -25,29 +28,39 @@ const HistoricalDisplay = ({match}) => {
 
   const cleanUrl = getBaseUrl(url, 'historical', projectId)
 
+  const now = moment()
+  const oneWeekAgo = now.clone()
+    .subtract(7, 'days')
+
+  const incrementsArr = Object.keys(timeIncrements)
+
+  const [startTime, setStartTime] = useState(oneWeekAgo)
+  const [endTime, setEndTime] = useState(now)
+  const [timeIncrement, setTimeIncrement] = useState(incrementsArr[1])
   const [loading, setLoading] = useState(false)
   const [timeseries, setTimeseries] = useState(null)
   // const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
+  const [weather, setWeather] = useState(false)
 
-  const getInitTimes = () => {
-    const now = moment()
-    const endMillis = now.valueOf()
-    const startMillis = now.clone()
-                        .subtract(7, 'days')
-                        .valueOf()
-    return {
-      endMillis,
-      startMillis,
-    }
-  }
+  const onIncrement = moment => moment.clone().add(1, timeIncrement)
 
-  const getData = (endMillis, startMillis, weather = false) => {
+  const onDecrement = moment => moment.clone().subtract(1, timeIncrement)
+
+  const onIncrementStartTime = () => setStartTime(onIncrement(startTime))
+
+  const onDecrementStartTime = () => setStartTime(onDecrement(startTime))
+
+  const getData = () => {
+
+    const startMillis = startTime.valueOf()
+    const endMillis = endTime.valueOf()
 
     const body = {
       id: projectId,
       endMillis,
       startMillis,
+      weather,
     }
 
     setLoading(true)
@@ -67,13 +80,9 @@ const HistoricalDisplay = ({match}) => {
   }
 
   useEffect( () => {
+    console.log('startTime?', startTime);
 
-    const {
-      endMillis,
-      startMillis,
-    } = getInitTimes()
-
-    getData(endMillis, startMillis)
+    getData()
   }, [])
 
   return (
@@ -86,13 +95,21 @@ const HistoricalDisplay = ({match}) => {
       { loading && <Loading message={''} />}
       {
         (timeseries && config) &&
-        <DashboardSection headerContent={'Last Week'}>
+        <DashboardSection headerContent={'Historical'}>
           <LineBarChart
             barKey={'lmp'}
             data={timeseries}
             timeZone={config.timeZone}
             aspect={3}
             />
+          <DateControl
+            date={startTime}
+            title='Start Time'
+            increment={timeIncrement}
+            onIncrement={onIncrementStartTime}
+            onDecrement={onDecrementStartTime}
+            timeZone={config.timeZone}
+          />
         </DashboardSection>
       }
     </ProjectPageTemplate>
