@@ -18,7 +18,7 @@ import {
 import CustomTooltip from './CustomTooltip'
 import CustomLegend from './CustomLegend'
 
-import { monthDayTimeFormat } from '../../config/'
+import { timeFormat } from '../../config/'
 
 import { lineDataFormat } from '../../config/chart'
 
@@ -63,7 +63,7 @@ const LineBarChart = ({
         margin={{top: 0, right: 0, left: 0, bottom: 0}}>
         <XAxis
           dataKey="timestamp"
-          tickFormatter={millis => formatMillis(millis, timeZone, monthDayTimeFormat)}
+          tickFormatter={millis => formatMillis(millis, timeZone, timeFormat)}
           />
         <YAxis
           yAxisId="left"

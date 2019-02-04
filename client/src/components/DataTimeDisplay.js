@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 
+import { monthDayTimeFormat } from '../config/'
+
 const DataTimeDisplay = ({millis, timeZone}) => (
 
   <p style={styles}>
-    Data as of {moment(millis).tz(timeZone).format('h:mm A')}
+    Data as of {moment(millis).tz(timeZone).format(monthDayTimeFormat)}
   </p>
 )
 
@@ -16,7 +18,8 @@ const styles = {
 }
 
 DataTimeDisplay.propTypes = {
-  millis: PropTypes.number,
+  millis: PropTypes.number.isRequired,
+  timeZone: PropTypes.string.isRequired,
 }
 
 export default DataTimeDisplay
