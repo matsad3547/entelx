@@ -8,21 +8,25 @@ const Button = ({
   type,
   onClick,
   disabled = false,
-}) => (
+  overrideStyles = {}
+}) => {
 
-  <input
-    type="button"
-    value={value}
-    style={getStyles(type)}
-    disabled={disabled}
-    onClick={onClick}
-  />
-)
+  const getStyles = type => ({
+    ...styles.root,
+    ...buttons[type],
+    ...overrideStyles,
+  })
 
-const getStyles = type => ({
-  ...styles.root,
-  ...buttons[type],
-})
+  return (
+    <input
+      type="button"
+      value={value}
+      style={getStyles(type)}
+      disabled={disabled}
+      onClick={onClick}
+      />
+  )
+}
 
 const styles = {
   root: {
@@ -40,8 +44,9 @@ const styles = {
 Button.propTypes = {
   value: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  overrideStyles: PropTypes.object,
 }
 
 export default Button

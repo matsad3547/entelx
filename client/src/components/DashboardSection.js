@@ -6,13 +6,16 @@ import Header4 from '../components/Header4'
 const DashboardSection = ({
   headerContent,
   children,
+  childStyles = {}
 }) => (
 
   <div style={styles.root}>
     <div style={styles.header}>
       <Header4 content={headerContent} />
     </div>
-    {children}
+    <div style={childStyles}>
+      {children}
+    </div>
   </div>
 )
 
@@ -28,6 +31,7 @@ const styles = {
 
 DashboardSection.propTypes = {
   headerContent: PropTypes.string,
+  childStyles: PropTypes.object,
 }
 
 export default DashboardSection

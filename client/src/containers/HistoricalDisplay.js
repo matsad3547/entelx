@@ -5,7 +5,8 @@ import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
 import DashboardSection from '../components/DashboardSection'
 import DateControl from '../components/DateControl'
-import LineBarChart from '../components/charts/LineBarChart'
+import HistoricalDataChart from '../components/HistoricalDataChart'
+
 
 import { getBaseUrl } from '../utils/'
 
@@ -19,6 +20,8 @@ import {timeIncrements} from '../config/'
 
 const HistoricalDisplay = ({match}) => {
 
+  console.log('rendering?');
+
   const {
     url,
     params,
@@ -28,7 +31,9 @@ const HistoricalDisplay = ({match}) => {
 
   const cleanUrl = getBaseUrl(url, 'historical', projectId)
 
-  const now = moment()
+  const getNow = () => moment()
+
+  const now = getNow()
   const oneWeekAgo = now.clone()
     .subtract(7, 'days')
 
@@ -47,9 +52,30 @@ const HistoricalDisplay = ({match}) => {
 
   const onDecrement = moment => moment.clone().subtract(1, timeIncrement)
 
-  const onIncrementStartTime = () => setStartTime(onIncrement(startTime))
+  const onIncrementStartTime = () => {
+    const incremented = onIncrement(startTime)
 
-  const onDecrementStartTime = () => setStartTime(onDecrement(startTime))
+    incremented.isBefore(endTime) ? setStartTime(incremented) : setStartTime(endTime.clone().subtract(1, 'day'))
+  }
+
+  const onDecrementStartTime = () => {
+    const decremented = onDecrement(startTime)
+
+    setStartTime(decremented)
+    // decremented.isAfter(startTime) ? setEndTime(decremented) : setEndTime(startTime.clone().add(1, 'day'))
+  }
+
+  const onIncrementEndTime = () => {
+    const incremented = onIncrement(endTime)
+
+    incremented.isBefore(getNow()) ? setEndTime(incremented) : setEndTime(getNow())
+  }
+
+  const onDecrementEndTime = () => {
+    const decremented = onDecrement(endTime)
+
+    decremented.isAfter(startTime) ? setEndTime(decremented) : setEndTime(startTime.clone().add(1, 'day'))
+  }
 
   const getData = () => {
 
@@ -80,7 +106,6 @@ const HistoricalDisplay = ({match}) => {
   }
 
   useEffect( () => {
-    console.log('startTime?', startTime);
 
     getData()
   }, [])
@@ -88,32 +113,47 @@ const HistoricalDisplay = ({match}) => {
   return (
 
     <ProjectPageTemplate
-      title={'Last Week'}
+      title={'Historical Data Analysis'}
       baseUrl={cleanUrl}
       id={projectId}
       >
       { loading && <Loading message={''} />}
       {
         (timeseries && config) &&
-        <DashboardSection headerContent={'Historical'}>
-          <LineBarChart
-            barKey={'lmp'}
+        <div>
+          {/*<HistoricalDataChart
             data={timeseries}
             timeZone={config.timeZone}
-            aspect={3}
-            />
-          <DateControl
-            date={startTime}
-            title='Start Time'
-            increment={timeIncrement}
-            onIncrement={onIncrementStartTime}
-            onDecrement={onDecrementStartTime}
-            timeZone={config.timeZone}
-          />
-        </DashboardSection>
+            />*/}
+          <DashboardSection childStyles={styles.dateControls}>
+            <DateControl
+              date={startTime}
+              title='Start Time'
+              increment={timeIncrement}
+              onIncrement={onIncrementStartTime}
+              onDecrement={onDecrementStartTime}
+              timeZone={config.timeZone}
+              />
+            <DateControl
+              date={endTime}
+              title='End Time'
+              increment={timeIncrement}
+              onIncrement={onIncrementEndTime}
+              onDecrement={onDecrementEndTime}
+              timeZone={config.timeZone}
+              />
+          </DashboardSection>
+        </div>
       }
     </ProjectPageTemplate>
   )
+}
+
+const styles = {
+  dateControls: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  }
 }
 
 export default HistoricalDisplay
