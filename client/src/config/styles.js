@@ -4,6 +4,7 @@ export const fontSize = {
   h2: '2.369em',
   h3: '1.777em',
   h4: '1.333em',
+  h5: '1em',
   label: '1.1em',
 }
 

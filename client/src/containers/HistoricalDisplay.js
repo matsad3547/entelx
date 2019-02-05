@@ -3,10 +3,12 @@ import moment from 'moment-timezone'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
+import Button from '../components/button/'
 import DashboardSection from '../components/DashboardSection'
 import DateControl from '../components/DateControl'
 import HistoricalDataChart from '../components/HistoricalDataChart'
-
+import TimeIncrementSelect from '../components/TimeIncrementSelect'
+import LabeledCheckbox from '../components/LabeledCheckbox'
 
 import { getBaseUrl } from '../utils/'
 
@@ -19,8 +21,6 @@ import {
 import {timeIncrements} from '../config/'
 
 const HistoricalDisplay = ({match}) => {
-
-  console.log('rendering?');
 
   const {
     url,
@@ -46,7 +46,7 @@ const HistoricalDisplay = ({match}) => {
   const [timeseries, setTimeseries] = useState(null)
   // const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
-  const [weather, setWeather] = useState(false)
+  const [includeWeather, setIncludeWeather] = useState(false)
 
   const onIncrement = moment => moment.clone().add(1, timeIncrement)
 
@@ -77,6 +77,12 @@ const HistoricalDisplay = ({match}) => {
     decremented.isAfter(startTime) ? setEndTime(decremented) : setEndTime(startTime.clone().add(1, 'day'))
   }
 
+  const onTimeIncrementSelect = e => setTimeIncrement(e.target.value)
+
+  const onSetIncludeWeather = e => setIncludeWeather(e.target.value === 'true')
+
+  const onGetData = () => getData()
+
   const getData = () => {
 
     const startMillis = startTime.valueOf()
@@ -86,7 +92,7 @@ const HistoricalDisplay = ({match}) => {
       id: projectId,
       endMillis,
       startMillis,
-      weather,
+      includeWeather,
     }
 
     setLoading(true)
@@ -113,7 +119,7 @@ const HistoricalDisplay = ({match}) => {
   return (
 
     <ProjectPageTemplate
-      title={'Historical Data Analysis'}
+      title={config ? `${config.projectName} - Historical` : 'Project Historical Analysis'}
       baseUrl={cleanUrl}
       id={projectId}
       >
@@ -121,11 +127,15 @@ const HistoricalDisplay = ({match}) => {
       {
         (timeseries && config) &&
         <div>
-          {/*<HistoricalDataChart
+          <HistoricalDataChart
             data={timeseries}
             timeZone={config.timeZone}
-            />*/}
+            />
           <DashboardSection childStyles={styles.dateControls}>
+            <TimeIncrementSelect
+              onSelect={onTimeIncrementSelect}
+              selected={timeIncrement}
+              />
             <DateControl
               date={startTime}
               title='Start Time'
@@ -142,6 +152,22 @@ const HistoricalDisplay = ({match}) => {
               onDecrement={onDecrementEndTime}
               timeZone={config.timeZone}
               />
+            <div style={styles.inclusion}>
+              <LabeledCheckbox
+                name={'include-weather'}
+                label="Include Weather"
+                value={!includeWeather}
+                checked={includeWeather}
+                onChange={onSetIncludeWeather}
+                />
+              <Button
+                value="Get Data"
+                disabled={loading}
+                type="success"
+                onClick={onGetData}
+                overrideStyles={styles.getData}
+              />
+            </div>
           </DashboardSection>
         </div>
       }
@@ -153,7 +179,14 @@ const styles = {
   dateControls: {
     display: 'flex',
     justifyContent: 'space-between',
-  }
+  },
+  inclusion: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  getData: {
+    margin: '.5em 0 0 1.5em',
+  },
 }
 
 export default HistoricalDisplay

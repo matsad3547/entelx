@@ -1,31 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 
 import LineBarChart from '../components/charts/LineBarChart'
 
 import DashboardSection from '../components/DashboardSection'
 
-const HistoricalDataChart = ({data, timeZone}) => {
-  console.log('rendering the chart');
-
-  const [historicalData, setHistoricalData] = useState(null)
-
-  useEffect( () => {
-    setHistoricalData(data)
-  }, [data])
-
-  return (
+const HistoricalDataChart = React.memo(({data, timeZone}) => (
     <DashboardSection headerContent={'Historical Data'}>
-      {
-        historicalData &&
-        <LineBarChart
-          barKey={'lmp'}
-          data={historicalData}
-          timeZone={timeZone}
-          aspect={3}
-          />
-      }
+      <LineBarChart
+        barKey={'lmp'}
+        data={data}
+        timeZone={timeZone}
+        aspect={3}
+        />
     </DashboardSection>
   )
-}
+)
 
 export default HistoricalDataChart

@@ -38,7 +38,7 @@ const styles = {
   	fontSize: '1.3em',
   	padding: '1em',
     margin: '1em 0',
-},
+  },
 }
 
 Button.propTypes = {

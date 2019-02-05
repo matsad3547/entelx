@@ -15,7 +15,7 @@ const getHistoricalData = async (req, res) => {
     endMillis,
     startMillis,
     id,
-    weather,
+    includeWeather,
   } = req.body
 
   const [project] = await readTableRows('project', {id,})
@@ -27,6 +27,7 @@ const getHistoricalData = async (req, res) => {
     timeZone,
     power,
     energy,
+    name,
   } = project
 
   const [node] = await readTableRows('node', {id: nodeId})
@@ -36,6 +37,9 @@ const getHistoricalData = async (req, res) => {
   return res.status(200).json({
     timeseries,
     config: {
+      projectName: name,
+      power,
+      energy,
       lat,
       lng,
       timeZone,

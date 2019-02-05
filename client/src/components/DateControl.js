@@ -4,6 +4,8 @@ import moment from 'moment-timezone'
 
 import Button from './button/'
 
+import Header5 from './Header5'
+
 import {
   dayMonthYearTimeFormat,
   timeIncrements,
@@ -20,7 +22,7 @@ const DateControl = ({
 }) => (
 
   <div>
-    <h3>{title}</h3>
+    <Header5 content={title} />
     <div style={styles.interface}>
       {moment.tz(date, timeZone).format(dayMonthYearTimeFormat)}
       <div style={styles.buttons}>

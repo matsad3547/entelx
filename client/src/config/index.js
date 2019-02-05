@@ -9,14 +9,18 @@ export const timeFormat = 'h:mm A'
 export const timeIncrements = {
   hour: {
     label: 'Hour',
+    value: 'hour',
   },
   day: {
     label: 'Day',
+    value: 'day',
   },
   week: {
     label: 'Week',
+    value: 'week',
   },
   month: {
     label: 'Month',
+    value: 'month',
   },
 }
