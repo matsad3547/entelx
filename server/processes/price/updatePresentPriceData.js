@@ -5,7 +5,8 @@
   const {
     setExitListeners,
     getUpdateTimeout,
-    catchErrorsWithMessage
+    catchErrorsWithMessage,
+    catchErrorAndRestart,
   } = require('../../utils/')
 
   const { fiveMinutesMillis } = require('../../config/')
@@ -70,7 +71,7 @@
 
         console.log(`price data update at ${now.valueOf()}`)
 
-        const {end} = await catchErrorsWithMessage('There was an error getting continuous price updates', updatePriceData)(nodeData, endMillis, startMillis, project)
+        const {end} = await catchErrorAndRestart('There was an error getting continuous price updates', updatePriceData, getPriceDataOnInterval)(nodeData, endMillis, startMillis, project)
 
         nextTimeoutMillis = getUpdateTimeout(end)
 

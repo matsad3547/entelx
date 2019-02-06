@@ -7,6 +7,7 @@ const {
 const {
   checkStatus,
   catchErrorsWithMessage,
+  catchErrorAndRestart,
 } = require('./requestUtils')
 
 const { writeToFile } = require('./fileUtils')
@@ -27,6 +28,7 @@ module.exports = {
   getUpdateTimeout,
   checkStatus,
   catchErrorsWithMessage,
+  catchErrorAndRestart,
   writeToFile,
   calculateScoreData,
   calculateDerivedData,
