@@ -29,7 +29,7 @@ import {
   findRelevantKeys,
 } from '../../utils'
 
-const LineBarChart = ({
+const LineBarChart = React.memo(({
   data,
   timeZone,
   barKey,
@@ -134,7 +134,7 @@ const LineBarChart = ({
   </ComposedChart>
     </ResponsiveContainer>
   )
-}
+})
 
 LineBarChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({

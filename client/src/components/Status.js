@@ -29,6 +29,7 @@ const Status = ({
       <div style={styles.root}>
         <div>
           <DataTimeDisplay
+            message="Data as of"
             millis={latest.timestamp}
             timeZone={timeZone}
             />

@@ -4,11 +4,13 @@ import moment from 'moment-timezone'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
 import Button from '../components/button/'
+import LineBarChart from '../components/charts/LineBarChart'
 import DashboardSection from '../components/DashboardSection'
 import DateControl from '../components/DateControl'
-import HistoricalDataChart from '../components/HistoricalDataChart'
 import TimeIncrementSelect from '../components/TimeIncrementSelect'
 import LabeledCheckbox from '../components/LabeledCheckbox'
+import DataTimeDisplay from '../components/DataTimeDisplay'
+import DataTimeRangeDisplay from '../components/DataTimeRangeDisplay'
 
 import { getBaseUrl } from '../utils/'
 
@@ -64,7 +66,7 @@ const HistoricalDisplay = ({match}) => {
   const onDecrementStartTime = () => {
     const decremented = onDecrement(startTime)
 
-    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone().add(1, 'day'))
+    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone())
   }
 
   const onIncrementEndTime = () => {
@@ -137,48 +139,71 @@ const HistoricalDisplay = ({match}) => {
       >
       { loading && <Loading message={''} />}
       {
-        (timeseries && config) &&
+        (timeseries && config && minDate) &&
         <div>
-          <HistoricalDataChart
-            data={timeseries}
-            timeZone={config.timeZone}
-            />
-          <DashboardSection childStyles={styles.dateControls}>
-            <TimeIncrementSelect
-              onSelect={onTimeIncrementSelect}
-              selected={timeIncrement}
-              />
-            <DateControl
-              date={startTime}
-              title='Start Time'
-              increment={timeIncrement}
-              onIncrement={onIncrementStartTime}
-              onDecrement={onDecrementStartTime}
+          <DashboardSection headerContent={'Historical Data'}>
+            <DataTimeRangeDisplay
+              message="Data from"
+              startMillis={timeseries[0].timestamp}
+              endMillis={timeseries[timeseries.length - 1].timestamp}
               timeZone={config.timeZone}
               />
-            <DateControl
-              date={endTime}
-              title='End Time'
-              increment={timeIncrement}
-              onIncrement={onIncrementEndTime}
-              onDecrement={onDecrementEndTime}
+            <LineBarChart
+              barKey={'lmp'}
+              data={timeseries}
               timeZone={config.timeZone}
+              aspect={3}
               />
-            <div style={styles.inclusion}>
-              <LabeledCheckbox
-                name={'include-weather'}
-                label="Include Weather"
-                value={!includeWeather}
-                checked={includeWeather}
-                onChange={onSetIncludeWeather}
+            {/*<HistoricalDataChart
+              data={timeseries}
+              timeZone={config.timeZone}
+              />*/}
+          </DashboardSection>
+          <DashboardSection>
+            <div style={styles.minDate}>
+              <DataTimeDisplay
+                message="Earliest data currently available is from"
+                millis={minDate.valueOf()}
+                timeZone={config.timeZone}
                 />
-              <Button
-                value="Get Data"
-                disabled={loading}
-                type="success"
-                onClick={onGetData}
-                overrideStyles={styles.getData}
-              />
+            </div>
+            <div style={styles.dateControls}>
+              <TimeIncrementSelect
+                onSelect={onTimeIncrementSelect}
+                selected={timeIncrement}
+                />
+              <DateControl
+                date={startTime}
+                title='Start Time'
+                increment={timeIncrement}
+                onIncrement={onIncrementStartTime}
+                onDecrement={onDecrementStartTime}
+                timeZone={config.timeZone}
+                />
+              <DateControl
+                date={endTime}
+                title='End Time'
+                increment={timeIncrement}
+                onIncrement={onIncrementEndTime}
+                onDecrement={onDecrementEndTime}
+                timeZone={config.timeZone}
+                />
+              <div style={styles.inclusion}>
+                <LabeledCheckbox
+                  name={'include-weather'}
+                  label="Include Weather"
+                  value={!includeWeather}
+                  checked={includeWeather}
+                  onChange={onSetIncludeWeather}
+                  />
+                <Button
+                  value="Get Data"
+                  disabled={loading}
+                  type="success"
+                  onClick={onGetData}
+                  overrideStyles={styles.getData}
+                  />
+              </div>
             </div>
           </DashboardSection>
         </div>
@@ -198,6 +223,9 @@ const styles = {
   },
   getData: {
     margin: '.5em 0 0 1.5em',
+  },
+  minDate: {
+    padding: '0 0 1em',
   },
 }
 

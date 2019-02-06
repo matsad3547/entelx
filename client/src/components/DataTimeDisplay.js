@@ -4,10 +4,10 @@ import moment from 'moment-timezone'
 
 import { monthDayTimeFormat } from '../config/'
 
-const DataTimeDisplay = ({millis, timeZone}) => (
+const DataTimeDisplay = ({message, millis, timeZone}) => (
 
   <p style={styles}>
-    Data as of {moment(millis).tz(timeZone).format(monthDayTimeFormat)}
+    {`${message} ${moment(millis).tz(timeZone).format(monthDayTimeFormat)}`}
   </p>
 )
 
@@ -18,6 +18,7 @@ const styles = {
 }
 
 DataTimeDisplay.propTypes = {
+  message: PropTypes.string.isRequired,
   millis: PropTypes.number.isRequired,
   timeZone: PropTypes.string.isRequired,
 }
