@@ -20,6 +20,8 @@ import {
 
 import {timeIncrements} from '../config/'
 
+import { connectToServerSideEvent } from '../hooks/'
+
 const HistoricalDisplay = ({match}) => {
 
   const {
@@ -47,6 +49,7 @@ const HistoricalDisplay = ({match}) => {
   // const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
   const [includeWeather, setIncludeWeather] = useState(false)
+  const [minDate, setMinDate] = useState(null)
 
   const onIncrement = moment => moment.clone().add(1, timeIncrement)
 
@@ -61,8 +64,7 @@ const HistoricalDisplay = ({match}) => {
   const onDecrementStartTime = () => {
     const decremented = onDecrement(startTime)
 
-    setStartTime(decremented)
-    // decremented.isAfter(startTime) ? setEndTime(decremented) : setEndTime(startTime.clone().add(1, 'day'))
+    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone().add(1, 'day'))
   }
 
   const onIncrementEndTime = () => {
@@ -112,9 +114,19 @@ const HistoricalDisplay = ({match}) => {
   }
 
   useEffect( () => {
-
     getData()
   }, [])
+
+  const handleData = e => {
+    e.preventDefault()
+    const {minDateMillis} = JSON.parse(e.data)
+
+    setMinDate(moment(minDateMillis))
+  }
+
+  const sseRoute = `/historical/${projectId}/min_date`
+
+  connectToServerSideEvent(sseRoute, handleData)
 
   return (
 

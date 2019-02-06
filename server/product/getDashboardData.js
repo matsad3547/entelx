@@ -29,8 +29,6 @@ const getDashboardData = async (req, res) => {
     revenue,
   } = project
 
-  const projectId = project.id
-
   const maxRes = await catchErrorsWithMessage(`There was an error finding the max timestamp associated with node ${nodeId}`, findMax)('price', 'timestamp', {nodeId,})
 
   const mostRecent = maxRes[0]['max(timestamp)']
@@ -91,24 +89,6 @@ const getData = async (res, projectSpecs) => {
     revenue: project.revenue,
     charge: project.charge,
   })
-
-  // return Promise.all([
-  //     getCurrentWeather(lat, lng),
-  //     readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis]),
-  //     readTableRows('project', {id,})
-  //   ].map( p => p.catch(handleMultiPromiseError) )
-  // )
-  // .then( data => {
-  //
-  //   const [weather, prices, [project]] = data
-  //
-  //   return res.sseSend({
-  //     weather,
-  //     prices,
-  //     revenue: project.revenue,
-  //     soc: project.soc,
-  //   })
-  // })
 }
 
 const handleMultiPromiseError = err => {

@@ -20,13 +20,13 @@ const ProjectNav = ({baseUrl, id}) => {
       label: 'Project Dashboard',
     },
     {
-      link: 'roi',
-      label: 'Project ROI',
-    },
-    {
       link: 'historical',
       label: 'Historical',
     },
+    // {
+    //   link: 'roi',
+    //   label: 'Project ROI',
+    // },
   ]
 
   return (

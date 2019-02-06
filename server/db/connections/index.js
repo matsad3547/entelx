@@ -1,5 +1,6 @@
 const findByLatLng = require('./findByLatLng')
 const findMax = require('./findMax')
+const findMin = require('./findMin')
 const createTableRow = require('./createTableRow')
 const createTableRows = require('./createTableRows')
 const readTableRows = require('./readTableRows')
@@ -11,6 +12,7 @@ const deleteTableRowsWhereNot = require('./deleteTableRowsWhereNot')
 module.exports = {
   findByLatLng,
   findMax,
+  findMin,
   createTableRow,
   createTableRows,
   readTableRows,
