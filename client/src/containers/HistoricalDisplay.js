@@ -152,7 +152,7 @@ const HistoricalDisplay = ({match}) => {
               barKey={'lmp'}
               data={timeseries}
               timeZone={config.timeZone}
-              aspect={3}
+              aspect={4}
               />
             {/*<HistoricalDataChart
               data={timeseries}
