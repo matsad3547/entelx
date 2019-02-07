@@ -15,6 +15,7 @@
     getFiveMinutesFromNow,
     getOneMinuteAgo,
     getFirstUpdateMillis,
+    getSixMosAgo,
   } = require('./utils/')
 
   const {
@@ -23,13 +24,12 @@
     deleteTableRowsWhereNot,
   } = require('../../db/')
 
-  const updatePriceData = require('./updatePriceData')
+  const presentPriceDataUpdater = require('./presentPriceDataUpdater')
 
   const args = JSON.parse(process.argv[2])
 
   const {
     node,
-    timeZone,
     projectId,
     mostRecent,
   } = args
@@ -46,7 +46,7 @@
   firstUpdate = getUpdateTimeout(mostRecent)
 
   firstUpdateTimeout = setTimeout( async () => {
-    let now = moment().tz(timeZone)
+    let now = moment()
 
     console.log(`starting price data update at ${now.valueOf()}`)
 
@@ -55,14 +55,14 @@
 
     const [project] = await readTableRows('project', {id: projectId})
 
-    const {end} = await catchErrorsWithMessage('There was an error getting the initial price update', updatePriceData)(nodeData, endMillis, startMillis, project)
+    const end = await catchErrorsWithMessage('There was an error getting the initial price update', presentPriceDataUpdater)(nodeData, startMillis, endMillis, project)
 
     let nextTimeoutMillis = getUpdateTimeout(end)
 
     const getPriceDataOnInterval = (timeoutMillis = fiveMinutesMillis) => {
       continuousTimeout = setTimeout( async () => {
 
-        now = moment().tz(timeZone)
+        now = moment()
 
         endMillis = getFiveMinutesFromNow(now)
         startMillis = getOneMinuteAgo(now)
@@ -71,13 +71,11 @@
 
         console.log(`price data update at ${now.valueOf()}`)
 
-        const {end} = await catchErrorAndRestart('There was an error getting continuous price updates', updatePriceData, getPriceDataOnInterval)(nodeData, endMillis, startMillis, project)
+        const end = await catchErrorAndRestart('There was an error getting continuous price updates', presentPriceDataUpdater, getPriceDataOnInterval)(nodeData, startMillis, endMillis, project)
 
         nextTimeoutMillis = getUpdateTimeout(end)
 
-        const sixMosAgo = now.clone()
-        .subtract(180, 'days')
-        .valueOf()
+        const sixMosAgo = getSixMosAgo(now)
 
         console.log('gonna check for data older than 6 mos');
         //TODO delete data more than 6 mos. old
@@ -99,7 +97,7 @@
   process.on('SIGUSR2', () => true )
 
   const cleanUp = code => {
-    console.log(`exiting "updatePriceData" for ${name}\n exit code: ${code}` );
+    console.log(`exiting "updatePresentPriceData" for ${name}\n exit code: ${code}` );
     clearTimeout(firstUpdateTimeout)
     clearTimeout(continuousTimeout)
   }

@@ -10,8 +10,13 @@ const getOneMinuteAgo = nowMoment => nowMoment.clone()
 
 const getFirstUpdateMillis = lastDataAgoMillis => lastDataAgoMillis % fiveMinutesMillis
 
+const getSixMosAgo = moment => moment.clone()
+.subtract(180, 'days')
+.valueOf()
+
 module.exports = {
   getFiveMinutesFromNow,
   getOneMinuteAgo,
   getFirstUpdateMillis,
+  getSixMosAgo,
 }

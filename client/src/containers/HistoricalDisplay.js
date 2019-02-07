@@ -154,10 +154,6 @@ const HistoricalDisplay = ({match}) => {
               timeZone={config.timeZone}
               aspect={4}
               />
-            {/*<HistoricalDataChart
-              data={timeseries}
-              timeZone={config.timeZone}
-              />*/}
           </DashboardSection>
           <DashboardSection>
             <div style={styles.minDate}>

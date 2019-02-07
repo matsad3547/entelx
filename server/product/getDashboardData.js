@@ -24,7 +24,6 @@ const getDashboardData = async (req, res) => {
 
   const {
     nodeId,
-    timeZone,
     charge,
     revenue,
   } = project
@@ -33,7 +32,7 @@ const getDashboardData = async (req, res) => {
 
   const mostRecent = maxRes[0]['max(timestamp)']
 
-  const start = moment().tz(timeZone).valueOf()
+  const start = moment().valueOf()
 
   const firstUpdate = fiveMinutesMillis - (start - mostRecent) + (2 * 1000)
 
@@ -62,11 +61,10 @@ const getData = async (res, projectSpecs) => {
     id,
     lat,
     lng,
-    timeZone,
     nodeId,
   } = projectSpecs
 
-  const now = moment().tz(timeZone)
+  const now = moment()
   const endMillis = now.valueOf()
   const startMillis = now.clone()
     .subtract(1, 'hour')
