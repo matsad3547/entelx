@@ -46,6 +46,7 @@
     const oldest = await catchErrorAndRestart('There was an error getting past update data', pastPriceDataUpdater, ()=> console.log('should restart') )(startMillis, endMillis, nodeData)
 
     if (oldest < sixMonthsAgoMillis) {
+      await catchErrorsWithMessage('There was an error resetting the process id for past price updates', updateTableRow)('project', {id: projectId}, {pastUpdatePid: null})
       process.kill(pid)
     }
     else {

@@ -18,8 +18,8 @@ const deleteProjectById = (req, res) => {
       const handleError = err => console.error(`Error ending process ${presentUpdatePid} or ${pastUpdatePid}:`, err)
 
       try {
-        process.kill(presentUpdatePid)
-        process.kill(pastUpdatePid)
+        presentUpdatePid && process.kill(presentUpdatePid)
+        pastUpdatePid && process.kill(pastUpdatePid)
       }
       catch (e) {
         handleError(e)
