@@ -8,6 +8,7 @@ const readTableRowsWhereBtw = require('./readTableRowsWhereBtw')
 const updateTableRow = require('./updateTableRow')
 const deleteTableRows = require('./deleteTableRows')
 const deleteTableRowsWhereNot = require('./deleteTableRowsWhereNot')
+const deleteTableRowsWhereBtw = require('./deleteTableRowsWhereBtw')
 
 module.exports = {
   findByLatLng,
@@ -20,4 +21,5 @@ module.exports = {
   updateTableRow,
   deleteTableRows,
   deleteTableRowsWhereNot,
+  deleteTableRowsWhereBtw,
 }

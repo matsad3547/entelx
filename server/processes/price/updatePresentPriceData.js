@@ -9,7 +9,10 @@
     catchErrorAndRestart,
   } = require('../../utils/')
 
-  const { fiveMinutesMillis } = require('../../config/')
+  const {
+    fiveMinutesMillis,
+    sixMonthMillis,
+  } = require('../../config/')
 
   const {
     getFiveMinutesFromNow,
@@ -21,7 +24,7 @@
   const {
     readTableRows,
     updateTableRow,
-    deleteTableRowsWhereNot,
+    deleteTableRowsWhereBtw,
   } = require('../../db/')
 
   const presentPriceDataUpdater = require('./presentPriceDataUpdater')
@@ -77,8 +80,8 @@
 
         const sixMosAgo = getSixMosAgo(now)
 
-        console.log('gonna check for data older than 6 mos');
-        //TODO delete data more than 6 mos. old
+        await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
+
         getPriceDataOnInterval(nextTimeoutMillis)
 
       }, timeoutMillis)
