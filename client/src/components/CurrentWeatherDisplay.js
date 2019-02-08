@@ -16,6 +16,7 @@ const CurrentWeatherDisplay = ({ weather, timeZone }) => (
     <DashboardSectionContent>
       <div>
         <DataTimeDisplay
+          message="Data as of"
           millis={weather.time * 1000}
           timeZone={timeZone}
           />

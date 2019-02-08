@@ -55,9 +55,9 @@
 
     const [project] = await readTableRows('project', {id: projectId})
 
-    const end = await catchErrorsWithMessage('There was an error getting the initial price update', presentPriceDataUpdater)(nodeData, startMillis, endMillis, project)
+    const newest = await catchErrorsWithMessage('There was an error getting the initial price update', presentPriceDataUpdater)(startMillis, endMillis, nodeData, project)
 
-    let nextTimeoutMillis = getUpdateTimeout(end)
+    let nextTimeoutMillis = getUpdateTimeout(newest)
 
     const getPriceDataOnInterval = (timeoutMillis = fiveMinutesMillis) => {
       continuousTimeout = setTimeout( async () => {
@@ -71,9 +71,9 @@
 
         console.log(`price data update at ${now.valueOf()}`)
 
-        const end = await catchErrorAndRestart('There was an error getting continuous price updates', presentPriceDataUpdater, getPriceDataOnInterval)(nodeData, startMillis, endMillis, project)
+        const newest = await catchErrorAndRestart('There was an error getting continuous price updates', presentPriceDataUpdater, getPriceDataOnInterval)(startMillis, endMillis, nodeData, project)
 
-        nextTimeoutMillis = getUpdateTimeout(end)
+        nextTimeoutMillis = getUpdateTimeout(newest)
 
         const sixMosAgo = getSixMosAgo(now)
 
@@ -89,7 +89,7 @@
 
   const pid = process.pid
 
-  await catchErrorsWithMessage('There was an error setting the process id for present price updates', updateTableRow)('project', {id: projectId}, {pid,})
+  await catchErrorsWithMessage('There was an error setting the process id for present price updates', updateTableRow)('project', {id: projectId}, {presentUpdatePid: pid})
 
   setExitListeners()
 

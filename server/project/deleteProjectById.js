@@ -10,12 +10,16 @@ const deleteProjectById = (req, res) => {
   return readTableRows('project', {id,})
     .then( project => {
 
-      const { pid } = project[0]
+      const {
+        presentUpdatePid,
+        pastUpdatePid,
+      } = project[0]
 
-      const handleError = err => console.error(`Error ending process ${pid}:`, err)
+      const handleError = err => console.error(`Error ending process ${presentUpdatePid} or ${pastUpdatePid}:`, err)
 
       try {
-        process.kill(pid)
+        process.kill(presentUpdatePid)
+        process.kill(pastUpdatePid)
       }
       catch (e) {
         handleError(e)

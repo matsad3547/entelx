@@ -1,4 +1,3 @@
-const getPriceRequest = require('./getPriceRequest')
 const updateRevenueAndSoc = require('./updateRevenueAndSoc')
 const updatePriceData = require('./updatePriceData')
 
@@ -7,9 +6,9 @@ const { createTableRows } = require('../../db/')
 const { catchErrorsWithMessage } = require('../../utils/')
 
 const presentPriceDataUpdater = async (
-  nodeData,
   startMillis,
   endMillis,
+  nodeData,
   project,
 ) => {
 
@@ -18,11 +17,6 @@ const presentPriceDataUpdater = async (
     name,
     currentAvg,
   } = nodeData
-
-  const {
-    req,
-    params,
-  } = getPriceRequest(nodeData)
 
   const data = await catchErrorsWithMessage(`There was an error getting present price data from ${startMillis} to ${endMillis}`, updatePriceData)(startMillis, endMillis, nodeData)
 

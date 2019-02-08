@@ -21,20 +21,30 @@ const launchPriceUpdates = params => {
       mostRecent,
     })
 
-    const updateData = spawn('node', ['server/processes/price/updatePresentPriceData.js', args], {
+    const updatePresentData = spawn('node', ['server/processes/price/updatePresentPriceData.js', args], {
       stdio: 'inherit',
       detached: true,
     })
 
-    updateData.on('error', err => {
-      console.error('There was an error running the `updatePriceData` process:', err)
-      updateData.exit(1)
+    const updatePastData = spawn('node', ['server/processes/price/updatePastPriceData.js', args], {
+      stdio: 'inherit',
+      detached: true,
+    })
+
+    updatePresentData.on('error', err => {
+      console.error('There was an error running the "updatePriceData" process:', err)
+      updatePresentData.exit(1)
       throw new Error(err)
     })
 
-    console.log('at launchPriceUpdates:', process.pid);
+    updatePastData.on('error', err => {
+      console.error('There was an error running the "updatePastData" process:', err)
+      updatePastData.exit(1)
+      throw new Error(err)
+    })
 
-    updateData.unref()
+    updatePresentData.unref()
+    updatePastData.unref()
   })
 }
 

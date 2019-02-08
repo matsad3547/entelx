@@ -1,23 +1,24 @@
 ( async () => {
 
-  const moment = require('moment-timezone')
-
   const {
     setExitListeners,
-    getUpdateTimeout,
     catchErrorsWithMessage,
     catchErrorAndRestart,
     calculateDerivedData,
   } = require('../../utils/')
 
-  const {getSixMosAgo} = require('./utils/')
+  const {
+    oneMinuteMillis,
+    sixMonthMillis,
+    threeWeeksMillis,
+  } = require('../../config/')
 
   const {
     readTableRows,
     updateTableRow,
   } = require('../../db/')
 
-  const updatePriceData = require('./updatePriceData')
+  const pastPriceDataUpdater = require('./pastPriceDataUpdater')
 
   const args = JSON.parse(process.argv[2])
 
@@ -32,19 +33,30 @@
     name,
   } = node
 
-  let now = moment()
+  const sixMonthsAgoMillis = mostRecent - sixMonthMillis
 
-  let startMillis = getSixMosAgo(now)
-  let endMillis = now.clone().valueOf()
+  let endMillis = mostRecent - oneMinuteMillis
 
   const [nodeData] = await readTableRows('node', {id,})
 
-  const {end} = await catchErrorsWithMessage('There was an error getting the initial price update', updatePriceData)(nodeData, endMillis, startMillis)
-
-
   const pid = process.pid
 
-  await catchErrorsWithMessage('There was an error setting the process id for present price updates', updateTableRow)('project', {id: projectId}, {pid,})
+  const update = async () => {
+    const startMillis = endMillis - threeWeeksMillis
+    const oldest = await catchErrorAndRestart('There was an error getting past update data', pastPriceDataUpdater, ()=> console.log('should restart') )(startMillis, endMillis, nodeData)
+
+    if (oldest < sixMonthsAgoMillis) {
+      process.kill(pid)
+    }
+    else {
+      endMillis = oldest - oneMinuteMillis
+      update()
+    }
+  }
+
+  update()
+
+  await catchErrorsWithMessage('There was an error setting the process id for past price updates', updateTableRow)('project', {id: projectId}, {pastUpdatePid: pid})
 
   setExitListeners()
 
@@ -52,9 +64,7 @@
   process.on('SIGUSR2', () => true )
 
   const cleanUp = code => {
-    console.log(`exiting "updatePastPriceData" for ${name}\n exit code: ${code}` );
-    clearTimeout(firstUpdateTimeout)
-    clearTimeout(continuousTimeout)
+    console.log(`exiting "updatePastPriceData" for ${name}\n exit code: ${code}` )
   }
 
   process.on('exit', cleanUp)
