@@ -12,13 +12,12 @@
   const {
     fiveMinutesMillis,
     sixMonthMillis,
+    oneMinuteMillis,
   } = require('../../config/')
 
   const {
     getFiveMinutesFromNow,
     getOneMinuteAgo,
-    getFirstUpdateMillis,
-    getSixMosAgo,
   } = require('./utils/')
 
   const {
@@ -48,6 +47,9 @@
 
   firstUpdate = getUpdateTimeout(mostRecent)
 
+  const pid = process.pid
+
+
   firstUpdateTimeout = setTimeout( async () => {
     let now = moment()
 
@@ -74,11 +76,9 @@
 
         console.log(`price data update at ${now.valueOf()}`)
 
-        const newest = await catchErrorAndRestart('There was an error getting continuous price updates', presentPriceDataUpdater, getPriceDataOnInterval)(startMillis, endMillis, nodeData, project)
+        const newest = await catchErrorAndRestart('There was an error getting continuous price updates', presentPriceDataUpdater, getPriceDataOnIntervalRestart)(startMillis, endMillis, nodeData, project)
 
         nextTimeoutMillis = getUpdateTimeout(newest)
-
-        const sixMosAgo = getSixMosAgo(now)
 
         await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
 
@@ -87,10 +87,13 @@
       }, timeoutMillis)
     }
 
-    getPriceDataOnInterval(nextTimeoutMillis)
-  }, firstUpdate)
+    const getPriceDataOnIntervalRestart = () => setTimeout( () => {
+      console.log('restarting presentPriceDataUpdates...')
+      getPriceDataOnInterval(nextTimeoutMillis - oneMinuteMillis)
+    }, oneMinuteMillis)
 
-  const pid = process.pid
+    getPriceDataOnInterval(getPriceDataOnInterval)
+  }, firstUpdate)
 
   await catchErrorsWithMessage('There was an error setting the process id for present price updates', updateTableRow)('project', {id: projectId}, {presentUpdatePid: pid})
 

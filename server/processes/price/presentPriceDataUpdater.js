@@ -14,7 +14,6 @@ const presentPriceDataUpdater = async (
 
   const {
     id,
-    name,
     currentAvg,
   } = nodeData
 

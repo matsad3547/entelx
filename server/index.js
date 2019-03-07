@@ -1,7 +1,8 @@
 const express = require('express')
 const compression = require('compression')
 require('isomorphic-fetch')
-const dotenv = require('dotenv').config()
+// const dotenv = require('dotenv').config()
+require('dotenv').config()
 const bodyParser = require('body-parser')
 
 const {
@@ -9,7 +10,7 @@ const {
   getCompressionOptions,
 } = require('./middleware')
 
-const eia = require('./app/eiaRequest')
+// const eia = require('./app/eiaRequest')
 
 const {
   createUser,
@@ -39,10 +40,11 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('server/public'))
 }
 
-const server = app.listen(app.get('port'), err => {
+// const server = 
+app.listen(app.get('port'), err => {
   if (err) {
-    throw new Error(err)
     console.error('An error occured:', err)
+    throw new Error(err)
   }
   console.log(`Find the server at: http://localhost:${app.get('port')}`)
 })
@@ -80,7 +82,7 @@ const roiTest = (req, res) => {
 
   console.log('running roi test');
 
-  const { id } = req.params
+  // const { id } = req.params
 
   res.sseSetup()
 
