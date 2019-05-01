@@ -24,8 +24,8 @@ const getDashboardData = async (req, res) => {
 
   const {
     nodeId,
-    charge,
-    revenue,
+    // charge,
+    // revenue,
   } = project
 
   const maxRes = await catchErrorsWithMessage(`There was an error finding the max timestamp associated with node ${nodeId}`, findMax)('price', 'timestamp', {nodeId,})

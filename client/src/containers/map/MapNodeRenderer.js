@@ -15,6 +15,7 @@ import {
 } from '../../config/styles'
 
 const MapNodeRenderer = ({ map }) => {
+  console.log('hitting map node renderer');
 
   const [nodes, setNodes] = useState(null)
 
@@ -192,6 +193,22 @@ const MapNodeRenderer = ({ map }) => {
   }, [map, nodes, onNodeMouseEnter, onNodeMouseLeave, onClusterMouseEnter,  onClusterMouseLeave, onClusterClick])
 
   const cleanup =  useCallback(() => {
+    console.log('running cleanup');
+    // if (map) {
+    //
+    //   if (map.getLayer('unclustered-nodes')){
+    //     map.removeLayer('unclustered-nodes')
+    //   }
+    //   if (map.getLayer('cluster-count')){
+    //     map.removeLayer('cluster-count')
+    //   }
+    //   if (map.getLayer('clusters')){
+    //     map.removeLayer('clusters')
+    //   }
+    //   if (map.getSource('nodes')) {
+    //     map.removeSource('nodes')
+    //   }
+    // }
     map.off('mouseenter', 'clusters', onClusterMouseEnter)
     map.off('mouseleave', 'clusters', onClusterMouseLeave)
     map.off('click', 'clusters', onClusterClick)
@@ -199,10 +216,17 @@ const MapNodeRenderer = ({ map }) => {
     map.off('mouseleave', 'unclustered-nodes', onNodeMouseLeave)
   }, [map, onClusterMouseEnter, onClusterMouseLeave, onClusterClick, onNodeMouseEnter, onNodeMouseLeave])
 
+  // useEffect( () => {
+  //   console.log('setting source');
+  //   setSource()
+  //   return () => map.removeSource('nodes')
+  // }, [map, setSource])
+
   useEffect( () => {
+    console.log('setting layers');
     setLayers()
-    return () => cleanup()
-  }, [nodes, cleanup, setLayers])
+    return cleanup
+  }, [nodes, setLayers, cleanup])
 
   return false
 }
