@@ -7,7 +7,7 @@ import Loading from '../components/loading/'
 import DashboardSection from '../components/DashboardSection'
 import LineBarChart from '../components/charts/LineBarChart'
 
-import { connectToServerSideEvent } from '../hooks/'
+import { useConnectToServerSideEvent } from '../hooks/'
 
 import { getBaseUrl } from '../utils/'
 
@@ -76,7 +76,7 @@ JS Docs - insta documentation
 
   const sseRoute = `/dashboard/${projectId}/data`
 
-  connectToServerSideEvent(sseRoute, handleData)
+  useConnectToServerSideEvent(sseRoute, handleData)
 
   useEffect( () => {
     getInitDashboard()

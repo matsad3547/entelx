@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
 
-import { connectToServerSideEvent } from '../hooks/'
+import { useConnectToServerSideEvent } from '../hooks/'
 
 import { getBaseUrl } from '../utils/'
 
@@ -29,7 +29,7 @@ const ProjectRoi = ({match}) => {
 
   const sseRoute = `/roi/${projectId}`
 
-  connectToServerSideEvent(sseRoute, handleData)
+  useConnectToServerSideEvent(sseRoute, handleData)
 
   return (
     <ProjectPageTemplate

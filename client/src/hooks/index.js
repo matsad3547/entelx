@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export const connectToServerSideEvent = (route, handleData) => useEffect( () => {
+export const useConnectToServerSideEvent = (route, handleData) => useEffect( () => {
     const stream = new EventSource(route)
 
     const handlePing = e => console.log(`ping: ${JSON.parse(e.data).time}`)

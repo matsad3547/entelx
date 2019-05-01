@@ -22,7 +22,7 @@ import {
 
 import {timeIncrements} from '../config/'
 
-import { connectToServerSideEvent } from '../hooks/'
+import { useConnectToServerSideEvent } from '../hooks/'
 
 const HistoricalDisplay = ({match}) => {
 
@@ -128,7 +128,7 @@ const HistoricalDisplay = ({match}) => {
 
   const sseRoute = `/historical/${projectId}/min_date`
 
-  connectToServerSideEvent(sseRoute, handleData)
+  useConnectToServerSideEvent(sseRoute, handleData)
 
   return (
 
