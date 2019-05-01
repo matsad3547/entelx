@@ -49,7 +49,6 @@
 
   const pid = process.pid
 
-
   firstUpdateTimeout = setTimeout( async () => {
     let now = moment()
 
@@ -76,7 +75,9 @@
 
         console.log(`price data update at ${now.valueOf()}`)
 
-        const newest = await catchErrorAndRestart('There was an error getting continuous price updates', presentPriceDataUpdater, getPriceDataOnIntervalRestart)(startMillis, endMillis, nodeData, project)
+        const newest = await catchErrorsWithMessage('There was an error getting the initial price update', presentPriceDataUpdater)(startMillis, endMillis, nodeData, project)
+
+        // const newest = await catchErrorAndRestart('There was an error getting continuous price updates', presentPriceDataUpdater, getPriceDataOnIntervalRestart)(startMillis, endMillis, nodeData, project)
 
         nextTimeoutMillis = getUpdateTimeout(newest)
 
@@ -89,6 +90,7 @@
 
     const getPriceDataOnIntervalRestart = () => setTimeout( () => {
       console.log('restarting presentPriceDataUpdates...')
+
       getPriceDataOnInterval(nextTimeoutMillis - oneMinuteMillis)
     }, oneMinuteMillis)
 
