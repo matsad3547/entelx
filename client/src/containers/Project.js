@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { withRouter } from 'react-router'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
@@ -45,7 +45,7 @@ const Project = ({match, history}) => {
       })
   }
 
-  const getProject = () => {
+  const getProject = useCallback(() => {
     setLoading(true)
     singleRequest(`/project/${projectId}`, getRequest('GET'))
       .then(parseResponse)
@@ -57,9 +57,9 @@ const Project = ({match, history}) => {
         setLoading(false)
         console.error(`There was an error retrieving your project: ${err}`)
       })
-  }
+  }, [projectId])
 
-  useEffect( () => getProject(), [])
+  useEffect( () => getProject(), [getProject])
 
   return (
     <ProjectPageTemplate

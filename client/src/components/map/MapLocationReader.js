@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 const MapLocationReader = ({
@@ -6,12 +6,12 @@ const MapLocationReader = ({
   getLatLng,
 }) => {
 
-  const onClick = e => getLatLng(e.lngLat)
+  const onClick = useCallback(e => getLatLng(e.lngLat), [getLatLng])
 
   useEffect( () => {
     map.on('click', onClick)
     return () => map.off('click', onClick)
-  }, [])
+  }, [map, onClick])
 
   return false
 }

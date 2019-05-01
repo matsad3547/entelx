@@ -83,8 +83,10 @@ const WeatherIcon = ({icon, style}) => {
 
     skycons.play()
 
-    return () => skycons.remove(iconRef.current)
-  }, [icon])
+    const skycon = iconRef.current
+
+    return () => skycons.remove(skycon)
+  }, [icon, skycons, iconConfig.key])
 
   return (
     <canvas width='128' height='128' style={style} ref={iconRef}></canvas>

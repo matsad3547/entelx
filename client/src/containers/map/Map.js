@@ -31,7 +31,7 @@ const Map = ({
     map.on('load', () => setLoaded(true) )
 
     return () => map.remove()
-  }, [])
+  }, [zoom, center])
 
   const childrenWithProps = React.Children.map(children, child =>
     React.cloneElement(child, { map, })

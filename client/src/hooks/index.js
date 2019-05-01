@@ -18,4 +18,4 @@ export const useConnectToServerSideEvent = (route, handleData) => useEffect( () 
       console.log('closing sse connection...');
       stream.close()
     }
-  }, [])
+  }, [route, handleData])

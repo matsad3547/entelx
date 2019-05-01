@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
@@ -87,7 +87,7 @@ const HistoricalDisplay = ({match}) => {
 
   const onGetData = () => getData()
 
-  const getData = () => {
+  const getData = useCallback(() => {
 
     const startMillis = startTime.valueOf()
     const endMillis = endTime.valueOf()
@@ -113,11 +113,11 @@ const HistoricalDisplay = ({match}) => {
         setLoading(false)
         console.error(`There was an error retrieving your project: ${err}`)
       })
-  }
+  }, [startTime, endTime, includeWeather, projectId])
 
   useEffect( () => {
     getData()
-  }, [])
+  }, [getData])
 
   const handleData = e => {
     e.preventDefault()

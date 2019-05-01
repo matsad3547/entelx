@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import CurrentWeatherDisplay from '../components/CurrentWeatherDisplay'
@@ -43,7 +43,7 @@ JS Docs - insta documentation
 
 */
 
-  const getInitDashboard = () => {
+  const getInitDashboard = useCallback(() => {
 
     setLoading(true)
     singleRequest(`/dashboard/${projectId}/config`, getRequest('GET'))
@@ -57,7 +57,7 @@ JS Docs - insta documentation
         setLoading(false)
         console.error(`There was an error retrieving your project: ${err}`)
       })
-  }
+  }, [projectId])
 
   const handleData = e => {
     e.preventDefault()
@@ -80,7 +80,7 @@ JS Docs - insta documentation
 
   useEffect( () => {
     getInitDashboard()
-  }, [])
+  }, [getInitDashboard])
 
   const hasPrices = prices && prices.length > 0
 

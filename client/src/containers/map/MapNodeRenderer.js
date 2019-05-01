@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect, useCallback} from 'react'
 import PropTypes from 'prop-types'
 
 import mapboxgl from 'mapbox-gl'
@@ -53,7 +53,64 @@ const MapNodeRenderer = ({ map }) => {
     closeOnClick: false
   })
 
-  const setLayers = () => {
+  const onNodeMouseEnter = useCallback(e => {
+    map.getCanvas().style.cursor = 'pointer'
+
+    const coordinates = e.features[0].geometry.coordinates.slice()
+
+    const nodeProps = e.features[0].properties
+
+    const popUpHtml = Object.keys(nodeProps).reduce( (str, np, i, keys) => {
+
+      let newLine = `<tr><td><strong>${formatNodeLabels(np)}:</strong></td><td>${ nodeProps[np]}</td></tr>`
+
+      newLine = i < keys.length - 1 ? newLine + '*' : newLine
+
+      const arr = str.split('*')
+
+      return [arr[0], newLine, arr[1]].join('')
+    }, '<table>*</table>')
+
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+
+    popup.setLngLat(coordinates)
+      .setHTML(popUpHtml)
+      .addTo(map)
+  }, [map, popup])
+
+  const onNodeMouseLeave = useCallback(() => {
+    map.getCanvas().style.cursor = ''
+    popup.remove()
+  }, [map, popup])
+
+  const onClusterMouseEnter = useCallback(() => {
+    map.getCanvas().style.cursor = 'pointer'
+  }, [map])
+
+  const onClusterMouseLeave = useCallback(() => {
+    map.getCanvas().style.cursor = ''
+  }, [map])
+
+  const onClusterClick = useCallback(e => {
+    const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
+    const clusterId = features[0].properties.cluster_id
+    map.getSource('nodes').getClusterExpansionZoom(clusterId, (err, zoom) => {
+      if (err) {
+        return
+      }
+
+      const newZoom = zoom === clusterMaxZoom ? zoom + 1 : zoom
+
+      map.easeTo({
+        center: features[0].geometry.coordinates,
+        zoom: newZoom,
+      })
+    })
+  }, [map])
+
+  const setLayers = useCallback(() => {
 
     if (nodes) {
       map.addSource('nodes', {
@@ -132,77 +189,20 @@ const MapNodeRenderer = ({ map }) => {
 
       map.on('mouseleave', 'unclustered-nodes', onNodeMouseLeave)
     }
-  }
+  }, [map, nodes, onNodeMouseEnter, onNodeMouseLeave, onClusterMouseEnter,  onClusterMouseLeave, onClusterClick])
 
-  const onNodeMouseEnter = e => {
-    map.getCanvas().style.cursor = 'pointer'
-
-    const coordinates = e.features[0].geometry.coordinates.slice()
-
-    const nodeProps = e.features[0].properties
-
-    const popUpHtml = Object.keys(nodeProps).reduce( (str, np, i, keys) => {
-
-      let newLine = `<tr><td><strong>${formatNodeLabels(np)}:</strong></td><td>${ nodeProps[np]}</td></tr>`
-
-      newLine = i < keys.length - 1 ? newLine + '*' : newLine
-
-      const arr = str.split('*')
-
-      return [arr[0], newLine, arr[1]].join('')
-    }, '<table>*</table>')
-
-    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-    }
-
-    popup.setLngLat(coordinates)
-      .setHTML(popUpHtml)
-      .addTo(map)
-  }
-
-  const onNodeMouseLeave = () => {
-    map.getCanvas().style.cursor = ''
-    popup.remove()
-  }
-
-  const onClusterMouseEnter = () => {
-    map.getCanvas().style.cursor = 'pointer'
-  }
-
-  const onClusterMouseLeave = () => {
-    map.getCanvas().style.cursor = ''
-  }
-
-  const onClusterClick = e => {
-    const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
-    const clusterId = features[0].properties.cluster_id
-    map.getSource('nodes').getClusterExpansionZoom(clusterId, (err, zoom) => {
-      if (err) {
-        return
-      }
-
-      const newZoom = zoom === clusterMaxZoom ? zoom + 1 : zoom
-
-      map.easeTo({
-        center: features[0].geometry.coordinates,
-        zoom: newZoom,
-      })
-    })
-  }
-
-  const cleanup = () => {
+  const cleanup =  useCallback(() => {
     map.off('mouseenter', 'clusters', onClusterMouseEnter)
     map.off('mouseleave', 'clusters', onClusterMouseLeave)
     map.off('click', 'clusters', onClusterClick)
     map.off('mouseenter', 'unclustered-nodes', onNodeMouseEnter)
     map.off('mouseleave', 'unclustered-nodes', onNodeMouseLeave)
-  }
+  }, [map, onClusterMouseEnter, onClusterMouseLeave, onClusterClick, onNodeMouseEnter, onNodeMouseLeave])
 
   useEffect( () => {
     setLayers()
     return () => cleanup()
-  }, [nodes])
+  }, [nodes, cleanup, setLayers])
 
   return false
 }
