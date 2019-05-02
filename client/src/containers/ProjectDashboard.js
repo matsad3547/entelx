@@ -80,7 +80,7 @@ JS Docs - insta documentation
 
   useEffect( () => {
     getInitDashboard()
-  }, [getInitDashboard])
+  }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
   const hasPrices = prices && prices.length > 0
 

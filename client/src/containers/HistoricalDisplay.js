@@ -117,7 +117,7 @@ const HistoricalDisplay = ({match}) => {
 
   useEffect( () => {
     getData()
-  }, [getData])
+  }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
   const handleData = useCallback( e => {
     e.preventDefault()
