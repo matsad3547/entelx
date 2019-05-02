@@ -119,12 +119,11 @@ const HistoricalDisplay = ({match}) => {
     getData()
   }, [getData])
 
-  const handleData = e => {
+  const handleData = useCallback( e => {
     e.preventDefault()
     const {minDateMillis} = JSON.parse(e.data)
-
     setMinDate(moment(minDateMillis))
-  }
+  }, [])
 
   const sseRoute = `/historical/${projectId}/min_date`
 

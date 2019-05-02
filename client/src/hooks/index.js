@@ -15,7 +15,7 @@ export const useConnectToServerSideEvent = (route, handleData) => useEffect( () 
       stream.removeEventListener('message', handleData)
       stream.removeEventListener('ping', handlePing)
       stream.removeEventListener('error', handleError)
-      console.log('closing sse connection...');
+      console.log('closing sse connection...')
       stream.close()
     }
   }, [route, handleData])

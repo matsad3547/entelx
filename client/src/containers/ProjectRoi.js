@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
@@ -21,11 +21,11 @@ const ProjectRoi = ({match}) => {
   const [loading] = useState(false)
   const [data, setData] = useState(null)
 
-  const handleData = e => {
+  const handleData = useCallback( e => {
     // TODO Check origin in production and dev per https://html.spec.whatwg.org/multipage/web-messaging.html#authors
     console.log(e);
     setData(JSON.parse(e.data))
-  }
+  }, [])
 
   const sseRoute = `/roi/${projectId}`
 

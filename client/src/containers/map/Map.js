@@ -30,7 +30,7 @@ const Map = ({
 
     map.on('load', () => setLoaded(true) )
 
-    return map.remove
+    return () => map.remove()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
   const childrenWithProps = React.Children.map(children, child =>

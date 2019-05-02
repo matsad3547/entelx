@@ -59,7 +59,7 @@ JS Docs - insta documentation
       })
   }, [projectId])
 
-  const handleData = e => {
+  const handleData = useCallback( e => {
     e.preventDefault()
     const {
       weather,
@@ -72,7 +72,7 @@ JS Docs - insta documentation
     setPrices(prices)
     setRevenue(revenue)
     setCharge(charge)
-  }
+  }, [])
 
   const sseRoute = `/dashboard/${projectId}/data`
 
