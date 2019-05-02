@@ -28,7 +28,7 @@ const Map = ({
 
     setMap(map)
 
-    map.once('load', () => setLoaded(true) )
+    map.on('load', () => setLoaded(true) )
 
     return () => map.remove()
   }, [zoom, center])

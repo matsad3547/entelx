@@ -6,12 +6,17 @@ const MapLocationReader = ({
   getLatLng,
 }) => {
 
-  const onClick = useCallback(e => getLatLng(e.lngLat), [getLatLng])
+  console.log('getLatLng', getLatLng);
+
+  const onClick = e => console.log('e at onclick:', e);
+  // const onClick = e => getLatLng(e.lngLat)
+
+  const cleanUp = () => map.off('click', onClick)
 
   useEffect( () => {
     map.on('click', onClick)
-    return () => map.off('click', onClick)
-  }, [map, onClick])
+    return cleanUp
+  }, [])
 
   return false
 }
