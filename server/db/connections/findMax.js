@@ -7,7 +7,6 @@ const findMax = (
 ) => knex(table)
   .where(addlQuery)
   .max(maxColumn)
-  .debug()
   .catch( err => console.error(`Error finding the max value for column ${maxColumn} where ${addlQuery} from table ${table}:`, err))
 
 module.exports = findMax

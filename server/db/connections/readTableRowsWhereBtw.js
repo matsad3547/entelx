@@ -8,7 +8,6 @@ const readTableRowsWhereBtw = (
 ) => knex(table)
   .where(queryObj)
   .whereBetween(wbColumn, wbArr)
-  .debug()
   .catch( err => console.error(`Error reading from '${table}' table by ${queryObj} and where '${wbColumn}' is between ${wbArr}:`, err))
 
 module.exports = readTableRowsWhereBtw
