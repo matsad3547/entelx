@@ -43,7 +43,7 @@ const oasisEndpoint = (
             json['m:OASISReport']['m:MessagePayload']['m:RTO']['m:ERROR']
 
           if(error !== undefined) {
-            console.timeEnd(`CAISO ${query} request`)
+            console.timeEnd(`CAISO ${url} request`)
             reject(error['m:ERR_DESC']._text)
           }
           else {
@@ -51,17 +51,21 @@ const oasisEndpoint = (
 
             try {
               const parsed = parser(query, json)
-              console.timeEnd(`CAISO ${query} request`)
+              console.timeEnd(`CAISO ${url} request`)
               resolve(parsed)
             }
             catch (err) {
-              console.error(`There was an issue parsing data from ${url}:`, err)
+              console.timeEnd(`CAISO ${url} request`)
+              console.error(`There was an issue parsing data from ${query}:`, err)
               console.log('OASIS response:', json)
             }
           }
         })
     )
-    .on('error', reject)
+    .on('error', err => {
+      console.timeEnd(`CAISO ${url} request`)
+      reject(err)
+    })
 })
 
 module.exports = oasisEndpoint

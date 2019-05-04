@@ -73,7 +73,7 @@
 
         const [project] = await readTableRows('project', {id: projectId})
 
-        console.log(`price data update at ${now.valueOf()}`)
+        console.log(`periodic price data update at ${now.valueOf()}`)
 
         const newest = await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater)(startMillis, endMillis, nodeData, project)
 
@@ -88,14 +88,15 @@
       }, timeoutMillis)
     }
 
-    const getPriceDataOnIntervalRestart = (nextTimeoutMillis) => setTimeout( () => {
-      console.log('restarting presentPriceDataUpdates...')
+    // const getPriceDataOnIntervalRestart = (nextTimeoutMillis) => setTimeout( () => {
+    //   console.log('restarting presentPriceDataUpdates...')
+    //
+    //   getPriceDataOnInterval(nextTimeoutMillis - oneMinuteMillis)
+    // }, oneMinuteMillis)
 
-      getPriceDataOnInterval(nextTimeoutMillis - oneMinuteMillis)
-    }, oneMinuteMillis)
-
-    getPriceDataOnInterval(getPriceDataOnInterval)
+    getPriceDataOnInterval(nextTimeoutMillis)
   }, firstUpdate)
+
 
   await catchErrorsWithMessage('There was an error setting the process id for present price updates', updateTableRow)('project', {id: projectId}, {presentUpdatePid: pid})
 

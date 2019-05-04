@@ -274,7 +274,6 @@ const styles = {
     minHeight: '50em',
   },
   map: {
-    // height: '55em',
     height: '100%',
   },
   button: {
