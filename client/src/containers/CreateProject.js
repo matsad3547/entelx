@@ -266,13 +266,16 @@ const styles = {
     justifyContent: 'space-between',
   },
   mapContainer: {
-    display: 'block',
+    display: 'flex',
+    flexDirection: 'column',
     boxSizing: 'border-box',
     flex: '1 1 48%',
     padding: '1em',
+    minHeight: '50em',
   },
   map: {
-    height: '55em',
+    // height: '55em',
+    height: '100%',
   },
   button: {
     display: 'flex',

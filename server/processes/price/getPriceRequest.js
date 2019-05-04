@@ -4,6 +4,7 @@ const getPriceRequest = node => {
 
   switch (true) {
     case false:
+      return
 
     default:
       return {

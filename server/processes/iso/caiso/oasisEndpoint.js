@@ -15,7 +15,6 @@ const oasisEndpoint = (
   node,
 ) => new Promise( (resolve, reject) => {
 
-  console.time(`CAISO ${query} request`)
 
   const url = getUrl(
     startMillis,
@@ -24,8 +23,7 @@ const oasisEndpoint = (
     marketType,
     node,
   )
-
-  // console.log('url:', url);
+  console.time(`CAISO ${url} request`)
 
   const xmlOptions = {
     compact: true,
@@ -42,10 +40,7 @@ const oasisEndpoint = (
         .then( json => {
 
           const error = json['m:OASISReport'] &&
-            json['m:OASISReport']
-              ['m:MessagePayload']
-              ['m:RTO']
-              ['m:ERROR']
+            json['m:OASISReport']['m:MessagePayload']['m:RTO']['m:ERROR']
 
           if(error !== undefined) {
             console.timeEnd(`CAISO ${query} request`)
@@ -60,7 +55,7 @@ const oasisEndpoint = (
               resolve(parsed)
             }
             catch (err) {
-              console.error(`There was an issue parsing data from ${query}:`, err)
+              console.error(`There was an issue parsing data from ${url}:`, err)
               console.log('OASIS response:', json)
             }
           }

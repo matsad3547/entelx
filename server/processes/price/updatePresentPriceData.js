@@ -88,7 +88,7 @@
       }, timeoutMillis)
     }
 
-    const getPriceDataOnIntervalRestart = () => setTimeout( () => {
+    const getPriceDataOnIntervalRestart = (nextTimeoutMillis) => setTimeout( () => {
       console.log('restarting presentPriceDataUpdates...')
 
       getPriceDataOnInterval(nextTimeoutMillis - oneMinuteMillis)
