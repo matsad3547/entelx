@@ -15,11 +15,11 @@ const catchErrorsWithMessage = (msg, fn) => (...args) =>
       throw err
     })
 
-const catchErrorAndRestart = (msg, fn, restartFn) => (...args) =>
+const catchErrorAndRestart = (msg, fn) => (...args) => (restartFn) => (...restartArgs) =>
   fn(...args)
-  .catch(err => {
+    .catch(err => {
       console.error(`${msg}:`, err)
-      restartFn()
+      restartFn(...restartArgs)
     })
 
 module.exports = {
