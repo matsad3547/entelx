@@ -86,6 +86,7 @@ const getData = async (res, projectSpecs) => {
     prices,
     revenue: project.revenue,
     charge: project.charge,
+    status: project.status,
   })
 }
 

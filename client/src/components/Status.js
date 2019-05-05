@@ -17,6 +17,7 @@ const Status = ({
   charge,
   revenue,
   energy,
+  status,
 }) => {
 
   const latest = prices[prices.length - 1]
@@ -38,6 +39,7 @@ const Status = ({
             avgPrc={avgPrc}
             chargeThreshold={chargeThreshold}
             dischargeThreshold={dischargeThreshold}
+            status={status}
             />
         </div>
         <div style={styles.followingSection}>
@@ -74,6 +76,7 @@ Status.propTypes = {
   charge: PropTypes.number.isRequired,
   revenue: PropTypes.number.isRequired,
   timeZone: PropTypes.string.isRequired,
+  status: PropTypes.oneOf(['charge', 'discharge', 'standby'])
 }
 
 export default Status

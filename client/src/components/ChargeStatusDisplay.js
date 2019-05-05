@@ -42,13 +42,16 @@ const ChargeStatusDisplay = ({
   avgPrc,
   chargeThreshold,
   dischargeThreshold,
+  status,
 }) => {
 
   const diff = currentPrc - avgPrc
 
-  const charge = currentPrc < avgPrc - chargeThreshold
+  const charge = status === 'charge'
 
-  const discharge = currentPrc > avgPrc + dischargeThreshold
+  const discharge = status === 'discharge'
+
+  const standby = status === 'standby'
 
   return (
     <div>
@@ -63,7 +66,7 @@ const ChargeStatusDisplay = ({
         <div style={getStatusStyles(statusColors.discharge)}>DISCHARGE</div>
       }
       {
-        (!charge && !discharge) &&
+        standby &&
         <div style={getStatusStyles(statusColors.standby)}>STANDBY</div>
       }
       <p>
@@ -78,6 +81,7 @@ ChargeStatusDisplay.propTypes = {
   avgPrc: PropTypes.number.isRequired,
   chargeThreshold: PropTypes.number.isRequired,
   dischargeThreshold: PropTypes.number.isRequired,
+  status: PropTypes.oneOf(['charge', 'discharge', 'standby'])
 }
 
 export default ChargeStatusDisplay
