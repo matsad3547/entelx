@@ -197,11 +197,6 @@ const findRevenueAndCharge = (
     chargeBuffer,
   } = batterySpecs
 
-  const {
-    charge,
-    revenue,
-  } = currentState
-
   const chargeEnergy = power * fiveMinsAsHour
 
   const maxEnergy = (1 - chargeBuffer) * energy
