@@ -1108,6 +1108,7 @@ describe('findRevenueAndCharge', () => {
     const expected = {
       charge: 0.20833333333333331,
       revenue: -6.42023125,
+      status: 'charge',
     }
     expect(actual).toEqual(expected)
   })
@@ -1169,6 +1170,7 @@ describe('findRevenueAndCharge', () => {
     const expected = {
       charge: 1/12,
       revenue: -30/12,
+      status: 'charge',
     }
     expect(actual).toEqual(expected)
   })
@@ -1199,6 +1201,7 @@ describe('findRevenueAndCharge', () => {
     const expected = {
       charge: 1/6,
       revenue: -30/6,
+      status: 'charge',
     }
     expect(actual).toEqual(expected)
   })
@@ -1229,6 +1232,7 @@ describe('findRevenueAndCharge', () => {
     const expected = {
       charge: 0,
       revenue: 0,
+      status: 'standby',
     }
     expect(actual).toEqual(expected)
   })
@@ -1259,6 +1263,7 @@ describe('findRevenueAndCharge', () => {
     const expected = {
       charge: 1/12,
       revenue: -30/12,
+      status: 'standby',
     }
     expect(actual).toEqual(expected)
   })
@@ -1282,6 +1287,7 @@ describe('findRevenueAndCharge', () => {
     const currentState = {
       charge: 0,
       revenue: -30/12,
+
     }
     const dischargeThreshold = 5
     const chargeThreshold = 5
@@ -1289,6 +1295,7 @@ describe('findRevenueAndCharge', () => {
     const expected = {
       charge: 0,
       revenue: -30/12,
+      status: 'standby',
     }
     expect(actual).toEqual(expected)
   })
@@ -1319,6 +1326,7 @@ describe('findRevenueAndCharge', () => {
     const expected = {
       charge: 2/12,
       revenue: -30/12,
+      status: 'standby',
     }
     expect(actual).toEqual(expected)
   })
@@ -1349,8 +1357,11 @@ describe('findRevenueAndCharge', () => {
     const expected = {
       charge: 1/12,
       revenue: 16/12,
+      status: 'discharge',
     }
     expect(actual.charge).toBeCloseTo(expected.charge, 10)
     expect(actual.revenue).toBeCloseTo(expected.revenue, 10)
+    expect(actual.status).toBe('discharge')
+
   })
 })

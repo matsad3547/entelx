@@ -217,16 +217,21 @@ const findRevenueAndCharge = (
       return {
         charge: agg.charge + chargeEnergy,
         revenue: agg.revenue - (d[key] * chargeEnergy),
+        status: 'charge',
       }
     }
     else if (discharge) {
       return {
         charge: agg.charge - chargeEnergy,
         revenue: agg.revenue + (d[key] * rte * chargeEnergy),
+        status: 'discharge',
       }
     }
     else {
-      return agg
+      return {
+        ...agg,
+        status: 'standby',
+      }
     }
   }, currentState)
 }
