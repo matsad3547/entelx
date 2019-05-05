@@ -6,6 +6,7 @@ import DataTimeDisplay from '../components/DataTimeDisplay'
 import ChargeStatusDisplay from '../components/ChargeStatusDisplay'
 import HeadingLabel from '../components/HeadingLabel'
 import DataDisplay from '../components/DataDisplay'
+import AnimatedDataDisplay from '../components/AnimatedDataDisplay'
 
 import { roundToDigits } from '../utils/'
 
@@ -49,6 +50,15 @@ const Status = ({
         <div style={styles.followingSection}>
           <HeadingLabel content="Revenue" />
           <DataDisplay content={`$${roundToDigits(revenue, 2)}`}/>
+        </div>
+        <div style={styles.followingSection}>
+          <AnimatedDataDisplay
+            label="Animated State of Charge"
+            seconds={5 * 60}
+            value={(charge/energy) * 100}
+            digits={1}
+            units={'%'}
+          />
         </div>
       </div>
     </DashboardSection>
