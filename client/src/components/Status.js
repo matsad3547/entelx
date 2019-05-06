@@ -56,8 +56,8 @@ const Status = ({
             label="Animated State of Charge"
             seconds={5 * 60}
             value={(charge/energy) * 100}
-            digits={1}
-            units={'%'}
+            digits={2}
+            unit={' %'}
           />
         </div>
       </div>
