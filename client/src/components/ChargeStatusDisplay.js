@@ -51,7 +51,7 @@ const ChargeStatusDisplay = ({
 
   const discharge = status === 'discharge'
 
-  const standby = status === 'standby'
+  const standby = !charge && !discharge
 
   return (
     <div>

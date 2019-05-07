@@ -4,15 +4,11 @@ import PropTypes from 'prop-types'
 import HeadingLabel from '../components/HeadingLabel'
 import DataDisplay from '../components/DataDisplay'
 
-import { roundToDigits } from '../utils/'
-
-
 const useInterpolateValues = (value, seconds) => {
 
   const [displayVal, setDisplayVal] = useState(0)
-  const [restart, setRestart] = useState(true) //eslint-disable-line no-unused-vars
 
-  const timerRef = useRef({interval: null, timer: null})
+  const timerRef = useRef(null)
   const valRef = useRef({nextVal: 0, prevVal: 0})
 
   useEffect( () => {
@@ -29,35 +25,29 @@ const useInterpolateValues = (value, seconds) => {
 
     const step = (nextVal - prevVal) / seconds
 
-    console.log('updating interpolate hook - next val:', nextVal, 'prev val:', prevVal);
+    const updateDisplayVal = () => {
+      console.log('updating interpolate hook - next val:', nextVal, 'prev val:', prevVal, 'step:', step)
 
-    if (prevVal !== nextVal) {
-      console.log('updating at if');
-      timerRef.current.interval = setInterval( () => {
-
-        setDisplayVal( displayVal => displayVal + step)
-      }, 1000)
+      if (prevVal !== nextVal) {
+        console.log('updating at if');
+        timerRef.current = setTimeout( () => {
+          setDisplayVal( displayVal => {
+            if (displayVal !== nextVal) {
+              return displayVal + step
+            }
+          })
+          updateDisplayVal()
+        }, 1000)
+      }
+      else {
+        console.log('setting value at else');
+        setDisplayVal(value)
+      }
     }
-    else {
-      console.log('setting value at else');
-      setDisplayVal(value)
-    }
 
-    timerRef.current.timer = setTimeout( () => {
-      console.log('restarting...');
-      setRestart( restart => !restart )
-    }, seconds * 1000)
+    updateDisplayVal()
 
-    const {
-      interval,
-      timer,
-    } = timerRef.current
-
-    return () => {
-
-      clearInterval(interval)
-      clearTimeout(timer)
-    }
+    return () => clearTimeout(timerRef.current)
   }, [value, seconds])
 
   return displayVal
@@ -77,7 +67,7 @@ const AnimatedDataDisplay = ({
   return (
     <div>
       <HeadingLabel content={label} />
-      <DataDisplay content={`${dollars ?  '$' : ''}${roundToDigits(displayVal, digits)} ${unit}`}/>
+      <DataDisplay content={`${dollars ?  '$' : ''}${displayVal.toFixed(digits)} ${unit}`}/>
     </div>
   )
 }
