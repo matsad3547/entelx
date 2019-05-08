@@ -32,8 +32,11 @@ const useInterpolateValues = (value, seconds) => {
         console.log('updating at if');
         timerRef.current = setTimeout( () => {
           setDisplayVal( displayVal => {
-            if (displayVal !== nextVal) {
+            if ((nextVal < prevVal && displayVal + step > nextVal) || (nextVal > prevVal && displayVal + step < nextVal)) {
               return displayVal + step
+            }
+            else {
+              return displayVal
             }
           })
           updateDisplayVal()
@@ -47,7 +50,11 @@ const useInterpolateValues = (value, seconds) => {
 
     updateDisplayVal()
 
-    return () => clearTimeout(timerRef.current)
+    return () => {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+      valRef.current = {nextVal: 0, prevVal: 0}
+    }
   }, [value, seconds])
 
   return displayVal
