@@ -66,15 +66,9 @@ const Status = ({
             unit={' %'}
             />
             </div>*/}
-          </div>
-        </DashboardSection>
-      )
-  // if (config) {
-  //
-  // }
-  // else {
-  //   return null
-  // }
+        </div>
+      </DashboardSection>
+    )
 }
 
 const styles = {

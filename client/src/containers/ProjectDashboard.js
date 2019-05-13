@@ -87,7 +87,7 @@ JS Docs - insta documentation
   const hasPrices = prices && prices.length > 0
 
   const dataLoaded = loading && !hasPrices
-  // 
+  //
   // const hasSoc = charge !== null && revenue !== null
 
   return (
@@ -106,10 +106,9 @@ JS Docs - insta documentation
           revenue={revenue}
           status={status}
           />
-
+        <DashboardSection headerContent={'Last Hour'}>
         {
-          (hasPrices && config) &&
-          <DashboardSection headerContent={'Last Hour'}>
+          (hasPrices && config) ?
             <LineBarChart
               barKey={'lmp'}
               negBarThreshold={config.chargeThreshold}
@@ -117,9 +116,10 @@ JS Docs - insta documentation
               data={prices}
               timeZone={config.timeZone}
               aspect={4}
-              />
-          </DashboardSection>
+              /> :
+            <p>Data for the last hour is not currently available</p>
         }
+        </DashboardSection>
         {
           (weather && config) &&
           <CurrentWeatherDisplay
