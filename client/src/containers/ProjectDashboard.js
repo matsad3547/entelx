@@ -121,7 +121,7 @@ JS Docs - insta documentation
         }
         </DashboardSection>
         {
-          (weather && config) &&
+          config &&
           <CurrentWeatherDisplay
             weather={weather}
             timeZone={config.timeZone}

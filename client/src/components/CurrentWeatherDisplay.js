@@ -13,8 +13,9 @@ import { roundToDigits } from '../utils/'
 const CurrentWeatherDisplay = ({ weather, timeZone }) => (
 
   <DashboardSection headerContent="Weather">
-    <DashboardSectionContent>
-      <div>
+    { weather ?
+      <DashboardSectionContent>
+        <div>
         <DataTimeDisplay
           message="Data as of"
           millis={weather.time * 1000}
@@ -53,7 +54,9 @@ const CurrentWeatherDisplay = ({ weather, timeZone }) => (
           Powered by Dark Sky
         </a>
       </div>
-    </DashboardSectionContent>
+    </DashboardSectionContent> :
+    <p>Weather data is not currently available</p>
+    }
   </DashboardSection>
 )
 
@@ -85,7 +88,7 @@ CurrentWeatherDisplay.propTypes = {
     windBearing: PropTypes.number,
     nearestStormDistance: PropTypes.number,
     nearestStormBearing: PropTypes.number,
-  }).isRequired,
+  }),
 }
 
 export default CurrentWeatherDisplay
