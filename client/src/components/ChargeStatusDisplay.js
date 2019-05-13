@@ -40,47 +40,54 @@ const statusColors = {
 const ChargeStatusDisplay = ({
   currentPrc,
   avgPrc,
-  chargeThreshold,
-  dischargeThreshold,
   status,
 }) => {
 
-  const diff = currentPrc - avgPrc
+  if (currentPrc && avgPrc && status) {
 
-  const charge = status === 'charge'
+    const diff = currentPrc - avgPrc
 
-  const discharge = status === 'discharge'
+    const charge = status === 'charge'
 
-  const standby = !charge && !discharge
+    const discharge = status === 'discharge'
 
-  return (
-    <div>
-      {
-        charge &&
-        <div style={getStatusStyles(statusColors.charge)}>
-          CHARGE
-        </div>
-      }
-      {
-        discharge &&
-        <div style={getStatusStyles(statusColors.discharge)}>DISCHARGE</div>
-      }
-      {
-        standby &&
-        <div style={getStatusStyles(statusColors.standby)}>STANDBY</div>
-      }
-      <p>
-        {getPriceDescription(diff, charge, discharge)}
-      </p>
-    </div>
-  )
+    const standby = !charge && !discharge
+
+    return (
+      <div>
+        {
+          charge &&
+          <div style={getStatusStyles(statusColors.charge)}>
+            CHARGE
+          </div>
+        }
+        {
+          discharge &&
+          <div style={getStatusStyles(statusColors.discharge)}>DISCHARGE</div>
+        }
+        {
+          standby &&
+          <div style={getStatusStyles(statusColors.standby)}>STANDBY</div>
+        }
+
+        <p>
+          {
+            getPriceDescription(diff, charge, discharge)
+          }
+        </p>
+      </div>
+    )
+  }
+  else {
+    return (
+      <p>Status data is not currently available</p>
+    )
+  }
 }
 
 ChargeStatusDisplay.propTypes = {
-  currentPrc: PropTypes.number.isRequired,
-  avgPrc: PropTypes.number.isRequired,
-  chargeThreshold: PropTypes.number.isRequired,
-  dischargeThreshold: PropTypes.number.isRequired,
+  currentPrc: PropTypes.number,
+  avgPrc: PropTypes.number,
   status: PropTypes.oneOf(['charge', 'discharge', 'standby'])
 }
 

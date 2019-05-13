@@ -41,7 +41,6 @@ JS Docs - insta documentation
 * turns on the spinner
 * @param {object} config
 * @param {lat: Number}
-
 */
 
   const getInitDashboard = useCallback(() => {
@@ -88,8 +87,8 @@ JS Docs - insta documentation
   const hasPrices = prices && prices.length > 0
 
   const dataLoaded = loading && !hasPrices
-
-  const hasSoc = charge !== null && revenue !== null
+  // 
+  // const hasSoc = charge !== null && revenue !== null
 
   return (
 
@@ -100,19 +99,14 @@ JS Docs - insta documentation
       >
       { dataLoaded && <Loading message={''} />}
       <div style={styles.root}>
-        {
-          (hasPrices && config && hasSoc) &&
-          <Status
-            prices={prices}
-            timeZone={config.timeZone}
-            chargeThreshold={config.chargeThreshold}
-            dischargeThreshold={config.dischargeThreshold}
-            charge={charge}
-            revenue={revenue}
-            energy={config.energy}
-            status={status}
-            />
-        }
+        <Status
+          config={config}
+          prices={prices}
+          charge={charge}
+          revenue={revenue}
+          status={status}
+          />
+
         {
           (hasPrices && config) &&
           <DashboardSection headerContent={'Last Hour'}>

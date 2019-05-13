@@ -11,58 +11,70 @@ import AnimatedDataDisplay from '../components/AnimatedDataDisplay'
 import { roundToDigits } from '../utils/'
 
 const Status = ({
+  config,
   prices,
-  timeZone,
-  chargeThreshold,
-  dischargeThreshold,
   charge,
   revenue,
-  energy,
   status,
 }) => {
 
-  const latest = prices[prices.length - 1]
-
-  const currentPrc = latest.lmp
-  const avgPrc = latest.mvgAvg
+  const latest = prices && prices[prices.length - 1]
+  const currentPrc = latest && latest.lmp
+  const avgPrc = latest && latest.mvgAvg
+  const timestamp = latest && latest.timestamp
 
   return (
     <DashboardSection headerContent="Status">
       <div style={styles.root}>
         <div>
-          <DataTimeDisplay
-            message="Data as of"
-            millis={latest.timestamp}
-            timeZone={timeZone}
-            />
+          {
+            timestamp &&
+            <DataTimeDisplay
+              message="Data as of"
+              millis={timestamp}
+              timeZone={config.timeZone}
+              />
+          }
           <ChargeStatusDisplay
             currentPrc={currentPrc}
             avgPrc={avgPrc}
-            chargeThreshold={chargeThreshold}
-            dischargeThreshold={dischargeThreshold}
             status={status}
             />
         </div>
         <div style={styles.followingSection}>
           <HeadingLabel content="State of Charge" />
-          <DataDisplay content={`${roundToDigits((charge/energy) * 100, 1)} %`}/>
-        </div>
-        <div style={styles.followingSection}>
-          <HeadingLabel content="Revenue" />
-          <DataDisplay content={`$${roundToDigits(revenue, 2)}`}/>
-        </div>
-        <div style={styles.followingSection}>
-          <AnimatedDataDisplay
+          {
+            (charge && config.energy) ?
+            <DataDisplay content={`${roundToDigits((charge/config.energy) * 100, 1)} %`}/> :
+              <span>State of charge data is not currently available</span>
+            }
+          </div>
+          <div style={styles.followingSection}>
+            <HeadingLabel content="Revenue" />
+            {
+              revenue ?
+              <DataDisplay content={`$${roundToDigits(revenue, 2)}`}/> :
+                <span>Revenue data is not currently available</span>
+              }
+            </div>
+            {/*<div style={styles.followingSection}>
+            <AnimatedDataDisplay
             label="Animated State of Charge"
             seconds={5 * 60}
             value={(charge/energy) * 100}
             digits={2}
             unit={' %'}
-          />
-        </div>
-      </div>
-    </DashboardSection>
-  )
+            />
+            </div>*/}
+          </div>
+        </DashboardSection>
+      )
+  // if (config) {
+  //
+  // }
+  // else {
+  //   return null
+  // }
 }
 
 const styles = {
@@ -76,16 +88,19 @@ const styles = {
 }
 
 Status.propTypes = {
+  config: PropTypes.shape({
+    energy: PropTypes.number,
+    timeZone: PropTypes.string,
+  }),
   prices: PropTypes.arrayOf(PropTypes.shape({
       lmp: PropTypes.number,
       mvgAvg: PropTypes.number,
       score: PropTypes.number,
       timestamp: PropTypes.number,
     })
-  ).isRequired,
-  charge: PropTypes.number.isRequired,
-  revenue: PropTypes.number.isRequired,
-  timeZone: PropTypes.string.isRequired,
+  ),
+  charge: PropTypes.number,
+  revenue: PropTypes.number,
   status: PropTypes.oneOf(['charge', 'discharge', 'standby'])
 }
 
