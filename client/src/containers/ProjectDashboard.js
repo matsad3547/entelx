@@ -87,8 +87,6 @@ JS Docs - insta documentation
   const hasPrices = prices && prices.length > 0
 
   const dataLoaded = loading && !hasPrices
-  //
-  // const hasSoc = charge !== null && revenue !== null
 
   return (
 
@@ -117,7 +115,7 @@ JS Docs - insta documentation
               timeZone={config.timeZone}
               aspect={4}
               /> :
-            <p>Data for the last hour is not currently available</p>
+            <p style={styles.noData}>Data for the last hour is not currently available</p>
         }
         </DashboardSection>
         {
@@ -138,7 +136,10 @@ const styles = {
   },
   chart: {
     padding: '1em 0',
-  }
+  },
+  noData: {
+    padding: '0 1em',
+  },
 }
 
 export default ProjectDashboard
