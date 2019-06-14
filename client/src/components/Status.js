@@ -6,7 +6,7 @@ import DataTimeDisplay from '../components/DataTimeDisplay'
 import ChargeStatusDisplay from '../components/ChargeStatusDisplay'
 import HeadingLabel from '../components/HeadingLabel'
 import DataDisplay from '../components/DataDisplay'
-import AnimatedDataDisplay from '../components/AnimatedDataDisplay'
+// import AnimatedDataDisplay from '../components/AnimatedDataDisplay'
 
 import { roundToDigits } from '../utils/'
 
