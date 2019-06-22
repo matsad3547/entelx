@@ -43,6 +43,8 @@ const setProjectData = (node, projectId, timeZone) => {
       aggregate,
     } = derivedData
 
+    console.log('aggregate:', aggregate);
+
     // TODO get these values from aggregate
     const chargeThreshold = 6.23
     const dischargeThreshold = 5.43

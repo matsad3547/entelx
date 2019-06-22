@@ -24,6 +24,7 @@
     readTableRows,
     updateTableRow,
     deleteTableRowsWhereBtw,
+    findMax,
   } = require('../../db/')
 
   const presentPriceDataUpdater = require('./presentPriceDataUpdater')
@@ -33,13 +34,16 @@
   const {
     node,
     projectId,
-    mostRecent,
   } = args
 
   const {
     id,
     name,
   } = node
+
+  const max = await findMax('price', 'timestamp', {nodeId: id})
+
+  const mostRecent = max[0]['max(timestamp)']
 
   let firstUpdateTimeout, continuousTimeout, firstUpdate
 

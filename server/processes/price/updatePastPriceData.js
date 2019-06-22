@@ -15,6 +15,7 @@
   const {
     readTableRows,
     updateTableRow,
+    findMax,
   } = require('../../db/')
 
   const pastPriceDataUpdater = require('./pastPriceDataUpdater')
@@ -24,13 +25,16 @@
   const {
     node,
     projectId,
-    mostRecent,
   } = args
 
   const {
     id,
     name,
   } = node
+
+  const max = await findMax('price', 'timestamp', {nodeId: id})
+
+  const mostRecent = max[0]['max(timestamp)']
 
   const sixMonthsAgoMillis = mostRecent - sixMonthMillis
 
