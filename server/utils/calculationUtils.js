@@ -394,6 +394,7 @@ const calculateDerivedData = composeData(
   calculateScore,
   findMinMax,
   findInflections,
+  findStdDev,
 )
 
 module.exports = {

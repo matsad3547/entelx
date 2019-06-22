@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('server/public'))
 }
 
-// const server = 
+// const server =
 app.listen(app.get('port'), err => {
   if (err) {
     console.error('An error occured:', err)

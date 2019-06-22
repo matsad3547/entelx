@@ -6,13 +6,11 @@
     setExitListeners,
     getUpdateTimeout,
     catchErrorsWithMessage,
-    catchErrorAndRestart,
   } = require('../../utils/')
 
   const {
     fiveMinutesMillis,
     sixMonthMillis,
-    oneMinuteMillis,
   } = require('../../config/')
 
   const {
@@ -81,8 +79,6 @@
 
         const newest = await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater)(startMillis, endMillis, nodeData, project)
 
-        // const newest = await catchErrorAndRestart('There was an error getting continuous price updates', presentPriceDataUpdater, getPriceDataOnIntervalRestart)(startMillis, endMillis, nodeData, project)
-
         nextTimeoutMillis = getUpdateTimeout(newest)
 
         await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
@@ -91,12 +87,6 @@
 
       }, timeoutMillis)
     }
-
-    // const getPriceDataOnIntervalRestart = (nextTimeoutMillis) => setTimeout( () => {
-    //   console.log('restarting presentPriceDataUpdates...')
-    //
-    //   getPriceDataOnInterval(nextTimeoutMillis - oneMinuteMillis)
-    // }, oneMinuteMillis)
 
     getPriceDataOnInterval(nextTimeoutMillis)
   }, firstUpdate)
@@ -110,7 +100,7 @@
   process.on('SIGUSR2', () => true )
 
   const cleanUp = code => {
-    console.log(`exiting "updatePresentPriceData" for ${name}\n exit code: ${code}` );
+    console.log(`exiting "updatePresentPriceData" for ${name}\n exit code: ${code}` )
     clearTimeout(firstUpdateTimeout)
     clearTimeout(continuousTimeout)
   }

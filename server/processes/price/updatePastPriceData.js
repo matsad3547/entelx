@@ -32,6 +32,8 @@
     name,
   } = node
 
+  console.log(`starting "updatePastPriceData" for ${name}` )
+
   const max = await findMax('price', 'timestamp', {nodeId: id})
 
   const mostRecent = max[0]['max(timestamp)']
@@ -47,6 +49,7 @@
   let tries = 0
 
   const update = async () => {
+    console.log('updating past price data')
     const startMillis = endMillis - threeWeeksMillis
     const oldest = await catchErrorAndRestart('There was an error getting past update data', pastPriceDataUpdater, restartPastPriceUpdates )(startMillis, endMillis, nodeData)
 
