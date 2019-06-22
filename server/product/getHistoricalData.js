@@ -1,13 +1,13 @@
-const moment = require('moment-timezone')
+// const moment = require('moment-timezone')
 
 const {
   readTableRows,
   readTableRowsWhereBtw,
 } = require('../db/')
-
-const {
-  aggregateHistoricalWeather,
-} = require('../processes/')
+//
+// const {
+//   aggregateHistoricalWeather,
+// } = require('../processes/')
 
 const getHistoricalData = async (req, res) => {
 
@@ -15,7 +15,7 @@ const getHistoricalData = async (req, res) => {
     endMillis,
     startMillis,
     id,
-    includeWeather,
+    // includeWeather, TODO Make this work
   } = req.body
 
   const [project] = await readTableRows('project', {id,})

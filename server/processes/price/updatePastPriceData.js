@@ -3,7 +3,7 @@
   const {
     setExitListeners,
     catchErrorsWithMessage,
-    catchErrorAndRestart,
+    // catchErrorAndRestart,
   } = require('../../utils/')
 
   const {
@@ -46,35 +46,35 @@
 
   const pid = process.pid
 
-  let tries = 0
+  // let tries = 0
 
   const update = async () => {
     console.log('updating past price data')
     const startMillis = endMillis - threeWeeksMillis
-    const oldest = await catchErrorAndRestart('There was an error getting past update data', pastPriceDataUpdater, restartPastPriceUpdates )(startMillis, endMillis, nodeData)
+    const oldest = await catchErrorsWithMessage('There was an error getting past update data', pastPriceDataUpdater)(startMillis, endMillis, nodeData)
 
     if (oldest < sixMonthsAgoMillis) {
       exitPastPriceUpdates()
     }
     else {
-      tries = 0
+      // tries = 0
       endMillis = oldest - oneMinuteMillis
       update()
     }
   }
 
-  const restartPastPriceUpdates = () => {
-    setTimeout( () => {
-      tries++
-      update()
-    }, oneMinuteMillis)
-    if (tries > 5) {
-      exitPastPriceUpdates()
-    }
-    else {
-      return false
-    }
-   }
+  // const restartPastPriceUpdates = () => {
+  //   setTimeout( () => {
+  //     tries++
+  //     update()
+  //   }, oneMinuteMillis)
+  //   if (tries > 5) {
+  //     exitPastPriceUpdates()
+  //   }
+  //   else {
+  //     return false
+  //   }
+  //  }
 
   const exitPastPriceUpdates = async () => {
     await catchErrorsWithMessage('There was an error resetting the process id for past price updates', updateTableRow)('project', {id: projectId}, {pastUpdatePid: null})

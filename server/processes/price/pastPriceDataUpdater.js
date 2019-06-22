@@ -15,11 +15,7 @@ const pastPriceDataUpdater = async (
   nodeData,
 ) => {
 
-  const {
-    id,
-    name,
-    currentAvg,
-  } = nodeData
+  const { id } = nodeData
 
   const data = await catchErrorsWithMessage(`There was an error getting past price data from ${startMillis} to ${endMillis}`, updatePriceData)(startMillis, endMillis, nodeData)
 
