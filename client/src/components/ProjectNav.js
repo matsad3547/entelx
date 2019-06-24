@@ -23,6 +23,10 @@ const ProjectNav = ({baseUrl, id}) => {
       link: 'historical',
       label: 'Historical',
     },
+    {
+      link: 'insights',
+      label: 'Insights',
+    },
     // {
     //   link: 'roi',
     //   label: 'Project ROI',

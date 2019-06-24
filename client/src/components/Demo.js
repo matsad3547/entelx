@@ -8,6 +8,7 @@ import Project from '../containers/Project'
 import ProjectRoi from '../containers/ProjectRoi'
 import ProjectDashboard from '../containers/ProjectDashboard'
 import HistoricalDisplay from '../containers/HistoricalDisplay'
+import InsightsDisplay from '../containers/InsightsDisplay'
 
 const Demo = ({ match }) => (
 
@@ -34,6 +35,10 @@ const Demo = ({ match }) => (
       <Route
         path={`${match.path}/historical/:projectId`}
         component={HistoricalDisplay}
+      />
+      <Route
+        path={`${match.path}/insights/:projectId`}
+        component={InsightsDisplay}
       />
     </div>
   </PublicPageTemplate>
