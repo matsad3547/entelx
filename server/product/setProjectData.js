@@ -43,13 +43,19 @@ const setProjectData = (node, projectId, timeZone) => {
       aggregate,
     } = derivedData
 
-    console.log('aggregate:', Object.keys(aggregate));
+    const {
+      min,
+      max,
+      stdDev,
+    } = aggregate
+
+    const currentAvg = timeSeries[timeSeries.length - 1].mvgAvg
 
     // TODO get these values from aggregate
     const chargeThreshold = 6.23
     const dischargeThreshold = 5.43
 
-    const currentAvg = timeSeries[timeSeries.length - 1].mvgAvg
+    console.log('standard deviation:', stdDev, 'min:', min, 'max:', max, 'current average:', currentAvg)
 
     return Promise.all([
       updateTableRow(

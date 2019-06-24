@@ -13,6 +13,7 @@ const {
   findStdDev,
   findThresholds,
   findRevenueAndCharge,
+  findUpperAndLowerDeviations,
 } = require('../calculationUtils')
 
 const testData = [
@@ -1363,5 +1364,100 @@ describe('findRevenueAndCharge', () => {
     expect(actual.revenue).toBeCloseTo(expected.revenue, 10)
     expect(actual.status).toBe('discharge')
 
+  })
+})
+
+describe('findUpperAndLowerDeviations', () => {
+  const period = 5
+  const key = 'lmp'
+  const getDeviations = composeData(
+    calculateMovingAverage,
+    findUpperAndLowerDeviations,
+  )
+
+  const dataSnippet = [
+    {
+      timestamp: 1538710500000,
+      congestionPrc: 0,
+      energyPrc: 28.02027,
+      ghgPrc: 0,
+      lossPrc: -0.38948,
+      lmp: 27.63079,
+    },
+    {
+      timestamp: 1538710800000,
+      congestionPrc: 0,
+      energyPrc: 26.79269,
+      ghgPrc: 0,
+      lossPrc: -0.37242,
+      lmp: 26.42027,
+    },
+    {
+      timestamp: 1538711100000,
+      congestionPrc: 0,
+      energyPrc: 26.83094,
+      ghgPrc: 0,
+      lossPrc: -0.36758,
+      lmp: 26.46335,
+    },
+    {
+      timestamp: 1538711400000,
+      congestionPrc: 0,
+      energyPrc: 26.76948,
+      ghgPrc: 0,
+      lossPrc: -0.36674,
+      lmp: 26.40274,
+    },
+    {
+      timestamp: 1538711700000,
+      congestionPrc: 0,
+      energyPrc: 27.86177,
+      ghgPrc: 0,
+      lossPrc: -0.38171,
+      lmp: 27.48006,
+    },
+    {
+      timestamp: 1538712000000,
+      congestionPrc: 0,
+      energyPrc: 32.1997,
+      ghgPrc: 0,
+      lossPrc: -0.4025,
+      lmp: 31.79721,
+    },
+    {
+      timestamp: 1538712300000,
+      congestionPrc: -25.06595,
+      energyPrc: 47.8386,
+      ghgPrc: 0,
+      lossPrc: -0.59798,
+      lmp: 22.17467,
+    }
+  ]
+
+  test('should return the timeseries', () => {
+    const actual = getDeviations(dataSnippet, key, period).timeSeries
+    expect(actual).toBeDefined()
+  })
+
+  test('should return a `aboveStdDev` value in the `aggregate` portion', () => {
+    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveStdDev
+    expect(actual).toBeDefined()
+  })
+
+  test('should return a `belowStdDev` value in the `aggregate` portion', () => {
+    const actual = getDeviations(dataSnippet, key, period).aggregate.belowStdDev
+    expect(actual).toBeDefined()
+  })
+
+  test('returns a correct value for `aboveStdDev`', () => {
+    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveStdDev
+    const expected = 2.158575
+    expect(actual).toBeCloseTo(expected, 6)
+  })
+
+  test('returns a correct value for `belowStdDev`', () => {
+    const actual = getDeviations(dataSnippet, key, period).aggregate.belowStdDev
+    const expected = 1.842219
+    expect(actual).toBeCloseTo(expected, 6)
   })
 })

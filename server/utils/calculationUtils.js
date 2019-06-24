@@ -14,6 +14,12 @@ const getSum = (a, b) => a + b
 
 const getMean = arr => arr.reduce(getSum)/arr.length
 
+const getStdDev = (timeSeries, key) => {
+  const mean = getMean(timeSeries.map( d => d[key] ))
+
+  return Math.sqrt(getMean(timeSeries.map( d => (d[key] - mean)**2 )))
+}
+
 const calculateMovingAverage = (data, key, period) => {
 
   const { timeSeries } = data
@@ -358,15 +364,31 @@ const findStdDev = (data, key, period, options) => {
     aggregate,
   } = data
 
-  const mean = timeSeries.reduce( (sum, d, i) => sum + d[key], 0)/timeSeries.length
+  return {
+    ...data,
+    aggregate: {
+      ...aggregate,
+      stdDev: getStdDev(timeSeries, key),
+    }
+  }
+}
 
-  const stdDev = Math.sqrt(getMean(timeSeries.map( d => (d[key] - mean)**2 )))
+const findUpperAndLowerDeviations = (data, key, period, options) => {
+  const {
+    timeSeries,
+    aggregate,
+  } = data
+
+  const above = timeSeries.filter( d => d[key] > d.mvgAvg )
+
+  const below = timeSeries.filter( d => d[key] < d.mvgAvg )
 
   return {
     ...data,
     aggregate: {
       ...aggregate,
-      stdDev,
+      aboveStdDev: getStdDev(above, key),
+      belowStdDev: getStdDev(below, key),
     }
   }
 }
@@ -412,4 +434,5 @@ module.exports = {
   findStdDev,
   calculateScoreData,
   calculateDerivedData,
+  findUpperAndLowerDeviations,
 }
