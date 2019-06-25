@@ -33,7 +33,7 @@ const InsightsDisplay = ({match}) => {
 
   const { projectId } = params
 
-  const cleanUrl = getBaseUrl(url, 'historical', projectId)
+  const cleanUrl = getBaseUrl(url, 'insights', projectId)
 
   const getNow = () => moment()
 

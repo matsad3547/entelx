@@ -13,7 +13,7 @@ const {
   findStdDev,
   findThresholds,
   findRevenueAndCharge,
-  findUpperAndLowerDeviations,
+  findUpperAndLowerValues,
 } = require('../calculationUtils')
 
 const testData = [
@@ -1367,12 +1367,12 @@ describe('findRevenueAndCharge', () => {
   })
 })
 
-describe('findUpperAndLowerDeviations', () => {
+describe('findUpperAndLowerValues', () => {
   const period = 5
   const key = 'lmp'
   const getDeviations = composeData(
     calculateMovingAverage,
-    findUpperAndLowerDeviations,
+    findUpperAndLowerValues,
   )
 
   const dataSnippet = [
@@ -1459,5 +1459,29 @@ describe('findUpperAndLowerDeviations', () => {
     const actual = getDeviations(dataSnippet, key, period).aggregate.belowStdDev
     const expected = 1.842219
     expect(actual).toBeCloseTo(expected, 6)
+  })
+
+  test('returns a correct value for `aboveMean`', () => {
+    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveMean
+    const expected = 29.638635
+    expect(actual).toBeCloseTo(expected, 6)
+  })
+
+  test('returns a correct value for `belowMean`', () => {
+    const actual = getDeviations(dataSnippet, key, period).aggregate.belowMean
+    const expected = 25.365257
+    expect(actual).toBeCloseTo(expected, 6)
+  })
+
+  test('returns a correct value for `aboveMax`', () => {
+    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveMax
+    const expected = 31.79721
+    expect(actual).toEqual(expected)
+  })
+
+  test('returns a correct value for `aboveMin`', () => {
+    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveMin
+    const expected = 27.48006
+    expect(actual).toEqual(expected)
   })
 })

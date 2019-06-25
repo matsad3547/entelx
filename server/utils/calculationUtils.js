@@ -14,11 +14,12 @@ const getSum = (a, b) => a + b
 
 const getMean = arr => arr.reduce(getSum)/arr.length
 
-const getStdDev = (timeSeries, key) => {
-  const mean = getMean(timeSeries.map( d => d[key] ))
+const getStdDev = (timeSeries, key, mean) => Math.sqrt(getMean(timeSeries.map( d => (d[key] - mean)**2 )))
 
-  return Math.sqrt(getMean(timeSeries.map( d => (d[key] - mean)**2 )))
-}
+const getMinAndMax = (timeSeries, key) => timeSeries.reduce( (obj, d, i) =>  ({
+  max: d[key] > obj.max ? d[key] : obj.max,
+  min: d[key] < obj.min ? d[key] : obj.min,
+}), {max: 0, min: Infinity})
 
 const calculateMovingAverage = (data, key, period) => {
 
@@ -143,10 +144,7 @@ const findMinMax = (data, key, period) => {
     aggregate,
   } = data
 
-  const calculation = timeSeries.reduce( (obj, d, i) =>  ({
-    max: d[key] > obj.max ? d[key] : obj.max,
-    min: d[key] < obj.min ? d[key] : obj.min,
-  }), {max: 0, min: 0})
+  const calculation = getMinAndMax(timeSeries, key)
 
   return {
     ...data,
@@ -364,16 +362,18 @@ const findStdDev = (data, key, period, options) => {
     aggregate,
   } = data
 
+  const mean = getMean(timeSeries.map( d => d[key] ))
+
   return {
     ...data,
     aggregate: {
       ...aggregate,
-      stdDev: getStdDev(timeSeries, key),
+      stdDev: getStdDev(timeSeries, key, mean),
     }
   }
 }
 
-const findUpperAndLowerDeviations = (data, key, period, options) => {
+const findUpperAndLowerValues = (data, key, period, options) => {
   const {
     timeSeries,
     aggregate,
@@ -381,14 +381,28 @@ const findUpperAndLowerDeviations = (data, key, period, options) => {
 
   const above = timeSeries.filter( d => d[key] > d.mvgAvg )
 
+  const aboveMean = getMean(above.map( d => d[key] ))
+
+  const aboveMinMax = getMinAndMax(above, key)
+
   const below = timeSeries.filter( d => d[key] < d.mvgAvg )
+
+  const belowMean = getMean(below.map( d => d[key] ))
+
+  const belowMinMax = getMinAndMax(above, key)
 
   return {
     ...data,
     aggregate: {
       ...aggregate,
-      aboveStdDev: getStdDev(above, key),
-      belowStdDev: getStdDev(below, key),
+      aboveStdDev: getStdDev(above, key, aboveMean),
+      belowStdDev: getStdDev(below, key, belowMean),
+      aboveMean,
+      belowMean,
+      aboveMax: aboveMinMax.max,
+      aboveMin: aboveMinMax.min,
+      belowMax: belowMinMax.max,
+      belowMin: belowMinMax.min,
     }
   }
 }
@@ -414,9 +428,9 @@ const calculateScoreData = composeData(
 const calculateDerivedData = composeData(
   calculateMovingAverage,
   calculateScore,
-  findMinMax,
   findInflections,
   findStdDev,
+  findUpperAndLowerValues,
 )
 
 module.exports = {
@@ -434,5 +448,5 @@ module.exports = {
   findStdDev,
   calculateScoreData,
   calculateDerivedData,
-  findUpperAndLowerDeviations,
+  findUpperAndLowerValues,
 }
