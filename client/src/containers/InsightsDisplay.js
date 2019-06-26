@@ -4,13 +4,15 @@ import moment from 'moment-timezone'
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
 import Button from '../components/button/'
-import LineBarChart from '../components/charts/LineBarChart'
 import DashboardSection from '../components/DashboardSection'
 import DateControl from '../components/DateControl'
 import TimeIncrementSelect from '../components/TimeIncrementSelect'
 import LabeledCheckbox from '../components/LabeledCheckbox'
 import DataTimeDisplay from '../components/DataTimeDisplay'
 import DataTimeRangeDisplay from '../components/DataTimeRangeDisplay'
+
+import Label from '../components/Label'
+import DataDisplay from '../components/DataDisplay'
 
 import { getBaseUrl } from '../utils/'
 
@@ -23,6 +25,8 @@ import {
 import {timeIncrements} from '../config/'
 
 import { useConnectToServerSideEvent } from '../hooks/'
+
+import { roundToDigits } from '../utils/'
 
 const InsightsDisplay = ({match}) => {
 
@@ -38,52 +42,21 @@ const InsightsDisplay = ({match}) => {
   const getNow = () => moment()
 
   const now = getNow()
-  const oneWeekAgo = now.clone()
+  const threeWeekAgo = now.clone()
     .subtract(7, 'days')
 
   const incrementsArr = Object.keys(timeIncrements)
 
-  const [startTime, setStartTime] = useState(oneWeekAgo)
+  const [startTime, setStartTime] = useState(threeWeekAgo)
   const [endTime, setEndTime] = useState(now)
   const [timeIncrement, setTimeIncrement] = useState(incrementsArr[1])
   const [loading, setLoading] = useState(false)
   const [timeseries, setTimeseries] = useState(null)
+  const [data, setData] = useState(null)
   // const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
   const [includeWeather, setIncludeWeather] = useState(false)
   const [minDate, setMinDate] = useState(null)
-
-  const onIncrement = moment => moment.clone().add(1, timeIncrement)
-
-  const onDecrement = moment => moment.clone().subtract(1, timeIncrement)
-
-  const onIncrementStartTime = () => {
-    const incremented = onIncrement(startTime)
-
-    incremented.isBefore(endTime) ? setStartTime(incremented) : setStartTime(endTime.clone().subtract(1, 'day'))
-  }
-
-  const onDecrementStartTime = () => {
-    const decremented = onDecrement(startTime)
-
-    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone())
-  }
-
-  const onIncrementEndTime = () => {
-    const incremented = onIncrement(endTime)
-
-    incremented.isBefore(getNow()) ? setEndTime(incremented) : setEndTime(getNow())
-  }
-
-  const onDecrementEndTime = () => {
-    const decremented = onDecrement(endTime)
-
-    decremented.isAfter(startTime) ? setEndTime(decremented) : setEndTime(startTime.clone().add(1, 'day'))
-  }
-
-  const onTimeIncrementSelect = e => setTimeIncrement(e.target.value)
-
-  const onSetIncludeWeather = e => setIncludeWeather(e.target.value === 'true')
 
   const onGetData = () => getData()
 
@@ -96,11 +69,10 @@ const InsightsDisplay = ({match}) => {
       id: projectId,
       endMillis,
       startMillis,
-      includeWeather,
     }
 
     setLoading(true)
-    singleRequest('/historical/', getRequest('POST', JSON.stringify(body)))
+    singleRequest('/insights/', getRequest('POST', JSON.stringify(body)))
       .then(parseResponse)
       .then( res => {
         console.log('res:', res);
@@ -137,77 +109,45 @@ const InsightsDisplay = ({match}) => {
       id={projectId}
       >
       { loading && <Loading message={''} />}
-      {
-        (timeseries && config && minDate) &&
-        <div>
-          <DashboardSection headerContent={'Historical Data'}>
-            <DataTimeRangeDisplay
-              message="Data from"
-              startMillis={timeseries[0].timestamp}
-              endMillis={timeseries[timeseries.length - 1].timestamp}
-              timeZone={config.timeZone}
-              />
-            <LineBarChart
-              barKey={'lmp'}
-              data={timeseries}
-              timeZone={config.timeZone}
-              aspect={4}
-              />
-          </DashboardSection>
-          <DashboardSection>
-            <div style={styles.minDate}>
-              <DataTimeDisplay
-                message="Earliest data currently available is from"
-                millis={minDate.valueOf()}
-                timeZone={config.timeZone}
-                />
-            </div>
-            <div style={styles.dateControls}>
-              <TimeIncrementSelect
-                onSelect={onTimeIncrementSelect}
-                selected={timeIncrement}
-                />
-              <DateControl
-                date={startTime}
-                title='Start Time'
-                increment={timeIncrement}
-                onIncrement={onIncrementStartTime}
-                onDecrement={onDecrementStartTime}
-                timeZone={config.timeZone}
-                />
-              <DateControl
-                date={endTime}
-                title='End Time'
-                increment={timeIncrement}
-                onIncrement={onIncrementEndTime}
-                onDecrement={onDecrementEndTime}
-                timeZone={config.timeZone}
-                />
-              <div style={styles.inclusion}>
-                <LabeledCheckbox
-                  name={'include-weather'}
-                  label="Include Weather"
-                  value={!includeWeather}
-                  checked={includeWeather}
-                  onChange={onSetIncludeWeather}
-                  />
-                <Button
-                  value="Get Data"
-                  disabled={loading}
-                  type="success"
-                  onClick={onGetData}
-                  overrideStyles={styles.getData}
-                  />
-              </div>
-            </div>
-          </DashboardSection>
-        </div>
-      }
+      <div style={styles.columns}>
+        <DashboardSection headerContent={'Values for Potential Charging'}>
+          <div style={styles.specs}>
+            <Label content="Average Price"/>
+            <DataDisplay content={`$${data ? roundToDigits(data.belowMean, 2) : '-.--'}`}/>
+            <Label content="Lowest Price"/>
+            <DataDisplay content={`$${data ? roundToDigits(data.belowMin, 2) : '-.--'}`}/>
+            <Label content="Highest Price"/>
+            <DataDisplay content={`$${data ? roundToDigits(data.belowMax, 2) : '-.--'}`}/>
+            <Label content="Standard Deviation"/>
+            <DataDisplay content={`$${data ? roundToDigits(data.belowStdDev, 2) : '-.--'}`}/>
+          </div>
+        </DashboardSection>
+        <DashboardSection headerContent={'Values for Potential Discharging'}>
+          <div style={styles.specs}>
+            <Label content="Average Price"/>
+            <DataDisplay content={`$${data ? roundToDigits(data.aboveMean, 2) : '-.--'}`}/>
+            <Label content="Lowest Price"/>
+            <DataDisplay content={`$${data ? roundToDigits(data.aboveMin, 2) : '-.--'}`}/>
+            <Label content="Highest Price"/>
+            <DataDisplay content={`$${data ? roundToDigits(data.aboveMax, 2) : '-.--'}`}/>
+            <Label content="Standard Deviation"/>
+            <DataDisplay content={`$${data ? roundToDigits(data.aboveStdDev, 2) : '-.--'}`}/>
+          </div>
+        </DashboardSection>
+      </div>
     </ProjectPageTemplate>
   )
 }
 
 const styles = {
+  specs: {
+    padding: '0 2em',
+  },
+  columns: {
+    display: 'flex',
+    flexDirection: 'rows',
+    justifyContent: 'space-around',
+  },
   dateControls: {
     display: 'flex',
     justifyContent: 'space-between',

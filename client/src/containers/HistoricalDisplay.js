@@ -129,6 +129,8 @@ const HistoricalDisplay = ({match}) => {
 
   useConnectToServerSideEvent(sseRoute, handleData)
 
+  console.log('config:', config);
+
   return (
 
     <ProjectPageTemplate
