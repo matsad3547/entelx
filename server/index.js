@@ -21,6 +21,7 @@ const {
   getDashboardConfig,
   getDashboardData,
   getHistoricalData,
+  getInsightData,
   getMinDate,
 } = require('./product/')
 
@@ -77,6 +78,9 @@ app.delete('/project/:id', deleteProjectById)
 // historical
 app.post('/historical/', getHistoricalData)
 app.get('/historical/:id/min_date', getMinDate)
+
+//insights
+app.post('/insights/', getInsightData)
 
 const roiTest = (req, res) => {
 

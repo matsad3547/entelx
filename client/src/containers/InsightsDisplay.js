@@ -58,8 +58,6 @@ const InsightsDisplay = ({match}) => {
   const [includeWeather, setIncludeWeather] = useState(false)
   const [minDate, setMinDate] = useState(null)
 
-  const onGetData = () => getData()
-
   const getData = useCallback(() => {
 
     const startMillis = startTime.valueOf()
@@ -77,29 +75,20 @@ const InsightsDisplay = ({match}) => {
       .then( res => {
         console.log('res:', res);
         setLoading(false)
-        setConfig(res.config)
-        setTimeseries(res.timeseries)
+        setData(res.data)
+        // setConfig(res.config)
+        // setTimeseries(res.timeseries)
         // setAggregate(res.aggregate)
       })
       .catch( err => {
         setLoading(false)
         console.error(`There was an error retrieving your project: ${err}`)
       })
-  }, [startTime, endTime, includeWeather, projectId])
+  }, [startTime, endTime, projectId])
 
   useEffect( () => {
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
-
-  const handleData = useCallback( e => {
-    e.preventDefault()
-    const {minDateMillis} = JSON.parse(e.data)
-    setMinDate(moment(minDateMillis))
-  }, [])
-
-  const sseRoute = `/historical/${projectId}/min_date`
-
-  useConnectToServerSideEvent(sseRoute, handleData)
 
   return (
 

@@ -389,7 +389,7 @@ const findUpperAndLowerValues = (data, key, period, options) => {
 
   const belowMean = getMean(below.map( d => d[key] ))
 
-  const belowMinMax = getMinAndMax(above, key)
+  const belowMinMax = getMinAndMax(below, key)
 
   return {
     ...data,
@@ -433,6 +433,11 @@ const calculateDerivedData = composeData(
   findUpperAndLowerValues,
 )
 
+const calculateInsightData = composeData(
+  findInflections,
+  findUpperAndLowerValues,
+)
+
 module.exports = {
   composeData,
   testOptimization,
@@ -449,4 +454,5 @@ module.exports = {
   calculateScoreData,
   calculateDerivedData,
   findUpperAndLowerValues,
+  calculateInsightData,
 }
