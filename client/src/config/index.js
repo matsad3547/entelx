@@ -6,6 +6,8 @@ export const dayMonthYearTimeFormat = 'ddd, MMM Do YYYY, h:mm A'
 export const monthDayTimeFormat = 'M/D h:mm A'
 export const timeFormat = 'h:mm A'
 
+export const blankDollars = '$-.--'
+
 export const timeIncrements = {
   hour: {
     label: 'Hour',

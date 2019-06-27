@@ -26,7 +26,9 @@ import {timeIncrements} from '../config/'
 
 import { useConnectToServerSideEvent } from '../hooks/'
 
-import { roundToDigits } from '../utils/'
+import { formatDollars } from '../utils/'
+
+import { blankDollars } from '../config/'
 
 const InsightsDisplay = ({match}) => {
 
@@ -101,26 +103,30 @@ const InsightsDisplay = ({match}) => {
       <div style={styles.columns}>
         <DashboardSection headerContent={'Values for Potential Charging'}>
           <div style={styles.specs}>
+            <Label content="Number of Events"/>
+            <DataDisplay content={`${data ? data.belowN : 0}`}/>
             <Label content="Average Price"/>
-            <DataDisplay content={`$${data ? roundToDigits(data.belowMean, 2) : '-.--'}`}/>
+            <DataDisplay content={`${data ? formatDollars(data.belowMean) : blankDollars}`}/>
             <Label content="Lowest Price"/>
-            <DataDisplay content={`$${data ? roundToDigits(data.belowMin, 2) : '-.--'}`}/>
+            <DataDisplay content={`${data ? formatDollars(data.belowMin) : blankDollars}`}/>
             <Label content="Highest Price"/>
-            <DataDisplay content={`$${data ? roundToDigits(data.belowMax, 2) : '-.--'}`}/>
+            <DataDisplay content={`${data ? formatDollars(data.belowMax) : blankDollars}`}/>
             <Label content="Standard Deviation"/>
-            <DataDisplay content={`$${data ? roundToDigits(data.belowStdDev, 2) : '-.--'}`}/>
+            <DataDisplay content={`${data ? formatDollars(data.belowStdDev) : blankDollars}`}/>
           </div>
         </DashboardSection>
         <DashboardSection headerContent={'Values for Potential Discharging'}>
           <div style={styles.specs}>
+            <Label content="Number of Events"/>
+            <DataDisplay content={`${data ? data.aboveN : 0}`}/>
             <Label content="Average Price"/>
-            <DataDisplay content={`$${data ? roundToDigits(data.aboveMean, 2) : '-.--'}`}/>
+            <DataDisplay content={`${data ? formatDollars(data.aboveMean) : blankDollars}`}/>
             <Label content="Lowest Price"/>
-            <DataDisplay content={`$${data ? roundToDigits(data.aboveMin, 2) : '-.--'}`}/>
+            <DataDisplay content={`${data ? formatDollars(data.aboveMin) : blankDollars}`}/>
             <Label content="Highest Price"/>
-            <DataDisplay content={`$${data ? roundToDigits(data.aboveMax, 2) : '-.--'}`}/>
+            <DataDisplay content={`${data ? formatDollars(data.aboveMax) : blankDollars}`}/>
             <Label content="Standard Deviation"/>
-            <DataDisplay content={`$${data ? roundToDigits(data.aboveStdDev, 2) : '-.--'}`}/>
+            <DataDisplay content={`${data ? formatDollars(data.aboveStdDev) : blankDollars}`}/>
           </div>
         </DashboardSection>
       </div>

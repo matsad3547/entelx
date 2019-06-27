@@ -403,6 +403,8 @@ const findUpperAndLowerValues = (data, key, period, options) => {
       aboveMin: aboveMinMax.min,
       belowMax: belowMinMax.max,
       belowMin: belowMinMax.min,
+      aboveN: above.length,
+      belowN: below.length,
     }
   }
 }
