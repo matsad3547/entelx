@@ -5,11 +5,11 @@ import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import Loading from '../components/loading/'
 import Button from '../components/button/'
 import DashboardSection from '../components/DashboardSection'
-import DateControl from '../components/DateControl'
-import TimeIncrementSelect from '../components/TimeIncrementSelect'
-import LabeledCheckbox from '../components/LabeledCheckbox'
-import DataTimeDisplay from '../components/DataTimeDisplay'
-import DataTimeRangeDisplay from '../components/DataTimeRangeDisplay'
+// import DateControl from '../components/DateControl'
+// import TimeIncrementSelect from '../components/TimeIncrementSelect'
+// import LabeledCheckbox from '../components/LabeledCheckbox'
+// import DataTimeDisplay from '../components/DataTimeDisplay'
+import ValueControl from '../components/ValueControl'
 
 import Label from '../components/Label'
 import DataDisplay from '../components/DataDisplay'
@@ -22,9 +22,9 @@ import {
   getRequest,
 } from '../utils/requestUtils'
 
-import {timeIncrements} from '../config/'
-
-import { useConnectToServerSideEvent } from '../hooks/'
+// import {timeIncrements} from '../config/'
+//
+// import { useConnectToServerSideEvent } from '../hooks/'
 
 import { formatDollars } from '../utils/'
 
@@ -47,18 +47,36 @@ const InsightsDisplay = ({match}) => {
   const threeWeekAgo = now.clone()
     .subtract(7, 'days')
 
-  const incrementsArr = Object.keys(timeIncrements)
+  // const incrementsArr = Object.keys(timeIncrements)
 
   const [startTime, setStartTime] = useState(threeWeekAgo)
   const [endTime, setEndTime] = useState(now)
-  const [timeIncrement, setTimeIncrement] = useState(incrementsArr[1])
+  const [chargeThreshold, setChargeThreshold] = useState(0)
+  const [dischargeThreshold, setdischargeThreshold] = useState(0)
+  const [multiplier, setMultiplier] = useState(.1)
+  // const [timeIncrement, setTimeIncrement] = useState(incrementsArr[1])
   const [loading, setLoading] = useState(false)
-  const [timeseries, setTimeseries] = useState(null)
+  // const [timeseries, setTimeseries] = useState(null)
   const [data, setData] = useState(null)
   // const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
-  const [includeWeather, setIncludeWeather] = useState(false)
-  const [minDate, setMinDate] = useState(null)
+  // const [includeWeather, setIncludeWeather] = useState(false)
+  // const [minDate, setMinDate] = useState(null)
+  const onIncrement = (value, increment) => value + increment
+
+  const onDecrement = (value, increment) => value - increment
+
+  const onIncrementChargeThreshold = () => {
+    const incremented = onIncrement(startTime)
+
+    // incremented.isBefore(endTime) ? setStartTime(incremented) : setStartTime(endTime.clone().subtract(1, 'day'))
+  }
+
+  const onDecrementChargeThreshold = () => {
+    const decremented = onDecrement(startTime)
+
+    // decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone())
+  }
 
   const getData = useCallback(() => {
 
@@ -78,7 +96,7 @@ const InsightsDisplay = ({match}) => {
         console.log('res:', res);
         setLoading(false)
         setData(res.data)
-        // setConfig(res.config)
+        setConfig(res.config)
         // setTimeseries(res.timeseries)
         // setAggregate(res.aggregate)
       })
@@ -91,6 +109,8 @@ const InsightsDisplay = ({match}) => {
   useEffect( () => {
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
+
+  console.log('config:', config);
 
   return (
 
@@ -130,6 +150,19 @@ const InsightsDisplay = ({match}) => {
           </div>
         </DashboardSection>
       </div>
+      <DashboardSection
+        headerContent={'Test Charge and Discharge Thresholds'}>
+        <ValueControl
+          value={chargeThreshold || (config && config.chargeThreshold)}
+          format={formatDollars}
+          title="Charge Threshold"
+          disabled={config && !config.chargeThreshold}
+          onIncrement={onIncrementChargeThreshold}
+          onDecrement={onDecrementChargeThreshold}
+          onIncrementLabel={`${multiplier}\u03C3`}
+          onDecrementLabel={`${multiplier}\u03C3`}
+        />
+      </DashboardSection>
     </ProjectPageTemplate>
   )
 }
@@ -141,7 +174,8 @@ const styles = {
   columns: {
     display: 'flex',
     flexDirection: 'rows',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    maxWidth: '60em',
   },
   dateControls: {
     display: 'flex',

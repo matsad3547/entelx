@@ -25,7 +25,7 @@ const styles = {
     padding: '0 3em 2em',
   },
   header: {
-    padding: '0 0 1em',
+    padding: '0 0 .5em',
   },
 }
 
