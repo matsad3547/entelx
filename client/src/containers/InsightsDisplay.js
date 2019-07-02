@@ -51,8 +51,13 @@ const InsightsDisplay = ({match}) => {
 
   const [startTime, setStartTime] = useState(threeWeekAgo)
   const [endTime, setEndTime] = useState(now)
+
   const [chargeThreshold, setChargeThreshold] = useState(0)
-  const [dischargeThreshold, setdischargeThreshold] = useState(0)
+  const [chargeStdDev, setChargeStdDev] = useState(0)
+
+  const [dischargeThreshold, setDischargeThreshold] = useState(0)
+  const [dischargeStdDev, setDischargeStdDev] = useState(0)
+
   const [multiplier, setMultiplier] = useState(.1)
   // const [timeIncrement, setTimeIncrement] = useState(incrementsArr[1])
   const [loading, setLoading] = useState(false)
@@ -67,15 +72,27 @@ const InsightsDisplay = ({match}) => {
   const onDecrement = (value, increment) => value - increment
 
   const onIncrementChargeThreshold = () => {
-    const incremented = onIncrement(startTime)
+    const incremented = onIncrement(chargeThreshold, chargeStdDev * multiplier)
 
-    // incremented.isBefore(endTime) ? setStartTime(incremented) : setStartTime(endTime.clone().subtract(1, 'day'))
+    setChargeThreshold(incremented)
   }
 
   const onDecrementChargeThreshold = () => {
-    const decremented = onDecrement(startTime)
+    const decremented = onDecrement(chargeThreshold, chargeStdDev * multiplier)
 
-    // decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone())
+    setChargeThreshold(decremented)
+  }
+
+  const onIncrementDischargeThreshold = () => {
+    const incremented = onIncrement(dischargeThreshold, dischargeStdDev * multiplier)
+
+    setDischargeThreshold(incremented)
+  }
+
+  const onDecrementDischargeThreshold = () => {
+    const decremented = onDecrement(dischargeThreshold, dischargeStdDev * multiplier)
+
+    setDischargeThreshold(decremented)
   }
 
   const getData = useCallback(() => {
@@ -97,6 +114,19 @@ const InsightsDisplay = ({match}) => {
         setLoading(false)
         setData(res.data)
         setConfig(res.config)
+
+        const {
+          belowMean,
+          belowStdDev,
+          aboveMean,
+          aboveStdDev,
+        } = res.data
+
+        setChargeThreshold(belowMean)
+        setChargeStdDev(belowStdDev)
+        setDischargeThreshold(aboveMean)
+        setDischargeStdDev(aboveStdDev)
+
         // setTimeseries(res.timeseries)
         // setAggregate(res.aggregate)
       })
@@ -152,16 +182,28 @@ const InsightsDisplay = ({match}) => {
       </div>
       <DashboardSection
         headerContent={'Test Charge and Discharge Thresholds'}>
-        <ValueControl
-          value={chargeThreshold || (config && config.chargeThreshold)}
-          format={formatDollars}
-          title="Charge Threshold"
-          disabled={config && !config.chargeThreshold}
-          onIncrement={onIncrementChargeThreshold}
-          onDecrement={onDecrementChargeThreshold}
-          onIncrementLabel={`${multiplier}\u03C3`}
-          onDecrementLabel={`${multiplier}\u03C3`}
-        />
+        <div style={styles.controls}>
+          <ValueControl
+            value={chargeThreshold || (config && config.chargeThreshold)}
+            format={formatDollars}
+            title="Charge Threshold"
+            disabled={config && !config.chargeThreshold}
+            onIncrement={onIncrementChargeThreshold}
+            onDecrement={onDecrementChargeThreshold}
+            onIncrementLabel={`${multiplier}\u03C3`}
+            onDecrementLabel={`${multiplier}\u03C3`}
+            />
+          <ValueControl
+            value={dischargeThreshold || (config && config.dischargeThreshold)}
+            format={formatDollars}
+            title="Discharge Threshold"
+            disabled={config && !config.dischargeThreshold}
+            onIncrement={onIncrementDischargeThreshold}
+            onDecrement={onDecrementDischargeThreshold}
+            onIncrementLabel={`${multiplier}\u03C3`}
+            onDecrementLabel={`${multiplier}\u03C3`}
+            />
+        </div>
       </DashboardSection>
     </ProjectPageTemplate>
   )
@@ -177,7 +219,7 @@ const styles = {
     justifyContent: 'space-between',
     maxWidth: '60em',
   },
-  dateControls: {
+  controls: {
     display: 'flex',
     justifyContent: 'space-between',
   },
