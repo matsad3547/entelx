@@ -14,9 +14,10 @@ const ValueControl = ({
   onIncrementLabel,
   onDecrementLabel,
   disabled = false,
+  width = '16em',
 }) => (
 
-  <div style={styles.interface}>
+  <div style={getRootStyle(width)}>
     <Label content={title}/>
     <DataDisplay content={format(value)}/>
     <div style={styles.buttons}>
@@ -24,31 +25,35 @@ const ValueControl = ({
         value={`- ${onIncrementLabel}`}
         disabled={disabled}
         type="primary"
-        onClick={onDecrement}
+        onClick={onIncrement}
         overrideStyles={styles.button}
         />
       <Button
         value={`+ ${onDecrementLabel}`}
         disabled={disabled}
         type="primary"
-        onClick={onIncrement}
+        onClick={onDecrement}
         overrideStyles={styles.button}
       />
     </div>
   </div>
 )
 
+const getRootStyle = width => ({
+  ...styles.root,
+  width,
+})
+
 const styles = {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    padding: '.5em',
+  },
   value: {
     padding: '.5em 1em',
     fontSize: '1.2em',
-  },
-  interface: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '16em',
-    justifyContent: 'space-between',
-    padding: '.5em',
   },
   buttons: {
     display: 'flex',
@@ -63,14 +68,18 @@ const styles = {
 }
 
 ValueControl.propTypes = {
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.object,
+  ]),
   format: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
   onIncrementLabel: PropTypes.string.isRequired,
   onDecrementLabel: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  width: PropTypes.string,
 }
 
 export default ValueControl
