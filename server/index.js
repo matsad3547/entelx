@@ -1,7 +1,6 @@
 const express = require('express')
 const compression = require('compression')
 require('isomorphic-fetch')
-// const dotenv = require('dotenv').config()
 require('dotenv').config()
 const bodyParser = require('body-parser')
 
@@ -23,6 +22,7 @@ const {
   getHistoricalData,
   getInsightData,
   getMinDate,
+  getRevenueByThresholds,
 } = require('./product/')
 
 const {
@@ -81,6 +81,7 @@ app.get('/historical/:id/min_date', getMinDate)
 
 //insights
 app.post('/insights/', getInsightData)
+app.post('/get_revenue_by_thresholds/', getRevenueByThresholds)
 
 const roiTest = (req, res) => {
 
