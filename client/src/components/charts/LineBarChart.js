@@ -12,13 +12,17 @@ import {
   Tooltip,
   Legend,
   ReferenceLine,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Brush,
 } from 'recharts'
 
 import CustomTooltip from './CustomTooltip'
 import CustomLegend from './CustomLegend'
 
-import { timeFormat } from '../../config/'
+import {
+  twelveHourFormat,
+  monthDayTimeFormat,
+} from '../../config/'
 
 import { lineDataFormat } from '../../config/chart'
 
@@ -37,6 +41,7 @@ const LineBarChart = React.memo(({
   posBarThreshold = 0,
   aspect = 3,
   xRefLines = [],
+  useBrush = false,
 }) => {
 
   const dataTypes = findRelevantKeys(data)
@@ -63,7 +68,7 @@ const LineBarChart = React.memo(({
         margin={{top: 0, right: 0, left: 0, bottom: 0}}>
         <XAxis
           dataKey="timestamp"
-          tickFormatter={millis => formatMillis(millis, timeZone, timeFormat)}
+          tickFormatter={millis => formatMillis(millis, timeZone, twelveHourFormat)}
           />
         <YAxis
           yAxisId="left"
@@ -104,6 +109,14 @@ const LineBarChart = React.memo(({
           )
         }
       </Bar>
+      {
+        useBrush &&
+        <Brush
+          dataKey="timestamp"
+          height={30} stroke={colors.lightGreen}
+          tickFormatter={millis => formatMillis(millis, timeZone, monthDayTimeFormat)}
+        />
+      }
       {
         dataTypes.map( t =>
           <Line
@@ -148,6 +161,7 @@ LineBarChart.propTypes = {
   negBarThreshold: PropTypes.number,
   timeZone: PropTypes.string.isRequired,
   xRefLines: PropTypes.arrayOf(PropTypes.number),
+  useBrush: PropTypes.bool,
 }
 
 export default LineBarChart

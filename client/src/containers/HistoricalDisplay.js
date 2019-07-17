@@ -154,6 +154,7 @@ const HistoricalDisplay = ({match}) => {
               data={timeseries}
               timeZone={config.timeZone}
               aspect={4}
+              useBrush={true}
               />
           </DashboardSection>
           <DashboardSection>
