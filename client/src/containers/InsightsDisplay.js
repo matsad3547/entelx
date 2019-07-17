@@ -65,6 +65,7 @@ const InsightsDisplay = ({match}) => {
   const [data, setData] = useState(null)
   // const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
+  const [revenue, setRevenue] = useState(0)
   // const [includeWeather, setIncludeWeather] = useState(false)
   // const [minDate, setMinDate] = useState(null)
   const onIncrement = (value, increment) => value + increment
@@ -84,12 +85,14 @@ const InsightsDisplay = ({match}) => {
   }
 
   const onIncrementDischargeThreshold = () => {
+    console.log('incrementing');
     const incremented = onIncrement(dischargeThreshold, dischargeStdDev * multiplier)
 
     setDischargeThreshold(incremented)
   }
 
   const onDecrementDischargeThreshold = () => {
+    console.log('decrementing');
     const decremented = onDecrement(dischargeThreshold, dischargeStdDev * multiplier)
 
     setDischargeThreshold(decremented)
@@ -110,7 +113,6 @@ const InsightsDisplay = ({match}) => {
     singleRequest('/insights/', getRequest('POST', JSON.stringify(body)))
       .then(parseResponse)
       .then( res => {
-        console.log('res:', res);
         setLoading(false)
         setData(res.data)
         setConfig(res.config)
@@ -136,11 +138,31 @@ const InsightsDisplay = ({match}) => {
       })
   }, [startTime, endTime, projectId])
 
+  const getRevenue = useCallback(() => {
+
+    const body = {
+      id: projectId,
+      chargeThreshold,
+      dischargeThreshold,
+    }
+
+    setLoading(true)
+    singleRequest('/get_revenue_by_thresholds/', getRequest('POST', JSON.stringify(body)))
+      .then(parseResponse)
+      .then( res => {
+        console.log('res:', res);
+        setLoading(false)
+        setRevenue(res.revenue)
+      })
+      .catch( err => {
+        setLoading(false)
+        console.error(`There was an error retrieving revenue data: ${err}`)
+      })
+  }, [chargeThreshold, dischargeThreshold, projectId])
+
   useEffect( () => {
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
-
-  console.log('config:', config);
 
   return (
 
@@ -202,6 +224,15 @@ const InsightsDisplay = ({match}) => {
             onDecrement={onDecrementDischargeThreshold}
             onIncrementLabel={`${multiplier}\u03C3`}
             onDecrementLabel={`${multiplier}\u03C3`}
+            />
+        </div>
+        <div>
+          <Button
+            value="Get Data"
+            disabled={loading}
+            type="success"
+            onClick={getRevenue}
+            overrideStyles={styles.getData}
             />
         </div>
       </DashboardSection>

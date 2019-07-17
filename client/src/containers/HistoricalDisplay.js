@@ -85,7 +85,7 @@ const HistoricalDisplay = ({match}) => {
 
   const onSetIncludeWeather = e => setIncludeWeather(e.target.value === 'true')
 
-  const onGetData = () => getData()
+  // const onGetData = () => getData()
 
   const getData = useCallback(() => {
 
@@ -197,7 +197,7 @@ const HistoricalDisplay = ({match}) => {
                   value="Get Data"
                   disabled={loading}
                   type="success"
-                  onClick={onGetData}
+                  onClick={getData}
                   overrideStyles={styles.getData}
                   />
               </div>

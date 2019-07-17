@@ -82,32 +82,3 @@ app.get('/historical/:id/min_date', getMinDate)
 //insights
 app.post('/insights/', getInsightData)
 app.post('/get_revenue_by_thresholds/', getRevenueByThresholds)
-
-const roiTest = (req, res) => {
-
-  console.log('running roi test');
-
-  // const { id } = req.params
-
-  res.sseSetup()
-
-  let n = 0
-
-  // run to send initial data
-  res.sseSend({cheese: `dicks - ${n}`,})
-
-  n = 1
-
-  const int = setInterval( () => {
-    // run to send follow up data
-    res.sseSend({cheese: `balls - ${n}`,})
-    n++
-  }, 5 * 1000)
-
-  req.on('close', () => {
-    clearInterval(int)
-    res.sseClose()
-  })
-}
-
-app.get('/roi/:id', roiTest)

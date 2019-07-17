@@ -22,19 +22,19 @@ const ValueControl = ({
     <DataDisplay content={format(value)}/>
     <div style={styles.buttons}>
       <Button
-        value={`- ${onIncrementLabel}`}
+        value={`- ${onDecrementLabel}`}
+        disabled={disabled}
+        type="primary"
+        onClick={onDecrement}
+        overrideStyles={styles.button}
+        />
+      <Button
+        value={`+ ${onIncrementLabel}`}
         disabled={disabled}
         type="primary"
         onClick={onIncrement}
         overrideStyles={styles.button}
         />
-      <Button
-        value={`+ ${onDecrementLabel}`}
-        disabled={disabled}
-        type="primary"
-        onClick={onDecrement}
-        overrideStyles={styles.button}
-      />
     </div>
   </div>
 )

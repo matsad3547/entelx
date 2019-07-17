@@ -5,7 +5,7 @@ const {
   readTableRowsWhereBtw,
 } = require('../db/')
 
-const { calculateInsightData } = require('../utils/')
+const { findRevenueAndCharge } = require('../utils/')
 
 const getRevenueByThresholds = async (req, res) => {
 
@@ -19,12 +19,11 @@ const getRevenueByThresholds = async (req, res) => {
 
   const {
     nodeId,
-    lat,
-    lng,
-    timeZone,
     power,
     energy,
-    name,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
   } = project
 
   const getNow = () => moment()
@@ -34,26 +33,30 @@ const getRevenueByThresholds = async (req, res) => {
     .subtract(7, 'days')
     .valueOf()
 
-  const [node] = await readTableRows('node', {id: nodeId})
-
   const timeSeries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis])
 
-  const { aggregate } = calculateInsightData(timeSeries, 'lmp')
+  const batterySpecs = {
+    power,
+    energy,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  }
+
+  const charge = 0
+  const revenue = 0
+
+  const currentState = {
+    charge,
+    revenue,
+  }
+
+  const key = 'lmp'
+
+  const newVals = findRevenueAndCharge(timeSeries, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
 
   return res.status(200).json({
-    data: aggregate,
-    timeSeries,
-    config: {
-      projectName: name,
-      power,
-      energy,
-      lat,
-      lng,
-      timeZone,
-      node,
-      chargeThreshold,
-      dischargeThreshold,
-    }
+    revenue: newVals.revenue,
   })
 }
 
