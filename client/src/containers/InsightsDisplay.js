@@ -14,7 +14,10 @@ import ValueControl from '../components/ValueControl'
 import Label from '../components/Label'
 import DataDisplay from '../components/DataDisplay'
 
-import { getBaseUrl } from '../utils/'
+import {
+  getBaseUrl,
+  roundToDigits,
+} from '../utils/'
 
 import {
   singleRequest,
@@ -224,9 +227,24 @@ const InsightsDisplay = ({match}) => {
             onDecrementLabel={`${multiplier}\u03C3`}
             />
         </div>
-        <div>
+        {
+          (revenue !== 0 && data) &&
+          <div style={styles.thresholds}>
+            <span>
+              {`Charge Threshold is ${roundToDigits((data.belowMean - chargeThreshold)/data.belowStdDev, 2)} x \u03C3 below the mean`}
+            </span>
+            <span>
+              {`Discharge Threshold is ${roundToDigits((dischargeThreshold -data.aboveMean)/data.aboveStdDev, 2)} x \u03C3 above the mean`}
+            </span>
+          </div>
+        }
+        <div style={styles.revenue}>
+          <div>
+            <Label content="7 Day Revenue for Selected Thresholds"/>
+            <DataDisplay content={`${revenue ? formatDollars(revenue) : blankDollars}`}/>
+          </div>
           <Button
-            value="Get Data"
+            value="Get Revenue"
             disabled={loading}
             type="success"
             onClick={getRevenue}
@@ -262,6 +280,18 @@ const styles = {
   minDate: {
     padding: '0 0 1em',
   },
+  revenue: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    width: '60%',
+  },
+  thresholds: {
+    display: 'flex',
+    flexDirection: 'column',
+    lineHeight: '2.5em',
+    padding: '1em 0',
+  }
 }
 
 export default InsightsDisplay
