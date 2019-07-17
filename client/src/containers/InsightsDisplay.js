@@ -85,14 +85,12 @@ const InsightsDisplay = ({match}) => {
   }
 
   const onIncrementDischargeThreshold = () => {
-    console.log('incrementing');
     const incremented = onIncrement(dischargeThreshold, dischargeStdDev * multiplier)
 
     setDischargeThreshold(incremented)
   }
 
   const onDecrementDischargeThreshold = () => {
-    console.log('decrementing');
     const decremented = onDecrement(dischargeThreshold, dischargeStdDev * multiplier)
 
     setDischargeThreshold(decremented)
