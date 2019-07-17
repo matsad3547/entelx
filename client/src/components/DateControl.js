@@ -31,7 +31,7 @@ const DateControl = ({
       onIncrementLabel={`${timeIncrements[increment].label}`}
       onDecrementLabel={`${timeIncrements[increment].label}`}
       disabled={disabled}
-      width={'20em'}
+      width={'18em'}
     />
   )
 }

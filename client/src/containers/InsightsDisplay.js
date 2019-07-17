@@ -227,17 +227,6 @@ const InsightsDisplay = ({match}) => {
             onDecrementLabel={`${multiplier}\u03C3`}
             />
         </div>
-        {
-          (revenue !== 0 && data) &&
-          <div style={styles.thresholds}>
-            <span>
-              {`Charge Threshold is ${roundToDigits((data.belowMean - chargeThreshold)/data.belowStdDev, 2)} x \u03C3 below the mean`}
-            </span>
-            <span>
-              {`Discharge Threshold is ${roundToDigits((dischargeThreshold -data.aboveMean)/data.aboveStdDev, 2)} x \u03C3 above the mean`}
-            </span>
-          </div>
-        }
         <div style={styles.revenue}>
           <div>
             <Label content="7 Day Revenue for Selected Thresholds"/>
@@ -251,6 +240,17 @@ const InsightsDisplay = ({match}) => {
             overrideStyles={styles.getData}
             />
         </div>
+        {
+          (revenue !== 0 && data) &&
+          <div style={styles.thresholds}>
+            <span>
+              {`Charge Threshold is ${roundToDigits((data.belowMean - chargeThreshold)/data.belowStdDev, 2)} x \u03C3 below the mean`}
+            </span>
+            <span>
+              {`Discharge Threshold is ${roundToDigits((dischargeThreshold -data.aboveMean)/data.aboveStdDev, 2)} x \u03C3 above the mean`}
+            </span>
+          </div>
+        }
       </DashboardSection>
     </ProjectPageTemplate>
   )
@@ -284,13 +284,13 @@ const styles = {
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    width: '60%',
   },
   thresholds: {
     display: 'flex',
     flexDirection: 'column',
     lineHeight: '2.5em',
     padding: '1em 0',
+    fontStyle: 'italic',
   }
 }
 

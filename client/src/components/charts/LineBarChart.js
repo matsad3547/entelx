@@ -115,6 +115,7 @@ const LineBarChart = React.memo(({
           dataKey="timestamp"
           height={30} stroke={colors.lightGreen}
           tickFormatter={millis => formatMillis(millis, timeZone, monthDayTimeFormat)}
+          endIndex={0}
         />
       }
       {

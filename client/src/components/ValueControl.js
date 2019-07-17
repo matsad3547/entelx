@@ -49,7 +49,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: '.5em',
+    padding: '.5em 0',
   },
   value: {
     padding: '.5em 1em',
