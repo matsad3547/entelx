@@ -5,6 +5,7 @@
   "proxy": "http://localhost:5000/",
   "dependencies": {
     "d3": "^5.9.7",
+    "d3-3d": "^0.0.9",
     "mapbox-gl": "^0.54.0",
     "react": "^16.7.0-alpha.0",
     "react-dom": "^16.7.0-alpha.0",

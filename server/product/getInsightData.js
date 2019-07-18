@@ -46,8 +46,6 @@ const getInsightData = async (req, res) => {
 //     belowN,
 // } = aggregate
 
-  console.log('insight aggregate:', aggregate);
-
   return res.status(200).json({
     data: aggregate,
     timeSeries,

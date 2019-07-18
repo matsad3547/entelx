@@ -254,7 +254,10 @@ const InsightsDisplay = ({match}) => {
           </div>
         }
       </DashboardSection>
-      <ThreeDimensionalChart />
+      {
+        revenue &&
+        <ThreeDimensionalChart />
+      }
     </ProjectPageTemplate>
   )
 }
