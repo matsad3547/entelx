@@ -418,6 +418,28 @@ const testOptimization = () => {
   return optimize.minimize_Powell(forOptimization, [-10])
 }
 
+const getCenteredValuesArr = (center, increment, distance) => {
+  const start = center - distance
+  const end = center + distance
+
+  let arr = [start]
+
+  const iterate = arr => {
+
+    if (arr[arr.length - 1] < end) {
+      arr.push(arr[arr.length - 1] + increment)
+      iterate(arr)
+    }
+    else {
+      return arr
+    }
+  }
+  iterate(arr)
+  return arr
+}
+
+const getTwoDimensionalArray = (xArr, yArr) => xArr.flatMap( xVal => yArr.map( yVal => [xVal, yVal]))
+
 const scoreValues = composeData(
   calculateMovingAverage,
   calculateScore,
@@ -457,4 +479,6 @@ module.exports = {
   calculateDerivedData,
   findUpperAndLowerValues,
   calculateInsightData,
+  getCenteredValuesArr,
+  getTwoDimensionalArray,
 }

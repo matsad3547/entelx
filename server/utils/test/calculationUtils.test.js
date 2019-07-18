@@ -14,6 +14,8 @@ const {
   findThresholds,
   findRevenueAndCharge,
   findUpperAndLowerValues,
+  getCenteredValuesArr,
+  getTwoDimensionalArray,
 } = require('../calculationUtils')
 
 const testData = [
@@ -1484,4 +1486,30 @@ describe('findUpperAndLowerValues', () => {
     const expected = 27.48006
     expect(actual).toEqual(expected)
   })
+})
+
+test('getCenteredValuesArr should return a range of values from a centered value in both directions to a absolute value', () => {
+  const actual = getCenteredValuesArr(5, 1, 3)
+  const expected = [2, 3, 4, 5, 6, 7, 8]
+  expect(actual).toEqual(expected)
+})
+
+test('getTwoDimensionalArray should return a array with n^2 sub arrays', () => {
+  const xArr = getCenteredValuesArr(3, 1, 1)
+  //[2, 3, 4]
+  const yArr = getCenteredValuesArr(8, 1, 1)
+  //[7, 8, 9]
+  const actual = getTwoDimensionalArray(xArr, yArr)
+  const expected = [
+    [2, 7],
+    [2, 8],
+    [2, 9],
+    [3, 7],
+    [3, 8],
+    [3, 9],
+    [4, 7],
+    [4, 8],
+    [4, 9],
+  ]
+  expect(actual).toEqual(expected)
 })
