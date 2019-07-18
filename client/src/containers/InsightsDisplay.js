@@ -13,6 +13,8 @@ import ValueControl from '../components/ValueControl'
 
 import Label from '../components/Label'
 import DataDisplay from '../components/DataDisplay'
+import ThreeDimensionalChart from '../components/charts/ThreeDimensionalChart'
+
 
 import {
   getBaseUrl,
@@ -252,6 +254,7 @@ const InsightsDisplay = ({match}) => {
           </div>
         }
       </DashboardSection>
+      <ThreeDimensionalChart />
     </ProjectPageTemplate>
   )
 }
@@ -295,5 +298,3 @@ const styles = {
 }
 
 export default InsightsDisplay
-
-// xRefLines={aggregate.inflections}
