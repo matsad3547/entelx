@@ -33,21 +33,21 @@ const getInsightData = async (req, res) => {
 
   const { aggregate } = calculateInsightData(timeSeries, 'lmp')
 
-//   const {
-//     aboveStdDev,
-//     belowStdDev,
-//     aboveMean,
-//     belowMean,
-//     aboveMax,
-//     aboveMin,
-//     belowMax,
-//     belowMin,
-//     aboveN,
-//     belowN,
-// } = aggregate
+  const {
+    aboveStdDev,
+    belowStdDev,
+    aboveMean,
+    belowMean,
+    aboveMax,
+    aboveMin,
+    belowMax,
+    belowMin,
+    aboveN,
+    belowN,
+  } = aggregate
 
   return res.status(200).json({
-    data: aggregate,
+    aggregate,
     timeSeries,
     config: {
       projectName: name,

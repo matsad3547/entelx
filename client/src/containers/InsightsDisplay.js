@@ -67,8 +67,8 @@ const InsightsDisplay = ({match}) => {
   // const [timeIncrement, setTimeIncrement] = useState(incrementsArr[1])
   const [loading, setLoading] = useState(false)
   // const [timeseries, setTimeseries] = useState(null)
-  const [data, setData] = useState(null)
-  // const [aggregate, setAggregate] = useState(null)
+  // const [data, setData] = useState(null)
+  const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
   const [revenue, setRevenue] = useState(0)
   // const [includeWeather, setIncludeWeather] = useState(false)
@@ -117,7 +117,8 @@ const InsightsDisplay = ({match}) => {
       .then(parseResponse)
       .then( res => {
         setLoading(false)
-        setData(res.data)
+        // setData(res.data)
+        setAggregate(res.aggregate)
         setConfig(res.config)
 
         const {
@@ -125,15 +126,12 @@ const InsightsDisplay = ({match}) => {
           belowStdDev,
           aboveMean,
           aboveStdDev,
-        } = res.data
+        } = res.aggregate
 
         setChargeThreshold(belowMean)
         setChargeStdDev(belowStdDev)
         setDischargeThreshold(aboveMean)
         setDischargeStdDev(aboveStdDev)
-
-        // setTimeseries(res.timeseries)
-        // setAggregate(res.aggregate)
       })
       .catch( err => {
         setLoading(false)
@@ -179,29 +177,29 @@ const InsightsDisplay = ({match}) => {
         <DashboardSection headerContent={'Values for Potential Charging'}>
           <div style={styles.specs}>
             <Label content="Number of Events"/>
-            <DataDisplay content={`${data ? data.belowN : 0}`}/>
+            <DataDisplay content={`${aggregate ? aggregate.belowN : 0}`}/>
             <Label content="Average Price"/>
-            <DataDisplay content={`${data ? formatDollars(data.belowMean) : blankDollars}`}/>
+            <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMean) : blankDollars}`}/>
             <Label content="Lowest Price"/>
-            <DataDisplay content={`${data ? formatDollars(data.belowMin) : blankDollars}`}/>
+            <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMin) : blankDollars}`}/>
             <Label content="Highest Price"/>
-            <DataDisplay content={`${data ? formatDollars(data.belowMax) : blankDollars}`}/>
+            <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMax) : blankDollars}`}/>
             <Label content="Standard Deviation"/>
-            <DataDisplay content={`${data ? formatDollars(data.belowStdDev) : blankDollars}`}/>
+            <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowStdDev) : blankDollars}`}/>
           </div>
         </DashboardSection>
         <DashboardSection headerContent={'Values for Potential Discharging'}>
           <div style={styles.specs}>
             <Label content="Number of Events"/>
-            <DataDisplay content={`${data ? data.aboveN : 0}`}/>
+            <DataDisplay content={`${aggregate ? aggregate.aboveN : 0}`}/>
             <Label content="Average Price"/>
-            <DataDisplay content={`${data ? formatDollars(data.aboveMean) : blankDollars}`}/>
+            <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMean) : blankDollars}`}/>
             <Label content="Lowest Price"/>
-            <DataDisplay content={`${data ? formatDollars(data.aboveMin) : blankDollars}`}/>
+            <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMin) : blankDollars}`}/>
             <Label content="Highest Price"/>
-            <DataDisplay content={`${data ? formatDollars(data.aboveMax) : blankDollars}`}/>
+            <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMax) : blankDollars}`}/>
             <Label content="Standard Deviation"/>
-            <DataDisplay content={`${data ? formatDollars(data.aboveStdDev) : blankDollars}`}/>
+            <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveStdDev) : blankDollars}`}/>
           </div>
         </DashboardSection>
       </div>
@@ -243,19 +241,19 @@ const InsightsDisplay = ({match}) => {
             />
         </div>
         {
-          (revenue !== 0 && data) &&
+          (revenue !== 0 && aggregate) &&
           <div style={styles.thresholds}>
             <span>
-              {`Charge Threshold is ${roundToDigits((data.belowMean - chargeThreshold)/data.belowStdDev, 2)} x \u03C3 below the mean`}
+              {`Charge Threshold is ${roundToDigits((aggregate.belowMean - chargeThreshold)/aggregate.belowStdDev, 2)} x \u03C3 below the mean`}
             </span>
             <span>
-              {`Discharge Threshold is ${roundToDigits((dischargeThreshold -data.aboveMean)/data.aboveStdDev, 2)} x \u03C3 above the mean`}
+              {`Discharge Threshold is ${roundToDigits((dischargeThreshold -aggregate.aboveMean)/aggregate.aboveStdDev, 2)} x \u03C3 above the mean`}
             </span>
           </div>
         }
       </DashboardSection>
       {
-        revenue &&
+        revenue !== 0 &&
         <ThreeDimensionalChart />
       }
     </ProjectPageTemplate>
