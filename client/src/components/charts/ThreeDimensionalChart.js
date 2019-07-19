@@ -3,14 +3,16 @@ import { _3d } from 'd3-3d'
 import React, {useRef, useEffect} from 'react'
 // import PropTypes from 'prop-types'
 
+import { colors } from '../../config/styles'
+
 const ThreeDimensionalChart = ({
   data,
 }) => {
 
   const chartRef = useRef(null)
 
-  const width = 1000, height = 600, startAngle = Math.PI/4
-  const origin = [500, -100]
+  const width = 500, height = 1000, startAngle = Math.PI/4
+  const origin = [width/2, 100]
 
   const color = d3.scaleLinear()
 
@@ -22,7 +24,7 @@ const ThreeDimensionalChart = ({
     } = data
 
     const surface = _3d()
-      .scale(10)
+      .scale(1)
       .x( d => d.x )
       .y( d => d.y )
       .z( d => d.z )
@@ -75,8 +77,12 @@ const ThreeDimensionalChart = ({
   }, [color, data, origin, startAngle])
 
   return (
-    <svg width={width} height={height} ref={chartRef} />
+    <svg style={style} width={width} height={height} ref={chartRef} />
   )
+}
+
+const style = {
+  background: colors.mediumGray,
 }
 
 export default ThreeDimensionalChart
