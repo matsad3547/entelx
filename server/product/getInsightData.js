@@ -54,8 +54,8 @@ const getInsightData = async (req, res) => {
     // belowN,
   } = aggregate
 
-  const aboveIncrement = aboveStdDev * .5
-  const belowIncrement = belowStdDev * .5
+  const aboveIncrement = aboveStdDev * .2
+  const belowIncrement = belowStdDev * .2
   const aboveDistance = aboveStdDev * 3
   const belowDistance = belowStdDev * 3
 
@@ -82,7 +82,7 @@ const getInsightData = async (req, res) => {
     revenue,
   }
 
-  const revenueData = valArr.map( arr => {
+  const points = valArr.map( arr => {
     const [x, z] = arr
 
     const { revenue } = findRevenueAndCharge(timeSeries, key, batterySpecs, currentState, x, z)
@@ -94,9 +94,14 @@ const getInsightData = async (req, res) => {
     }
   })
 
+  console.log('x axis length:', xArr.length, 'z axis length:', zArr.length);
+
   return res.status(200).json({
     aggregate,
-    data: revenueData,
+    data: {
+      points,
+      axisLength: xArr.length,
+    },
     config: {
       projectName: name,
       power,
