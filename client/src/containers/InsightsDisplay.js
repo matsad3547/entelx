@@ -64,15 +64,12 @@ const InsightsDisplay = ({match}) => {
   const [dischargeStdDev, setDischargeStdDev] = useState(0)
 
   const [multiplier, setMultiplier] = useState(.1)
-  // const [timeIncrement, setTimeIncrement] = useState(incrementsArr[1])
   const [loading, setLoading] = useState(false)
-  // const [timeseries, setTimeseries] = useState(null)
-  // const [data, setData] = useState(null)
+  const [data, setData] = useState(null)
   const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
   const [revenue, setRevenue] = useState(0)
-  // const [includeWeather, setIncludeWeather] = useState(false)
-  // const [minDate, setMinDate] = useState(null)
+
   const onIncrement = (value, increment) => value + increment
 
   const onDecrement = (value, increment) => value - increment
@@ -117,7 +114,7 @@ const InsightsDisplay = ({match}) => {
       .then(parseResponse)
       .then( res => {
         setLoading(false)
-        // setData(res.data)
+        setData(res.data)
         setAggregate(res.aggregate)
         setConfig(res.config)
 
@@ -164,6 +161,8 @@ const InsightsDisplay = ({match}) => {
   useEffect( () => {
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
+
+  // console.log('data:', data);
 
   return (
 
@@ -254,7 +253,9 @@ const InsightsDisplay = ({match}) => {
       </DashboardSection>
       {
         revenue !== 0 &&
-        <ThreeDimensionalChart />
+        <ThreeDimensionalChart
+          data={data} 
+        />
       }
     </ProjectPageTemplate>
   )

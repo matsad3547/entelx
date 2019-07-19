@@ -17,6 +17,8 @@ const {
   calculateDerivedData,
   findRevenueAndCharge,
   calculateInsightData,
+  getCenteredValuesArr,
+  getTwoDimensionalArray,
 } = require('./calculationUtils')
 
 const { findClosest } = require('./geoUtils')
@@ -37,4 +39,6 @@ module.exports = {
   findRevenueAndCharge,
   findClosest,
   setExitListeners,
+  getCenteredValuesArr,
+  getTwoDimensionalArray,
 }

@@ -3,7 +3,12 @@ const {
   readTableRowsWhereBtw,
 } = require('../db/')
 
-const { calculateInsightData } = require('../utils/')
+const {
+  calculateInsightData,
+  getCenteredValuesArr,
+  getTwoDimensionalArray,
+  findRevenueAndCharge,
+} = require('../utils/')
 
 const getInsightData = async (req, res) => {
 
@@ -25,6 +30,9 @@ const getInsightData = async (req, res) => {
     name,
     chargeThreshold,
     dischargeThreshold,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
   } = project
 
   const [node] = await readTableRows('node', {id: nodeId})
@@ -38,17 +46,57 @@ const getInsightData = async (req, res) => {
     belowStdDev,
     aboveMean,
     belowMean,
-    aboveMax,
-    aboveMin,
-    belowMax,
-    belowMin,
-    aboveN,
-    belowN,
+    // aboveMax,
+    // aboveMin,
+    // belowMax,
+    // belowMin,
+    // aboveN,
+    // belowN,
   } = aggregate
+
+  const aboveIncrement = aboveStdDev * .5
+  const belowIncrement = belowStdDev * .5
+  const aboveDistance = aboveStdDev * 3
+  const belowDistance = belowStdDev * 3
+
+  const xArr = getCenteredValuesArr(aboveMean, aboveIncrement, aboveDistance)
+  const zArr = getCenteredValuesArr(belowMean, belowIncrement, belowDistance)
+
+  const valArr = getTwoDimensionalArray(xArr, zArr)
+
+  const key = 'lmp'
+
+  const batterySpecs = {
+    power,
+    energy,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  }
+
+  const charge = 0
+  const revenue = 0
+
+  const currentState = {
+    charge,
+    revenue,
+  }
+
+  const revenueData = valArr.map( arr => {
+    const [x, z] = arr
+
+    const { revenue } = findRevenueAndCharge(timeSeries, key, batterySpecs, currentState, x, z)
+
+    return {
+      x,
+      y: revenue,
+      z,
+    }
+  })
 
   return res.status(200).json({
     aggregate,
-    timeSeries,
+    data: revenueData,
     config: {
       projectName: name,
       power,
