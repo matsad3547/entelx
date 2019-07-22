@@ -13,7 +13,6 @@ const {
 const { writeToFile } = require('./fileUtils')
 
 const {
-  calculateScoreData,
   calculateDerivedData,
   findRevenueAndCharge,
   calculateInsightData,
@@ -33,7 +32,6 @@ module.exports = {
   catchErrorsWithMessage,
   catchErrorAndRestart,
   writeToFile,
-  calculateScoreData,
   calculateDerivedData,
   calculateInsightData,
   findRevenueAndCharge,

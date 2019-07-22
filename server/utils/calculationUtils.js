@@ -2,12 +2,12 @@ const optimize = require('optimization-js')
 const fmin = require('fmin')
 const { fiveMinsAsHour } = require('../config/')
 
-const composeData = (...fns) => (data, key, period, options) => {
+const composeData = (...fns) => (data, key, options) => {
   const res = {
     timeSeries: data,
     aggregate: {},
   }
-  return fns.reduce( (v, f) => f(v, key, period, options), res)
+  return fns.reduce( (v, f) => f(v, key, options), res)
 }
 
 const getSum = (a, b) => a + b
@@ -21,7 +21,9 @@ const getMinAndMax = (timeSeries, key) => timeSeries.reduce( (obj, d, i) =>  ({
   min: d[key] < obj.min ? d[key] : obj.min,
 }), {max: 0, min: Infinity})
 
-const calculateMovingAverage = (data, key, period) => {
+const calculateMovingAverage = (data, key, options) => {
+
+  const { period } = options
 
   const { timeSeries } = data
 
@@ -67,7 +69,7 @@ const calculateScore = (data, key) => {
   }
 }
 
-const calculateArbitrage = (data, key, period, options) => {
+const calculateArbitrage = (data, key, options) => {
 
   const {
     chargeThreshold,
@@ -137,7 +139,7 @@ const calculateArbitrage = (data, key, period, options) => {
   }
 }
 
-const findMinMax = (data, key, period) => {
+const findMinMax = (data, key) => {
 
   const {
     timeSeries,
@@ -155,7 +157,7 @@ const findMinMax = (data, key, period) => {
   }
 }
 
-const findInflections = (data, key, period) => {
+const findInflections = (data, key) => {
 
   const {
     timeSeries,
@@ -185,7 +187,7 @@ const findInflections = (data, key, period) => {
 }
 
 const findRevenueAndCharge = (
-  data, //array
+  timeSeries, //array
   key,
   batterySpecs,
   currentState,
@@ -207,27 +209,27 @@ const findRevenueAndCharge = (
 
   const minEnergy = dischargeBuffer * energy
 
-  return data.reduce( (agg, d) => {
+  return timeSeries.reduce( (agg, ts) => {
 
     const canCharge = agg.charge + chargeEnergy <= maxEnergy
 
     const canDischarge = agg.charge - chargeEnergy >= minEnergy
 
-    const charge = canCharge && d[key] < d.mvgAvg - chargeThreshold
+    const charge = canCharge && ts[key] < ts.mvgAvg - chargeThreshold
 
-    const discharge = canDischarge && d[key] > d.mvgAvg + dischargeThreshold
+    const discharge = canDischarge && ts[key] > ts.mvgAvg + dischargeThreshold
 
     if (charge) {
       return {
         charge: agg.charge + chargeEnergy,
-        revenue: agg.revenue - (d[key] * chargeEnergy),
+        revenue: agg.revenue - (ts[key] * chargeEnergy),
         status: 'charge',
       }
     }
     else if (discharge) {
       return {
         charge: agg.charge - chargeEnergy,
-        revenue: agg.revenue + (d[key] * rte * chargeEnergy),
+        revenue: agg.revenue + (ts[key] * rte * chargeEnergy),
         status: 'discharge',
       }
     }
@@ -240,7 +242,7 @@ const findRevenueAndCharge = (
   }, currentState)
 }
 
-const findAggregateRevenue = (data, key, period, batterySpecs) => {
+const findAggregateRevenue = (data, key, options) => {
 
   const {
     timeSeries,
@@ -255,7 +257,7 @@ const findAggregateRevenue = (data, key, period, batterySpecs) => {
   const {
     energy,
     dischargeBuffer,
-  } = batterySpecs
+  } = options
 
   const initEnergy = dischargeBuffer * energy
 
@@ -264,7 +266,7 @@ const findAggregateRevenue = (data, key, period, batterySpecs) => {
     revenue: 0,
   }
 
-  const calculation = (dischargeThreshold, chargeThreshold) => findRevenueAndCharge(timeSeries, key, batterySpecs, initState, dischargeThreshold, chargeThreshold)
+  const calculation = (dischargeThreshold, chargeThreshold) => findRevenueAndCharge(timeSeries, key, options, initState, dischargeThreshold, chargeThreshold)
 
   return {
     ...data,
@@ -275,7 +277,7 @@ const findAggregateRevenue = (data, key, period, batterySpecs) => {
   }
 }
 
-const findThresholds = (data, key, period, options) => {
+const findThresholds = (data, key, options) => {
 
   const {
     timeSeries,
@@ -355,7 +357,7 @@ const findThresholds = (data, key, period, options) => {
   }
 }
 
-const findStdDev = (data, key, period, options) => {
+const findStdDev = (data, key) => {
 
   const {
     timeSeries,
@@ -373,7 +375,7 @@ const findStdDev = (data, key, period, options) => {
   }
 }
 
-const findUpperAndLowerValues = (data, key, period, options) => {
+const findUpperAndLowerValues = (data, key) => {
   const {
     timeSeries,
     aggregate,

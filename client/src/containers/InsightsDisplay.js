@@ -69,6 +69,7 @@ const InsightsDisplay = ({match}) => {
   const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
   const [revenue, setRevenue] = useState(0)
+  const [showChart, setShowChart] = useState(false)
 
   const onIncrement = (value, increment) => value + increment
 
@@ -236,7 +237,6 @@ const InsightsDisplay = ({match}) => {
             disabled={loading}
             type="success"
             onClick={getRevenue}
-            overrideStyles={styles.getData}
             />
         </div>
         {
@@ -250,12 +250,20 @@ const InsightsDisplay = ({match}) => {
             </span>
           </div>
         }
+        <div style={styles.showChart}>
+          <Button
+            value="Show Chart"
+            disabled={loading}
+            type="success"
+            onClick={() => setShowChart(!showChart)}
+            />
+        </div>
       </DashboardSection>
       {
-        revenue !== 0 &&
+        showChart &&
         <ThreeDimensionalChart
-          data={data} 
-        />
+          data={data}
+          />
       }
     </ProjectPageTemplate>
   )
@@ -296,7 +304,11 @@ const styles = {
     lineHeight: '2.5em',
     padding: '1em 0',
     fontStyle: 'italic',
-  }
+  },
+  showChart: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
 }
 
 export default InsightsDisplay

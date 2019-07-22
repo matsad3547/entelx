@@ -49,7 +49,6 @@ JS Docs - insta documentation
     singleRequest(`/dashboard/${projectId}/config`, getRequest('GET'))
       .then(parseResponse)
       .then( res => {
-        console.log('res:', res);
         setLoading(false)
         setConfig(res.config)
       })

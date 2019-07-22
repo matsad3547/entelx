@@ -19,7 +19,7 @@ const pastPriceDataUpdater = async (
 
   const data = await catchErrorsWithMessage(`There was an error getting past price data from ${startMillis} to ${endMillis}`, updatePriceData)(startMillis, endMillis, nodeData)
 
-  const derivedData = calculateDerivedData(data, 'lmp', 21 * dayOf5Mins)
+  const derivedData = calculateDerivedData(data, 'lmp', {period: 21 * dayOf5Mins})
 
   const { timeSeries } = derivedData
 

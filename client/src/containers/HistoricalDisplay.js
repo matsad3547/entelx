@@ -85,8 +85,6 @@ const HistoricalDisplay = ({match}) => {
 
   const onSetIncludeWeather = e => setIncludeWeather(e.target.value === 'true')
 
-  // const onGetData = () => getData()
-
   const getData = useCallback(() => {
 
     const startMillis = startTime.valueOf()
@@ -103,11 +101,9 @@ const HistoricalDisplay = ({match}) => {
     singleRequest('/historical/', getRequest('POST', JSON.stringify(body)))
       .then(parseResponse)
       .then( res => {
-        console.log('res:', res);
         setLoading(false)
         setConfig(res.config)
         setTimeseries(res.timeseries)
-        // setAggregate(res.aggregate)
       })
       .catch( err => {
         setLoading(false)
@@ -128,8 +124,6 @@ const HistoricalDisplay = ({match}) => {
   const sseRoute = `/historical/${projectId}/min_date`
 
   useConnectToServerSideEvent(sseRoute, handleData)
-
-  console.log('config:', config);
 
   return (
 
@@ -199,7 +193,6 @@ const HistoricalDisplay = ({match}) => {
                   disabled={loading}
                   type="success"
                   onClick={getData}
-                  overrideStyles={styles.getData}
                   />
               </div>
             </div>
@@ -218,6 +211,7 @@ const styles = {
   inclusion: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
   getData: {
     margin: '.5em 0 0 1.5em',

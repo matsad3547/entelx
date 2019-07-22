@@ -63,28 +63,34 @@ describe('calculateMovingAverage', () => {
 
   test('should return an array', () => {
     const data = timeSeriesData
-    const period = 10
+    const options = {
+      period: 10,
+    }
     const key = 'lmp'
     const expected = true
-    const actual = Array.isArray(getAvgData(data, key, period).timeSeries)
+    const actual = Array.isArray(getAvgData(data, key, options).timeSeries)
     expect(actual).toEqual(expected)
   })
 
   test('should return an array 287 items long', () => {
     const data = timeSeriesData
-    const period = 10
+    const options = {
+      period: 10,
+    }
     const key = 'lmp'
     const expected = 287
-    const actual = getAvgData(data, key, period).timeSeries.length
+    const actual = getAvgData(data, key, options).timeSeries.length
     expect(actual).toEqual(expected)
   })
 
   test('should return an object with a `timestamp` property and a `mvAvg` property and a property for whichever key was passed in', () => {
     const data = timeSeriesData
-    const period = 10
+    const options = {
+      period: 10,
+    }
     const key = 'lmp'
     const expected = new Array(287).fill(true)
-    const arr = getAvgData(data, key, period)
+    const arr = getAvgData(data, key, options)
     const keyArr = arr.timeSeries.map( obj => Object.keys(obj) )
     const actual = keyArr.map( k =>
       k.includes('timestamp') &&
@@ -96,26 +102,32 @@ describe('calculateMovingAverage', () => {
 
   test('should have a value for its first entry equal to the average of the first two entries of the input', () => {
     const data = timeSeriesData
-    const period = 5
+    const options = {
+      period: 5,
+    }
     const key = 'lmp'
     const expected = 27.02553
-    const actual = getAvgData(data, key, period).timeSeries[0].mvgAvg
+    const actual = getAvgData(data, key, options).timeSeries[0].mvgAvg
     expect(actual).toEqual(expected)
   })
 
   test('should have a value of `26.694084` for its last entry for the last 5 entries', () => {
     const data = timeSeriesData.slice(282)
-    const period = 5
+    const options = {
+      period: 5,
+    }
     const key = 'lmp'
     const expected = 26.694084000000004
-    const actual = getAvgData(data, key, period).timeSeries[4].mvgAvg
+    const actual = getAvgData(data, key, options).timeSeries[4].mvgAvg
     expect(actual).toEqual(expected)
   })
 })
 
 describe('calculateScore', () => {
 
-  const period = 5
+  const options = {
+    period: 5,
+  }
   const key = 'val'
 
   const getScoreData = composeData(
@@ -125,19 +137,19 @@ describe('calculateScore', () => {
 
   test('should return an array', () => {
     const expected = true
-    const actual = Array.isArray(getScoreData(testData, key, period).timeSeries)
+    const actual = Array.isArray(getScoreData(testData, key, options).timeSeries)
     expect(actual).toEqual(expected)
   })
 
   test('should return an array 5 items long', () => {
     const expected = 5
-    const actual = getScoreData(testData, key, period).timeSeries.length
+    const actual = getScoreData(testData, key, options).timeSeries.length
     expect(actual).toEqual(expected)
   })
 
   test('should return an object with `timestamp`, `mvAvg`, and `score` properties and a property for whichever key was passed in', () => {
     const expected = new Array(5).fill(true)
-    const arr = getScoreData(testData, key, period).timeSeries
+    const arr = getScoreData(testData, key, options).timeSeries
     const keyArr = arr.map( obj => Object.keys(obj) )
     const actual = keyArr.map( k =>
       k.includes('timestamp') &&
@@ -150,25 +162,25 @@ describe('calculateScore', () => {
 
   test('should have a `mvgAvg` value of `4` for its last entry for the last 5 entries', () => {
     const expected = 4
-    const actual = getScoreData(testData, key, period).timeSeries[4].mvgAvg
+    const actual = getScoreData(testData, key, options).timeSeries[4].mvgAvg
     expect(actual).toEqual(expected)
   })
 
   test('should have a `score` value of `2` for its last entry', () => {
     const expected = 1
-    const actual = getScoreData(testData, key, period).timeSeries[4].score
+    const actual = getScoreData(testData, key, options).timeSeries[4].score
     expect(actual).toEqual(expected)
   })
 
   test('should have a `score` value of `0.4` for its first entry', () => {
     const expected = .4
-    const actual = getScoreData(testData, key, period).timeSeries[0].score
+    const actual = getScoreData(testData, key, options).timeSeries[0].score
     expect(actual).toEqual(expected)
   })
 
   test('should have a `score` value of `-1` for its second to last entry', () => {
     const expected = -1
-    const actual = getScoreData(testData, key, period).timeSeries[3].score
+    const actual = getScoreData(testData, key, options).timeSeries[3].score
     expect(actual).toEqual(expected)
   })
 
@@ -206,7 +218,7 @@ describe('calculateScore', () => {
         val: 8,
       },
     ]
-    const actual = getScoreData(testData, key, period).timeSeries
+    const actual = getScoreData(testData, key, options).timeSeries
     expect(actual).toEqual(expected)
   })
 
@@ -223,7 +235,6 @@ describe('calculateScore', () => {
 
 describe('calculateArbitrage', () => {
 
-  const period = 5
   const key = 'val'
   const getArbitrageData = composeData(
     calculateMovingAverage,
@@ -232,12 +243,13 @@ describe('calculateArbitrage', () => {
   )
 
   const options = {
+    period: 5,
     chargeThreshold: .5,
     dischargeThreshold: .5,
   }
 
   test('should return the passed in data', () => {
-    const actual = getArbitrageData(testData, key, period, options).timeSeries
+    const actual = getArbitrageData(testData, key, options).timeSeries
 
     const expected = [
       {
@@ -275,7 +287,7 @@ describe('calculateArbitrage', () => {
   })
 
   test('should return an `aggregate` object with a correct `chargeVol` object', () => {
-    const actual = getArbitrageData(testData, key, period, options).aggregate.chargeVol
+    const actual = getArbitrageData(testData, key, options).aggregate.chargeVol
     const expected = {
       avgPrc: -.5,
       n: 2,
@@ -284,7 +296,7 @@ describe('calculateArbitrage', () => {
   })
 
   test('should return an `aggregate` object with a correct `dischargeVol` object', () => {
-    const actual = getArbitrageData(testData, key, period, options).aggregate.dischargeVol
+    const actual = getArbitrageData(testData, key, options).aggregate.dischargeVol
     const expected = {
       avgPrc: 7,
       n: 2,
@@ -295,7 +307,9 @@ describe('calculateArbitrage', () => {
 
 describe('findMinMax', () => {
 
-  const period = 5
+  const options = {
+    period: 5,
+  }
   const key = 'val'
   const getMinMaxData = composeData(
     calculateMovingAverage,
@@ -304,7 +318,7 @@ describe('findMinMax', () => {
   )
 
   test('should return the passed in data', () => {
-    const actual = getMinMaxData(testData, key, period).timeSeries
+    const actual = getMinMaxData(testData, key, options).timeSeries
     const expected = [
       {
         mvgAvg: 5,
@@ -341,27 +355,29 @@ describe('findMinMax', () => {
   })
 
   test('should return an `aggregate` object with a correct `max` value', () => {
-    const actual = getMinMaxData(testData, key, period).aggregate.max
+    const actual = getMinMaxData(testData, key, options).aggregate.max
     const expected = 8
     expect(actual).toEqual(expected)
   })
 
   test('should return an `aggregate` object with a correct `min` value', () => {
-    const actual = getMinMaxData(testData, key, period).aggregate.min
+    const actual = getMinMaxData(testData, key, options).aggregate.min
     const expected = -1
     expect(actual).toEqual(expected)
   })
 })
 
 test('calculateDerivedData should work', () => {
-  const actual = calculateDerivedData(testData, 'val', 5)
+  const actual = calculateDerivedData(testData, 'val', {period: 5})
   expect(actual).toBeDefined()
 })
 
 
 describe('findInflections', () => {
 
-  const period = 5
+  const options = {
+    period: 5,
+  }
   const key = 'val'
   const getInflectionData = composeData(
     calculateMovingAverage,
@@ -429,7 +445,7 @@ describe('findInflections', () => {
   ]
 
   test('should return the passed in data', () => {
-    const actual = getInflectionData(testData, key, period).timeSeries
+    const actual = getInflectionData(testData, key, options).timeSeries
     const expected = [
       {
         mvgAvg: 5,
@@ -466,7 +482,7 @@ describe('findInflections', () => {
   })
 
   test('should return an array for `inflections`', () => {
-    const actual = Array.isArray(getInflectionData(dataSnippet, 'lmp', period).aggregate.inflections)
+    const actual = Array.isArray(getInflectionData(dataSnippet, 'lmp', options).aggregate.inflections)
     const intermediate = [
       {
         timestamp:1538710800000,
@@ -509,7 +525,7 @@ describe('findInflections', () => {
   })
 
   test('should return an array of inflection timestamps', () => {
-    const actual = getInflectionData(dataSnippet, 'lmp', period).aggregate.inflections
+    const actual = getInflectionData(dataSnippet, 'lmp', options).aggregate.inflections
     const intermediate = [
       {
         timestamp:1538710800000,
@@ -559,7 +575,6 @@ describe('findInflections', () => {
 
 describe('findAggregateRevenue', () => {
 
-  const period = 6
   const key = 'lmp'
   const getRevenueData = composeData(
     calculateMovingAverage,
@@ -638,7 +653,7 @@ describe('findAggregateRevenue', () => {
   ]
 
   test('should return a `timeSeries` array', () => {
-    const actual = getRevenueData(mockData, key, period, {}).timeSeries
+    const actual = getRevenueData(mockData, key,  {period: 6}).timeSeries
     const expected = [
       {
        lmp: 3,
@@ -690,13 +705,14 @@ describe('findAggregateRevenue', () => {
       },
     }
     const options = {
+      period: 6,
       power: .001,
       energy: (1/6) * .001,
       rte: 1,
       dischargeBuffer: 0,
       chargeBuffer: 0,
     }
-    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.revenue
+    const actual = findAggregateRevenue(data, 'lmp', options).aggregate.revenue
     const expected = .0005
     expect(actual).toEqual(expected)
   })
@@ -711,13 +727,14 @@ describe('findAggregateRevenue', () => {
       },
     }
     const options = {
+      period: 6,
       power: .001,
       energy: (1/6) * .001,
       rte: 1,
       dischargeBuffer: 0,
       chargeBuffer: 0,
     }
-    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.charge
+    const actual = findAggregateRevenue(data, 'lmp', options).aggregate.charge
     const expected = 0
     expect(actual).toEqual(expected)
   })
@@ -732,13 +749,14 @@ describe('findAggregateRevenue', () => {
       },
     }
     const options = {
+      period: 6,
       power: .001,
       energy: (1/6) * .001,
       rte: 1,
       dischargeBuffer: 0,
       chargeBuffer: 0,
     }
-    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.revenue
+    const actual = findAggregateRevenue(data, 'lmp', options).aggregate.revenue
     const expected = .00083
     expect(actual).toBeCloseTo(expected, 5)
   })
@@ -753,13 +771,14 @@ describe('findAggregateRevenue', () => {
       },
     }
     const options = {
+      period: 6,
       power: .001,
       energy: 1.25 * (1/6) * .001,
       rte: 1,
       dischargeBuffer: .1, //percentages of battery energy
       chargeBuffer: .1,
     }
-    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.revenue
+    const actual = findAggregateRevenue(data, 'lmp', options).aggregate.revenue
     const expected = .0005
     expect(actual).toEqual(expected)
   })
@@ -774,13 +793,14 @@ describe('findAggregateRevenue', () => {
       },
     }
     const options = {
+      period: 6,
       power: .001,
       energy: 1.25 * (1/6) * .001,
       rte: .8,
       dischargeBuffer: .1,
       chargeBuffer: .1,
     }
-    const actual = findAggregateRevenue(data, 'lmp', 6, options).aggregate.revenue
+    const actual = findAggregateRevenue(data, 'lmp', options).aggregate.revenue
     const expected = .0003167
     expect(actual).toBeCloseTo(expected, 6)
   })

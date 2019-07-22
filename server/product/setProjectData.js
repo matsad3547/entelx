@@ -36,7 +36,7 @@ const setProjectData = (node, projectId, timeZone) => {
     node.name,
   )
   .then( data => {
-    const derivedData = calculateDerivedData(data, 'lmp', numDays * dayOf5Mins)
+    const derivedData = calculateDerivedData(data, 'lmp', {period: numDays * dayOf5Mins})
 
     const {
       timeSeries,

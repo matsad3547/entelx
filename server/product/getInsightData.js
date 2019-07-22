@@ -46,12 +46,6 @@ const getInsightData = async (req, res) => {
     belowStdDev,
     aboveMean,
     belowMean,
-    // aboveMax,
-    // aboveMin,
-    // belowMax,
-    // belowMin,
-    // aboveN,
-    // belowN,
   } = aggregate
 
   const aboveIncrement = aboveStdDev * .2

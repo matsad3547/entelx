@@ -11,7 +11,8 @@ const ThreeDimensionalChart = ({
 
   const chartRef = useRef(null)
 
-  const width = 500, height = 1000, startAngle = Math.PI/4
+  const width = 500, height = 1000
+  const startAngle = Math.PI/4
   const origin = [width/2, 100]
 
   const color = d3.scaleLinear()
@@ -66,7 +67,10 @@ const ThreeDimensionalChart = ({
     const init = () => {
       const yMin = d3.min(points, d => d.y )
       const yMax = d3.max(points, d => d.y )
-      console.log('data?', yMax);
+
+      const maxPoint = d3.scan(points, (a, b) => b.y - a.y)
+
+      console.log('max revenue:', yMax, '\npoint?', points[maxPoint]);
 
       color.domain([yMin, yMax])
       processData(surface(points), 1000)

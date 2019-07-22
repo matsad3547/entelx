@@ -37,7 +37,7 @@ const styles = {
   	cursor: 'pointer',
   	fontSize: '1.3em',
   	padding: '1em',
-    margin: '1em 0',
+    margin: '.5em 0',
   },
 }
 
