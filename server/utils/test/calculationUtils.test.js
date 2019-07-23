@@ -16,6 +16,7 @@ const {
   findUpperAndLowerValues,
   getCenteredValuesArr,
   getTwoDimensionalArray,
+  calculateMean,
 } = require('../calculationUtils')
 
 const testData = [
@@ -83,7 +84,7 @@ describe('calculateMovingAverage', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should return an object with a `timestamp` property and a `mvAvg` property and a property for whichever key was passed in', () => {
+  test('should return an object with a `timestamp` property and a `mvgAvg` property and a property for whichever key was passed in', () => {
     const data = timeSeriesData
     const options = {
       period: 10,
@@ -1532,4 +1533,29 @@ test('getTwoDimensionalArray should return a array with n^2 sub arrays', () => {
     [4, 9],
   ]
   expect(actual).toEqual(expected)
+})
+
+describe('calculateMean', () => {
+  const key = 'val'
+  const getMeanData = composeData(
+    calculateMean,
+  )
+
+  test('should return a `timeSeries` and `aggregate` properties', () => {
+    const expected = ['timeSeries', 'aggregate']
+    const actual = Object.keys(getMeanData(testData, key))
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return a `mean` property on the `aggregate` property', () => {
+    const expected = ['mean']
+    const actual = Object.keys(getMeanData(testData, key).aggregate)
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return a `mean` property on the `aggregate` property', () => {
+    const expected = 3.83333
+    const actual = getMeanData(testData, key).aggregate.mean
+    expect(actual).toBeCloseTo(expected, 5)
+  })
 })

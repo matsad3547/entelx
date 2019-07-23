@@ -49,12 +49,14 @@ const InsightsDisplay = ({match}) => {
   const getNow = () => moment()
 
   const now = getNow()
-  const oneWeekAgo = now.clone()
+  // const oneWeekAgo = now.clone()
+    .subtract(7, 'days')
+  const threeWeeksAgo = now.clone()
     .subtract(7, 'days')
 
   // const incrementsArr = Object.keys(timeIncrements)
 
-  const [startTime, setStartTime] = useState(oneWeekAgo)
+  const [startTime, setStartTime] = useState(threeWeeksAgo)
   const [endTime, setEndTime] = useState(now)
 
   const [chargeThreshold, setChargeThreshold] = useState(0)

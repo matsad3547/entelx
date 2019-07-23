@@ -2,6 +2,13 @@ const optimize = require('optimization-js')
 const fmin = require('fmin')
 const { fiveMinsAsHour } = require('../config/')
 
+// TODO mvgAvg Change utils to use a `mean` value from the `aggregate` portion of the data instead of `mvgAvg` that is added to the `timeSeries`
+
+// TODO mvgAvg utils that use `mvgAvg`:
+// 1. calculateScore
+// 2. findRevenueAndCharge
+// 3. findUpperAndLowerValues
+
 const composeData = (...fns) => (data, key, options) => {
   const res = {
     timeSeries: data,
@@ -20,6 +27,17 @@ const getMinAndMax = (timeSeries, key) => timeSeries.reduce( (obj, d, i) =>  ({
   max: d[key] > obj.max ? d[key] : obj.max,
   min: d[key] < obj.min ? d[key] : obj.min,
 }), {max: 0, min: Infinity})
+
+const calculateMean = (data, key) => {
+
+  return {
+    ...data,
+    aggregate: {
+      ...data.aggregate,
+      mean: getMean(data.timeSeries.map( ts => ts[key])),
+    }
+  }
+}
 
 const calculateMovingAverage = (data, key, options) => {
 
@@ -56,9 +74,6 @@ const calculateScore = (data, key) => {
 
   const calculation = timeSeries.map( d => ({
       ...d,
-      timestamp: d.timestamp,
-      mvgAvg: d.mvgAvg,
-      [key]: d[key],
       score: (d[key] - d.mvgAvg) / d.mvgAvg,
     })
   )
@@ -452,6 +467,7 @@ const calculateScoreData = composeData(
 )
 
 const calculateDerivedData = composeData(
+  calculateMean,
   calculateMovingAverage,
   calculateScore,
   findInflections,
@@ -483,4 +499,5 @@ module.exports = {
   calculateInsightData,
   getCenteredValuesArr,
   getTwoDimensionalArray,
+  calculateMean,
 }
