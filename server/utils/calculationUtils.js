@@ -6,8 +6,6 @@ const { fiveMinsAsHour } = require('../config/')
 
 // TODO mvgAvg utils that use `mvgAvg`:
 // 1. calculateScore
-// 2. findRevenueAndCharge
-// 3. findUpperAndLowerValues
 
 const composeData = (...fns) => (data, key, options) => {
   const res = {
@@ -19,7 +17,7 @@ const composeData = (...fns) => (data, key, options) => {
 
 const getSum = (a, b) => a + b
 
-const getMean = arr => arr.reduce(getSum)/arr.length
+const getMean = arr => arr.reduce(getSum, 0)/arr.length
 
 const getStdDev = (timeSeries, key, mean) => Math.sqrt(getMean(timeSeries.map( d => (d[key] - mean)**2 )))
 
@@ -202,13 +200,20 @@ const findInflections = (data, key) => {
 }
 
 const findRevenueAndCharge = (
-  timeSeries, //array
+  data,
   key,
   batterySpecs,
   currentState,
   dischargeThreshold,
   chargeThreshold,
 ) => {
+
+  const {
+    timeSeries,
+    aggregate,
+  } = data
+
+  const { mean } = aggregate
 
   const {
     power,
@@ -230,9 +235,9 @@ const findRevenueAndCharge = (
 
     const canDischarge = agg.charge - chargeEnergy >= minEnergy
 
-    const charge = canCharge && ts[key] < ts.mvgAvg - chargeThreshold
+    const charge = canCharge && ts[key] < mean - chargeThreshold
 
-    const discharge = canDischarge && ts[key] > ts.mvgAvg + dischargeThreshold
+    const discharge = canDischarge && ts[key] > mean + dischargeThreshold
 
     if (charge) {
       return {
@@ -259,10 +264,7 @@ const findRevenueAndCharge = (
 
 const findAggregateRevenue = (data, key, options) => {
 
-  const {
-    timeSeries,
-    aggregate,
-  } = data
+  const { aggregate } = data
 
   const {
     dischargeThreshold,
@@ -281,7 +283,7 @@ const findAggregateRevenue = (data, key, options) => {
     revenue: 0,
   }
 
-  const calculation = (dischargeThreshold, chargeThreshold) => findRevenueAndCharge(timeSeries, key, options, initState, dischargeThreshold, chargeThreshold)
+  const calculation = (dischargeThreshold, chargeThreshold) => findRevenueAndCharge(data, key, options, initState, dischargeThreshold, chargeThreshold)
 
   return {
     ...data,
@@ -294,10 +296,7 @@ const findAggregateRevenue = (data, key, options) => {
 
 const findThresholds = (data, key, options) => {
 
-  const {
-    timeSeries,
-    aggregate,
-  } = data
+  const { aggregate } = data
 
   const {
     power,
@@ -307,67 +306,60 @@ const findThresholds = (data, key, options) => {
     chargeBuffer,
   } = options
 
-  // This function assumes 5 minute timeSeries data
-  const fiveMinsAsHour = 5 / 60
-  const chargeEnergy = power * fiveMinsAsHour
+  const {
+    aboveStdDev,
+    belowStdDev,
+    aboveMean,
+    belowMean,
+  } = aggregate
 
-  const maxEnergy = (1 - chargeBuffer) * energy
+  const aboveIncrement = aboveStdDev * .2
+  const belowIncrement = belowStdDev * .2
+  const aboveDistance = aboveStdDev * 3
+  const belowDistance = belowStdDev * 3
 
-  const minEnergy = dischargeBuffer * energy
+  const xArr = getCenteredValuesArr(aboveMean, aboveIncrement, aboveDistance)
+  const zArr = getCenteredValuesArr(belowMean, belowIncrement, belowDistance)
 
-  const calculation = (dischargeThreshold, chargeThreshold) => timeSeries.reduce( (obj, d, i) => {
+  const valArr = getTwoDimensionalArray(xArr, zArr)
 
-    // console.log('at findThresholds?', obj.revenue + '$', i, dischargeThreshold, chargeThreshold);
+  const batterySpecs = {
+    power,
+    energy,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  }
 
-    const canCharge = obj.charge + chargeEnergy <= maxEnergy
+  //for calculating initial thresholds
+  const charge = 0
+  const revenue = 0
 
-    const canDischarge = obj.charge - chargeEnergy >= minEnergy
+  const currentState = {
+    charge,
+    revenue,
+  }
 
-    const charge = canCharge && d[key] < d.mvgAvg - chargeThreshold
+  const points = valArr.map( arr => {
+    const [x, z] = arr
 
-    const discharge = canDischarge && d[key] > d.mvgAvg + dischargeThreshold
+    const { revenue } = findRevenueAndCharge(data, key, batterySpecs, currentState, x, z)
 
-    if (charge) {
-      return {
-        charge: obj.charge + chargeEnergy,
-        revenue: obj.revenue - (d[key] * chargeEnergy),
-      }
+    return {
+      x,
+      y: revenue,
+      z,
     }
-    else if (discharge) {
-      return {
-        charge: obj.charge - chargeEnergy,
-        revenue: obj.revenue + (d[key] * rte * chargeEnergy),
-      }
-    }
-    else {
-      return obj
-    }
-  }, {
-    charge: minEnergy,
-    revenue: 0,
   })
 
-  const maxThreshold = timeSeries[timeSeries.length - 1].mvgAvg
-
-  // const initThresholdVal = maxThreshold / 2
-  const initThresholdVal = 0
-
-  console.log('max threshold:', maxThreshold);
-
-  const forOptimization = ([c, d]) => -(calculation(c, d).revenue)
-
-  // const optimizedThresholds = optimize.minimize_Powell(forOptimization, [initThresholdVal, initThresholdVal])
-
-  const optimizedThresholds = fmin.nelderMead(forOptimization, [initThresholdVal, initThresholdVal])
-
-  console.log(optimizedThresholds);
+  // console.log('points:', points);
 
   return {
     ...data,
     aggregate: {
-      ...aggregate,
-      dischargeThreshold: optimizedThresholds.argument[0],
-      chargeThreshold: optimizedThresholds.argument[1],
+      ...data.aggregate,
+      dischargeThreshold: null,
+      chargeThreshold: null,
     }
   }
 }
@@ -396,13 +388,15 @@ const findUpperAndLowerValues = (data, key) => {
     aggregate,
   } = data
 
-  const above = timeSeries.filter( d => d[key] > d.mvgAvg )
+  const { mean } = aggregate
+
+  const above = timeSeries.filter( d => d[key] > mean )
 
   const aboveMean = getMean(above.map( d => d[key] ))
 
   const aboveMinMax = getMinAndMax(above, key)
 
-  const below = timeSeries.filter( d => d[key] < d.mvgAvg )
+  const below = timeSeries.filter( d => d[key] < mean )
 
   const belowMean = getMean(below.map( d => d[key] ))
 
@@ -476,6 +470,7 @@ const calculateDerivedData = composeData(
 )
 
 const calculateInsightData = composeData(
+  calculateMean,
   findInflections,
   findUpperAndLowerValues,
 )

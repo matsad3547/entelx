@@ -578,6 +578,7 @@ describe('findAggregateRevenue', () => {
 
   const key = 'lmp'
   const getRevenueData = composeData(
+    calculateMean,
     calculateMovingAverage,
     calculateScore,
     findAggregateRevenue,
@@ -701,6 +702,7 @@ describe('findAggregateRevenue', () => {
     const data = {
       timeSeries: staticAvg,
       aggregate: {
+        mean: 4,
         dischargeThreshold: 0,
         chargeThreshold: 0,
       },
@@ -723,6 +725,7 @@ describe('findAggregateRevenue', () => {
     const data = {
       timeSeries: staticAvg,
       aggregate: {
+        mean: 4,
         dischargeThreshold: 0,
         chargeThreshold: 0,
       },
@@ -745,6 +748,7 @@ describe('findAggregateRevenue', () => {
     const data = {
       timeSeries: staticAvg,
       aggregate: {
+        mean: 4,
         dischargeThreshold: 1,
         chargeThreshold: 1,
       },
@@ -767,6 +771,7 @@ describe('findAggregateRevenue', () => {
     const data = {
       timeSeries: staticAvg,
       aggregate: {
+        mean: 4,
         dischargeThreshold: 0,
         chargeThreshold: 0,
       },
@@ -789,6 +794,7 @@ describe('findAggregateRevenue', () => {
     const data = {
       timeSeries: staticAvg,
       aggregate: {
+        mean: 4,
         dischargeThreshold: 0,
         chargeThreshold: 0,
       },
@@ -809,11 +815,10 @@ describe('findAggregateRevenue', () => {
 
 describe('findThresholds', () => {
 
-  const period = 6
   const key = 'lmp'
   const getThresholdData = composeData(
-    calculateMovingAverage,
-    calculateScore,
+    calculateMean,
+    findUpperAndLowerValues,
     findThresholds,
   )
 
@@ -848,44 +853,39 @@ describe('findThresholds', () => {
     },
   ]
 
-  const staticAvg = [
-    {
-     lmp: 3,
-     mvgAvg: 4,
-     score: -0.14285714285714285,
-     timestamp: 1538710500000,
-    },
-    {
-     lmp: 2,
-     mvgAvg: 4,
-     score: -0.3333333333333333,
-     timestamp: 1538710800000,
-    },
-    {
-     lmp: 1,
-     mvgAvg: 4,
-     score: -0.6,
-     timestamp: 1538711100000,
-    },
-    {
-     lmp: 5,
-     mvgAvg: 4,
-     score: 0.6666666666666666,
-     timestamp: 1538711400000,
-    },
-    {
-     lmp: 6,
-     mvgAvg: 4,
-     score: 0.7142857142857143,
-     timestamp: 1538711700000,
-    },
-    {
-     lmp: 7,
-     mvgAvg: 4,
-     score: 0.75,
-     timestamp: 1538712000000,
-    },
-  ]
+  const options = {
+    power: 1,
+    energy: 2,
+    rte: .85,
+    dischargeBuffer: 0,
+    chargeBuffer: 0,
+  }
+
+  test('should return a `timeSeries` array and an `aggregate` object', () => {
+    const actual = Object.keys(getThresholdData(mockData, key, options))
+    const expected = ['timeSeries', 'aggregate']
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return an `aggregate` object with `mean`, `dischargeThreshold`, `chargeThreshold`, `aboveStdDev`, `belowStdDev`, `aboveMean`, `belowMean`, `aboveMax`, `aboveMin`, `belowMax`, `belowMin`, `aboveN`, and `belowN` keys', () => {
+    const actual = Object.keys(getThresholdData(mockData, key, options).aggregate)
+    const expected = [
+      'mean',
+      'aboveStdDev',
+      'belowStdDev',
+      'aboveMean',
+      'belowMean',
+      'aboveMax',
+      'aboveMin',
+      'belowMax',
+      'belowMin',
+      'aboveN',
+      'belowN',
+      'dischargeThreshold',
+      'chargeThreshold',
+    ]
+    expect(actual).toEqual(expected)
+  })
 
   // test('should return a `timeSeries` array', () => {
   //   const actual = getThresholdData(mockData, key, period, {}).timeSeries
@@ -1101,19 +1101,23 @@ describe('testOptimization', () => {
 
 describe('findRevenueAndCharge', () => {
   test('should do something with real data', () => {
-    const data = [
-      {
-        timestamp: 1548788100000,
-        lmp: 30.81711,
-        lossPrc: 1.31858,
-        ghgPrc: 0,
-        energyPrc: 29.49853,
-        congestionPrc: 0,
-        mvgAvg: 40.3,
-        nodeId: 3969,
-        score: -0.23530744416873445
-      }
-    ]
+    const data = {
+      aggregate: {
+        mean: 40.3,
+      },
+      timeSeries: [
+        {
+          timestamp: 1548788100000,
+          lmp: 30.81711,
+          lossPrc: 1.31858,
+          ghgPrc: 0,
+          energyPrc: 29.49853,
+          congestionPrc: 0,
+          nodeId: 3969,
+          score: -0.23530744416873445
+        }
+      ]
+    }
     const key = 'lmp'
     const batterySpecs = {
       power: 2.5,
@@ -1138,13 +1142,17 @@ describe('findRevenueAndCharge', () => {
   })
 
   test('should return realistic charge values', () => {
-    const data = [
-      {
-        timestamp: 1548788100000,
-        lmp: 30,
-        mvgAvg: 40,
-      }
-    ]
+    const data = {
+      aggregate: {
+        mean: 40,
+      },
+      timeSeries: [
+        {
+          timestamp: 1548788100000,
+          lmp: 30,
+        }
+      ]
+    }
     const key = 'lmp'
     const batterySpecs = {
       power: 2.5,
@@ -1169,13 +1177,17 @@ describe('findRevenueAndCharge', () => {
   })
 
   test('should charge from zero correctly', () => {
-    const data = [
-      {
-        timestamp: 1548788100000,
-        lmp: 30, //$/MWh
-        mvgAvg: 40,
-      }
-    ]
+    const data = {
+      aggregate: {
+        mean: 40,
+      },
+      timeSeries: [
+        {
+          timestamp: 1548788100000,
+          lmp: 30,
+        }
+      ]
+    }
     const key = 'lmp'
     const batterySpecs = {
       power: 1, //MW
@@ -1200,13 +1212,17 @@ describe('findRevenueAndCharge', () => {
   })
 
   test('should charge from an existing level correctly', () => {
-    const data = [
-      {
-        timestamp: 1548788100000,
-        lmp: 30, //$/MWh
-        mvgAvg: 40,
-      }
-    ]
+    const data = {
+      aggregate: {
+        mean: 40,
+      },
+      timeSeries: [
+        {
+          timestamp: 1548788100000,
+          lmp: 30,
+        }
+      ]
+    }
     const key = 'lmp'
     const batterySpecs = {
       power: 1, //MW
@@ -1231,13 +1247,17 @@ describe('findRevenueAndCharge', () => {
   })
 
   test('should not charge from zero if the price is not below the charge threshold', () => {
-    const data = [
-      {
-        timestamp: 1548788100000,
-        lmp: 36, //$/MWh
-        mvgAvg: 40,
-      }
-    ]
+    const data = {
+      aggregate: {
+        mean: 40,
+      },
+      timeSeries: [
+        {
+          timestamp: 1548788100000,
+          lmp: 36,
+        }
+      ]
+    }
     const key = 'lmp'
     const batterySpecs = {
       power: 1, //MW
@@ -1262,13 +1282,17 @@ describe('findRevenueAndCharge', () => {
   })
 
   test('should not charge from a non-zero level if the price is not below the charge threshold', () => {
-    const data = [
-      {
-        timestamp: 1548788100000,
-        lmp: 36, //$/MWh
-        mvgAvg: 40,
-      }
-    ]
+    const data = {
+      aggregate: {
+        mean: 40,
+      },
+      timeSeries: [
+        {
+          timestamp: 1548788100000,
+          lmp: 36,
+        }
+      ]
+    }
     const key = 'lmp'
     const batterySpecs = {
       power: 1, //MW
@@ -1293,13 +1317,17 @@ describe('findRevenueAndCharge', () => {
   })
 
   test('should not discharge from zero', () => {
-    const data = [
-      {
-        timestamp: 1548788100000,
-        lmp: 46, //$/MWh
-        mvgAvg: 40,
-      }
-    ]
+    const data = {
+      aggregate: {
+        mean: 40,
+      },
+      timeSeries: [
+        {
+          timestamp: 1548788100000,
+          lmp: 46,
+        }
+      ]
+    }
     const key = 'lmp'
     const batterySpecs = {
       power: 1, //MW
@@ -1325,13 +1353,17 @@ describe('findRevenueAndCharge', () => {
   })
 
   test('should not discharge from a non-zero level if the price is not above the discharge threshold', () => {
-    const data = [
-      {
-        timestamp: 1548788100000,
-        lmp: 44, //$/MWh
-        mvgAvg: 40,
-      }
-    ]
+    const data = {
+      aggregate: {
+        mean: 40,
+      },
+      timeSeries: [
+        {
+          timestamp: 1548788100000,
+          lmp: 44,
+        }
+      ]
+    }
     const key = 'lmp'
     const batterySpecs = {
       power: 1, //MW
@@ -1356,13 +1388,17 @@ describe('findRevenueAndCharge', () => {
   })
 
   test('should discharge from a non-zero level if the price is above the discharge threshold', () => {
-    const data = [
-      {
-        timestamp: 1548788100000,
-        lmp: 46, //$/MWh
-        mvgAvg: 40,
-      }
-    ]
+    const data = {
+      aggregate: {
+        mean: 40,
+      },
+      timeSeries: [
+        {
+          timestamp: 1548788100000,
+          lmp: 46,
+        }
+      ]
+    }
     const key = 'lmp'
     const batterySpecs = {
       power: 1, //MW
@@ -1386,15 +1422,14 @@ describe('findRevenueAndCharge', () => {
     expect(actual.charge).toBeCloseTo(expected.charge, 10)
     expect(actual.revenue).toBeCloseTo(expected.revenue, 10)
     expect(actual.status).toBe('discharge')
-
   })
 })
 
 describe('findUpperAndLowerValues', () => {
-  const period = 5
+  const options = {period: 5}
   const key = 'lmp'
   const getDeviations = composeData(
-    calculateMovingAverage,
+    calculateMean,
     findUpperAndLowerValues,
   )
 
@@ -1458,52 +1493,52 @@ describe('findUpperAndLowerValues', () => {
   ]
 
   test('should return the timeseries', () => {
-    const actual = getDeviations(dataSnippet, key, period).timeSeries
+    const actual = getDeviations(dataSnippet, key, options).timeSeries
     expect(actual).toBeDefined()
   })
 
   test('should return a `aboveStdDev` value in the `aggregate` portion', () => {
-    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveStdDev
+    const actual = getDeviations(dataSnippet, key, options).aggregate.aboveStdDev
     expect(actual).toBeDefined()
   })
 
   test('should return a `belowStdDev` value in the `aggregate` portion', () => {
-    const actual = getDeviations(dataSnippet, key, period).aggregate.belowStdDev
+    const actual = getDeviations(dataSnippet, key, options).aggregate.belowStdDev
     expect(actual).toBeDefined()
   })
 
   test('returns a correct value for `aboveStdDev`', () => {
-    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveStdDev
-    const expected = 2.158575
+    const actual = getDeviations(dataSnippet, key, options).aggregate.aboveStdDev
+    const expected = 2.000543
     expect(actual).toBeCloseTo(expected, 6)
   })
 
   test('returns a correct value for `belowStdDev`', () => {
-    const actual = getDeviations(dataSnippet, key, period).aggregate.belowStdDev
+    const actual = getDeviations(dataSnippet, key, options).aggregate.belowStdDev
     const expected = 1.842219
     expect(actual).toBeCloseTo(expected, 6)
   })
 
   test('returns a correct value for `aboveMean`', () => {
-    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveMean
-    const expected = 29.638635
+    const actual = getDeviations(dataSnippet, key, options).aggregate.aboveMean
+    const expected = 28.969353
     expect(actual).toBeCloseTo(expected, 6)
   })
 
   test('returns a correct value for `belowMean`', () => {
-    const actual = getDeviations(dataSnippet, key, period).aggregate.belowMean
+    const actual = getDeviations(dataSnippet, key, options).aggregate.belowMean
     const expected = 25.365257
     expect(actual).toBeCloseTo(expected, 6)
   })
 
   test('returns a correct value for `aboveMax`', () => {
-    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveMax
+    const actual = getDeviations(dataSnippet, key, options).aggregate.aboveMax
     const expected = 31.79721
     expect(actual).toEqual(expected)
   })
 
   test('returns a correct value for `aboveMin`', () => {
-    const actual = getDeviations(dataSnippet, key, period).aggregate.aboveMin
+    const actual = getDeviations(dataSnippet, key, options).aggregate.aboveMin
     const expected = 27.48006
     expect(actual).toEqual(expected)
   })
