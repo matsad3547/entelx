@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "d3-array": "^2.2.0",
     "dotenv": "^4.0.0",
     "isomorphic-fetch": "^2.2.1",
     "moment-timezone": "^0.5.21",

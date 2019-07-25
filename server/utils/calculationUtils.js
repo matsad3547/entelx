@@ -1,5 +1,6 @@
 const optimize = require('optimization-js')
-const fmin = require('fmin')
+const d3 = require('d3-array')
+// const fmin = require('fmin')
 const { fiveMinsAsHour } = require('../config/')
 
 // TODO mvgAvg Change utils to use a `mean` value from the `aggregate` portion of the data instead of `mvgAvg` that is added to the `timeSeries`
@@ -295,6 +296,7 @@ const findAggregateRevenue = (data, key, options) => {
 }
 
 const findThresholds = (data, key, options) => {
+  console.time('finding thresholds')
 
   const { aggregate } = data
 
@@ -313,8 +315,8 @@ const findThresholds = (data, key, options) => {
     belowMean,
   } = aggregate
 
-  const aboveIncrement = aboveStdDev * .2
-  const belowIncrement = belowStdDev * .2
+  const aboveIncrement = aboveStdDev * .1
+  const belowIncrement = belowStdDev * .1
   const aboveDistance = aboveStdDev * 3
   const belowDistance = belowStdDev * 3
 
@@ -352,14 +354,16 @@ const findThresholds = (data, key, options) => {
     }
   })
 
-  // console.log('points:', points);
+  const maxPoint = d3.least(points, (a, b) => b.y - a.y)
+
+  console.timeEnd('finding thresholds')
 
   return {
     ...data,
     aggregate: {
       ...data.aggregate,
-      dischargeThreshold: null,
-      chargeThreshold: null,
+      dischargeThreshold: maxPoint.z,
+      chargeThreshold: maxPoint.x,
     }
   }
 }

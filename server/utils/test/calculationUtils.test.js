@@ -825,7 +825,7 @@ describe('findThresholds', () => {
   const mockData = [
     {
       timestamp: 1538710500000,
-      lmp: 4,
+      lmp: 40,
     },
     {
       timestamp: 1538710500000,
@@ -833,7 +833,7 @@ describe('findThresholds', () => {
     },
     {
       timestamp: 1538710800000,
-      lmp: 2,
+      lmp: 20,
     },
     {
       timestamp: 1538711100000,
@@ -841,7 +841,7 @@ describe('findThresholds', () => {
     },
     {
       timestamp: 1538711400000,
-      lmp: 5,
+      lmp: 50,
     },
     {
       timestamp: 1538711700000,
@@ -849,7 +849,7 @@ describe('findThresholds', () => {
     },
     {
       timestamp: 1538712000000,
-      lmp: 7,
+      lmp: 70,
     },
   ]
 
@@ -887,118 +887,17 @@ describe('findThresholds', () => {
     expect(actual).toEqual(expected)
   })
 
-  // test('should return a `timeSeries` array', () => {
-  //   const actual = getThresholdData(mockData, key, period, {}).timeSeries
-  //   const expected = [
-  //     {
-  //      lmp: 3,
-  //      mvgAvg: 3.5,
-  //      score: -0.14285714285714285,
-  //      timestamp: 1538710500000,
-  //     },
-  //     {
-  //      lmp: 2,
-  //      mvgAvg: 3,
-  //      score: -0.3333333333333333,
-  //      timestamp: 1538710800000,
-  //     },
-  //     {
-  //      lmp: 1,
-  //      mvgAvg: 2.5,
-  //      score: -0.6,
-  //      timestamp: 1538711100000,
-  //     },
-  //     {
-  //      lmp: 5,
-  //      mvgAvg: 3,
-  //      score: 0.6666666666666666,
-  //      timestamp: 1538711400000,
-  //     },
-  //     {
-  //      lmp: 6,
-  //      mvgAvg: 3.5,
-  //      score: 0.7142857142857143,
-  //      timestamp: 1538711700000,
-  //     },
-  //     {
-  //      lmp: 7,
-  //      mvgAvg: 4,
-  //      score: 0.75,
-  //      timestamp: 1538712000000,
-  //     },
-  //   ]
-  //   expect(actual).toEqual(expected)
-  // })
+  test('should return a real value for `chargeThreshold`', () => {
+    const chargeThreshold = getThresholdData(mockData, key, options).aggregate.chargeThreshold
+    const expected = 15.917
+    expect(chargeThreshold).toBeCloseTo(expected, 3)
+  })
 
-  // test('should return a `dischargeThreshold` value on the `aggregate` object', () => {
-  //
-  //   const data = {
-  //     timeSeries: mockData,
-  //     aggregate: {},
-  //   }
-  //   const options = {
-  //     power: .001,
-  //     energy: (1/6) * .001,
-  //     rte: 1,
-  //   }
-  //   const actual = getThresholdData(mockData, key, period, {}).aggregate.dischargeThreshold
-  //   expect(actual).toBeDefined()
-  // })
-  //
-  // test('should return a `chargeThreshold` value on the `aggregate` object', () => {
-  //
-  //   const data = {
-  //     timeSeries: mockData,
-  //     aggregate: {},
-  //   }
-  //   const options = {
-  //     power: .001,
-  //     energy: (1/6) * .001,
-  //     rte: 1,
-  //   }
-  //   const actual = getThresholdData(mockData, key, period, {}).aggregate.chargeThreshold
-  //   expect(actual).toBeDefined()
-  // })
-
-  // test('should return reasonable `chargeThreshold` and `dischargeThreshold` values on the `aggregate` object', () => {
-  //
-  //   const data = {
-  //     timeSeries: mockData,
-  //     aggregate: {},
-  //   }
-  //   const options = {
-  //     power: .001,
-  //     energy: (1/6) * .001,
-  //     rte: 1,
-  //   }
-  //   const actual = getThresholdData(mockData, key, period, options).aggregate
-  //   const expected = {
-  //     chargeThreshold: 2,
-  //     dischargeThreshold: 2,
-  //   }
-  //   expect(actual).toEqual(expected)
-  // })
-
-  // test('should return reasonable `chargeThreshold` and `dischargeThreshold` values on the `aggregate` object', () => {
-  //
-  //   const data = {
-  //     timeSeries: staticAvg,
-  //     aggregate: {},
-  //   }
-  //   const options = {
-  //     power: .001,
-  //     energy: (1/6) * .001,
-  //     rte: 1,
-  //     dischargeBuffer: 0,
-  //     chargeBuffer: 0,
-  //   }
-  //   const actual = findThresholds(data, key, period, options).aggregate
-  //   const expected = {
-  //     chargeThreshold: 2,
-  //     dischargeThreshold: 2,
-  //   }
-  //   expect(actual).toEqual(expected)
-  // })
+  test('should return a real value for `dischargeThreshold`', () => {
+    const chargeThreshold = getThresholdData(mockData, key, options).aggregate.dischargeThreshold
+    const expected = 21.623
+    expect(chargeThreshold).toBeCloseTo(expected, 3)
+  })
 })
 
 describe('findStdDev', () => {
