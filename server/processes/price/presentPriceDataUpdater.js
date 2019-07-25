@@ -17,9 +17,9 @@ const presentPriceDataUpdater = async (
     currentAvg,
   } = nodeData
 
-  const data = await catchErrorsWithMessage(`There was an error getting present price data from ${startMillis} to ${endMillis}`, updatePriceData)(startMillis, endMillis, nodeData)
+  const newData = await catchErrorsWithMessage(`There was an error getting present price data from ${startMillis} to ${endMillis}`, updatePriceData)(startMillis, endMillis, nodeData)
 
-  const dataWithAvg = data.map( obj => ({
+  const timeSeries = newData.map( obj => ({
       ...obj,
       mvgAvg: currentAvg,
       nodeId: id,
@@ -27,9 +27,18 @@ const presentPriceDataUpdater = async (
     })
   )
 
-  await catchErrorsWithMessage(`There was an error adding rows for data from ${startMillis} to ${endMillis}`, createTableRows)('price', dataWithAvg)
+  const aggregate = {
+    mean: currentAvg,
+  }
 
-  await catchErrorsWithMessage('There was an error updating state of charge and revenue', updateRevenueAndSoc)(dataWithAvg, 'lmp', project)
+  const data = {
+    timeSeries,
+    aggregate,
+  }
+
+  await catchErrorsWithMessage(`There was an error adding rows for data from ${startMillis} to ${endMillis}`, createTableRows)('price', timeSeries)
+
+  await catchErrorsWithMessage('There was an error updating state of charge and revenue', updateRevenueAndSoc)(data, 'lmp', project)
 
   return data[data.length - 1].timestamp
 }

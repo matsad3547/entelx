@@ -39,7 +39,9 @@ const getInsightData = async (req, res) => {
 
   const timeSeries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis])
 
-  const { aggregate } = calculateInsightData(timeSeries, 'lmp')
+  const data = calculateInsightData(timeSeries, 'lmp')
+
+  const { aggregate } = data
 
   const {
     aboveStdDev,
@@ -79,7 +81,7 @@ const getInsightData = async (req, res) => {
   const points = valArr.map( arr => {
     const [x, z] = arr
 
-    const { revenue } = findRevenueAndCharge(timeSeries, key, batterySpecs, currentState, x, z)
+    const { revenue } = findRevenueAndCharge(data, key, batterySpecs, currentState, x, z)
 
     return {
       x,

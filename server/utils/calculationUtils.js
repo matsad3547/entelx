@@ -471,6 +471,7 @@ const calculateDerivedData = composeData(
   findInflections,
   findStdDev,
   findUpperAndLowerValues,
+  findThresholds,
 )
 
 const calculateInsightData = composeData(
