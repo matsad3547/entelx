@@ -39,7 +39,15 @@ const getInsightData = async (req, res) => {
 
   const timeSeries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis])
 
-  const data = calculateInsightData(timeSeries, 'lmp')
+  const options = {
+    power,
+    energy,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  }
+
+  const data = calculateInsightData(timeSeries, 'lmp', options)
 
   const { aggregate } = data
 
@@ -50,8 +58,8 @@ const getInsightData = async (req, res) => {
     belowMean,
   } = aggregate
 
-  const aboveIncrement = aboveStdDev * .2
-  const belowIncrement = belowStdDev * .2
+  const aboveIncrement = aboveStdDev * .1
+  const belowIncrement = belowStdDev * .1
   const aboveDistance = aboveStdDev * 3
   const belowDistance = belowStdDev * 3
 

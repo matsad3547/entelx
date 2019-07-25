@@ -478,6 +478,7 @@ const calculateInsightData = composeData(
   calculateMean,
   findInflections,
   findUpperAndLowerValues,
+  findThresholds,
 )
 
 module.exports = {

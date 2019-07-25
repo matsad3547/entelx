@@ -40,7 +40,7 @@ const presentPriceDataUpdater = async (
 
   await catchErrorsWithMessage('There was an error updating state of charge and revenue', updateRevenueAndSoc)(data, 'lmp', project)
 
-  return data[data.length - 1].timestamp
+  return newData[data.length - 1].timestamp
 }
 
 module.exports = presentPriceDataUpdater

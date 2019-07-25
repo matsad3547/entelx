@@ -165,7 +165,7 @@ const InsightsDisplay = ({match}) => {
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
-  // console.log('data:', data);
+  console.log('aggregate:', aggregate);
 
   return (
 
