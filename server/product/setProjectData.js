@@ -15,7 +15,17 @@ const { calculateDerivedData } = require('../utils/')
 
 const { dayOf5Mins } = require('../config/')
 
-const setProjectData = (node, projectId, timeZone) => {
+const setProjectData = (node, project) => {
+
+  const {
+    id,
+    timeZone,
+    power,
+    energy,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  } = project
 
   const numDays = 21
   const now = moment().tz(timeZone)
@@ -29,6 +39,15 @@ const setProjectData = (node, projectId, timeZone) => {
     params,
   } = getPriceRequest(node)
 
+  const options = {
+    period: numDays * dayOf5Mins,
+    power,
+    energy,
+    rte,
+    dischargeBuffer,
+    chargeBuffer,
+  }
+
   return req(
     ...params,
     startMillis,
@@ -36,7 +55,7 @@ const setProjectData = (node, projectId, timeZone) => {
     node.name,
   )
   .then( data => {
-    const derivedData = calculateDerivedData(data, 'lmp', {period: numDays * dayOf5Mins})
+    const derivedData = calculateDerivedData(data, 'lmp', options)
 
     const {
       timeSeries,
@@ -59,7 +78,7 @@ const setProjectData = (node, projectId, timeZone) => {
       ),
       updateTableRow(
         'project',
-        {id: projectId},
+        {id, },
         {
           chargeThreshold,
           dischargeThreshold,
@@ -82,7 +101,7 @@ const setProjectData = (node, projectId, timeZone) => {
   .then( () => launchPriceUpdates({
       node,
       timeZone,
-      projectId,
+      projectId: id,
     })
   )
   .catch( err => {

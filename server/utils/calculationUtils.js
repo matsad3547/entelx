@@ -205,8 +205,8 @@ const findRevenueAndCharge = (
   key,
   batterySpecs,
   currentState,
-  dischargeThreshold,
   chargeThreshold,
+  dischargeThreshold,
 ) => {
 
   const {
@@ -296,7 +296,7 @@ const findAggregateRevenue = (data, key, options) => {
 }
 
 const findThresholds = (data, key, options) => {
-  console.time('finding thresholds')
+  console.time('findThresholds')
 
   const { aggregate } = data
 
@@ -320,8 +320,8 @@ const findThresholds = (data, key, options) => {
   const aboveDistance = aboveStdDev * 3
   const belowDistance = belowStdDev * 3
 
-  const xArr = getCenteredValuesArr(aboveMean, aboveIncrement, aboveDistance)
-  const zArr = getCenteredValuesArr(belowMean, belowIncrement, belowDistance)
+  const xArr = getCenteredValuesArr(belowMean, belowIncrement, belowDistance)
+  const zArr = getCenteredValuesArr(aboveMean, aboveIncrement, aboveDistance)
 
   const valArr = getTwoDimensionalArray(xArr, zArr)
 
@@ -356,14 +356,14 @@ const findThresholds = (data, key, options) => {
 
   const maxPoint = d3.least(points, (a, b) => b.y - a.y)
 
-  console.timeEnd('finding thresholds')
+  console.timeEnd('findThresholds')
 
   return {
     ...data,
     aggregate: {
       ...data.aggregate,
-      dischargeThreshold: maxPoint.z,
       chargeThreshold: maxPoint.x,
+      dischargeThreshold: maxPoint.z,
     }
   }
 }

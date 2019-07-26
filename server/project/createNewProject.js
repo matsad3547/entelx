@@ -44,7 +44,7 @@ const createProject = async (data, res, next) => {
   const charge = 0
   const revenue = 0
 
-  const manualData = {
+  const projectData = {
     ...data,
     timeZone,
     dischargeBuffer,
@@ -53,7 +53,7 @@ const createProject = async (data, res, next) => {
     revenue,
   }
 
-  const [ id ] = await createTableRow('project', manualData)
+  const [ id ] = await createTableRow('project', projectData)
 
   const matches = await findByLatLng('node', lat, lng)
 
@@ -61,7 +61,12 @@ const createProject = async (data, res, next) => {
 
   await updateTableRow('project', {id,}, {nodeId: node.id})
 
-  await setProjectData(node, id, timeZone)
+  const project = {
+    ...projectData,
+    id,
+  }
+
+  await setProjectData(node, project)
 
   res.status(200).json({id,})
 }

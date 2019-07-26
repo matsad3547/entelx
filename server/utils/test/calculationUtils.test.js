@@ -881,21 +881,21 @@ describe('findThresholds', () => {
       'belowMin',
       'aboveN',
       'belowN',
-      'dischargeThreshold',
       'chargeThreshold',
+      'dischargeThreshold',
     ]
     expect(actual).toEqual(expected)
   })
 
   test('should return a real value for `chargeThreshold`', () => {
     const chargeThreshold = getThresholdData(mockData, key, options).aggregate.chargeThreshold
-    const expected = 15.917
+    const expected = 21.623
     expect(chargeThreshold).toBeCloseTo(expected, 3)
   })
 
   test('should return a real value for `dischargeThreshold`', () => {
     const chargeThreshold = getThresholdData(mockData, key, options).aggregate.dischargeThreshold
-    const expected = 21.623
+    const expected = 15.917
     expect(chargeThreshold).toBeCloseTo(expected, 3)
   })
 })

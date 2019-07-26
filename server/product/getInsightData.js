@@ -47,7 +47,9 @@ const getInsightData = async (req, res) => {
     chargeBuffer,
   }
 
-  const data = calculateInsightData(timeSeries, 'lmp', options)
+  const key = 'lmp'
+
+  const data = calculateInsightData(timeSeries, key, options)
 
   const { aggregate } = data
 
@@ -63,20 +65,10 @@ const getInsightData = async (req, res) => {
   const aboveDistance = aboveStdDev * 3
   const belowDistance = belowStdDev * 3
 
-  const xArr = getCenteredValuesArr(aboveMean, aboveIncrement, aboveDistance)
-  const zArr = getCenteredValuesArr(belowMean, belowIncrement, belowDistance)
+  const xArr = getCenteredValuesArr(belowMean, belowIncrement, belowDistance)
+  const zArr = getCenteredValuesArr(aboveMean, aboveIncrement, aboveDistance)
 
   const valArr = getTwoDimensionalArray(xArr, zArr)
-
-  const key = 'lmp'
-
-  const batterySpecs = {
-    power,
-    energy,
-    rte,
-    dischargeBuffer,
-    chargeBuffer,
-  }
 
   const charge = 0
   const revenue = 0
@@ -89,7 +81,7 @@ const getInsightData = async (req, res) => {
   const points = valArr.map( arr => {
     const [x, z] = arr
 
-    const { revenue } = findRevenueAndCharge(data, key, batterySpecs, currentState, x, z)
+    const { revenue } = findRevenueAndCharge(data, key, options, currentState, x, z)
 
     return {
       x,
