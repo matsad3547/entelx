@@ -300,6 +300,8 @@ const findThresholds = (data, key, options) => {
 
   const { aggregate } = data
 
+  console.log('options at findThresholds:', options);
+
   const {
     power,
     energy,
@@ -455,12 +457,8 @@ const getCenteredValuesArr = (center, increment, distance) => {
 
 const getTwoDimensionalArray = (xArr, yArr) => xArr.flatMap( xVal => yArr.map( yVal => [xVal, yVal]))
 
-const scoreValues = composeData(
-  calculateMovingAverage,
-  calculateScore,
-)
-
 const calculateScoreData = composeData(
+  calculateMovingAverage,
   calculateScore,
 )
 
@@ -487,14 +485,13 @@ module.exports = {
   calculateMovingAverage,
   calculateScore,
   calculateArbitrage,
-  scoreValues,
+  calculateScoreData,
   findMinMax,
   findInflections,
   findRevenueAndCharge,
   findAggregateRevenue,
   findThresholds,
   findStdDev,
-  calculateScoreData,
   calculateDerivedData,
   findUpperAndLowerValues,
   calculateInsightData,

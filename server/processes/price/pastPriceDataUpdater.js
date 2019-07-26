@@ -4,10 +4,10 @@ const { createTableRows } = require('../../db/')
 
 const {
   catchErrorsWithMessage,
-  calculateDerivedData,
+  calculateScoreData,
 } = require('../../utils/')
 
-const {dayOf5Mins} = '../../config/'
+const {dayOf5Mins} = require('../../config/')
 
 const pastPriceDataUpdater = async (
   startMillis,
@@ -19,9 +19,7 @@ const pastPriceDataUpdater = async (
 
   const data = await catchErrorsWithMessage(`There was an error getting past price data from ${startMillis} to ${endMillis}`, updatePriceData)(startMillis, endMillis, nodeData)
 
-  const derivedData = calculateDerivedData(data, 'lmp', {period: 21 * dayOf5Mins})
-
-  const { timeSeries } = derivedData
+  const { timeSeries } = calculateScoreData(data, 'lmp', {period: 21 * dayOf5Mins})
 
   const timeSeriesWithNode = timeSeries.map( ts => ({
       ...ts,

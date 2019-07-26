@@ -14,8 +14,9 @@ const { writeToFile } = require('./fileUtils')
 
 const {
   calculateDerivedData,
-  findRevenueAndCharge,
   calculateInsightData,
+  calculateScoreData,
+  findRevenueAndCharge,
   getCenteredValuesArr,
   getTwoDimensionalArray,
 } = require('./calculationUtils')
@@ -34,6 +35,7 @@ module.exports = {
   writeToFile,
   calculateDerivedData,
   calculateInsightData,
+  calculateScoreData,
   findRevenueAndCharge,
   findClosest,
   setExitListeners,
