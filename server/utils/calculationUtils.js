@@ -214,6 +214,8 @@ const findRevenueAndCharge = (
     aggregate,
   } = data
 
+  console.log('aggregate at findRevenueAndCharge:', aggregate);
+
   const { mean } = aggregate
 
   const {

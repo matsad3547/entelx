@@ -12,10 +12,6 @@ const {
 
 const { setProjectData } = require('../product/')
 
-const handleError = err => {
-  throw err
-}
-
 const createNewProject = async (req, res, next) => {
   const { type } = req.body
   // TODO add validation for request here

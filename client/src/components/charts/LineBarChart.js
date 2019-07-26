@@ -51,7 +51,7 @@ const LineBarChart = React.memo(({
     const isScorePositive = entry.score > 0
 
     const includeScore = isScorePositive ?
-      entry[barKey] > entry.mvgAvg + posBarThreshold : entry[barKey] < entry.mvgAvg - negBarThreshold
+      entry[barKey] > posBarThreshold : entry[barKey] < negBarThreshold
 
       const {
         score,
