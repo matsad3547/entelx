@@ -984,20 +984,6 @@ describe('findStdDev', () => {
   })
 })
 
-describe('testOptimization', () => {
-  test('should return something like -1.5 for the argument for y = x^2 + 3x', () => {
-    const actual = testOptimization().argument[0]
-    const expected = 1.50
-    expect(actual).toBeCloseTo(expected, 2)
-  })
-
-  test('should return something like -2.25 for the `fncvalue` for y = x^2 + 3x', () => {
-    const actual = testOptimization().fncvalue
-    const expected = -2.25
-    expect(actual).toBeCloseTo(expected, 5)
-  })
-})
-
 describe('findRevenueAndCharge', () => {
   test('should do something with real data', () => {
     const data = {

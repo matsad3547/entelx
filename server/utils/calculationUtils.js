@@ -1,4 +1,3 @@
-const optimize = require('optimization-js')
 const d3 = require('d3-array')
 // const fmin = require('fmin')
 const { fiveMinsAsHour } = require('../config/')
@@ -214,8 +213,6 @@ const findRevenueAndCharge = (
     aggregate,
   } = data
 
-  console.log('aggregate at findRevenueAndCharge:', aggregate);
-
   const { mean } = aggregate
 
   const {
@@ -301,8 +298,6 @@ const findThresholds = (data, key, options) => {
   console.time('findThresholds')
 
   const { aggregate } = data
-
-  console.log('options at findThresholds:', options);
 
   const {
     power,
@@ -428,15 +423,6 @@ const findUpperAndLowerValues = (data, key) => {
   }
 }
 
-const objective1 = x => -(x**2) + (3*x)
-
-const forOptimization = x => -objective1(x)
-
-const testOptimization = () => {
-
-  return optimize.minimize_Powell(forOptimization, [-10])
-}
-
 const getCenteredValuesArr = (center, increment, distance) => {
   const start = center - distance
   const end = center + distance
@@ -483,7 +469,6 @@ const calculateInsightData = composeData(
 
 module.exports = {
   composeData,
-  testOptimization,
   calculateMovingAverage,
   calculateScore,
   calculateArbitrage,
