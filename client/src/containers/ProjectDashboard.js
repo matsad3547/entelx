@@ -43,19 +43,23 @@ JS Docs - insta documentation
 * @param {lat: Number}
 */
 
-  const getInitDashboard = useCallback(() => {
+  const getInitDashboard = useCallback( async () => {
 
     setLoading(true)
-    singleRequest(`/dashboard/${projectId}/config`, getRequest('GET'))
-      .then(parseResponse)
-      .then( res => {
-        setLoading(false)
-        setConfig(res.config)
-      })
-      .catch( err => {
-        setLoading(false)
-        console.error(`There was an error retrieving your project: ${err}`)
-      })
+
+    try {
+      const res = await singleRequest(`/dashboard/${projectId}/config`, getRequest('GET'))
+
+      const parsed = await parseResponse(res)
+
+      setConfig(parsed.config)
+
+    } catch (err) {
+      console.error(`There was an error retrieving your project: ${err}`)
+
+    } finally {
+      setLoading(false)
+    }
   }, [projectId])
 
   const handleData = useCallback( e => {
