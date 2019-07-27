@@ -6,13 +6,13 @@
   "dependencies": {
     "d3": "^5.9.7",
     "d3-3d": "^0.0.9",
-    "mapbox-gl": "^0.54.0",
+    "mapbox-gl": "^1.1.1",
     "react": "^16.7.0-alpha.0",
     "react-dom": "^16.7.0-alpha.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "3.0.0",
-    "recharts": "^1.1.0",
+    "react-scripts": "3.0.1",
+    "recharts": "^1.6.2",
     "rxjs": "^6.3.3",
     "skycons": "^1.0.0"
   },
