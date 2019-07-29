@@ -208,19 +208,14 @@ const findRevenueAndCharge = (
   dischargeThreshold,
 ) => {
 
-  const {
-    timeSeries,
-    aggregate,
-  } = data
-
-  const { mean } = aggregate
+  const { timeSeries } = data
 
   const {
     power,
     energy,
     rte,
-    dischargeBuffer,
     chargeBuffer,
+    dischargeBuffer,
   } = batterySpecs
 
   const chargeEnergy = power * fiveMinsAsHour
@@ -235,9 +230,9 @@ const findRevenueAndCharge = (
 
     const canDischarge = agg.charge - chargeEnergy >= minEnergy
 
-    const charge = canCharge && ts[key] < mean - chargeThreshold
+    const charge = canCharge && ts[key] < chargeThreshold
 
-    const discharge = canDischarge && ts[key] > mean + dischargeThreshold
+    const discharge = canDischarge && ts[key] > dischargeThreshold
 
     if (charge) {
       return {

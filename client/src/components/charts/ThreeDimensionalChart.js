@@ -11,7 +11,7 @@ const ThreeDimensionalChart = ({
 
   const chartRef = useRef(null)
 
-  const width = 500, height = 1000
+  const width = 750, height = 1000
   const startAngle = Math.PI/4
   const origin = [width/2, 100]
 

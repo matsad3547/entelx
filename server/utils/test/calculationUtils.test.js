@@ -716,7 +716,7 @@ describe('findAggregateRevenue', () => {
       chargeBuffer: 0,
     }
     const actual = findAggregateRevenue(data, 'lmp', options).aggregate.revenue
-    const expected = .0005
+    const expected = 0
     expect(actual).toEqual(expected)
   })
 
@@ -762,7 +762,7 @@ describe('findAggregateRevenue', () => {
       chargeBuffer: 0,
     }
     const actual = findAggregateRevenue(data, 'lmp', options).aggregate.revenue
-    const expected = .00083
+    const expected = 0
     expect(actual).toBeCloseTo(expected, 5)
   })
 
@@ -785,7 +785,7 @@ describe('findAggregateRevenue', () => {
       chargeBuffer: .1,
     }
     const actual = findAggregateRevenue(data, 'lmp', options).aggregate.revenue
-    const expected = .0005
+    const expected = 0
     expect(actual).toEqual(expected)
   })
 
@@ -808,7 +808,7 @@ describe('findAggregateRevenue', () => {
       chargeBuffer: .1,
     }
     const actual = findAggregateRevenue(data, 'lmp', options).aggregate.revenue
-    const expected = .0003167
+    const expected = 0
     expect(actual).toBeCloseTo(expected, 6)
   })
 })
@@ -889,7 +889,7 @@ describe('findThresholds', () => {
 
   test('should return a real value for `chargeThreshold`', () => {
     const chargeThreshold = getThresholdData(mockData, key, options).aggregate.chargeThreshold
-    const expected = 21.623
+    const expected = 6.013
     expect(chargeThreshold).toBeCloseTo(expected, 3)
   })
 
@@ -1015,9 +1015,9 @@ describe('findRevenueAndCharge', () => {
       charge: 0,
       revenue: 0,
     }
-    const dischargeThreshold = 0
-    const chargeThreshold = 0
-    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const chargeThreshold = 31
+    const dischargeThreshold = 40
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, chargeThreshold, dischargeThreshold)
     const expected = {
       charge: 0.20833333333333331,
       revenue: -6.42023125,
@@ -1050,9 +1050,9 @@ describe('findRevenueAndCharge', () => {
       charge: 0,
       revenue: 0,
     }
-    const dischargeThreshold = 0
-    const chargeThreshold = 0
-    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const dischargeThreshold = 40
+    const chargeThreshold = 40
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, chargeThreshold, dischargeThreshold)
     const expected = {
       charge: 2.5/12,
       revenue: -2.5 * (30/12),
@@ -1085,9 +1085,9 @@ describe('findRevenueAndCharge', () => {
       charge: 0, //MWh
       revenue: 0, //$
     }
-    const dischargeThreshold = 0
-    const chargeThreshold = 0
-    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const chargeThreshold = 31
+    const dischargeThreshold = 35
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState,  chargeThreshold, dischargeThreshold)
     const expected = {
       charge: 1/12,
       revenue: -30/12,
@@ -1120,9 +1120,9 @@ describe('findRevenueAndCharge', () => {
       charge: 1/12,
       revenue: -30/12,
     }
-    const dischargeThreshold = 0
-    const chargeThreshold = 0
-    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const chargeThreshold = 31
+    const dischargeThreshold = 40
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, chargeThreshold,  dischargeThreshold)
     const expected = {
       charge: 1/6,
       revenue: -30/6,
@@ -1131,7 +1131,7 @@ describe('findRevenueAndCharge', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should not charge from zero if the price is not below the charge threshold', () => {
+  test('should not charge from zero if the price is above the charge threshold', () => {
     const data = {
       aggregate: {
         mean: 40,
@@ -1155,9 +1155,9 @@ describe('findRevenueAndCharge', () => {
       charge: 0, //%
       revenue: 0, //$
     }
-    const dischargeThreshold = 5
-    const chargeThreshold = 5
-    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const chargeThreshold = 35
+    const dischargeThreshold = 45
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, chargeThreshold, dischargeThreshold)
     const expected = {
       charge: 0,
       revenue: 0,
@@ -1166,7 +1166,7 @@ describe('findRevenueAndCharge', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should not charge from a non-zero level if the price is not below the charge threshold', () => {
+  test('should not charge from a non-zero level if the price is above the charge threshold', () => {
     const data = {
       aggregate: {
         mean: 40,
@@ -1190,9 +1190,9 @@ describe('findRevenueAndCharge', () => {
       charge: 1/12,
       revenue: -30/12,
     }
-    const dischargeThreshold = 5
-    const chargeThreshold = 5
-    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const chargeThreshold = 35
+    const dischargeThreshold = 45
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, chargeThreshold, dischargeThreshold)
     const expected = {
       charge: 1/12,
       revenue: -30/12,
@@ -1226,9 +1226,9 @@ describe('findRevenueAndCharge', () => {
       revenue: -30/12,
 
     }
-    const dischargeThreshold = 5
-    const chargeThreshold = 5
-    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const chargeThreshold = 35
+    const dischargeThreshold = 45
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, chargeThreshold, dischargeThreshold)
     const expected = {
       charge: 0,
       revenue: -30/12,
@@ -1237,7 +1237,7 @@ describe('findRevenueAndCharge', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should not discharge from a non-zero level if the price is not above the discharge threshold', () => {
+  test('should not discharge from a non-zero level if the price is below the discharge threshold', () => {
     const data = {
       aggregate: {
         mean: 40,
@@ -1261,9 +1261,9 @@ describe('findRevenueAndCharge', () => {
       charge: 2/12,
       revenue: -30/12,
     }
-    const dischargeThreshold = 5
-    const chargeThreshold = 5
-    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const chargeThreshold = 35
+    const dischargeThreshold = 45
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, chargeThreshold, dischargeThreshold)
     const expected = {
       charge: 2/12,
       revenue: -30/12,
@@ -1296,9 +1296,9 @@ describe('findRevenueAndCharge', () => {
       charge: 2/12,
       revenue: -30/12,
     }
-    const dischargeThreshold = 5
-    const chargeThreshold = 5
-    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+    const chargeThreshold = 35
+    const dischargeThreshold = 45
+    const actual = findRevenueAndCharge(data, key, batterySpecs, currentState, chargeThreshold, dischargeThreshold)
     const expected = {
       charge: 1/12,
       revenue: 16/12,
