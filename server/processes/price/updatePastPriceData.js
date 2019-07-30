@@ -3,6 +3,7 @@
   const {
     setExitListeners,
     catchErrorsWithMessage,
+    getMaxTimeStamp,
   } = require('../../utils/')
 
   const {
@@ -14,7 +15,6 @@
   const {
     readTableRows,
     updateTableRow,
-    findMax,
   } = require('../../db/')
 
   const pastPriceDataUpdater = require('./pastPriceDataUpdater')
@@ -33,9 +33,7 @@
 
   console.log(`starting "updatePastPriceData" for ${name}` )
 
-  const max = await findMax('price', 'timestamp', {nodeId: id})
-
-  const mostRecent = max[0]['max(timestamp)']
+  const mostRecent = getMaxTimeStamp(id)
 
   const sixMonthsAgoMillis = mostRecent - sixMonthMillis
 

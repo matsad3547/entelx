@@ -11,18 +11,19 @@
   const {
     fiveMinutesMillis,
     sixMonthMillis,
+    oneMinuteMillis,
   } = require('../../config/')
 
   const {
     getFiveMinutesFromNow,
     getOneMinuteAgo,
+    getMaxTimeStamp,
   } = require('./utils/')
 
   const {
     readTableRows,
     updateTableRow,
     deleteTableRowsWhereBtw,
-    findMax,
   } = require('../../db/')
 
   const presentPriceDataUpdater = require('./presentPriceDataUpdater')
@@ -39,9 +40,7 @@
     name,
   } = node
 
-  const max = await findMax('price', 'timestamp', {nodeId: id})
-
-  const mostRecent = max[0]['max(timestamp)']
+  let mostRecent = getMaxTimeStamp(id)
 
   let firstUpdateTimeout, continuousTimeout, firstUpdate
 
@@ -71,7 +70,10 @@
         now = moment()
 
         endMillis = getFiveMinutesFromNow(now)
-        startMillis = getOneMinuteAgo(now)
+
+console.log('using most recent as start');
+        startMillis = getMaxTimeStamp(id) - oneMinuteMillis
+        // startMillis = getOneMinuteAgo(now)
 
         const [project] = await readTableRows('project', {id: projectId})
 

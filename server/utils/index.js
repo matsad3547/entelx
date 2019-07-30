@@ -23,7 +23,10 @@ const {
 
 const { findClosest } = require('./geoUtils')
 
-const { setExitListeners } = require('./processUtils')
+const {
+  setExitListeners,
+  getMaxTimeStamp,
+} = require('./processUtils')
 
 module.exports = {
   millisToSeconds,
@@ -39,6 +42,7 @@ module.exports = {
   findRevenueAndCharge,
   findClosest,
   setExitListeners,
+  getMaxTimeStamp,
   getCenteredValuesArr,
   getTwoDimensionalArray,
 }
