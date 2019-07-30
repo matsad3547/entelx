@@ -40,7 +40,7 @@
     name,
   } = node
 
-  let mostRecent = getMaxTimeStamp(id)
+  const mostRecent = getMaxTimeStamp(id)
 
   let firstUpdateTimeout, continuousTimeout, firstUpdate
 

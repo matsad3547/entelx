@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
 import GradientBackground from './GradientBackground'
@@ -10,29 +10,26 @@ import {
   boxShadow,
 } from '../config/styles'
 
+
+
 const ProjectPageHeader = ({
   title,
   baseUrl,
   id,
 }) => {
 
-  const [isCompact, setIsCompact] = useState(false)
   const [position, setPosition] = useState(null)
+
+  const isCompact = position < 0
 
   const header = useRef(null)
 
-  const checkScroll = e => {
+  const checkScroll = useCallback(e => {
     if (header.current) {
       const pos = header.current.getBoundingClientRect().top
       setPosition(pos)
-      if(position < 0) {
-        setIsCompact(true)
-      }
-      else if (position > 2) {
-        setIsCompact(false)
-      }
     }
-  }
+  }, [])
 
   const setFontSize = () => {
     if( position >= - 40 && position < 0) {
@@ -47,9 +44,10 @@ const ProjectPageHeader = ({
   }
 
   useEffect(() => {
+    checkScroll()
     document.addEventListener('scroll', checkScroll)
     return () => document.removeEventListener('scroll', checkScroll)
-  })
+  }, [checkScroll])
 
   const switchStyles = isCompact ? {
     height: 120,
