@@ -10,8 +10,6 @@ import {
   boxShadow,
 } from '../config/styles'
 
-
-
 const ProjectPageHeader = ({
   title,
   baseUrl,

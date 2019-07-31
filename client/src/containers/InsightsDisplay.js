@@ -101,7 +101,7 @@ const InsightsDisplay = ({match}) => {
     setDischargeThreshold(decremented)
   }
 
-  const getData = useCallback(() => {
+  const getData = useCallback( async () => {
 
     const startMillis = startTime.valueOf()
     const endMillis = endTime.valueOf()
@@ -113,33 +113,36 @@ const InsightsDisplay = ({match}) => {
     }
 
     setLoading(true)
-    singleRequest('/insights/', getRequest('POST', JSON.stringify(body)))
-      .then(parseResponse)
-      .then( res => {
-        setLoading(false)
-        setData(res.data)
-        setAggregate(res.aggregate)
-        setConfig(res.config)
 
-        const {
-          belowMean,
-          belowStdDev,
-          aboveMean,
-          aboveStdDev,
-        } = res.aggregate
+    try {
+      const res = await singleRequest('/insights/', getRequest('POST', JSON.stringify(body)))
 
-        setChargeThreshold(belowMean)
-        setChargeStdDev(belowStdDev)
-        setDischargeThreshold(aboveMean)
-        setDischargeStdDev(aboveStdDev)
-      })
-      .catch( err => {
-        setLoading(false)
-        console.error(`There was an error retrieving your project: ${err}`)
-      })
+      const parsed = await parseResponse(res)
+
+      setData(parsed.data)
+      setAggregate(parsed.aggregate)
+      setConfig(parsed.config)
+
+      const {
+        belowMean,
+        belowStdDev,
+        aboveMean,
+        aboveStdDev,
+      } = parsed.aggregate
+
+      setChargeThreshold(belowMean)
+      setChargeStdDev(belowStdDev)
+      setDischargeThreshold(aboveMean)
+      setDischargeStdDev(aboveStdDev)
+
+    } catch (err) {
+      console.error(`There was an error retrieving your project: ${err}`)
+    } finally {
+      setLoading(false)
+    }
   }, [startTime, endTime, projectId])
 
-  const getRevenue = useCallback(() => {
+  const getRevenue = useCallback( async () => {
 
     const body = {
       id: projectId,
@@ -148,17 +151,18 @@ const InsightsDisplay = ({match}) => {
     }
 
     setLoading(true)
-    singleRequest('/get_revenue_by_thresholds/', getRequest('POST', JSON.stringify(body)))
-      .then(parseResponse)
-      .then( res => {
-        console.log('res:', res);
-        setLoading(false)
-        setRevenue(res.revenue)
-      })
-      .catch( err => {
-        setLoading(false)
-        console.error(`There was an error retrieving revenue data: ${err}`)
-      })
+
+    try {
+      const res = await singleRequest('/get_revenue_by_thresholds/', getRequest('POST', JSON.stringify(body)))
+
+      const parsed = await parseResponse(res)
+
+      setRevenue(parsed.revenue)
+    } catch (err) {
+      console.error(`There was an error retrieving revenue data: ${err}`)
+    } finally {
+      setLoading(false)
+    }
   }, [chargeThreshold, dischargeThreshold, projectId])
 
   useEffect( () => {
