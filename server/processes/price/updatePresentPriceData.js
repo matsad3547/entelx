@@ -6,6 +6,7 @@
     setExitListeners,
     getUpdateTimeout,
     catchErrorsWithMessage,
+    getMaxTimeStamp,
   } = require('../../utils/')
 
   const {
@@ -17,7 +18,6 @@
   const {
     getFiveMinutesFromNow,
     getOneMinuteAgo,
-    getMaxTimeStamp,
   } = require('./utils/')
 
   const {
@@ -40,7 +40,7 @@
     name,
   } = node
 
-  const mostRecent = getMaxTimeStamp(id)
+  const mostRecent = await getMaxTimeStamp(id)
 
   let firstUpdateTimeout, continuousTimeout, firstUpdate
 
@@ -71,9 +71,7 @@
 
         endMillis = getFiveMinutesFromNow(now)
 
-console.log('using most recent as start');
-        startMillis = getMaxTimeStamp(id) - oneMinuteMillis
-        // startMillis = getOneMinuteAgo(now)
+        startMillis = await getMaxTimeStamp(id) - oneMinuteMillis
 
         const [project] = await readTableRows('project', {id: projectId})
 

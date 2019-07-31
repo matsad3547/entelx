@@ -33,7 +33,7 @@
 
   console.log(`starting "updatePastPriceData" for ${name}` )
 
-  const mostRecent = getMaxTimeStamp(id)
+  const mostRecent = await getMaxTimeStamp(id)
 
   const sixMonthsAgoMillis = mostRecent - sixMonthMillis
 
@@ -44,7 +44,6 @@
   const pid = process.pid
 
   const update = async () => {
-    console.log('updating past price data')
     const startMillis = endMillis - threeWeeksMillis
     const oldest = await catchErrorsWithMessage('There was an error getting past update data', pastPriceDataUpdater)(startMillis, endMillis, nodeData)
 
