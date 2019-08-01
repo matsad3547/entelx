@@ -10,7 +10,7 @@ const getUpdateTimeout = mostRecentTimestamp => {
 
   const nowMillis = moment().valueOf()
 
-  return (fiveMinutesMillis - (nowMillis - mostRecentTimestamp)) + (1 * 1000)
+  return fiveMinutesMillis - ((nowMillis - mostRecentTimestamp) % fiveMinutesMillis) + (1000)
 }
 
 module.exports = {

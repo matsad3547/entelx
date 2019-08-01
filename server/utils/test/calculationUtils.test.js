@@ -2,7 +2,6 @@ const { timeSeriesData } = require('./mocks/timeSeries')
 
 const {
   composeData,
-  testOptimization,
   calculateMovingAverage,
   calculateScore,
   calculateArbitrage,
@@ -484,87 +483,12 @@ describe('findInflections', () => {
 
   test('should return an array for `inflections`', () => {
     const actual = Array.isArray(getInflectionData(dataSnippet, 'lmp', options).aggregate.inflections)
-    const intermediate = [
-      {
-        timestamp:1538710800000,
-        lmp:26.42027,
-        mvgAvg: 27.02553,
-        score: -0.02239586050671351,
-      },
-      {
-        timestamp:1538711100000,
-        lmp:26.46335,
-        mvgAvg: 26.838136666666667,
-        score: -0.013964705199976085,
-      },
-      {
-        timestamp:1538711400000,
-        lmp:26.40274,
-        mvgAvg: 26.729287499999998,
-        score: -0.01221684266742975,
-      },
-      {
-        timestamp:1538711700000,
-        lmp:27.48006,
-        mvgAvg: 26.879442,
-        score: 0.022344883498697655,
-      },
-      {
-        timestamp:1538712000000,
-        lmp:31.79721,
-        mvgAvg: 27.712726000000004,
-        score: 0.14738658333359178
-      },
-      {
-        timestamp:1538712300000,
-        lmp:22.17467,
-        mvgAvg: 26.863605999999997,
-        score: -0.17454603823477752,
-      }
-    ]
     expect(actual).toEqual(true)
   })
 
   test('should return an array of inflection timestamps', () => {
     const actual = getInflectionData(dataSnippet, 'lmp', options).aggregate.inflections
-    const intermediate = [
-      {
-        timestamp:1538710800000,
-        lmp:26.42027,
-        mvgAvg: 27.02553,
-        score: -0.02239586050671351,
-      },
-      {
-        timestamp:1538711100000,
-        lmp:26.46335,
-        mvgAvg: 26.838136666666667,
-        score: -0.013964705199976085,
-      },
-      {
-        timestamp:1538711400000,
-        lmp:26.40274,
-        mvgAvg: 26.729287499999998,
-        score: -0.01221684266742975,
-      },
-      {
-        timestamp:1538711700000,
-        lmp:27.48006,
-        mvgAvg: 26.879442,
-        score: 0.022344883498697655,
-      },
-      {
-        timestamp:1538712000000,
-        lmp:31.79721,
-        mvgAvg: 27.712726000000004,
-        score: 0.14738658333359178
-      },
-      {
-        timestamp:1538712300000,
-        lmp:22.17467,
-        mvgAvg: 26.863605999999997,
-        score: -0.17454603823477752,
-      }
-    ]
+
     const expected = [
       1538710800000,
       1538711700000,
