@@ -4,12 +4,14 @@ const { fiveMinutesMillis } = require('../config/')
 
 const { getCurrentWeather } = require('../processes/')
 
-const { catchErrorsWithMessage } = require('../utils/')
+const {
+  catchErrorsWithMessage,
+  getMaxTimeStamp,
+} = require('../utils/')
 
 const {
   readTableRows,
   readTableRowsWhereBtw,
-  findMax,
 } = require('../db/')
 
 const getDashboardData = async (req, res) => {
@@ -28,9 +30,7 @@ const getDashboardData = async (req, res) => {
     // revenue,
   } = project
 
-  const maxRes = await catchErrorsWithMessage(`There was an error finding the max timestamp associated with node ${nodeId}`, findMax)('price', 'timestamp', {nodeId,})
-
-  const mostRecent = maxRes[0]['max(timestamp)']
+  const mostRecent = await getMaxTimeStamp(nodeId)
 
   const start = moment().valueOf()
 

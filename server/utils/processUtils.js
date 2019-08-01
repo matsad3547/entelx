@@ -1,4 +1,5 @@
 const { findMax } = require('../db/')
+const { catchErrorsWithMessage } = require('./requestUtils')
 
 const exitSignals = [
   //catches ctrl+c event
@@ -19,7 +20,8 @@ const exitProcess = (signal, code) => {
 const setExitListeners = () => exitSignals.forEach( signal => process.on(signal, exitProcess) )
 
 const getMaxTimeStamp = async nodeId => {
-  const max = await findMax('price', 'timestamp', {nodeId, })
+
+  const max = await catchErrorsWithMessage(`There was an error finding the max timestamp associated with node ${nodeId}`, findMax)('price', 'timestamp', {nodeId,})
 
   return max[0]['max(timestamp)']
 }

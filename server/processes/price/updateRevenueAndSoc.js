@@ -30,7 +30,7 @@ const updateRevenueAndSoc = (data, key, project) => {
     revenue,
   }
 
-  const newVals = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+  const newVals = findRevenueAndCharge(data, key, batterySpecs, currentState, chargeThreshold, dischargeThreshold)
 
   return updateTableRow('project', {id,}, {
     charge: newVals.charge,
