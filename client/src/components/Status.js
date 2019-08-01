@@ -6,6 +6,7 @@ import DataTimeDisplay from '../components/DataTimeDisplay'
 import ChargeStatusDisplay from '../components/ChargeStatusDisplay'
 import HeadingLabel from '../components/HeadingLabel'
 import DataDisplay from '../components/DataDisplay'
+import Label from '../components/Label'
 // import AnimatedDataDisplay from '../components/AnimatedDataDisplay'
 
 import { roundToDigits } from '../utils/'
@@ -26,7 +27,7 @@ const Status = ({
   return (
     <DashboardSection headerContent="Status">
       <div style={styles.root}>
-        <div>
+        <div style={styles.status}>
           {
             timestamp &&
             <DataTimeDisplay
@@ -40,11 +41,28 @@ const Status = ({
             avgPrc={avgPrc}
             status={status}
             />
+          {
+            (config && currentPrc) &&
+            <div style={styles.prices}>
+              <div>
+                <Label content="Current Price"/>
+                <DataDisplay content={`$${roundToDigits(currentPrc, 2)}`}/>
+              </div>
+              <div>
+                <Label content="Charge Threshold"/>
+                <DataDisplay content={`$${roundToDigits(config.chargeThreshold, 2)}`}/>
+              </div>
+              <div>
+                <Label content="Discharge Threshold"/>
+                <DataDisplay content={`$${roundToDigits(config.dischargeThreshold, 2)}`}/>
+              </div>
+            </div>
+          }
         </div>
         <div style={styles.followingSection}>
           <HeadingLabel content="State of Charge" />
           {
-            (charge && config.energy) ?
+            (charge !== null && config.energy) ?
             <DataDisplay content={`${roundToDigits((charge/config.energy) * 100, 1)} %`}/> :
               <span>State of charge data is not currently available</span>
             }
@@ -52,7 +70,7 @@ const Status = ({
           <div style={styles.followingSection}>
             <HeadingLabel content="Revenue" />
             {
-              revenue ?
+              revenue !== null ?
               <DataDisplay content={`$${roundToDigits(revenue, 2)}`}/> :
                 <span>Revenue data is not currently available</span>
               }
@@ -75,6 +93,14 @@ const styles = {
   root: {
     display: 'flex',
     padding: '0 1em',
+  },
+  status: {
+    width: '35em',
+  },
+  prices: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '1.5em 0 0',
   },
   followingSection: {
     padding: '0 0 0 2em',
