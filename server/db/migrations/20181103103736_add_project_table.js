@@ -1,14 +1,15 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('project', t => {
-    t.integer('id').notNullable
-    t.integer('power').notNullable
-    t.integer('energy').notNullable
-    t.integer('node_id').notNullable
-    t.string('name').notNullable
+    t.increments('id').primary()
+    t.decimal('power', 6, 3).notNullable()
+    t.decimal('energy', 6, 3).notNullable()
+    t.integer('node_id').notNullable()
+    t.string('name').notNullable()
     t.string('address')
-    t.decimal('lat').notNullable
-    t.decimal('lng').notNullable
+    t.string('type').notNullable()
+    t.decimal('lat', 9, 5).notNullable()
+    t.decimal('lng', 9, 5).notNullable()
   })
 };
 
