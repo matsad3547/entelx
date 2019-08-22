@@ -15,7 +15,6 @@ const oasisEndpoint = (
   node,
 ) => new Promise( (resolve, reject) => {
 
-
   const url = getUrl(
     startMillis,
     endMillis,

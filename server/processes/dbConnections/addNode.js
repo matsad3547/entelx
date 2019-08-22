@@ -3,7 +3,7 @@ const { knex } = require('../../db/')
 const addNode = ({
   name,
   type,
-  control_area,
+  controlArea,
   lat,
   lng,
 }) => knex('node')

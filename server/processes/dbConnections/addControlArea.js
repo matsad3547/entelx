@@ -1,9 +1,9 @@
 const { knex } = require('../../db/')
 
 const addControlArea = ({
-  control_area,
+  controlArea,
   name,
-  full_name,
+  fullName,
   lat,
   lng,
 }) => knex('control_area')
