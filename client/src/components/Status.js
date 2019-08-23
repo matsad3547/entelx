@@ -9,7 +9,10 @@ import DataDisplay from '../components/DataDisplay'
 import Label from '../components/Label'
 // import AnimatedDataDisplay from '../components/AnimatedDataDisplay'
 
-import { roundToDigits } from '../utils/'
+import {
+  roundToDigits,
+  formatDollars,
+} from '../utils/'
 
 const Status = ({
   config,
@@ -46,15 +49,15 @@ const Status = ({
             <div style={styles.prices}>
               <div>
                 <Label content="Current Price"/>
-                <DataDisplay content={`$${roundToDigits(currentPrc, 2)}`}/>
+                <DataDisplay content={formatDollars(currentPrc)}/>
               </div>
               <div>
                 <Label content="Charge Threshold"/>
-                <DataDisplay content={`$${roundToDigits(config.chargeThreshold, 2)}`}/>
+                <DataDisplay content={formatDollars(config.chargeThreshold)}/>
               </div>
               <div>
                 <Label content="Discharge Threshold"/>
-                <DataDisplay content={`$${roundToDigits(config.dischargeThreshold, 2)}`}/>
+                <DataDisplay content={formatDollars(config.dischargeThreshold)}/>
               </div>
             </div>
           }
@@ -71,7 +74,7 @@ const Status = ({
             <HeadingLabel content="Revenue" />
             {
               revenue !== null ?
-              <DataDisplay content={`$${roundToDigits(revenue, 2)}`}/> :
+              <DataDisplay content={formatDollars(revenue)}/> :
                 <span>Revenue data is not currently available</span>
               }
             </div>
