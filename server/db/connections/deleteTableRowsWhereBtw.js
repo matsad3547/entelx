@@ -10,6 +10,6 @@ const deleteTableRowsWhereBtw = (
   .whereBetween(wbColumn, wbArr)
   .del()
   .then( rows => rows > 0 ? {success: true} : {success: false} )
-  .catch( err => console.error(`Error deleting from '${table}' table where '${wbColumn}' is between ${wbArr}:`, err))
+  .catch( err => console.error(`Error deleting from "${table}" table where "${wbColumn}" is between "${wbArr}":`, err))
 
 module.exports = deleteTableRowsWhereBtw

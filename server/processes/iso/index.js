@@ -1,5 +1,9 @@
-const { oasisEndpoint } = require('./caiso/')
+const {
+  oasisEndpoint,
+  getNodeLocations,
+} = require('./caiso/')
 
 module.exports = {
   oasisEndpoint,
+  getNodeLocations,
 }

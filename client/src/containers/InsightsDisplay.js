@@ -56,8 +56,8 @@ const InsightsDisplay = ({match}) => {
 
   // const incrementsArr = Object.keys(timeIncrements)
 
-  const [startTime, setStartTime] = useState(threeWeeksAgo)
-  const [endTime, setEndTime] = useState(now)
+  const [startTime] = useState(threeWeeksAgo)
+  const [endTime] = useState(now)
 
   const [chargeThreshold, setChargeThreshold] = useState(0)
   const [chargeStdDev, setChargeStdDev] = useState(0)
@@ -65,7 +65,7 @@ const InsightsDisplay = ({match}) => {
   const [dischargeThreshold, setDischargeThreshold] = useState(0)
   const [dischargeStdDev, setDischargeStdDev] = useState(0)
 
-  const [multiplier, setMultiplier] = useState(.1)
+  const [multiplier] = useState(.1)
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState(null)
   const [aggregate, setAggregate] = useState(null)
