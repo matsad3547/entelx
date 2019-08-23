@@ -94,6 +94,7 @@ const MapNodeRenderer = ({ map }) => {
   }, [map])
 
   const onClusterClick = useCallback(e => {
+    
     const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] })
     const clusterId = features[0].properties.cluster_id
     map.getSource('nodes').getClusterExpansionZoom(clusterId, (err, zoom) => {

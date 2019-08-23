@@ -2,20 +2,23 @@ import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
+import { colors } from '../../config/styles'
+
 const MapMarkerRenderer = ({
   map,
-  lngLat,
-  color,
+  lat,
+  lng,
+  color = colors.lightBlue,
 }) => {
 
   useEffect( () => {
 
     const marker = map && new mapboxgl.Marker({color})
-                    .setLngLat(lngLat)
+                    .setLngLat([lng, lat])
                     .addTo(map)
 
     return () => marker.remove()
-  }, [])
+  }, [lng, lat, color, map])
 
   return false
 }

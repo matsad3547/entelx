@@ -6,6 +6,8 @@ import Map from './map/Map'
 import MapNodeRenderer from './map/MapNodeRenderer'
 
 import MapLocationReader from '../components/map/MapLocationReader'
+import MapMarkerRenderer from '../components/map/MapMarkerRenderer'
+import MapZoomReader from '../components/map/MapZoomReader'
 
 import LabeledInput from '../components/LabeledInput'
 import Header3 from '../components/Header3'
@@ -44,10 +46,13 @@ const CreateProject = ({
   const [state, setState] = useState('CA')
   const [zip, setZip] = useState('')
   const [loading, setLoading] = useState(false)
+  const [locationChosen, setLocationChosen] = useState(false)
+  const [zoom, setZoom] = useState(null)
 
-  const setLatLng = ({lat, lng}) => {
+  const setLocation = ({lat, lng}) => {
     setLat(roundToDigits(lat, 5))
     setLng(roundToDigits(lng, 5))
+    setLocationChosen(true)
   }
 
   const setError = err => console.error(`There was an error creating your project: ${err}`)
@@ -213,10 +218,23 @@ const CreateProject = ({
           zoom={5}
           style={styles.map}
           >
-          <MapLocationReader
-            getLatLng={setLatLng}
-            />
+          <MapZoomReader
+            getZoom={setZoom}
+          />
           <MapNodeRenderer />
+          {
+            zoom > 9 &&
+            <MapLocationReader
+              getLatLng={setLocation}
+            />
+          }
+          {
+            locationChosen &&
+            <MapMarkerRenderer
+              lat={lat}
+              lng={lng}
+            />
+          }
         </Map>
       </div>
       <div style={styles.button}>

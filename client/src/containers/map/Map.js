@@ -34,7 +34,7 @@ const Map = ({
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
   const childrenWithProps = React.Children.map(children, child =>
-    React.cloneElement(child, { map, })
+    child && React.cloneElement(child, { map, })
   )
 
   return (
