@@ -1,6 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('price', t => {
+    t.integer('node_id').unsigned()
     t.foreign('node_id').references('id').inTable('node')
     t.timestamp('timestamp', false, 13).primary()
     t.decimal('lmp', 9, 5).notNullable()

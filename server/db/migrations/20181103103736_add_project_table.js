@@ -1,10 +1,11 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('project', t => {
+    t.integer('node_id').unsigned()
+    t.foreign('node_id').references('id').inTable('node')
     t.increments('id').primary()
     t.decimal('power', 6, 3).notNullable()
     t.decimal('energy', 6, 3).notNullable()
-    t.integer('node_id').notNullable()
     t.string('name').notNullable()
     t.string('address')
     t.string('type').notNullable()
