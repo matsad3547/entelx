@@ -26,6 +26,7 @@ const { findClosest } = require('./geoUtils')
 const {
   setExitListeners,
   getMaxTimeStamp,
+  getMinTimeStamp,
 } = require('./processUtils')
 
 module.exports = {
@@ -43,6 +44,7 @@ module.exports = {
   findClosest,
   setExitListeners,
   getMaxTimeStamp,
+  getMinTimeStamp,
   getCenteredValuesArr,
   getTwoDimensionalArray,
 }

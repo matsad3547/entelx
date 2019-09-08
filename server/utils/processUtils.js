@@ -1,4 +1,7 @@
-const { findMax } = require('../db/')
+const {
+  findMax,
+  findMin,
+} = require('../db/')
 const { catchErrorsWithMessage } = require('./requestUtils')
 
 const exitSignals = [
@@ -26,7 +29,15 @@ const getMaxTimeStamp = async nodeId => {
   return max[0]['max(timestamp)']
 }
 
+const getMinTimeStamp = async nodeId => {
+
+  const min = await catchErrorsWithMessage(`There was an error finding the min timestamp associated with node ${nodeId}`, findMin)('price', 'timestamp', {nodeId,})
+
+  return min[0]['min(timestamp)']
+}
+
 module.exports = {
   setExitListeners,
   getMaxTimeStamp,
+  getMinTimeStamp,
 }

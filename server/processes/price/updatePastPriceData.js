@@ -4,6 +4,7 @@
     setExitListeners,
     catchErrorsWithMessage,
     getMaxTimeStamp,
+    getMinTimeStamp,
   } = require('../../utils/')
 
   const {
@@ -45,7 +46,10 @@
 
   const update = async () => {
     const startMillis = endMillis - threeWeeksMillis
-    const oldest = await catchErrorsWithMessage('There was an error getting past update data', pastPriceDataUpdater)(startMillis, endMillis, nodeData)
+
+    await catchErrorsWithMessage('There was an error getting past update data', pastPriceDataUpdater)(startMillis, endMillis, nodeData)
+
+    const oldest = await getMinTimeStamp(id)
 
     if (oldest < sixMonthsAgoMillis) {
       exitPastPriceUpdates()

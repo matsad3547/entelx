@@ -28,8 +28,6 @@ const pastPriceDataUpdater = async (
   )
 
   await catchErrorsWithMessage(`There was an error adding rows for data from ${startMillis} to ${endMillis}`, createTableRows)('price', timeSeriesWithNode)
-
-  return data[0].timestamp
 }
 
 module.exports = pastPriceDataUpdater
