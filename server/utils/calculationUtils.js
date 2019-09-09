@@ -70,11 +70,14 @@ const calculateScore = (data, key) => {
 
   const { timeSeries } = data
 
-  const calculation = timeSeries.map( d => ({
+  const calculation = timeSeries.map( d => {
+    const score = (d[key] - d.mvgAvg) / d.mvgAvg
+
+    return {
       ...d,
-      score: (d[key] - d.mvgAvg) / d.mvgAvg,
-    })
-  )
+      score: score < 999.99 ? score : 999.99,
+    }
+  })
 
   return {
     ...data,
