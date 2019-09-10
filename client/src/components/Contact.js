@@ -9,7 +9,9 @@ const Contact = () => (
   <PublicPageTemplate
     title={'Contact'}
     >
+    <p style={styles.text}></p>
     <p style={styles.text}>If you have feedback, advice, or interest in this project, please contact me either on <a href="https://twitter.com/matsad111" target="_blank" rel="noopener noreferrer" style={styles.link}>Twitter</a> or on <a  href="https://www.linkedin.com/in/matthew-sadauckas-68bb9793/" target="_blank" rel="noopener noreferrer" style={styles.link}>LinkedIn</a>.</p>
+    <p style={styles.text}>If you would like to know more about this project, take a look <a  href="https://github.com/matsad3547/entelx" target="_blank" rel="noopener noreferrer" style={styles.link}>here</a>.</p>
   </PublicPageTemplate>
 )
 
