@@ -1,44 +1,73 @@
-import { useEffect } from 'react'
+import {
+  useEffect,
+  useCallback,
+} from 'react'
 import PropTypes from 'prop-types'
 
-const MapISOAreaRenderer = ({ map, getLatLng }) => {
+import {
+  isoColors
+} from '../../config/styles'
 
-  const setLayers = () => {
+const MapISOAreaRenderer = ({
+  map,
+  getLatLng,
+  isoLayer,
+  iso,
+}) => {
+
+  const onLayerClick = useCallback(e => {
+    const features = map.queryRenderedFeatures(e.point)
+    if (features[0].layer.id === iso) {
+      getLatLng(e.lngLat)
+    }
+  }, [getLatLng, iso])//eslint-disable-line react-hooks/exhaustive-deps
+
+  const setLayers = useCallback(() => {
 
     map.addSource('isos', {
       type: "geojson",
-      data: 'https://opendata.arcgis.com/datasets/9d1099b016e5482c900d657f06f3ac80_0.geojson',
+      data: isoLayer,
     })
 
     map.addLayer({
-      id: 'iso',
+      id: iso,
       type: 'fill',
       source: 'isos',
       paint: {
-        'fill-color': '#088',
+        'fill-color': isoColors[iso],
         'fill-opacity': 0.3,
         'fill-outline-color': '#000',
       }
     })
-  }
 
-  const cleanup = () => {
-    if (map && map.getSource('isos')) {
-      map.removeLayer('iso')
-      map.removeSource('isos')
+    if(getLatLng) {
+      map.on('click', iso, onLayerClick)
     }
-  }
+  }, [isoLayer, getLatLng, iso, onLayerClick])//eslint-disable-line react-hooks/exhaustive-deps
+
+  const cleanup = useCallback(() => {
+    if (map && map.getSource('isos')) {
+      map.removeLayer(iso)
+      map.removeSource('isos')
+      if (getLatLng) {
+        map.off('click', iso, onLayerClick)
+      }
+    }
+  }, [iso, onLayerClick])//eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect( () => {
     setLayers()
     return () => cleanup()
-  }, [])
+  }, [])//eslint-disable-line react-hooks/exhaustive-deps
 
   return false
 }
 
 MapISOAreaRenderer.propTypes = {
   map: PropTypes.object,
+  isoLayer: PropTypes.string.isRequired, //link to arcgis data layer
+  iso: PropTypes.oneOf(['caiso', 'ercot']).isRequired,
+  getLatLng: PropTypes.func,
 }
 
 export default MapISOAreaRenderer

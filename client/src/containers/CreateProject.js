@@ -5,9 +5,8 @@ import Map from './map/Map'
 
 import MapNodeRenderer from './map/MapNodeRenderer'
 
-import MapLocationReader from '../components/map/MapLocationReader'
 import MapMarkerRenderer from '../components/map/MapMarkerRenderer'
-import MapZoomReader from '../components/map/MapZoomReader'
+import MapISOAreaRenderer from '../components/map/MapISOAreaRenderer'
 
 import LabeledInput from '../components/LabeledInput'
 import Header3 from '../components/Header3'
@@ -47,7 +46,6 @@ const CreateProject = ({
   const [zip, setZip] = useState('')
   const [loading, setLoading] = useState(false)
   const [locationChosen, setLocationChosen] = useState(false)
-  const [zoom, setZoom] = useState(null)
 
   const setLocation = ({lat, lng}) => {
     setLat(roundToDigits(lat, 5))
@@ -218,16 +216,12 @@ const CreateProject = ({
           zoom={5}
           style={styles.map}
           >
-          <MapZoomReader
-            getZoom={setZoom}
-          />
-          <MapNodeRenderer />
-          {
-            zoom > 9 &&
-            <MapLocationReader
-              getLatLng={setLocation}
+          <MapISOAreaRenderer
+            iso="caiso"
+            isoLayer="https://opendata.arcgis.com/datasets/9d1099b016e5482c900d657f06f3ac80_0.geojson"
+            getLatLng={setLocation}
             />
-          }
+          <MapNodeRenderer />
           {
             locationChosen &&
             <MapMarkerRenderer

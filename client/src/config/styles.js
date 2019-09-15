@@ -48,6 +48,14 @@ export const nodeColors = [
   '#FDE74C',
 ]
 
+export const isoColors = {
+  caiso: '#E28413',
+  ercot: '#F56416',
+  3: '#DD4B1A',
+  4: '#EF271B',
+  5: '#EA1744',
+}
+
 export const buttons = {
   primary: {
     color: colors.white,
