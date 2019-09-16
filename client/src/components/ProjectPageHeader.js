@@ -14,6 +14,7 @@ const ProjectPageHeader = ({
   title,
   baseUrl,
   id,
+  showMenu,
 }) => {
 
   const [position, setPosition] = useState(null)
@@ -82,10 +83,13 @@ const ProjectPageHeader = ({
           addlStyles={gradientStyles}
           />
         <div style={itemStyles}>
-          <ProjectMenu
-            baseUrl={baseUrl}
-            id={id}
-            />
+          {
+            showMenu &&
+            <ProjectMenu
+              baseUrl={baseUrl}
+              id={id}
+              />
+          }
           <div style={textStyles}>
             <Header3 content={title} />
           </div>

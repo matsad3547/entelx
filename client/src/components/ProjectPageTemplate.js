@@ -8,6 +8,7 @@ const ProjectPageTemplate = ({
   baseUrl,
   id,
   children,
+  showMenu = true,
 }) => (
 
   <div>
@@ -15,6 +16,7 @@ const ProjectPageTemplate = ({
       title={title}
       baseUrl={baseUrl}
       id={id}
+      showMenu={showMenu}
       />
     {children}
   </div>
@@ -23,6 +25,7 @@ const ProjectPageTemplate = ({
 ProjectPageTemplate.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  hideMenu: PropTypes.bool,
 }
 
 export default ProjectPageTemplate

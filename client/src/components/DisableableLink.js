@@ -17,7 +17,7 @@ const getStyles = disabled => ({
   textDecoration: 'none',
   color: disabled ? colors.mediumGray : colors.text,
   pointerEvents: disabled ? 'none' : 'auto',
-  cursor: disabled ? 'not-allowed' : 'auto',
+  cursor: disabled ? 'not-allowed' : 'pointer',
 })
 
 DisableableLink.propTypes = {

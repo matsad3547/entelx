@@ -1,47 +1,35 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
 
 import PublicPageTemplate from './PublicPageTemplate'
+import ProjectTools from './ProjectTools'
+import Header4 from './Header4'
+import DisableableLink from './DisableableLink'
 
-import CreateProject from '../containers/CreateProject'
-import Project from '../containers/Project'
-import ProjectRoi from '../containers/ProjectRoi'
-import ProjectDashboard from '../containers/ProjectDashboard'
-import HistoricalDisplay from '../containers/HistoricalDisplay'
-import InsightsDisplay from '../containers/InsightsDisplay'
+const Demo = ({ match }) => {
 
-const Demo = ({ match }) => (
+  console.log('match:', match);
 
-  <PublicPageTemplate
-    title={'Demo'}
-    >
-    <div>
-      <Route
-        exact path={`${match.path}`}
-        component={CreateProject}
-      />
-      <Route
-        path={`${match.path}/project/:projectId`}
-        component={Project}
-      />
-      <Route
-        path={`${match.path}/roi/:projectId`}
-        component={ProjectRoi}
-      />
-      <Route
-        path={`${match.path}/dashboard/:projectId`}
-        component={ProjectDashboard}
-      />
-      <Route
-        path={`${match.path}/historical/:projectId`}
-        component={HistoricalDisplay}
-      />
-      <Route
-        path={`${match.path}/insights/:projectId`}
-        component={InsightsDisplay}
-      />
-    </div>
-  </PublicPageTemplate>
-)
+  return (
+
+    <PublicPageTemplate
+      title={'Demo'}
+      >
+      {
+        match.isExact &&
+        <div>
+          <Header4
+            content={'Evaluate Project Locations'}
+            />
+          <DisableableLink to="/demo/create_project" >
+            <Header4
+              content={'Create a New Project'}
+              />
+          </DisableableLink>
+        </div>
+      }
+      <ProjectTools match={match}/>
+    </PublicPageTemplate>
+  )
+}
 
 export default Demo
