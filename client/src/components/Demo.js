@@ -2,8 +2,9 @@ import React from 'react'
 
 import PublicPageTemplate from './PublicPageTemplate'
 import ProjectTools from './ProjectTools'
-import Header4 from './Header4'
+import Header3 from './Header3'
 import DisableableLink from './DisableableLink'
+import Button from '../components/button/'
 
 const Demo = ({ match }) => {
 
@@ -15,7 +16,7 @@ const Demo = ({ match }) => {
       {
         match.isExact &&
         <div style={styles.root}>
-          <Header4
+          <Header3
             content={'Evaluate Project Locations'}
             />
           <ul style={styles.list}>
@@ -23,11 +24,9 @@ const Demo = ({ match }) => {
               <p>Coming Soon!</p>
             </li>
           </ul>
-          <DisableableLink to="/demo/create_project" >
-            <Header4
-              content={'Create a New Project'}
-              />
-          </DisableableLink>
+          <Header3
+            content={'Build a Project'}
+            />
           <ul style={styles.list}>
             <li>
               <p>Specify the project location either by clicking on the map or entering an address.</p>
@@ -39,6 +38,15 @@ const Demo = ({ match }) => {
               <p>Create the project to get access to try out the Project Dashboard and Historical data visualizer.</p>
             </li>
           </ul>
+          <div style={styles.link}>
+            <DisableableLink to="/demo/create_project" >
+              <Button
+                value={'CREATE PROJECT'}
+                type="primary"
+                overrideStyles={styles.button}
+                />
+            </DisableableLink>
+          </div>
         </div>
       }
       <ProjectTools match={match}/>
@@ -53,9 +61,16 @@ const styles = {
   },
   list: {
     lineHeight: '3em',
-    padding: '0 0 0 1.5em',
+    padding: '1em 0 1em 1.5em',
     listStyle: 'disc',
   },
+  link: {
+    textAlign: 'right',
+    padding: '0 2em',
+  },
+  button: {
+    padding: '.8em'
+  }
 }
 
 export default Demo
