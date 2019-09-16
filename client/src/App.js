@@ -15,7 +15,7 @@ const App = () => (
 
   <div style={styles.root}>
     <NavBar />
-    <div>
+    <>
       <Route
         exact path="/"
         component={Home}
@@ -36,7 +36,7 @@ const App = () => (
         path="/system_admin"
         component={SystemAdmin}
       />
-    </div>
+    </>
   </div>
 )
 
@@ -48,6 +48,9 @@ const styles = {
     fontSize: 16,
     textAlign: 'center',
     overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
   },
 }
 

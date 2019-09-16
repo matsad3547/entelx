@@ -19,9 +19,11 @@ const PublicPageTemplate = ({title, children}) => (
 const styles = {
   root: {
     color: colors.text,
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
   },
   content: {
-    minHeight: '70vh',
     margin: '0 0 auto',
   }
 }
