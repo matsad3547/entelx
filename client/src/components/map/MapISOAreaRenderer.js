@@ -7,11 +7,13 @@ import PropTypes from 'prop-types'
 import {
   isoColors
 } from '../../config/styles'
+import {
+  isoLayerSources,
+} from '../../config/map'
 
 const MapISOAreaRenderer = ({
   map,
   getLatLng,
-  isoLayer,
   iso,
 }) => {
 
@@ -20,13 +22,13 @@ const MapISOAreaRenderer = ({
     if (features[0].layer.id === iso) {
       getLatLng(e.lngLat)
     }
-  }, [getLatLng, iso])//eslint-disable-line react-hooks/exhaustive-deps
+  }, [map, getLatLng, iso])
 
   const setLayers = useCallback(() => {
 
     map.addSource('isos', {
       type: "geojson",
-      data: isoLayer,
+      data: isoLayerSources[iso],
     })
 
     map.addLayer({
@@ -43,17 +45,13 @@ const MapISOAreaRenderer = ({
     if(getLatLng) {
       map.on('click', iso, onLayerClick)
     }
-  }, [isoLayer, getLatLng, iso, onLayerClick])//eslint-disable-line react-hooks/exhaustive-deps
+  }, [map, getLatLng, iso, onLayerClick])
 
   const cleanup = useCallback(() => {
-    if (map && map.getSource('isos')) {
-      map.removeLayer(iso)
-      map.removeSource('isos')
-      if (getLatLng) {
-        map.off('click', iso, onLayerClick)
-      }
+    if (getLatLng) {
+      map.off('click', iso, onLayerClick)
     }
-  }, [iso, onLayerClick])//eslint-disable-line react-hooks/exhaustive-deps
+  }, [map, iso, onLayerClick, getLatLng])
 
   useEffect( () => {
     setLayers()
@@ -65,8 +63,7 @@ const MapISOAreaRenderer = ({
 
 MapISOAreaRenderer.propTypes = {
   map: PropTypes.object,
-  isoLayer: PropTypes.string.isRequired, //link to arcgis data layer
-  iso: PropTypes.oneOf(['caiso', 'ercot']).isRequired,
+  iso: PropTypes.oneOf(Object.keys(isoLayerSources)).isRequired,
   getLatLng: PropTypes.func,
 }
 

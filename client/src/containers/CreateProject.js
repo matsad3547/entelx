@@ -222,7 +222,6 @@ const CreateProject = ({
             >
             <MapISOAreaRenderer
               iso="caiso"
-              isoLayer="https://opendata.arcgis.com/datasets/9d1099b016e5482c900d657f06f3ac80_0.geojson"
               getLatLng={setLocation}
               />
             <MapNodeRenderer />
