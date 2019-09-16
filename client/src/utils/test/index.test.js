@@ -1,6 +1,7 @@
 import {
   findRelevantKeys,
   roundToDigits,
+  getBaseUrl,
 } from '../index'
 
 test('findRelevantKeys', () => {
@@ -72,6 +73,24 @@ describe('roundToDigits', () => {
     const digits = 4
     const expected = 45.6746
     const actual = roundToDigits(val, digits)
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('getBaseUrl', () => {
+  test('should remove a path and `projectId` provided', () => {
+    const url = '/demo/project/9'
+    const path = 'project'
+    const projectId = 9
+    const actual = getBaseUrl(url, path, projectId)
+    const expected = '/demo'
+    expect(actual).toEqual(expected)
+  })
+  test('should remove a path even when no project id is present', () => {
+    const url = '/demo/create_project'
+    const path = 'create_project'
+    const actual = getBaseUrl(url, path)
+    const expected = '/demo'
     expect(actual).toEqual(expected)
   })
 })

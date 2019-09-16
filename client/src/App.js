@@ -15,7 +15,7 @@ const App = () => (
 
   <div style={styles.root}>
     <NavBar />
-    <>
+    <React.Fragment>
       <Route
         exact path="/"
         component={Home}
@@ -36,7 +36,7 @@ const App = () => (
         path="/system_admin"
         component={SystemAdmin}
       />
-    </>
+    </React.Fragment>
   </div>
 )
 

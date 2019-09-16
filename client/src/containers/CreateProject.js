@@ -29,10 +29,18 @@ import {
   setField,
 } from '../utils/'
 
+import { getBaseUrl } from '../utils/'
+
 const CreateProject = ({
   match,
   history,
 }) => {
+
+  const {
+    url,
+  } = match
+
+  const cleanUrl = getBaseUrl(url, 'create_project')
 
   const [lat, setLat] = useState(38.00002)
   const [lng, setLng] = useState(-119.00003)
@@ -85,7 +93,7 @@ const CreateProject = ({
       .then(parseResponse)
       .then( res => {
         setLoading(false)
-        history.push(`${match.url}/project/${res.id}`)
+        history.push(`${cleanUrl}/project/${res.id}`)
       })
       .catch( err => {
         setLoading(false)
@@ -101,7 +109,7 @@ const CreateProject = ({
   return (
     <ProjectPageTemplate
       title="Create Your Project"
-      baseUrl="create_project"
+      baseUrl={cleanUrl}
       id="create_project"
       showMenu={false}
       >

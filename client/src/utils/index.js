@@ -24,6 +24,6 @@ export const setField = (e, stateFunction) => {
   stateFunction(e.target.value)
 }
 
-export const getBaseUrl = (url, page, projectId) => url.replace(`/${page}/${projectId}`, '')
+export const getBaseUrl = (url, page, projectId) => projectId ? url.replace(`/${page}/${projectId}`, '') : url.replace(`/${page}`, '')
 
 export const formatDollars = number => `$${roundToDigits(number, 2).toFixed(2)}`

@@ -11,7 +11,7 @@ import InsightsDisplay from '../containers/InsightsDisplay'
 
 const ProjectTools = ({match}) => (
 
-  <>
+  <React.Fragment>
     <Route
       exact path={`${match.path}/create_project`}
       component={CreateProject}
@@ -36,7 +36,7 @@ const ProjectTools = ({match}) => (
       path={`${match.path}/insights/:projectId`}
       component={InsightsDisplay}
     />
-  </>
+  </React.Fragment>
 )
 
 export default ProjectTools
