@@ -30,7 +30,6 @@ const getNodes = (req, res) => {
     .then( nodes => res.json(processNodes(nodes)) )
     .catch( err => {
       console.error('Error getting nodes:', err)
-      next(err)
     })
 }
 

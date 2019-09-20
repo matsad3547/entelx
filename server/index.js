@@ -31,7 +31,10 @@ const {
   getProjectById,
 } = require('./project/')
 
-const { getNodes } = require('./processes/')
+const {
+  getEnv,
+  getNodes,
+} = require('./processes/')
 
 const app = express()
 
@@ -61,6 +64,8 @@ app.use(bodyParser.json())
 app.use(compression(getCompressionOptions))
 
 app.use(sse)
+
+app.get('/env', getEnv)
 
 //user
 app.post('/user/create', createUser)

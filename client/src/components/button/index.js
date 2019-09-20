@@ -44,7 +44,7 @@ const styles = {
 Button.propTypes = {
   value: PropTypes.string.isRequired,
   type: PropTypes.oneOf(Object.keys(buttons)).isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   disabled: PropTypes.bool,
   overrideStyles: PropTypes.object,
 }

@@ -6,10 +6,6 @@ import React, {
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
-console.log('process.env at map:', process.env);
-
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY
-
 const Map = ({
   zoom,
   center,
@@ -17,13 +13,12 @@ const Map = ({
   children,
 }) => {
 
-  const [map, setMap] = useState(null)
-  const [loaded, setLoaded] = useState(false)
+  mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY
 
+  const [map, setMap] = useState(null)
   const mapContainer = useRef(null)
 
   useEffect( () => {
-
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v9',
@@ -32,9 +27,7 @@ const Map = ({
       minZoom: 3,
     })
 
-    setMap(map)
-
-    map.on('load', () => setLoaded(true) )
+    map.on('load', () => setMap(map) )
 
     return () => map.remove()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
@@ -52,7 +45,7 @@ const Map = ({
       }}
       ref={mapContainer}
       >
-      {loaded && childrenWithProps}
+      {map && childrenWithProps}
     </div>
   )
 }
