@@ -13,6 +13,8 @@ const Map = ({
   children,
 }) => {
 
+  console.log('environment when building from local:', process.env);
+
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY
 
   const [map, setMap] = useState(null)

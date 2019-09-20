@@ -33,10 +33,9 @@
     "server-dev": "NODE_ENV=development nodemon server/index.js",
     "client-dev": "node ./server/scripts/start-client.js",
     "test": "NODE_ENV=test jest --watch",
-    "run-prod": "yarn run client-build && concurrently \"yarn run server-prod\" \"cd ~/Applications && ./ngrok http 5150\"",
-    "server-prod": "NODE_ENV=production PORT=5150 node server/index.js",
-    "client-build": "node ./server/scripts/build-client.js",
+    "client-build": "cd client/ && yarn build && cp -rf ./build/* ../server/public/ && cd ../",
     "project-install": "yarn && cd client && yarn && cd ../server && yarn && cd ../"
+
   },
   "jest": {
     "moduleNameMapper": null,
