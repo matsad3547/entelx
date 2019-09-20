@@ -32,7 +32,6 @@ const {
 } = require('./project/')
 
 const {
-  getEnv,
   getNodes,
 } = require('./processes/')
 
@@ -64,8 +63,6 @@ app.use(bodyParser.json())
 app.use(compression(getCompressionOptions))
 
 app.use(sse)
-
-app.get('/env', getEnv)
 
 //user
 app.post('/user/create', createUser)

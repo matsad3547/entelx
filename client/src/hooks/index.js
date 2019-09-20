@@ -4,12 +4,6 @@ import {
   useRef,
 } from 'react'
 
-import {
-  singleRequest,
-  parseResponse,
-  getRequest,
-} from '../utils/requestUtils'
-
 export const useConnectToServerSideEvent = (route, handleData) => useEffect( () => {
     const stream = new EventSource(route)
 
@@ -84,29 +78,4 @@ export const useInterpolateValues = (value, seconds) => {
   }, [value, seconds])
 
   return displayVal
-}
-
-export const useEnv = (...keys) => {
-  const envRef = useRef(null)
-
-  useEffect( () => {
-    const getEnv = async () => {
-      try {
-        const res = await singleRequest('/env', getRequest('GET'))
-
-        const env = await parseResponse(res)
-
-        envRef.current = env
-      }
-      catch (err) {
-        console.error('There was an error retrieving your runtime environment variables', err)
-      }
-    }
-    getEnv()
-  }, [keys])
-
-  return envRef.current && keys.reduce( (obj, k) => ({
-    ...obj,
-    [k]: envRef.current[k]
-  }), {})
 }
