@@ -47,7 +47,9 @@ app.listen(app.get('port'), err => {
     console.error('An error occured:', err)
     throw new Error(err)
   }
-  console.log(`Find the server at: http://localhost:${app.get('port')}`)
+  else if (process.env.NODE_ENV === 'development') {
+    console.log(`Find the server at: http://localhost:${app.get('port')}`)
+  }
 })
 
 //set up middlewares

@@ -1,10 +1,12 @@
 import React, {
   useState,
   useEffect,
-  useRef, 
+  useRef,
 } from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
+
+console.log('process.env at map:', process.env);
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY
 
