@@ -42,11 +42,11 @@ app.set('port', process.env.PORT || 5000)
 
 if (process.env.NODE_ENV === 'production') {
   // app.use(express.static('server/public'))
-  console.log('using `path` in production');
-  app.use(express.static(path.join(__dirname, 'server/public')))
+  app.use(express.static(path.join(__dirname, '/public')))
+  console.log('using `path` in production', path.join(__dirname, '/public'));
 
   app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'server/public', 'index.html'))
+    res.sendFile(path.join(__dirname, '/public', 'index.html'))
   })
 }
 
