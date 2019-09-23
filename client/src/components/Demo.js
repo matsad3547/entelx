@@ -27,11 +27,11 @@ const fireTest = async () => {
   // }
 
   try {
-    const res = await singleRequest('/nodes', getRequest('GET', null))
+    const res = await singleRequest('/node_balls', getRequest('GET', null))
 
     const nodes = await res.json()
 
-    console.log('testing "/nodes" endpoint:', nodes)
+    console.log('testing "/node_balls" endpoint:', nodes)
   }
   catch (err) {
     console.error('Something failed:', err)
