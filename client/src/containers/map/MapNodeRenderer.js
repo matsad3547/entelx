@@ -30,7 +30,7 @@ const MapNodeRenderer = ({ map }) => {
         setNodes(nodes)
       }
       catch (err) {
-        handleError(err)
+        console.error(`there was an error getting nodes: ${err}`)
       }
     }
     getNodes()
@@ -54,8 +54,6 @@ const MapNodeRenderer = ({ map }) => {
         return nodeKey
     }
   }
-
-  const handleError = err => console.error(`there was an error getting nodes: ${err}`)
 
   const clusterMaxZoom = 9
 

@@ -8,10 +8,9 @@ import Button from '../components/button/'
 
 import {
   singleRequest,
-  parseResponse,
 } from '../utils/requestUtils'
 
-const fireTest = () => {
+const fireTest = async () => {
 
   const body = JSON.stringify({
     test: 'does this route work?'
@@ -26,14 +25,17 @@ const fireTest = () => {
     body,
   }
 
-  singleRequest('/test', request)
-    .then(parseResponse)
-    .then( res => {
-      console.log('res from test', res);
-    })
-    .catch( err => {
-      console.error('Something failed:', err);
-    })
+  try {
+    const res = await singleRequest('/test', request)
+
+    const test = await res.json()
+
+    console.log('res.json tested:', test)
+  }
+  catch (err) {
+    console.error('Something failed:', err)
+  }
+
 }
 
 const Demo = ({ match }) => (
