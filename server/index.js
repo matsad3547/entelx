@@ -70,15 +70,13 @@ app.use(compression(getCompressionOptions))
 
 app.use(sse)
 
-// const testFun = (req, res) => {
-//   console.log('at test endpoint', req.body);
-//
-//   res.status(200).json({test: "Succeeded!"})
-// }
+const testFun = (req, res) => {
+  console.log('at test endpoint', req.body);
 
-app.post('/test', getNodes)
+  res.status(200).json({test: "Succeeded!"})
+}
 
-
+app.get('/test', testFun)
 
 //user
 app.post('/user/create', createUser)
@@ -90,7 +88,6 @@ app.get('/dashboard/:id/data', getDashboardData)
 
 app.post('/nodes', getNodes)
 // app.get('/nodes', getNodes)
-app.post('/node_balls', getNodes)
 
 //project page
 app.post('/project/create', createNewProject)

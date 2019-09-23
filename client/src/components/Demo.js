@@ -13,27 +13,26 @@ import {
 
 const fireTest = async () => {
 
-  console.log('firing "node_balls" test with post');
+  console.log('firing GET request to "/test"');
 
   // const body = JSON.stringify({
   //   test: 'does this route work?'
   // })
 
   const request = {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: null,
   }
 
   try {
-    const res = await singleRequest('/node_balls', request)
+    const res = await singleRequest('/test', request)
 
-    const nodes = await res.json()
+    const test = await res.json()
 
-    console.log('testing "/node_balls" endpoint:', nodes)
+    console.log('"/test" endpoint:', test)
   }
   catch (err) {
     console.error('Something failed:', err)
