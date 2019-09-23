@@ -6,6 +6,36 @@ import Header3 from './Header3'
 import DisableableLink from './DisableableLink'
 import Button from '../components/button/'
 
+import {
+  singleRequest,
+  parseResponse,
+} from '../utils/requestUtils'
+
+const fireTest = () => {
+
+  const body = JSON.stringify({
+    test: 'does this route work?'
+  })
+
+  const request = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body,
+  }
+
+  singleRequest('/test', request)
+    .then(parseResponse)
+    .then( res => {
+      console.log('res from test', res);
+    })
+    .catch( err => {
+      console.error('Something failed:', err);
+    })
+}
+
 const Demo = ({ match }) => (
 
   <PublicPageTemplate
@@ -45,6 +75,12 @@ const Demo = ({ match }) => (
               />
           </DisableableLink>
         </div>
+        <Button
+          value={'TEST'}
+          type="danger"
+          overrideStyles={styles.button}
+          onClick={fireTest}
+          />
       </div>
     }
     <ProjectTools match={match}/>

@@ -70,6 +70,12 @@ app.use(compression(getCompressionOptions))
 
 app.use(sse)
 
+app.post('/test', (req, res) => {
+  console.log('at test endpoint', req.body);
+
+  res.status(200).json({test: "Succeeded!"})
+})
+
 //user
 app.post('/user/create', createUser)
 app.post('/user/login', login)

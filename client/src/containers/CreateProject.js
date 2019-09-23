@@ -36,8 +36,6 @@ const CreateProject = ({
   history,
 }) => {
 
-  console.log('At create project');
-
   const {
     url,
   } = match
