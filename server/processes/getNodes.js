@@ -25,6 +25,7 @@ const processNodes = nodes => nodes.reduce( (obj, node) => ({
 })
 
 const getNodes = async (req, res) => {
+  console.log('getting nodes???');
   try {
     const query = req.body.query || {}
 

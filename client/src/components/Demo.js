@@ -13,6 +13,8 @@ import {
 
 const fireTest = async () => {
 
+  console.log('firing "node_balls" test');
+
   // const body = JSON.stringify({
   //   test: 'does this route work?'
   // })
