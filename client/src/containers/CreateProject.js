@@ -36,6 +36,8 @@ const CreateProject = ({
   history,
 }) => {
 
+  console.log('At create project');
+
   const {
     url,
   } = match
@@ -261,7 +263,7 @@ const styles = {
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     color: colors.text,
-    padding: '2em 3em',
+    padding: '0 3em 2em',
     width: '100%',
   },
   form: {
