@@ -24,13 +24,21 @@ const processNodes = nodes => nodes.reduce( (obj, node) => ({
     features: [],
 })
 
-const getNodes = (req, res) => {
-  const query = req.body.query || {}
-  return readTableRows('node', query)
-    .then( nodes => res.json(processNodes(nodes)) )
-    .catch( err => {
-      console.error('Error getting nodes:', err)
-    })
+const getNodes = async (req, res) => {
+  console.log('getting nodes?');
+  try {
+
+    const query = req.body.query || {}
+
+    const nodes = await readTableRows('node', query)
+
+    console.log('nodes:', nodes && nodes.length)
+
+    res.json(processNodes(nodes))
+  }
+  catch (err) {
+    console.error('Error getting nodes:', err)
+  }
 }
 
 module.exports = getNodes

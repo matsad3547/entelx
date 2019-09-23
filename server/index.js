@@ -61,6 +61,8 @@ app.listen(app.get('port'), err => {
   }
 })
 
+getNodes({body: {query: null}}, {})
+
 //set up middlewares
 app.use(express.static('public'))
 
