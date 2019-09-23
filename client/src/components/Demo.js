@@ -8,28 +8,28 @@ import Button from '../components/button/'
 
 import {
   singleRequest,
-  getRequest,
+  // getRequest,
 } from '../utils/requestUtils'
 
 const fireTest = async () => {
 
-  console.log('firing "node_balls" test');
+  console.log('firing "node_balls" test with post');
 
   // const body = JSON.stringify({
   //   test: 'does this route work?'
   // })
 
-  // const request = {
-  //   method: 'POST',
-  //   headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body,
-  // }
+  const request = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: null,
+  }
 
   try {
-    const res = await singleRequest('/node_balls', getRequest('GET', null))
+    const res = await singleRequest('/node_balls', request)
 
     const nodes = await res.json()
 
