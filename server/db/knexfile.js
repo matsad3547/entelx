@@ -22,7 +22,7 @@ module.exports = {
     min: 0,
     max: 9,
     afterCreate: (conn, done) => {
-      // in this example we use pg driver's connection API
+      console.log(`Connecting to ${process.env.DB_NAME}...`);
       conn.query('SET timezone="UTC";', err => {
         if (err) {
           // first query failed, return error and don't try to make next query

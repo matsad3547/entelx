@@ -50,11 +50,14 @@ if (process.env.NODE_ENV === 'production') {
 
 app.listen(app.get('port'), err => {
   if (err) {
-    console.error('An error occured:', err)
+    console.error('An error occurred starting the Entelx server:', err)
     throw new Error(err)
   }
   else if (process.env.NODE_ENV === 'development') {
-    console.log(`Find the server at: http://localhost:${app.get('port')}`)
+    console.log(`Find the Entelx server at: http://localhost:${app.get('port')}`)
+  }
+  else {
+    console.log('Running the Entelx server');
   }
 })
 
