@@ -19,10 +19,21 @@ const MapNodeRenderer = ({ map }) => {
   const [nodes, setNodes] = useState(null)
 
   useEffect( () => {
-    singleRequest('/nodes', getRequest('GET', null))
-    .then(parseResponse)
-    .then( nodes => setNodes(nodes))
-    .catch(handleError)
+    const getNodes = async () => {
+      try {
+        const res = await singleRequest('/nodes', getRequest('GET', null))
+
+        console.log('res at MapNodeRenderer:', res)
+
+        const nodes = await parseResponse(res)
+
+        setNodes(nodes)
+      }
+      catch (err) {
+        handleError(err)
+      }
+    }
+    getNodes()
   }, [])
 
   const formatNodeLabels = nodeKey => {
