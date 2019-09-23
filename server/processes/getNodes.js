@@ -25,14 +25,10 @@ const processNodes = nodes => nodes.reduce( (obj, node) => ({
 })
 
 const getNodes = async (req, res) => {
-  console.log('getting nodes?');
   try {
-
     const query = req.body.query || {}
 
     const nodes = await readTableRows('node', query)
-
-    console.log('nodes:', nodes && nodes.length)
 
     res.json(processNodes(nodes))
   }

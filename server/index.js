@@ -57,11 +57,9 @@ app.listen(app.get('port'), err => {
     console.log(`Find the Entelx server at: http://localhost:${app.get('port')}`)
   }
   else {
-    console.log('Running the Entelx server');
+    console.log(`Running the Entelx server at port ${app.get('port')}`)
   }
 })
-
-getNodes({body: {query: null}}, {})
 
 //set up middlewares
 app.use(express.static('public'))
