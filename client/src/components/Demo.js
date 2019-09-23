@@ -6,37 +6,36 @@ import Header3 from './Header3'
 import DisableableLink from './DisableableLink'
 import Button from '../components/button/'
 
-import {
-  singleRequest,
-} from '../utils/requestUtils'
-
-const fireTest = async () => {
-
-  const body = JSON.stringify({
-    test: 'does this route work?'
-  })
-
-  const request = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body,
-  }
-
-  try {
-    const res = await singleRequest('/test', request)
-
-    const test = await res.json()
-
-    console.log('res.json tested:', test)
-  }
-  catch (err) {
-    console.error('Something failed:', err)
-  }
-
-}
+// import {
+//   singleRequest,
+// } from '../utils/requestUtils'
+//
+// const fireTest = async () => {
+//
+//   const body = JSON.stringify({
+//     test: 'does this route work?'
+//   })
+//
+//   const request = {
+//     method: 'POST',
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body,
+//   }
+//
+//   try {
+//     const res = await singleRequest('/test', request)
+//
+//     const test = await res.json()
+//
+//     console.log('res.json tested:', test)
+//   }
+//   catch (err) {
+//     console.error('Something failed:', err)
+//   }
+// }
 
 const Demo = ({ match }) => (
 
@@ -77,12 +76,12 @@ const Demo = ({ match }) => (
               />
           </DisableableLink>
         </div>
-        <Button
+        {/*<Button
           value={'TEST'}
           type="danger"
           overrideStyles={styles.button}
           onClick={fireTest}
-          />
+          />*/}
       </div>
     }
     <ProjectTools match={match}/>

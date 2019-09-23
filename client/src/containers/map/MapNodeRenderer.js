@@ -6,7 +6,7 @@ import mapboxgl from 'mapbox-gl'
 import {
   singleRequest,
   getRequest,
-  parseResponse,
+  // parseResponse,
 } from '../../utils/requestUtils'
 
 import {
@@ -23,9 +23,9 @@ const MapNodeRenderer = ({ map }) => {
       try {
         const res = await singleRequest('/nodes', getRequest('GET', null))
 
-        console.log('res at MapNodeRenderer:', res)
-
-        const nodes = await parseResponse(res)
+        const nodes = await res.json()
+        console.log('nodes at MapNodeRenderer:', nodes)
+        // const nodes = await parseResponse(res)
 
         setNodes(nodes)
       }
