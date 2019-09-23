@@ -57,7 +57,7 @@ app.listen(app.get('port'), err => {
     console.log(`Find the Entelx server at: http://localhost:${app.get('port')}`)
   }
   else {
-    console.log(`Running the Entelx server at port ${app.get('port')}`)
+    console.log(`Running the Entelx server at port ${process.env.PORT}`)
   }
 })
 
