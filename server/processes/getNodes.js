@@ -30,7 +30,9 @@ const getNodes = async (req, res) => {
 
     const nodes = await readTableRows('node', query)
 
-    res.json(processNodes(nodes))
+    console.log('nodes:', nodes.length, processNodes(nodes))
+
+    res.status(200).json(processNodes(nodes))
   }
   catch (err) {
     console.error('Error getting nodes:', err)
