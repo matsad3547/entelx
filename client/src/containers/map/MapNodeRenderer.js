@@ -5,7 +5,7 @@ import mapboxgl from 'mapbox-gl'
 
 import {
   singleRequest,
-  getRequest,
+  // getRequest,
   // parseResponse,
 } from '../../utils/requestUtils'
 
@@ -20,11 +20,21 @@ const MapNodeRenderer = ({ map }) => {
 
   useEffect( () => {
     const getNodes = async () => {
+      const request = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: null,
+      }
+
       try {
-        const res = await singleRequest('/nodes', getRequest('GET', null))
+        const res = await singleRequest('/nodes', request)
+        // const res = await singleRequest('/nodes', getRequest('GET', null))
 
         const nodes = await res.json()
-        console.log('nodes at MapNodeRenderer:', nodes)
+        console.log('nodes at MapNodeRenderer using POST:', nodes)
         // const nodes = await parseResponse(res)
 
         setNodes(nodes)

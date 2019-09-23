@@ -88,7 +88,8 @@ app.post('/user/login', login)
 app.get('/dashboard/:id/config', getDashboardConfig)
 app.get('/dashboard/:id/data', getDashboardData)
 
-app.get('/nodes', getNodes)
+app.post('/nodes', getNodes)
+// app.get('/nodes', getNodes)
 app.post('/node_balls', getNodes)
 
 //project page
