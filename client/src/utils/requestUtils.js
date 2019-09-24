@@ -6,15 +6,6 @@ export const handleError = (self, err) => self.setState({
   error: err.message,
 })
 
-export const getRequest = (method, body) => ({
-  method,
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body,
-})
-
 export const checkStatus = res => {
   if (res.status >= 200 && res.status < 300) {
     return res

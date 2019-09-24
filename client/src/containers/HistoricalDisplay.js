@@ -17,10 +17,12 @@ import { getBaseUrl } from '../utils/'
 import {
   singleRequest,
   parseResponse,
-  getRequest,
 } from '../utils/requestUtils'
 
-import {timeIncrements} from '../config/'
+import {
+  timeIncrements,
+  defaultHeaders,
+} from '../config/'
 
 import { useConnectToServerSideEvent } from '../hooks/'
 
@@ -97,8 +99,14 @@ const HistoricalDisplay = ({match}) => {
       includeWeather,
     }
 
+    const request = {
+      method: 'POST',
+      headers: defaultHeaders,
+      body: JSON.stringify(body)
+    }
+
     setLoading(true)
-    singleRequest('/historical/', getRequest('POST', JSON.stringify(body)))
+    singleRequest('/historical/', request)
       .then(parseResponse)
       .then( res => {
         setLoading(false)

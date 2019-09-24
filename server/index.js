@@ -62,14 +62,6 @@ app.use(compression(getCompressionOptions))
 
 app.use(sse)
 
-const testFun = (req, res) => {
-  console.log('at /test endpoint!!!')
-
-  res.status(200).json({test: "Succeeded!"})
-}
-
-app.get('/test', testFun)
-
 //user
 app.post('/user/create', createUser)
 app.post('/user/login', login)
@@ -78,8 +70,7 @@ app.post('/user/login', login)
 app.get('/dashboard/:id/config', getDashboardConfig)
 app.get('/dashboard/:id/data', getDashboardData)
 
-app.post('/nodes', getNodes)
-// app.get('/nodes', getNodes)
+app.get('/nodes', getNodes)
 
 //project page
 app.post('/project/create', createNewProject)

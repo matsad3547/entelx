@@ -12,6 +12,8 @@ import {
   colors,
 } from '../../config/styles'
 
+import { defaultHeaders } from '../../config/'
+
 const MapNodeRenderer = ({ map }) => {
 
   const [nodes, setNodes] = useState(null)
@@ -20,17 +22,12 @@ const MapNodeRenderer = ({ map }) => {
     const getNodes = async () => {
 
       const request = {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: null,
+        method: 'GET',
+        headers: defaultHeaders,
       }
 
       try {
         const res = await singleRequest('/nodes', request)
-        // const res = await singleRequest('/nodes', getRequest('GET', null))
 
         const nodes = await res.json()
 

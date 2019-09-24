@@ -6,40 +6,6 @@ import Header3 from './Header3'
 import DisableableLink from './DisableableLink'
 import Button from '../components/button/'
 
-import {
-  singleRequest,
-  // getRequest,
-} from '../utils/requestUtils'
-
-import { defaultHeaders } from '../config/'
-
-const fireTest = async () => {
-
-  console.log('firing GET request to "/api/test"');
-
-  // const body = JSON.stringify({
-  //   test: 'does this route work?'
-  // })
-
-  const request = {
-    method: 'GET',
-    headers: defaultHeaders,
-  }
-
-  try {
-    const res = await singleRequest('/test', request)
-
-    const text = await res.text()
-
-    // const test = await res.json()
-
-    console.log('"/test" endpoint text:', text)
-  }
-  catch (err) {
-    console.error('Something failed:', err)
-  }
-}
-
 const Demo = ({ match }) => (
 
   <PublicPageTemplate
@@ -79,12 +45,6 @@ const Demo = ({ match }) => (
               />
           </DisableableLink>
         </div>
-        <Button
-          value={'TEST'}
-          type="danger"
-          overrideStyles={styles.button}
-          onClick={fireTest}
-          />
       </div>
     }
     <ProjectTools match={match}/>

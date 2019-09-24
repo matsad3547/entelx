@@ -14,10 +14,10 @@ import MapMarkerRenderer from '../components/map/MapMarkerRenderer'
 import {
   singleRequest,
   parseResponse,
-  getRequest,
 } from '../utils/requestUtils'
 
 import { getBaseUrl } from '../utils/'
+import { defaultHeaders } from '../config'
 
 const Project = ({match, history}) => {
 
@@ -37,7 +37,12 @@ const Project = ({match, history}) => {
 
     setLoading(true)
 
-    singleRequest(`/project/${projectId}`, getRequest('DELETE'))
+    const request = {
+      method: 'DELETE',
+      headers: defaultHeaders,
+    }
+
+    singleRequest(`/project/${projectId}`, request)
       .then( res => {
         setLoading(false)
         history.push(`${cleanUrl}`)
@@ -49,8 +54,15 @@ const Project = ({match, history}) => {
   }
 
   const getProject = useCallback(() => {
+
     setLoading(true)
-    singleRequest(`/project/${projectId}`, getRequest('GET'))
+
+    const request = {
+      method: 'GET',
+      headers: defaultHeaders,
+    }
+
+    singleRequest(`/project/${projectId}`, request)
       .then(parseResponse)
       .then( res => {
         setProject(res[0])

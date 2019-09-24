@@ -14,8 +14,9 @@ import { getBaseUrl } from '../utils/'
 import {
   singleRequest,
   parseResponse,
-  getRequest,
 } from '../utils/requestUtils'
+
+import { defaultHeaders } from '../config/'
 
 const ProjectDashboard = ({match}) => {
 
@@ -47,17 +48,24 @@ JS Docs - insta documentation
 
     setLoading(true)
 
+    const request = {
+      method: 'GET',
+      headers: defaultHeaders,
+    }
+
     try {
-      const res = await singleRequest(`/dashboard/${projectId}/config`, getRequest('GET'))
+      const res = await singleRequest(`/dashboard/${projectId}/config`, request)
 
       const parsed = await parseResponse(res)
 
       setConfig(parsed.config)
 
-    } catch (err) {
+    }
+    catch (err) {
       console.error(`There was an error retrieving your project: ${err}`)
 
-    } finally {
+    }
+    finally {
       setLoading(false)
     }
   }, [projectId])

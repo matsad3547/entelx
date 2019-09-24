@@ -24,7 +24,6 @@ import {
 import {
   singleRequest,
   parseResponse,
-  getRequest,
 } from '../utils/requestUtils'
 
 // import {timeIncrements} from '../config/'
@@ -33,7 +32,10 @@ import {
 
 import { formatDollars } from '../utils/'
 
-import { blankDollars } from '../config/'
+import {
+  blankDollars,
+  defaultHeaders,
+} from '../config/'
 
 const InsightsDisplay = ({match}) => {
 
@@ -112,10 +114,16 @@ const InsightsDisplay = ({match}) => {
       startMillis,
     }
 
+    const request = {
+      method: 'POST',
+      headers: defaultHeaders,
+      body: JSON.stringify(body)
+    }
+
     setLoading(true)
 
     try {
-      const res = await singleRequest('/insights/', getRequest('POST', JSON.stringify(body)))
+      const res = await singleRequest('/insights/', request)
 
       const parsed = await parseResponse(res)
 
@@ -150,10 +158,16 @@ const InsightsDisplay = ({match}) => {
       dischargeThreshold,
     }
 
+    const request = {
+      method: 'POST',
+      headers: defaultHeaders,
+      body: JSON.stringify(body)
+    }
+
     setLoading(true)
 
     try {
-      const res = await singleRequest('/get_revenue_by_thresholds/', getRequest('POST', JSON.stringify(body)))
+      const res = await singleRequest('/get_revenue_by_thresholds/', request)
 
       const parsed = await parseResponse(res)
 
