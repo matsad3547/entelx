@@ -40,14 +40,6 @@ const app = express()
 
 app.set('port', process.env.PORT || 5000)
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/public')))
-
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public', 'index.html'))
-  })
-}
-
 app.listen(app.get('port'), err => {
   if (err) {
     console.error('An error occurred starting the Entelx server:', err)
@@ -101,3 +93,11 @@ app.get('/historical/:id/min_date', getMinDate)
 //insights
 app.post('/insights/', getInsightData)
 app.post('/get_revenue_by_thresholds/', getRevenueByThresholds)
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/public')))
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public', 'index.html'))
+  })
+}
