@@ -33,8 +33,8 @@
     "server-dev": "NODE_ENV=development nodemon server/index.js",
     "client-dev": "node ./server/scripts/start-client.js",
     "test": "NODE_ENV=test jest --watch",
-    "client-build": "cd client/ && yarn build && cp -rf ./build/* ../server/public/ && cd ../",
-    "project-install": "yarn && cd client && yarn && cd ../server && yarn && cd ../"
+    "build-client": "cd client/ && yarn build && cp -rf ./build/* ../server/public/ && cd ../",
+    "install-project": "yarn && cd client && yarn && cd ../server && yarn && cd ../"
 
   },
   "jest": {

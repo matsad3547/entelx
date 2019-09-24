@@ -76,7 +76,7 @@ const testFun = (req, res) => {
   res.status(200).json({test: "Succeeded!"})
 }
 
-app.get('/test', testFun)
+app.get('/api/test', testFun)
 
 //user
 app.post('/user/create', createUser)

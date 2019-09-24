@@ -11,9 +11,11 @@ import {
   // getRequest,
 } from '../utils/requestUtils'
 
+import { defaultHeaders } from '../config/'
+
 const fireTest = async () => {
 
-  console.log('firing GET request to "/test"');
+  console.log('firing GET request to "/api/test"');
 
   // const body = JSON.stringify({
   //   test: 'does this route work?'
@@ -21,18 +23,15 @@ const fireTest = async () => {
 
   const request = {
     method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
+    headers: defaultHeaders,
   }
 
   try {
-    const res = await singleRequest('/test', request)
+    const res = await singleRequest('/api/test', request)
 
     const test = await res.json()
 
-    console.log('"/test" endpoint:', test)
+    console.log('"/api/test" endpoint:', test)
   }
   catch (err) {
     console.error('Something failed:', err)

@@ -26,3 +26,8 @@ export const timeIncrements = {
     value: 'month',
   },
 }
+
+export const defaultHeaders = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+}
