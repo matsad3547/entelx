@@ -27,11 +27,13 @@ const fireTest = async () => {
   }
 
   try {
-    const res = await singleRequest('/api/test', request)
+    const res = await singleRequest('/test', request)
 
-    const test = await res.json()
+    const text = await res.text()
 
-    console.log('"/api/test" endpoint:', test)
+    // const test = await res.json()
+
+    console.log('"/test" endpoint text:', text)
   }
   catch (err) {
     console.error('Something failed:', err)
