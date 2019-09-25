@@ -46,6 +46,7 @@
 
   const update = async () => {
     const startMillis = endMillis - threeWeeksMillis
+    console.log(`updating past prices from ${startMillis} to ${endMillis}`);
 
     await catchErrorsWithMessage('There was an error getting past update data', pastPriceDataUpdater)(startMillis, endMillis, nodeData)
 
