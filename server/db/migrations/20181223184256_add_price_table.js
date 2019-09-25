@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
     t.decimal('congestion_prc', 9, 5)
     t.decimal('loss_prc', 9, 5)
     t.decimal('mvg_avg', 7, 3)
-    t.decimal('score', 8, 5)
+    t.decimal('score', 7, 3)
   })
 };
 

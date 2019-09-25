@@ -12,7 +12,6 @@ const catchErrorsWithMessage = (msg, fn) => (...args) =>
   fn(...args)
   .catch(err => {
       console.error(`${msg}:`, err)
-      throw err
     })
 
 const catchErrorAndRestart = (msg, fn) => (...args) => (restartFn) => (...restartArgs) =>

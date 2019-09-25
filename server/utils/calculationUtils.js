@@ -70,12 +70,17 @@ const calculateScore = (data, key) => {
 
   const { timeSeries } = data
 
-  const calculation = timeSeries.map( d => {
-    const score = (d[key] - d.mvgAvg) / d.mvgAvg
+  const calculation = timeSeries.map( (d, i) => {
+    let score = (d[key] - d.mvgAvg) / d.mvgAvg
+
+    if(score > 9990) {
+      console.log(`Calculated score is out of range: ${score} from data ${d}`)
+      score = 9990
+    }
 
     return {
       ...d,
-      score: score < 999.99 ? score : 999.99,
+      score,
     }
   })
 
