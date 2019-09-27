@@ -74,7 +74,7 @@ const calculateScore = (data, key) => {
     let score = (d[key] - d.mvgAvg) / d.mvgAvg
 
     if(score > 9990) {
-      console.log(`Calculated score is out of range: ${score} from data ${d}`)
+      console.log(`Calculated score is out of range: ${score} from data ${JSON.stringify(d)}`)
       score = 9990
     }
 

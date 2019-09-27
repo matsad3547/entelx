@@ -17,7 +17,6 @@
 
   const {
     getFiveMinutesFromNow,
-    getOneMinuteAgo,
   } = require('./utils/')
 
   const {
@@ -40,13 +39,15 @@
     name,
   } = node
 
-  const mostRecent = await getMaxTimeStamp(id)
+  let mostRecent = await getMaxTimeStamp(id)
 
   let firstUpdateTimeout, continuousTimeout, firstUpdate
 
   const [nodeData] = await readTableRows('node', {id,})
 
   firstUpdate = getUpdateTimeout(mostRecent)
+
+  console.log('Most recent:', mostRecent, 'Starting present price data updates in:', firstUpdate);
 
   const pid = process.pid
 
@@ -55,8 +56,10 @@
 
     console.log(`starting price data update at ${now.valueOf()}`)
 
+    mostRecent = await getMaxTimeStamp(id)
+
     let endMillis = getFiveMinutesFromNow(now)
-    let startMillis = getOneMinuteAgo(now)
+    let startMillis = mostRecent + oneMinuteMillis
 
     const [project] = await readTableRows('project', {id: projectId})
 
@@ -69,9 +72,10 @@
 
         now = moment()
 
-        endMillis = getFiveMinutesFromNow(now)
+        mostRecent = await getMaxTimeStamp(id)
 
-        startMillis = await getMaxTimeStamp(id) - oneMinuteMillis
+        endMillis = getFiveMinutesFromNow(now)
+        startMillis = mostRecent + oneMinuteMillis
 
         const [project] = await readTableRows('project', {id: projectId})
 
