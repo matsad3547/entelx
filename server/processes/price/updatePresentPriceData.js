@@ -54,9 +54,7 @@
   firstUpdateTimeout = setTimeout( async () => {
     let now = moment()
 
-    console.log(`starting price data update at ${now.valueOf()}`)
-
-    mostRecent = await getMaxTimeStamp(id)
+    console.log(`starting price data update at ${now}`)
 
     let endMillis = getFiveMinutesFromNow(now)
     let startMillis = mostRecent + oneMinuteMillis

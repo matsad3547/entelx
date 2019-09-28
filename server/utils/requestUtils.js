@@ -14,9 +14,11 @@ const checkStatus = res => {
 const catchErrorsWithMessage = (msg, fn) => (...args) =>
   fn(...args)
   .catch(err => {
-    const now = moment()
-    writeToFile(err.toString(), 'server/errorLog', `error-${now.valueOf()}.txt`)
     console.error(`${msg}:`, err)
+    if (process.env.NODE_ENV === 'development') {
+      const now = moment()
+      writeToFile(err.toString(), 'server/errorLog', `error-${now.valueOf()}.txt`)
+    }
   })
 
 const catchErrorAndRestart = (msg, fn) => (...args) => (restartFn) => (...restartArgs) =>
