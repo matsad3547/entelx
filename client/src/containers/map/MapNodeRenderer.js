@@ -48,8 +48,8 @@ const MapNodeRenderer = ({ map }) => {
       case 'name':
         return 'Name'
 
-      case 'maxMw':
-        return 'Max Mw'
+      // case 'maxMw':
+      //   return 'Max Mw'
 
       case 'controlArea':
         return 'Control Area'
