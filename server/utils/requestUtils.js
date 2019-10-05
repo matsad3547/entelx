@@ -31,8 +31,14 @@ const catchErrorAndRestart = (msg, fn) => (...args) => (restartFn) => (...restar
       restartFn(...restartArgs)
     })
 
+const handleMultiPromiseError = err => {
+  console.error(`there was an error: ${err}`)
+  return { error: `there was an error: ${err}`}
+}
+
 module.exports = {
   checkStatus,
   catchErrorsWithMessage,
   catchErrorAndRestart,
+  handleMultiPromiseError,
 }

@@ -911,9 +911,6 @@ describe('findStdDev', () => {
 describe('findRevenueAndCharge', () => {
   test('should do something with real data', () => {
     const data = {
-      aggregate: {
-        mean: 40.3,
-      },
       timeSeries: [
         {
           timestamp: 1548788100000,
@@ -923,7 +920,8 @@ describe('findRevenueAndCharge', () => {
           energyPrc: 29.49853,
           congestionPrc: 0,
           nodeId: 3969,
-          score: -0.23530744416873445
+          score: -0.23530744416873445,
+          mvgAvg: 40.3,
         }
       ]
     }
@@ -952,9 +950,6 @@ describe('findRevenueAndCharge', () => {
 
   test('should return realistic charge values', () => {
     const data = {
-      aggregate: {
-        mean: 40,
-      },
       timeSeries: [
         {
           timestamp: 1548788100000,
@@ -987,9 +982,6 @@ describe('findRevenueAndCharge', () => {
 
   test('should charge from zero correctly', () => {
     const data = {
-      aggregate: {
-        mean: 40,
-      },
       timeSeries: [
         {
           timestamp: 1548788100000,
@@ -1022,9 +1014,6 @@ describe('findRevenueAndCharge', () => {
 
   test('should charge from an existing level correctly', () => {
     const data = {
-      aggregate: {
-        mean: 40,
-      },
       timeSeries: [
         {
           timestamp: 1548788100000,
@@ -1057,9 +1046,6 @@ describe('findRevenueAndCharge', () => {
 
   test('should not charge from zero if the price is above the charge threshold', () => {
     const data = {
-      aggregate: {
-        mean: 40,
-      },
       timeSeries: [
         {
           timestamp: 1548788100000,
@@ -1092,9 +1078,6 @@ describe('findRevenueAndCharge', () => {
 
   test('should not charge from a non-zero level if the price is above the charge threshold', () => {
     const data = {
-      aggregate: {
-        mean: 40,
-      },
       timeSeries: [
         {
           timestamp: 1548788100000,
@@ -1127,9 +1110,6 @@ describe('findRevenueAndCharge', () => {
 
   test('should not discharge from zero', () => {
     const data = {
-      aggregate: {
-        mean: 40,
-      },
       timeSeries: [
         {
           timestamp: 1548788100000,
@@ -1163,9 +1143,6 @@ describe('findRevenueAndCharge', () => {
 
   test('should not discharge from a non-zero level if the price is below the discharge threshold', () => {
     const data = {
-      aggregate: {
-        mean: 40,
-      },
       timeSeries: [
         {
           timestamp: 1548788100000,
@@ -1198,9 +1175,6 @@ describe('findRevenueAndCharge', () => {
 
   test('should discharge from a non-zero level if the price is above the discharge threshold', () => {
     const data = {
-      aggregate: {
-        mean: 40,
-      },
       timeSeries: [
         {
           timestamp: 1548788100000,

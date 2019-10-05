@@ -34,11 +34,12 @@
 
   console.log(`starting "updatePastPriceData" for ${name}` )
 
+  let oldest = await getMinTimeStamp(id)
   const mostRecent = await getMaxTimeStamp(id)
 
   const sixMonthsAgoMillis = mostRecent - sixMonthMillis
 
-  let endMillis = mostRecent - oneMinuteMillis
+  let endMillis = oldest - oneMinuteMillis
 
   const [nodeData] = await readTableRows('node', {id,})
 
@@ -50,7 +51,7 @@
 
     await catchErrorsWithMessage('There was an error getting past update data', pastPriceDataUpdater)(startMillis, endMillis, nodeData)
 
-    const oldest = await getMinTimeStamp(id)
+    oldest = await getMinTimeStamp(id)
 
     if (oldest < sixMonthsAgoMillis) {
       exitPastPriceUpdates()

@@ -7,9 +7,9 @@ const { fiveMinsAsHour } = require('../config/')
 // TODO mvgAvg utils that use `mvgAvg`:
 // 1. calculateScore
 
-const composeData = (...fns) => (data, key, options) => {
+const composeData = (...fns) => (timeSeries, key, options) => {
   const res = {
-    timeSeries: data,
+    timeSeries,
     aggregate: {},
   }
   return fns.reduce( (v, f) => f(v, key, options), res)
@@ -455,8 +455,6 @@ const calculateScoreData = composeData(
 
 const calculateDerivedData = composeData(
   calculateMean,
-  calculateMovingAverage,
-  calculateScore,
   findInflections,
   findStdDev,
   findUpperAndLowerValues,

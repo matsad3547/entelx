@@ -51,54 +51,58 @@
 
   const pid = process.pid
 
-  firstUpdateTimeout = setTimeout( async () => {
-    let now = moment()
+  try {
+    firstUpdateTimeout = setTimeout( async () => {
+      let now = moment()
 
-    console.log(`starting price data update at ${now}`)
+      console.log(`starting price data update at ${now}`)
 
-    let endMillis = getFiveMinutesFromNow(now)
-    let startMillis = mostRecent + oneMinuteMillis
+      let endMillis = getFiveMinutesFromNow(now)
+      let startMillis = mostRecent + oneMinuteMillis
 
-    const [project] = await readTableRows('project', {id: projectId})
+      const [project] = await readTableRows('project', {id: projectId})
 
-    const newest = await catchErrorsWithMessage('There was an error getting the initial price update', presentPriceDataUpdater)(startMillis, endMillis, nodeData, project)
+      const newest = await catchErrorsWithMessage('There was an error getting the initial price update', presentPriceDataUpdater)(startMillis, endMillis, nodeData, project)
 
-    let nextTimeoutMillis = getUpdateTimeout(newest)
+      let nextTimeoutMillis = getUpdateTimeout(newest)
 
-    const getPriceDataOnInterval = (timeoutMillis = fiveMinutesMillis) => {
-      continuousTimeout = setTimeout( async () => {
+      const getPriceDataOnInterval = (timeoutMillis = fiveMinutesMillis) => {
+        continuousTimeout = setTimeout( async () => {
 
-        now = moment()
+          now = moment()
 
-        mostRecent = await getMaxTimeStamp(id)
+          mostRecent = await getMaxTimeStamp(id)
 
-        endMillis = getFiveMinutesFromNow(now)
-        startMillis = mostRecent + oneMinuteMillis
+          endMillis = getFiveMinutesFromNow(now)
+          startMillis = mostRecent + oneMinuteMillis
 
-        const [project] = await readTableRows('project', {id: projectId})
+          const [project] = await readTableRows('project', {id: projectId})
 
-        console.log(`periodic price data update at ${now.valueOf()}`)
+          console.log(`periodic price data update at ${now}`)
 
-        const newest = await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater)(startMillis, endMillis, nodeData, project)
+          const newest = await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater)(startMillis, endMillis, nodeData, project)
 
-        if (!isNaN(newest)) {
-          nextTimeoutMillis = getUpdateTimeout(newest)
+          if (!isNaN(newest)) {
+            nextTimeoutMillis = getUpdateTimeout(newest)
 
-          await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
-        }
-        else {
-          console.log('delaying!!!! newest is', newest);
+            await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
+          }
+          else {
+            nextTimeoutMillis = fiveMinutesMillis - (30 * 1000)
+          }
 
-          nextTimeoutMillis = fiveMinutesMillis - (30 * 1000)
-        }
+          getPriceDataOnInterval(nextTimeoutMillis)
 
-        getPriceDataOnInterval(nextTimeoutMillis)
+        }, timeoutMillis)
+      }
 
-      }, timeoutMillis)
-    }
+      getPriceDataOnInterval(nextTimeoutMillis)
+    }, firstUpdate)
+  }
+  catch (err) {
+    console.error('There was an error in `updatePresentPriceData`:', err)
+  }
 
-    getPriceDataOnInterval(nextTimeoutMillis)
-  }, firstUpdate)
 
 
   await catchErrorsWithMessage('There was an error setting the process id for present price updates', updateTableRow)('project', {id: projectId}, {presentUpdatePid: pid})

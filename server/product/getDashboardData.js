@@ -7,6 +7,7 @@ const { getCurrentWeather } = require('../processes/')
 const {
   catchErrorsWithMessage,
   getMaxTimeStamp,
+  handleMultiPromiseError,
 } = require('../utils/')
 
 const {
@@ -88,11 +89,6 @@ const getData = async (res, projectSpecs) => {
     charge: project.charge,
     status: project.status,
   })
-}
-
-const handleMultiPromiseError = err => {
-  console.error(`there was an error: ${err}`)
-  return { error: `there was an error: ${err}`}
 }
 
 module.exports = getDashboardData

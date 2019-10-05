@@ -1,7 +1,9 @@
 const updateRevenueAndSoc = require('./updateRevenueAndSoc')
 const getPriceData = require('./getPriceData')
 
-const { createTableRows } = require('../../db/')
+const {
+  createTableRows,
+} = require('../../db/')
 
 const { catchErrorsWithMessage } = require('../../utils/')
 
@@ -12,22 +14,15 @@ const presentPriceDataUpdater = async (
   project,
 ) => {
 
-  const {
-    currentAvg,
-  } = nodeData
-
   const prices = await catchErrorsWithMessage(`There was an error getting present price data from ${startMillis} to ${endMillis}`, getPriceData)(startMillis, endMillis, nodeData)
 
-  const aggregate = {
-    mean: currentAvg,
-  }
-
-  const data = {
-    prices,
-    aggregate,
-  }
+  console.log(`got ${prices.length} price records from ${startMillis} to ${endMillis}`);
 
   await catchErrorsWithMessage(`There was an error adding rows for data from ${startMillis} to ${endMillis}`, createTableRows)('price', prices)
+
+  const data = {
+    timeSeries: prices,
+  }
 
   await catchErrorsWithMessage('There was an error updating state of charge and revenue', updateRevenueAndSoc)(data, 'lmp', project)
 

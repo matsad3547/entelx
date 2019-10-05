@@ -90,7 +90,7 @@ const HistoricalDisplay = ({match}) => {
   const getData = useCallback( async () => {
 
     const startMillis = startTime.valueOf()
-    
+
     const endMillis = endTime.valueOf()
 
     const body = {
@@ -123,19 +123,6 @@ const HistoricalDisplay = ({match}) => {
     finally {
       setLoading(false)
     }
-
-    // setLoading(true)
-    // singleRequest('/historical/', request)
-    //   .then(parseResponse)
-    //   .then( res => {
-    //     setLoading(false)
-    //     setConfig(res.config)
-    //     setTimeseries(res.timeseries)
-    //   })
-    //   .catch( err => {
-    //     setLoading(false)
-    //     console.error(`There was an error retrieving your project: ${err}`)
-    //   })
   }, [startTime, endTime, includeWeather, projectId])
 
   useEffect( () => {
