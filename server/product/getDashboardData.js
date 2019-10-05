@@ -75,7 +75,6 @@ const getData = async (res, projectSpecs) => {
   const data = await Promise.all([
       getCurrentWeather(lat, lng),
       readTableRowsWhereBtw('price_with_score', {nodeId,}, 'timestamp', [startMillis, endMillis]),
-      // readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis]),
       readTableRows('project', {id,})
     ].map( p => p.catch(handleMultiPromiseError) )
   )
