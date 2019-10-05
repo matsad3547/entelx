@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
     t.dropColumn('energy')
   })
   .then( () => knex.schema.table('project', t => {
-      t.decimal('power').notNullable
-      t.decimal('energy').notNullable
+      t.decimal('power').notNullable()
+      t.decimal('energy').notNullable()
     })
   )
 };
