@@ -81,9 +81,16 @@
 
         const newest = await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater)(startMillis, endMillis, nodeData, project)
 
-        nextTimeoutMillis = getUpdateTimeout(newest)
+        if (!isNaN(newest)) {
+          nextTimeoutMillis = getUpdateTimeout(newest)
 
-        await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
+          await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
+        }
+        else {
+          console.log('delaying!!!! newest is', newest);
+
+          nextTimeoutMillis = fiveMinutesMillis - (30 * 1000)
+        }
 
         getPriceDataOnInterval(nextTimeoutMillis)
 

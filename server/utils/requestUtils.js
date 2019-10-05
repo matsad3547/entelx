@@ -16,6 +16,7 @@ const catchErrorsWithMessage = (msg, fn) => (...args) =>
   fn(...args)
   .catch(err => {
     console.error(`${msg}:`, err)
+    throw err
     // Uncomment to log errors as .txt files
     // if (process.env.NODE_ENV === 'development') {
     //   const now = moment()
