@@ -32,7 +32,8 @@ const getHistoricalData = async (req, res) => {
 
   const [node] = await readTableRows('node', {id: nodeId})
 
-  const timeseries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis])
+  const timeseries = await readTableRowsWhereBtw('price_with_mvg_avg', {nodeId,}, 'timestamp', [startMillis, endMillis])
+  // const timeseries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis])
 
   return res.status(200).json({
     timeseries,
