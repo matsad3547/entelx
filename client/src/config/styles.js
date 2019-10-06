@@ -72,3 +72,13 @@ export const buttons = {
 }
 
 export const boxShadow = '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)'
+
+export const trendColors = [
+  '#03CEA4',
+  '#78C3FB',
+  '#89A6FB',
+  '#7067CF',
+  '#345995',
+  '#A11692',
+  '#861388',
+]

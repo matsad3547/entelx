@@ -1,21 +1,18 @@
-import { roundToDigits } from '../utils/'
+import {
+  roundToDigits,
+  formatDollars,
+} from '../utils/'
 
-export const trendColors = [
-  '#03CEA4',
-  '#78C3FB',
-  '#89A6FB',
-  '#7067CF',
-  '#345995',
-  '#A11692',
-  '#861388',
-]
+import {
+  trendColors
+} from './styles'
 
 export const lineDataFormat = {
   lmp: {
     unit: '$/Mwh',
     label: 'Locational Marginal Price',
     color: trendColors[0],
-    format: value => roundToDigits(value, 2),
+    format: formatDollars,
   },
   temperature: {
     unit: '°F',
@@ -43,9 +40,9 @@ export const lineDataFormat = {
   },
   mvgAvg: {
     unit: '$/Mwh',
-    label: 'Average Price',
+    label: '3 Week Moving Avg',
     color: trendColors[6],
-    format: value => Math.round((value * 100)) / 100,
+    format: formatDollars,
   },
 }
 
