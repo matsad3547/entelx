@@ -51,6 +51,6 @@ export const barDataFormat = {
     unit: '',
     label: 'Score',
     color: value => value > 0 ? 'red' : 'green',
-    format: value => Math.round((value * 1000)) / 1000,
+    format: value => roundToDigits(value, 3),
   }
 }

@@ -13,6 +13,7 @@ import DataTimeDisplay from '../components/DataTimeDisplay'
 import DataTimeRangeDisplay from '../components/DataTimeRangeDisplay'
 
 import { getBaseUrl } from '../utils/'
+import { roundMomentToMinutes } from '../utils/dateTimeUtils'
 
 import {
   singleRequest,
@@ -38,7 +39,8 @@ const HistoricalDisplay = ({match}) => {
 
   const getNow = () => moment()
 
-  const now = getNow()
+  const now = roundMomentToMinutes(getNow(), 5)
+
   const oneWeekAgo = now.clone()
     .subtract(7, 'days')
 
@@ -61,25 +63,28 @@ const HistoricalDisplay = ({match}) => {
   const onIncrementStartTime = () => {
     const incremented = onIncrement(startTime)
 
-    incremented.isBefore(endTime) ? setStartTime(incremented) : setStartTime(endTime.clone().subtract(1, 'day'))
+    roundMomentToMinutes(endTime.clone().subtract(1, 'day'), 5)
+
+    incremented.isBefore(endTime) ? setStartTime(roundMomentToMinutes(incremented, 5)) : setStartTime(roundMomentToMinutes(endTime.clone().subtract(1, 'day'), 5))
   }
 
   const onDecrementStartTime = () => {
     const decremented = onDecrement(startTime)
 
-    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone())
+    decremented.isAfter(minDate) ? setStartTime(roundMomentToMinutes(decremented, 5)) : setStartTime(minDate.clone())
   }
 
   const onIncrementEndTime = () => {
     const incremented = onIncrement(endTime)
 
-    incremented.isBefore(getNow()) ? setEndTime(incremented) : setEndTime(getNow())
+    incremented.isBefore(getNow()) ? setEndTime(roundMomentToMinutes(incremented, 5)) : setEndTime(roundMomentToMinutes(getNow(), 5))
   }
 
   const onDecrementEndTime = () => {
     const decremented = onDecrement(endTime)
+    roundMomentToMinutes(startTime.clone().add(1, 'day'), 5)
 
-    decremented.isAfter(startTime) ? setEndTime(decremented) : setEndTime(startTime.clone().add(1, 'day'))
+    decremented.isAfter(startTime) ? setEndTime(roundMomentToMinutes(decremented, 5)) : setEndTime(roundMomentToMinutes(startTime.clone().add(1, 'day'), 5))
   }
 
   const onTimeIncrementSelect = e => setTimeIncrement(e.target.value)
