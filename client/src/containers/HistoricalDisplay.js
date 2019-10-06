@@ -16,7 +16,6 @@ import { getBaseUrl } from '../utils/'
 
 import {
   singleRequest,
-  // parseResponse,
 } from '../utils/requestUtils'
 
 import {
