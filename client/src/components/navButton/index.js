@@ -27,12 +27,6 @@ const NavButton = ({
   </Link>
 )
 
-const getLabelStyles = current => ({
-  ...styles.label,
-  cursor: current ? 'not-allowed' : 'pointer',
-  background: current ? colors.lightGray : colors.white,
-})
-
 const getClassName = current => current ? 'navButton current' : 'navButton'
 
 const styles = {

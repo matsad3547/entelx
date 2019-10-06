@@ -17,15 +17,18 @@ const composeData = (...fns) => (timeSeries, key, options) => {
 
 const getSum = (a, b) => a + b
 
+// TODO Replace with metrics query
 const getMean = arr => arr.reduce(getSum, 0)/arr.length
-
+// TODO Replace with metrics query
 const getStdDev = (timeSeries, key, mean) => Math.sqrt(getMean(timeSeries.map( d => (d[key] - mean)**2 )))
 
+// TODO Replace with metrics query
 const getMinAndMax = (timeSeries, key) => timeSeries.reduce( (obj, d, i) =>  ({
   max: d[key] > obj.max ? d[key] : obj.max,
   min: d[key] < obj.min ? d[key] : obj.min,
 }), {max: 0, min: Infinity})
 
+// TODO Replace with metrics query
 const calculateMean = (data, key) => {
 
   return {
@@ -37,6 +40,7 @@ const calculateMean = (data, key) => {
   }
 }
 
+// TODO Delete - replaced
 const calculateMovingAverage = (data, key, options) => {
 
   const { period } = options
@@ -66,6 +70,7 @@ const calculateMovingAverage = (data, key, options) => {
   }
 }
 
+// TODO Delete - replaced
 const calculateScore = (data, key) => {
 
   const { timeSeries } = data
@@ -388,6 +393,7 @@ const findStdDev = (data, key) => {
   }
 }
 
+// TODO Replace with metrics query
 const findUpperAndLowerValues = (data, key) => {
   const {
     timeSeries,
