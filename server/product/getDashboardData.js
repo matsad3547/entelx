@@ -7,6 +7,7 @@ const { getCurrentWeather } = require('../processes/')
 const {
   catchErrorsWithMessage,
   getMaxTimeStamp,
+  handleMultiPromiseError,
 } = require('../utils/')
 
 const {
@@ -74,7 +75,7 @@ const getData = async (res, projectSpecs) => {
 
   const data = await Promise.all([
       getCurrentWeather(lat, lng),
-      readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis]),
+      readTableRowsWhereBtw('price_with_score', {nodeId,}, 'timestamp', [startMillis, endMillis]),
       readTableRows('project', {id,})
     ].map( p => p.catch(handleMultiPromiseError) )
   )
@@ -88,11 +89,6 @@ const getData = async (res, projectSpecs) => {
     charge: project.charge,
     status: project.status,
   })
-}
-
-const handleMultiPromiseError = err => {
-  console.error(`there was an error: ${err}`)
-  return { error: `there was an error: ${err}`}
 }
 
 module.exports = getDashboardData

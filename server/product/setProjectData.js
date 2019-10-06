@@ -1,7 +1,7 @@
 const moment = require('moment-timezone')
 
 const {
-  getPriceRequest,
+  getPriceData,
   launchPriceUpdates,
 } = require('../processes/')
 
@@ -11,11 +11,15 @@ const {
   deleteTableRowsWhereNot,
 } = require('../db/')
 
-const { calculateDerivedData } = require('../utils/')
+const {
+  calculateDerivedData,
+  catchErrorsWithMessage,
+  handleMultiPromiseError,
+} = require('../utils/')
 
 const { dayOf5Mins } = require('../config/')
 
-const setProjectData = (node, project) => {
+const setProjectData = async (node, project) => {
 
   const {
     id,
@@ -34,10 +38,7 @@ const setProjectData = (node, project) => {
                       .subtract(numDays, 'days')
                       .valueOf()
 
-  const {
-    req,
-    params,
-  } = getPriceRequest(node)
+  const prices = await catchErrorsWithMessage(`There was an error getting present price data from ${startMillis} to ${endMillis}`, getPriceData)(startMillis, endMillis, node)
 
   const options = {
     period: numDays * dayOf5Mins,
@@ -48,29 +49,19 @@ const setProjectData = (node, project) => {
     chargeBuffer,
   }
 
-  return req(
-    ...params,
-    startMillis,
-    endMillis,
-    node.name,
-  )
-  .then( data => {
-    const derivedData = calculateDerivedData(data, 'lmp', options)
+  const {
+    aggregate,
+  } = calculateDerivedData(prices, 'lmp', options)
 
-    const {
-      timeSeries,
-      aggregate,
-    } = derivedData
+  const {
+    mean,
+    chargeThreshold,
+    dischargeThreshold,
+  } = aggregate
 
-    const {
-      mean,
-      chargeThreshold,
-      dischargeThreshold,
-    } = aggregate
+  console.log('mean:', mean, 'chargeThreshold:', chargeThreshold, 'dischargeThreshold:', dischargeThreshold)
 
-    console.log('mean:', mean, 'chargeThreshold:', chargeThreshold, 'dischargeThreshold:', dischargeThreshold)
-
-    return Promise.all([
+  await Promise.all([
       updateTableRow(
         'node',
         {id: node.id},
@@ -90,23 +81,15 @@ const setProjectData = (node, project) => {
       ),
       createTableRows(
         'price',
-        timeSeries.map( ts => ({
-            ...ts,
-            nodeId: node.id,
-          })
-        )
+        prices
       ),
-    ])
-  })
-  .then( () => launchPriceUpdates({
-      node,
-      timeZone,
-      projectId: id,
-    })
+    ].map( p => p.catch(handleMultiPromiseError) )
   )
-  .catch( err => {
-    console.error('There was an error getting the running average:', err)
-    throw new Error(err)
+
+  launchPriceUpdates({
+    node,
+    timeZone,
+    projectId: id,
   })
 }
 

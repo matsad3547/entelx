@@ -9,8 +9,9 @@ const processNodes = nodes => nodes.reduce( (obj, node) => ({
         properties: {
           type: node.type,
           name: node.name,
-          maxMw: node.maxMw,
           controlArea: node.controlArea,
+          // TODO find endpoint to get node max Mw
+          // maxMw: node.maxMw,
         },
         geometry: {
           type: 'Point',

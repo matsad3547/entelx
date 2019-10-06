@@ -1,5 +1,5 @@
 const updateRevenueAndSoc = require('./updateRevenueAndSoc')
-const updatePriceData = require('./updatePriceData')
+const getPriceData = require('./getPriceData')
 
 const { createTableRows } = require('../../db/')
 
@@ -12,35 +12,19 @@ const presentPriceDataUpdater = async (
   project,
 ) => {
 
-  const {
-    id,
-    currentAvg,
-  } = nodeData
+  const prices = await catchErrorsWithMessage(`There was an error getting present price data from ${startMillis} to ${endMillis}`, getPriceData)(startMillis, endMillis, nodeData)
 
-  const newData = await catchErrorsWithMessage(`There was an error getting present price data from ${startMillis} to ${endMillis}`, updatePriceData)(startMillis, endMillis, nodeData)
+  console.log(`got ${prices.length} price records from ${startMillis} to ${endMillis}`);
 
-  const timeSeries = newData.map( obj => ({
-      ...obj,
-      mvgAvg: currentAvg,
-      nodeId: id,
-      score: (obj.lmp - currentAvg) / currentAvg,
-    })
-  )
-
-  const aggregate = {
-    mean: currentAvg,
-  }
+  await catchErrorsWithMessage(`There was an error adding rows for data from ${startMillis} to ${endMillis}`, createTableRows)('price', prices)
 
   const data = {
-    timeSeries,
-    aggregate,
+    timeSeries: prices,
   }
-
-  await catchErrorsWithMessage(`There was an error adding rows for data from ${startMillis} to ${endMillis}`, createTableRows)('price', timeSeries)
 
   await catchErrorsWithMessage('There was an error updating state of charge and revenue', updateRevenueAndSoc)(data, 'lmp', project)
 
-  return timeSeries[timeSeries.length - 1].timestamp
+  return prices[prices.length - 1].timestamp
 }
 
 module.exports = presentPriceDataUpdater

@@ -15,11 +15,11 @@ const launchPriceUpdates = params => {
   })
 
   updatePresentData.on('error', err => {
-    console.error('There was an error running the "updatePriceData" process:', err)
+    console.error('There was an error running the "updatePresentPriceData" process:', err)
   })
 
   updatePastData.on('error', err => {
-    console.error('There was an error running the "updatePastData" process:', err)
+    console.error('There was an error running the "updatePastPriceData" process:', err)
   })
 
   updatePresentData.unref()

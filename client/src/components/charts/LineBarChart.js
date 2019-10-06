@@ -65,7 +65,7 @@ const LineBarChart = React.memo(({
     <ResponsiveContainer width={'100%'} aspect={aspect}>
       <ComposedChart
         data={overThreshold}
-        margin={{top: 0, right: 0, left: 0, bottom: 0}}>
+        margin={{top: 20, right: 0, left: 0, bottom: 0}}>
         <XAxis
           dataKey="timestamp"
           tickFormatter={millis => formatMillis(millis, timeZone, twelveHourFormat)}
@@ -74,6 +74,8 @@ const LineBarChart = React.memo(({
           yAxisId="left"
           tickCount={10}
           minTickGap={5}
+          allowDecimals={false}
+          padding={{ top: 20 }}
           />
         <YAxis
           yAxisId="right"

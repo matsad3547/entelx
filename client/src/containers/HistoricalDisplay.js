@@ -16,7 +16,6 @@ import { getBaseUrl } from '../utils/'
 
 import {
   singleRequest,
-  parseResponse,
 } from '../utils/requestUtils'
 
 import {
@@ -87,9 +86,10 @@ const HistoricalDisplay = ({match}) => {
 
   const onSetIncludeWeather = e => setIncludeWeather(e.target.value === 'true')
 
-  const getData = useCallback(() => {
+  const getData = useCallback( async () => {
 
     const startMillis = startTime.valueOf()
+
     const endMillis = endTime.valueOf()
 
     const body = {
@@ -105,18 +105,23 @@ const HistoricalDisplay = ({match}) => {
       body: JSON.stringify(body)
     }
 
-    setLoading(true)
-    singleRequest('/historical/', request)
-      .then(parseResponse)
-      .then( res => {
-        setLoading(false)
-        setConfig(res.config)
-        setTimeseries(res.timeseries)
-      })
-      .catch( err => {
-        setLoading(false)
-        console.error(`There was an error retrieving your project: ${err}`)
-      })
+    try {
+      setLoading(true)
+
+      const res = await singleRequest('/historical/', request)
+
+      const parsed = await res.json()
+
+      setConfig(parsed.config)
+
+      setTimeseries(parsed.timeseries)
+    }
+    catch (err) {
+      console.error(`There was an error retrieving historical data for your project: ${err}`)
+    }
+    finally {
+      setLoading(false)
+    }
   }, [startTime, endTime, includeWeather, projectId])
 
   useEffect( () => {

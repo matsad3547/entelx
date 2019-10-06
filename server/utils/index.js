@@ -8,6 +8,7 @@ const {
   checkStatus,
   catchErrorsWithMessage,
   catchErrorAndRestart,
+  handleMultiPromiseError,
 } = require('./requestUtils')
 
 const { writeToFile } = require('./fileUtils')
@@ -36,6 +37,7 @@ module.exports = {
   checkStatus,
   catchErrorsWithMessage,
   catchErrorAndRestart,
+  handleMultiPromiseError,
   writeToFile,
   calculateDerivedData,
   calculateInsightData,
