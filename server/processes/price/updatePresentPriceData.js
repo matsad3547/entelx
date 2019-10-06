@@ -92,7 +92,6 @@
           }
 
           getPriceDataOnInterval(nextTimeoutMillis)
-
         }, timeoutMillis)
       }
 

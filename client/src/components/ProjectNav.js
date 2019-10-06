@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 
 import NavButton from './navButton/'
 
@@ -8,7 +9,18 @@ import {
   boxShadow,
 } from '../config/styles'
 
-const ProjectNav = ({baseUrl, id}) => {
+import {
+  getLocation
+} from '../utils/'
+
+const ProjectNav = ({
+  baseUrl,
+  id,
+  match,
+}) => {
+
+
+  const location = getLocation(match.url, baseUrl, id)
 
   const buttons = [
     {
@@ -43,6 +55,7 @@ const ProjectNav = ({baseUrl, id}) => {
           link={b.link}
           id={id}
           label={b.label}
+          current={location === b.link}
           />
         )
       }
@@ -65,4 +78,4 @@ ProjectNav.propTypes = {
   id: PropTypes.string.isRequired,
 }
 
-export default ProjectNav
+export default withRouter(ProjectNav)

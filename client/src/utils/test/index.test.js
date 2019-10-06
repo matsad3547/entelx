@@ -2,6 +2,7 @@ import {
   findRelevantKeys,
   roundToDigits,
   getBaseUrl,
+  getLocation,
 } from '../index'
 
 test('findRelevantKeys', () => {
@@ -91,6 +92,17 @@ describe('getBaseUrl', () => {
     const path = 'create_project'
     const actual = getBaseUrl(url, path)
     const expected = '/demo'
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('getLocation', () => {
+  test('should remove a base url and `projectId` provided', () => {
+    const url = '/demo/project/9'
+    const base = '/demo'
+    const projectId = 9
+    const actual = getLocation(url, base, projectId)
+    const expected = 'project'
     expect(actual).toEqual(expected)
   })
 })

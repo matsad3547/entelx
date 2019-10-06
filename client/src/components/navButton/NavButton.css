@@ -1,3 +1,14 @@
 .navButton:hover {
-  background: #e2e2e2;
+  background: #e2e2e2;  /* lightGray */
+}
+
+.navButton {
+  background: #fff;
+  cursor: pointer;
+}
+
+.current, .current:hover {
+  background: #fff;
+  color: #046D27;
+  cursor: not-allowed;
 }

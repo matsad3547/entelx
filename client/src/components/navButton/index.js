@@ -11,6 +11,7 @@ const NavButton = ({
   link,
   id,
   label,
+  current,
 }) => (
 
   <Link
@@ -18,13 +19,21 @@ const NavButton = ({
     style={styles.link}
     >
     <li
-      className="navButton"
+      className={getClassName(current)}
       style={styles.label}
       >
       {label}
     </li>
   </Link>
 )
+
+const getLabelStyles = current => ({
+  ...styles.label,
+  cursor: current ? 'not-allowed' : 'pointer',
+  background: current ? colors.lightGray : colors.white,
+})
+
+const getClassName = current => current ? 'navButton current' : 'navButton'
 
 const styles = {
   label: {
@@ -44,6 +53,7 @@ NavButton.propTypes = {
   link: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  current: PropTypes.bool.isRequired,
 }
 
 export default NavButton

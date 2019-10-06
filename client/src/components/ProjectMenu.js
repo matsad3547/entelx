@@ -27,9 +27,10 @@ const ProjectMenu = ({
 
   return (
     <div>
-      <div style={styles.button} >
-        <span className="fas fa-bars" onClick={showMenu}></span>
-      </div>
+      <span
+        className="fas fa-bars" onClick={showMenu}
+        style={styles.button}
+        />
       {
         display &&
         <div ref={menu}>
@@ -44,14 +45,9 @@ const ProjectMenu = ({
 }
 
 const styles = {
-  root: {
-    alignSelf: 'center',
-  },
   button: {
-    boxSizing: 'border-box',
-    padding: '.5em',
-    height: '97%',
     fontSize: '1.5em',
+    padding: '.5em',
     cursor: 'pointer',
   },
 }

@@ -125,6 +125,7 @@ const styles = {
   items: {
     display: 'inline-flex',
     justifyContent: 'space-between',
+    alignItems: 'flex-end',
     color: colors.white,
     zIndex: 1,
   },
