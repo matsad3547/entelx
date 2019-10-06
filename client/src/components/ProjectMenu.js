@@ -10,10 +10,10 @@ const ProjectMenu = ({
 
   const [display, setDisplay] = useState(false)
 
-  const menu = useRef(null)
+  const menuRef = useRef(null)
 
   const handleOutsideClick = e => {
-    if (menu.current && !menu.current.contains(e.target)) {
+    if (menuRef.current && !menuRef.current.contains(e.target)) {
       setDisplay(false)
     }
   }
@@ -33,7 +33,7 @@ const ProjectMenu = ({
         />
       {
         display &&
-        <div ref={menu}>
+        <div ref={menuRef}>
           <ProjectNav
             baseUrl={baseUrl}
             id={id}
