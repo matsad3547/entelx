@@ -35,6 +35,7 @@
   console.log(`starting "updatePastPriceData" for ${name}` )
 
   let oldest = await getMinTimeStamp(id)
+  
   const mostRecent = await getMaxTimeStamp(id)
 
   const sixMonthsAgoMillis = mostRecent - sixMonthMillis
