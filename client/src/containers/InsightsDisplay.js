@@ -21,10 +21,7 @@ import {
   roundToDigits,
 } from '../utils/'
 
-import {
-  singleRequest,
-  parseResponse,
-} from '../utils/requestUtils'
+import { singleRequest } from '../utils/requestUtils'
 
 // import {timeIncrements} from '../config/'
 //
@@ -69,11 +66,10 @@ const InsightsDisplay = ({match}) => {
 
   const [multiplier] = useState(.1)
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState(null)
+  const [revenueSurface, setRevenueSurface] = useState(null)
   const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
   const [revenue, setRevenue] = useState(0)
-  const [showChart, setShowChart] = useState(false)
 
   const onIncrement = (value, increment) => value + increment
 
@@ -103,11 +99,44 @@ const InsightsDisplay = ({match}) => {
     setDischargeThreshold(decremented)
   }
 
+  const getRevenueSurface = useCallback( async () => {
+
+    const startMillis = startTime.valueOf()
+    const endMillis = endTime.valueOf()
+
+    const body = {
+      id: projectId,
+      endMillis,
+      startMillis,
+    }
+
+    const request = {
+      method: 'POST',
+      headers: defaultHeaders,
+      body: JSON.stringify(body)
+    }
+
+    setLoading(true)
+
+    try {
+      const res = await singleRequest('/get_revenue_surface/', request)
+
+      const parsed = await res.json()
+
+      setRevenueSurface(parsed.revenueSurface)
+    }
+    catch (err) {
+      console.error(`There was an error calculating revenue surface data for your project: ${err}`)
+    }
+    finally {
+      setLoading(false)
+    }
+  }, [startTime, endTime, projectId])
+
   const getData = useCallback( async () => {
 
     const startMillis = startTime.valueOf()
     const endMillis = endTime.valueOf()
-    console.log('start:', startMillis, 'end:', endMillis);
 
     const body = {
       id: projectId,
@@ -126,9 +155,8 @@ const InsightsDisplay = ({match}) => {
     try {
       const res = await singleRequest('/insights/', request)
 
-      const parsed = await parseResponse(res)
+      const parsed = await res.json()
 
-      setData(parsed.data)
       setAggregate(parsed.aggregate)
       setConfig(parsed.config)
 
@@ -143,10 +171,11 @@ const InsightsDisplay = ({match}) => {
       setChargeStdDev(belowStdDev)
       setDischargeThreshold(aboveMean)
       setDischargeStdDev(aboveStdDev)
-
-    } catch (err) {
+    }
+    catch (err) {
       console.error(`There was an error retrieving your project: ${err}`)
-    } finally {
+    }
+    finally {
       setLoading(false)
     }
   }, [startTime, endTime, projectId])
@@ -170,12 +199,14 @@ const InsightsDisplay = ({match}) => {
     try {
       const res = await singleRequest('/get_revenue_by_thresholds/', request)
 
-      const parsed = await parseResponse(res)
+      const parsed = await res.json()
 
       setRevenue(parsed.revenue)
-    } catch (err) {
+    }
+    catch (err) {
       console.error(`There was an error retrieving revenue data: ${err}`)
-    } finally {
+    }
+    finally {
       setLoading(false)
     }
   }, [chargeThreshold, dischargeThreshold, projectId])
@@ -183,8 +214,6 @@ const InsightsDisplay = ({match}) => {
   useEffect( () => {
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
-
-  console.log('aggregate:', aggregate);
 
   return (
 
@@ -226,66 +255,79 @@ const InsightsDisplay = ({match}) => {
       </div>
       <DashboardSection
         headerContent={'Test Charge and Discharge Thresholds'}>
-        <div style={styles.controls}>
-          <ValueControl
-            value={chargeThreshold || (config && config.chargeThreshold)}
-            format={formatDollars}
-            title="Charge Threshold"
-            disabled={config && !config.chargeThreshold}
-            onIncrement={onIncrementChargeThreshold}
-            onDecrement={onDecrementChargeThreshold}
-            onIncrementLabel={`${multiplier}\u03C3`}
-            onDecrementLabel={`${multiplier}\u03C3`}
-            />
-          <ValueControl
-            value={dischargeThreshold || (config && config.dischargeThreshold)}
-            format={formatDollars}
-            title="Discharge Threshold"
-            disabled={config && !config.dischargeThreshold}
-            onIncrement={onIncrementDischargeThreshold}
-            onDecrement={onDecrementDischargeThreshold}
-            onIncrementLabel={`${multiplier}\u03C3`}
-            onDecrementLabel={`${multiplier}\u03C3`}
-            />
-        </div>
-        <div style={styles.revenue}>
-          <div>
-            <Label content="7 Day Revenue for Selected Thresholds"/>
-            <DataDisplay content={`${revenue ? formatDollars(revenue) : blankDollars}`}/>
-          </div>
-          <Button
-            value="Get Revenue"
-            disabled={loading}
-            type="success"
-            onClick={getRevenue}
-            />
-        </div>
         {
-          (revenue !== 0 && aggregate) &&
-          <div style={styles.thresholds}>
-            <span>
-              {`Charge Threshold is ${roundToDigits((aggregate.belowMean - chargeThreshold)/aggregate.belowStdDev, 2)} x \u03C3 below the mean`}
-            </span>
-            <span>
-              {`Discharge Threshold is ${roundToDigits((dischargeThreshold -aggregate.aboveMean)/aggregate.aboveStdDev, 2)} x \u03C3 above the mean`}
-            </span>
+          aggregate &&
+          <div style={styles.revenue}>
+            <div style={styles.revenueDisplay}>
+              <Label content="7 Day Revenue for Selected Thresholds:"/>
+              <DataDisplay content={`${revenue ? formatDollars(revenue) : blankDollars}`}/>
+            </div>
+            <div style={styles.revenueWrapper}>
+              <div style={styles.controls}>
+                <div>
+                  <ValueControl
+                    value={chargeThreshold || (config && config.chargeThreshold)}
+                    format={formatDollars}
+                    title="Charge Threshold"
+                    disabled={config && !config.chargeThreshold}
+                    onIncrement={onIncrementChargeThreshold}
+                    onDecrement={onDecrementChargeThreshold}
+                    onIncrementLabel={`${multiplier}\u03C3`}
+                    onDecrementLabel={`${multiplier}\u03C3`}
+                    />
+                  <p style={styles.thresholds}>
+                    {`Charge Threshold is ${roundToDigits((aggregate.belowMean - chargeThreshold)/aggregate.belowStdDev, 2)} x \u03C3 below the mean`}
+                  </p>
+                </div>
+                <div>
+                  <ValueControl
+                    value={dischargeThreshold || (config && config.dischargeThreshold)}
+                    format={formatDollars}
+                    title="Discharge Threshold"
+                    disabled={config && !config.dischargeThreshold}
+                    onIncrement={onIncrementDischargeThreshold}
+                    onDecrement={onDecrementDischargeThreshold}
+                    onIncrementLabel={`${multiplier}\u03C3`}
+                    onDecrementLabel={`${multiplier}\u03C3`}
+                    />
+                  <p style={styles.thresholds}>
+                    {`Discharge Threshold is ${roundToDigits((dischargeThreshold -aggregate.aboveMean)/aggregate.aboveStdDev, 2)} x \u03C3 above the mean`}
+                  </p>
+                </div>
+              </div>
+              <div style={styles.button}>
+                <Button
+                  value="Get Revenue"
+                  disabled={loading}
+                  type="success"
+                  onClick={getRevenue}
+                  />
+              </div>
+            </div>
           </div>
         }
-        <div style={styles.showChart}>
-          <Button
-            value="Show Chart"
-            disabled={loading}
-            type="success"
-            onClick={() => setShowChart(!showChart)}
-            />
+      </DashboardSection>
+      <DashboardSection
+        headerContent={'Revenue Surface'}>
+        <div style={styles.surface}>
+          {
+            revenueSurface ?
+            <ThreeDimensionalChart
+              data={revenueSurface}
+              />
+            : <div></div>
+          }
+          <div style={styles.button}>
+            <Button
+              value="Show Chart"
+              disabled={loading}
+              type="success"
+              onClick={getRevenueSurface}
+              overrideStyles={{margin: 0}}
+              />
+          </div>
         </div>
       </DashboardSection>
-      {
-        showChart &&
-        <ThreeDimensionalChart
-          data={data}
-          />
-      }
     </ProjectPageTemplate>
   )
 }
@@ -300,10 +342,6 @@ const styles = {
     justifyContent: 'space-between',
     maxWidth: '60em',
   },
-  controls: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
   inclusion: {
     display: 'flex',
     flexDirection: 'column',
@@ -314,21 +352,35 @@ const styles = {
   minDate: {
     padding: '0 0 1em',
   },
-  revenue: {
+  revenueWrapper: {
     display: 'flex',
-    alignItems: 'flex-end',
     justifyContent: 'space-between',
   },
-  thresholds: {
+  controls: {
     display: 'flex',
-    flexDirection: 'column',
-    lineHeight: '2.5em',
-    padding: '1em 0',
-    fontStyle: 'italic',
+    width: '45em',
+    justifyContent: 'space-between',
   },
-  showChart: {
+  revenue: {
+    padding: '.5em 1em',
+  },
+  revenueDisplay: {
+    display: 'inline-flex',
+    alignItems: 'baseline',
+  },
+  thresholds: {
+    lineHeight: '1.5em',
+    fontStyle: 'italic',
+    width: '15em',
+    padding: '.5em',
+  },
+  button: {
+    flex: 0,
+  },
+  surface: {
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'space-between',
+    padding: '1em',
   },
 }
 

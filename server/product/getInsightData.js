@@ -1,20 +1,13 @@
 const {
   readTableRows,
-  readTableRowsWhereBtw,
+  getPriceAggregateData,
 } = require('../db/')
-
-const {
-  calculateInsightData,
-  getCenteredValuesArr,
-  getTwoDimensionalArray,
-  findRevenueAndCharge,
-} = require('../utils/')
 
 const getInsightData = async (req, res) => {
 
   const {
-    endMillis,
     startMillis,
+    endMillis,
     id,
   } = req.body
 
@@ -30,74 +23,14 @@ const getInsightData = async (req, res) => {
     name,
     chargeThreshold,
     dischargeThreshold,
-    rte,
-    dischargeBuffer,
-    chargeBuffer,
   } = project
 
   const [node] = await readTableRows('node', {id: nodeId})
 
-  const timeSeries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis])
-
-  const options = {
-    power,
-    energy,
-    rte,
-    dischargeBuffer,
-    chargeBuffer,
-  }
-
-  const key = 'lmp'
-
-  const data = calculateInsightData(timeSeries, key, options)
-
-  const { aggregate } = data
-
-  const {
-    aboveStdDev,
-    belowStdDev,
-    aboveMean,
-    belowMean,
-  } = aggregate
-
-  const aboveIncrement = aboveStdDev * .1
-  const belowIncrement = belowStdDev * .1
-  const aboveDistance = aboveStdDev * 3
-  const belowDistance = belowStdDev * 3
-
-  const xArr = getCenteredValuesArr(belowMean, belowIncrement, belowDistance)
-  const zArr = getCenteredValuesArr(aboveMean, aboveIncrement, aboveDistance)
-
-  const valArr = getTwoDimensionalArray(xArr, zArr)
-
-  const charge = 0
-  const revenue = 0
-
-  const currentState = {
-    charge,
-    revenue,
-  }
-
-  const points = valArr.map( arr => {
-    const [x, z] = arr
-
-    const { revenue } = findRevenueAndCharge(data, key, options, currentState, x, z)
-
-    return {
-      x,
-      y: revenue,
-      z,
-    }
-  })
-
-  console.log('x axis length:', xArr.length, 'z axis length:', zArr.length);
+  const aggregate = await getPriceAggregateData(startMillis, endMillis)
 
   return res.status(200).json({
     aggregate,
-    data: {
-      points,
-      axisLength: xArr.length,
-    },
     config: {
       projectName: name,
       power,

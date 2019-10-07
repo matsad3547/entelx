@@ -24,6 +24,7 @@ const {
   getInsightData,
   getMinDate,
   getRevenueByThresholds,
+  getRevenueSurface,
 } = require('./product/')
 
 const {
@@ -84,6 +85,7 @@ app.get('/historical/:id/min_date', getMinDate)
 //insights
 app.post('/insights/', getInsightData)
 app.post('/get_revenue_by_thresholds/', getRevenueByThresholds)
+app.post('/get_revenue_surface/', getRevenueSurface)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/public')))
