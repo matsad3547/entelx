@@ -467,13 +467,6 @@ const calculateDerivedData = composeData(
   findThresholds,
 )
 
-const calculateInsightData = composeData(
-  calculateMean,
-  findInflections,
-  findUpperAndLowerValues,
-  findThresholds,
-)
-
 module.exports = {
   composeData,
   calculateMovingAverage,
@@ -488,7 +481,6 @@ module.exports = {
   findStdDev,
   calculateDerivedData,
   findUpperAndLowerValues,
-  calculateInsightData,
   getCenteredValuesArr,
   getTwoDimensionalArray,
   calculateMean,

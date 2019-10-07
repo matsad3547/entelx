@@ -53,7 +53,11 @@ const getRevenueByThresholds = async (req, res) => {
 
   const key = 'lmp'
 
-  const newVals = findRevenueAndCharge(timeSeries, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
+  const data = {
+    timeSeries,
+  }
+
+  const newVals = findRevenueAndCharge(data, key, batterySpecs, currentState, dischargeThreshold, chargeThreshold)
 
   return res.status(200).json({
     revenue: newVals.revenue,

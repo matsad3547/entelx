@@ -11,6 +11,7 @@ const DataDisplay = ({content}) => (
 const styles = {
   fontSize: '1.2em',
   padding: '0 .5em 1em',
+  fontStyle: 'normal',
 }
 
 DataDisplay.propTypes = {

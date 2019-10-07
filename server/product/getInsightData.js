@@ -1,10 +1,10 @@
 const {
   readTableRows,
   readTableRowsWhereBtw,
+  getPriceAggregateData,
 } = require('../db/')
 
 const {
-  calculateInsightData,
   getCenteredValuesArr,
   getTwoDimensionalArray,
   findRevenueAndCharge,
@@ -13,8 +13,8 @@ const {
 const getInsightData = async (req, res) => {
 
   const {
-    endMillis,
     startMillis,
+    endMillis,
     id,
   } = req.body
 
@@ -47,11 +47,7 @@ const getInsightData = async (req, res) => {
     chargeBuffer,
   }
 
-  const key = 'lmp'
-
-  const data = calculateInsightData(timeSeries, key, options)
-
-  const { aggregate } = data
+  const aggregate = await getPriceAggregateData(startMillis, endMillis)
 
   const {
     aboveStdDev,
@@ -77,6 +73,13 @@ const getInsightData = async (req, res) => {
     charge,
     revenue,
   }
+
+  const data = {
+    timeSeries,
+    aggregate,
+  }
+
+  const key = 'lmp'
 
   const points = valArr.map( arr => {
     const [x, z] = arr
