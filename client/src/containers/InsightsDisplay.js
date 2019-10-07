@@ -362,7 +362,7 @@ const styles = {
     justifyContent: 'space-between',
   },
   revenue: {
-    padding: '1em',
+    padding: '.5em 1em',
   },
   revenueDisplay: {
     display: 'inline-flex',
