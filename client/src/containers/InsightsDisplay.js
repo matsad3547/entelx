@@ -66,11 +66,10 @@ const InsightsDisplay = ({match}) => {
 
   const [multiplier] = useState(.1)
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState(null)
+  const [revenueSurface, setRevenueSurface] = useState(null)
   const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
   const [revenue, setRevenue] = useState(0)
-  const [showChart, setShowChart] = useState(false)
 
   const onIncrement = (value, increment) => value + increment
 
@@ -100,11 +99,44 @@ const InsightsDisplay = ({match}) => {
     setDischargeThreshold(decremented)
   }
 
+  const getRevenueSurface = useCallback( async () => {
+
+    const startMillis = startTime.valueOf()
+    const endMillis = endTime.valueOf()
+
+    const body = {
+      id: projectId,
+      endMillis,
+      startMillis,
+    }
+
+    const request = {
+      method: 'POST',
+      headers: defaultHeaders,
+      body: JSON.stringify(body)
+    }
+
+    setLoading(true)
+
+    try {
+      const res = await singleRequest('/get_revenue_surface/', request)
+
+      const parsed = await res.json()
+
+      setRevenueSurface(parsed.revenueSurface)
+    }
+    catch (err) {
+      console.error(`There was an error calculating revenue surface data for your project: ${err}`)
+    }
+    finally {
+      setLoading(false)
+    }
+  }, [startTime, endTime, projectId])
+
   const getData = useCallback( async () => {
 
     const startMillis = startTime.valueOf()
     const endMillis = endTime.valueOf()
-    console.log('start:', startMillis, 'end:', endMillis);
 
     const body = {
       id: projectId,
@@ -125,7 +157,6 @@ const InsightsDisplay = ({match}) => {
 
       const parsed = await res.json()
 
-      setData(parsed.data)
       setAggregate(parsed.aggregate)
       setConfig(parsed.config)
 
@@ -140,7 +171,6 @@ const InsightsDisplay = ({match}) => {
       setChargeStdDev(belowStdDev)
       setDischargeThreshold(aboveMean)
       setDischargeStdDev(aboveStdDev)
-
     }
     catch (err) {
       console.error(`There was an error retrieving your project: ${err}`)
@@ -281,14 +311,14 @@ const InsightsDisplay = ({match}) => {
             value="Show Chart"
             disabled={loading}
             type="success"
-            onClick={() => setShowChart(!showChart)}
+            onClick={getRevenueSurface}
             />
         </div>
       </DashboardSection>
       {
-        showChart &&
+        revenueSurface &&
         <ThreeDimensionalChart
-          data={data}
+          data={revenueSurface}
           />
       }
     </ProjectPageTemplate>
