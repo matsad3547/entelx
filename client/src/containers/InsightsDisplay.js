@@ -53,12 +53,12 @@ const InsightsDisplay = ({match}) => {
   const now = getNow()
   // const oneWeekAgo = now.clone()
     .subtract(7, 'days')
-  const threeWeeksAgo = now.clone()
+  const oneWeekAgo = now.clone()
     .subtract(7, 'days')
 
   // const incrementsArr = Object.keys(timeIncrements)
 
-  const [startTime] = useState(threeWeeksAgo)
+  const [startTime] = useState(oneWeekAgo)
   const [endTime] = useState(now)
 
   const [chargeThreshold, setChargeThreshold] = useState(0)
@@ -107,6 +107,7 @@ const InsightsDisplay = ({match}) => {
 
     const startMillis = startTime.valueOf()
     const endMillis = endTime.valueOf()
+    console.log('start:', startMillis, 'end:', endMillis);
 
     const body = {
       id: projectId,

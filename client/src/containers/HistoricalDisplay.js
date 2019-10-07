@@ -37,9 +37,9 @@ const HistoricalDisplay = ({match}) => {
 
   const cleanUrl = getBaseUrl(url, 'historical', projectId)
 
-  const getNow = () => moment()
+  const getNow = () => roundMomentToMinutes(moment(), 5)
 
-  const now = roundMomentToMinutes(getNow(), 5)
+  const now = getNow()
 
   const oneWeekAgo = now.clone()
     .subtract(7, 'days')
@@ -63,28 +63,25 @@ const HistoricalDisplay = ({match}) => {
   const onIncrementStartTime = () => {
     const incremented = onIncrement(startTime)
 
-    roundMomentToMinutes(endTime.clone().subtract(1, 'day'), 5)
-
-    incremented.isBefore(endTime) ? setStartTime(roundMomentToMinutes(incremented, 5)) : setStartTime(roundMomentToMinutes(endTime.clone().subtract(1, 'day'), 5))
+    incremented.isBefore(endTime) ? setStartTime(incremented) : setStartTime(endTime.clone().subtract(1, 'day'))
   }
 
   const onDecrementStartTime = () => {
     const decremented = onDecrement(startTime)
 
-    decremented.isAfter(minDate) ? setStartTime(roundMomentToMinutes(decremented, 5)) : setStartTime(minDate.clone())
+    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone())
   }
 
   const onIncrementEndTime = () => {
     const incremented = onIncrement(endTime)
 
-    incremented.isBefore(getNow()) ? setEndTime(roundMomentToMinutes(incremented, 5)) : setEndTime(roundMomentToMinutes(getNow(), 5))
+    incremented.isBefore(getNow()) ? setEndTime(incremented) : setEndTime(getNow())
   }
 
   const onDecrementEndTime = () => {
     const decremented = onDecrement(endTime)
-    roundMomentToMinutes(startTime.clone().add(1, 'day'), 5)
 
-    decremented.isAfter(startTime) ? setEndTime(roundMomentToMinutes(decremented, 5)) : setEndTime(roundMomentToMinutes(startTime.clone().add(1, 'day'), 5))
+    decremented.isAfter(startTime) ? setEndTime(decremented) : setEndTime(startTime.clone().add(1, 'day'))
   }
 
   const onTimeIncrementSelect = e => setTimeIncrement(e.target.value)

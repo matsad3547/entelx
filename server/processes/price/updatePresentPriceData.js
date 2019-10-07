@@ -102,8 +102,6 @@
     console.error('There was an error in `updatePresentPriceData`:', err)
   }
 
-
-
   await catchErrorsWithMessage('There was an error setting the process id for present price updates', updateTableRow)('project', {id: projectId}, {presentUpdatePid: pid})
 
   setExitListeners()

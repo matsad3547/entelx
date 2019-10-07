@@ -81,6 +81,7 @@ const LineBarChart = React.memo(({
           yAxisId="right"
           orientation="right"
           tickCount={5}
+          padding={{ top: 20 }}
           domain={[-3, 3]}
           />
         <CartesianGrid strokeDasharray="3 3"/>
