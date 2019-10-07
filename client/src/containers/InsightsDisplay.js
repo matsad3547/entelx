@@ -257,8 +257,8 @@ const InsightsDisplay = ({match}) => {
         headerContent={'Test Charge and Discharge Thresholds'}>
         {
           aggregate &&
-          <div>
-            <div style={styles.revenue}>
+          <div style={styles.revenue}>
+            <div style={styles.revenueDisplay}>
               <Label content="7 Day Revenue for Selected Thresholds:"/>
               <DataDisplay content={`${revenue ? formatDollars(revenue) : blankDollars}`}/>
             </div>
@@ -295,7 +295,7 @@ const InsightsDisplay = ({match}) => {
                   </p>
                 </div>
               </div>
-              <div style={{flex: 0}}>
+              <div style={styles.button}>
                 <Button
                   value="Get Revenue"
                   disabled={loading}
@@ -306,21 +306,28 @@ const InsightsDisplay = ({match}) => {
             </div>
           </div>
         }
-        <div style={styles.showChart}>
-          <Button
-            value="Show Chart"
-            disabled={loading}
-            type="success"
-            onClick={getRevenueSurface}
-            />
+      </DashboardSection>
+      <DashboardSection
+        headerContent={'Revenue Surface'}>
+        <div style={styles.surface}>
+          {
+            revenueSurface ?
+            <ThreeDimensionalChart
+              data={revenueSurface}
+              />
+            : <div></div>
+          }
+          <div style={styles.button}>
+            <Button
+              value="Show Chart"
+              disabled={loading}
+              type="success"
+              onClick={getRevenueSurface}
+              overrideStyles={{margin: 0}}
+              />
+          </div>
         </div>
       </DashboardSection>
-      {
-        revenueSurface &&
-        <ThreeDimensionalChart
-          data={revenueSurface}
-          />
-      }
     </ProjectPageTemplate>
   )
 }
@@ -355,6 +362,9 @@ const styles = {
     justifyContent: 'space-between',
   },
   revenue: {
+    padding: '1em',
+  },
+  revenueDisplay: {
     display: 'inline-flex',
     alignItems: 'baseline',
   },
@@ -364,9 +374,13 @@ const styles = {
     width: '15em',
     padding: '.5em',
   },
-  showChart: {
+  button: {
+    flex: 0,
+  },
+  surface: {
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'space-between',
+    padding: '1em',
   },
 }
 
