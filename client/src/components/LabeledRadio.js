@@ -47,6 +47,7 @@ const styles = {
   root: {
     display: 'inline-flex',
     alignItems: 'baseline',
+    padding: '0 .5em .5em',
   },
   input: {
     margin: '0 .5em 1em',

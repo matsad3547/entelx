@@ -62,18 +62,12 @@ const DateRangeControl = ({
 
   return (
     <div style={styles.root}>
-      <div style={styles.minDate}>
-        <DataTimeDisplay
-          message="Earliest data currently available is from"
-          millis={minDate.valueOf()}
-          timeZone={timeZone}
-          />
-      </div>
+      <DataTimeDisplay
+        message="Earliest data currently available is from"
+        millis={minDate.valueOf()}
+        timeZone={timeZone}
+        />
       <div style={styles.controls}>
-        <TimeIncrementSelect
-          onSelect={onTimeIncrementSelect}
-          selected={timeIncrement}
-          />
         <DateControl
           date={startTime}
           title='Start Time'
@@ -90,6 +84,10 @@ const DateRangeControl = ({
           onDecrement={onDecrementEndTime}
           timeZone={timeZone}
           />
+        <TimeIncrementSelect
+          onSelect={onTimeIncrementSelect}
+          selected={timeIncrement}
+          />
       </div>
     </div>
   )
@@ -98,9 +96,6 @@ const DateRangeControl = ({
 const styles = {
   root: {
     padding: '0 0 0 1em',
-  },
-  minDate: {
-    padding: '1em 0 0',
   },
   controls: {
     display: 'flex',

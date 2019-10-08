@@ -8,13 +8,13 @@ const Button = ({
   type,
   onClick,
   disabled = false,
-  overrideStyles = {}
+  width = '6em'
 }) => {
 
   const getStyles = type => ({
     ...styles.root,
     ...buttons[type],
-    ...overrideStyles,
+    width,
   })
 
   return (
@@ -37,7 +37,6 @@ const styles = {
   	cursor: 'pointer',
   	fontSize: '1.3em',
   	padding: '1em',
-    margin: '.5em 0',
   },
 }
 

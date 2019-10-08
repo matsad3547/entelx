@@ -26,14 +26,12 @@ const ValueControl = ({
         disabled={disabled}
         type="primary"
         onClick={onDecrement}
-        overrideStyles={styles.button}
         />
       <Button
         value={`+ ${onIncrementLabel}`}
         disabled={disabled}
         type="primary"
         onClick={onIncrement}
-        overrideStyles={styles.button}
         />
     </div>
   </div>
@@ -56,11 +54,6 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '0 0 0 .5em',
-  },
-  button: {
-    padding: '.5em',
-    margin: 0,
-    width: '5em',
   },
 }
 

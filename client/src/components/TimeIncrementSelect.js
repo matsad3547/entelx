@@ -45,7 +45,7 @@ const styles = {
   },
   radios: {
     display: 'flex',
-    flexDirection: 'column',
+    // flexDirection: 'column',
     padding: '0 0 0 .5em',
   },
 }

@@ -174,10 +174,6 @@ const styles = {
   getData: {
     margin: '.5em 0 0 1.5em',
   },
-
-  button: {
-    margin: 0,
-  },
 }
 
 export default HistoricalDisplay

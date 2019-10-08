@@ -12,7 +12,7 @@ const Label = ({ content }) => (
 
 export const labelStyle = {
   display: 'block',
-  padding: '1em 0',
+  padding: '.5em 0',
   fontStyle: 'italic',
   fontSize: fontSize.label,
 }

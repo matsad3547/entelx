@@ -45,7 +45,7 @@ const styles = {
     fontFamily: 'Montserrat, Helvetica, sans-serif',
     fontWeight: 200,
     // fontSize: '1.3vw',
-    fontSize: 16,
+    fontSize: 14,
     textAlign: 'center',
     overflow: 'hidden',
     display: 'flex',

@@ -8,11 +8,10 @@ const DataTimeDisplay = ({message, millis, timeZone}) => (
 
   <p style={styles}>
     {`${message} ${moment(millis).tz(timeZone).format(monthDayTimeFormat)}`}
-  </p> 
+  </p>
 )
 
 const styles = {
-  padding: '0 0 1em',
   fontSize: '.8em',
   fontStyle: 'italic',
 }

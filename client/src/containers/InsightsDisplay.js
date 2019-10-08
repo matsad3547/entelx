@@ -145,6 +145,7 @@ const InsightsDisplay = ({match}) => {
                 disabled={loading}
                 type="success"
                 onClick={getData}
+                width={'8em'}
                 />
             </div>
           </div>
@@ -170,7 +171,7 @@ const styles = {
   button: {
     display: 'flex',
     justifyContent: 'flex-end',
-    padding: '1em 0',
+    padding: '.5em 0',
   },
 }
 
