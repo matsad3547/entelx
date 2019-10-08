@@ -26,7 +26,7 @@ const getStatusStyles = color => ({
   fontSize: '2em',
   fontStyle: 'italic',
   fontWeight: 'bold',
-  padding: '0 0 .5em',
+  padding: '.5em 0',
   boxSizing: 'border-box',
   width: 'min-content',
 })
