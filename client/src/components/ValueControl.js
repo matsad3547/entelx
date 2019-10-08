@@ -50,15 +50,12 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     padding: '.5em 0',
-  },
-  value: {
-    padding: '.5em 1em',
-    fontSize: '1.2em',
+    textAlign: 'left',
   },
   buttons: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '0 .5em',
+    padding: '0 0 0 .5em',
   },
   button: {
     padding: '.5em',

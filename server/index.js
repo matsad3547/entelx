@@ -84,8 +84,13 @@ app.get('/historical/:id/min_date', getMinDate)
 
 //insights
 app.post('/insights/', getInsightData)
+
+//development
 app.post('/get_revenue_by_thresholds/', getRevenueByThresholds)
 app.post('/get_revenue_surface/', getRevenueSurface)
+
+//generic
+app.get('/get_min_date/:id', getMinDate)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/public')))

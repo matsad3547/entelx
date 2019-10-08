@@ -1,7 +1,7 @@
 import React from 'react'
 
 import LabeledRadio from '../components/LabeledRadio'
-import Header5 from './Header5'
+import Label from './Label'
 
 import {timeIncrements} from '../config/'
 
@@ -18,9 +18,9 @@ const TimeIncrementSelect = ({
   )
 
   return (
-    <div >
-      <Header5 content="Select Time Increment" />
-      <div style={styles}>
+    <div style={styles.root}>
+      <Label content="Select Time Increment"/>
+      <div style={styles.radios}>
         {
           increments.map( (inc, i) =>
           <LabeledRadio
@@ -40,9 +40,14 @@ const TimeIncrementSelect = ({
 }
 
 const styles = {
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '.5em 0',
+  root: {
+    padding: '0.5em 0',
+  },
+  radios: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '0 0 0 .5em',
+  },
 }
 
 export default TimeIncrementSelect

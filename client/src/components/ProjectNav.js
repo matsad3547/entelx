@@ -19,6 +19,7 @@ const ProjectNav = ({
   match,
 }) => {
 
+  // const env = process.env.NODE_ENV
 
   const location = getLocation(match.url, baseUrl, id)
 
@@ -39,6 +40,10 @@ const ProjectNav = ({
       link: 'insights',
       label: 'Insights',
     },
+    {
+      link: 'dev',
+      label: 'Development',
+    }
     // {
     //   link: 'roi',
     //   label: 'Project ROI',

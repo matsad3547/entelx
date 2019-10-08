@@ -10,7 +10,7 @@ const DataDisplay = ({content}) => (
 
 const styles = {
   fontSize: '1.2em',
-  padding: '0 .5em 1em',
+  padding: '0 0 1em .5em',
   fontStyle: 'normal',
 }
 

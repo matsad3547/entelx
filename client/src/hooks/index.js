@@ -2,7 +2,10 @@ import {
   useEffect,
   useState,
   useRef,
+  useCallback,
 } from 'react'
+
+import moment from 'moment-timezone'
 
 export const useConnectToServerSideEvent = (route, handleData) => useEffect( () => {
     const stream = new EventSource(route)
@@ -78,4 +81,24 @@ export const useInterpolateValues = (value, seconds) => {
   }, [value, seconds])
 
   return displayVal
+}
+
+export const useMinDate = (projectId) => {
+
+  const oneWeekAgo = moment()
+    .subtract(7, 'days')
+
+  const [minDate, setMinDate] = useState(oneWeekAgo)
+
+  const handleData = useCallback( e => {
+    e.preventDefault()
+    const {minDateMillis} = JSON.parse(e.data)
+    setMinDate(moment(minDateMillis))
+  }, [])
+
+  const sseRoute = `/get_min_date/${projectId}`
+
+  useConnectToServerSideEvent(sseRoute, handleData)
+
+  return minDate
 }
