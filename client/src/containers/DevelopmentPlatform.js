@@ -42,7 +42,7 @@ const DevelopmentPlatform = ({match}) => {
 
   const { projectId } = params
 
-  const cleanUrl = getBaseUrl(url, 'insights', projectId)
+  const cleanUrl = getBaseUrl(url, 'dev', projectId)
 
   const getNow = () => moment()
 
