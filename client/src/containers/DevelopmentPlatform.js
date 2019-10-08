@@ -33,7 +33,7 @@ import {
   defaultHeaders,
 } from '../config/'
 
-const InsightsDisplay = ({match}) => {
+const DevelopmentPlatform = ({match}) => {
 
   const {
     url,
@@ -66,7 +66,7 @@ const InsightsDisplay = ({match}) => {
   const [multiplier] = useState(.1)
   const [loading, setLoading] = useState(false)
   const [revenueSurface, setRevenueSurface] = useState(null)
-  const [aggregate] = useState(null)
+  const [aggregate, setAggregate] = useState(null)
   const [config, setConfig] = useState(null)
   const [revenue, setRevenue] = useState(0)
 
@@ -157,6 +157,7 @@ const InsightsDisplay = ({match}) => {
       const parsed = await res.json()
 
       setConfig(parsed.config)
+      setAggregate(parsed.aggregate)
 
       const {
         belowMean,
@@ -242,6 +243,7 @@ const InsightsDisplay = ({match}) => {
                     onDecrement={onDecrementChargeThreshold}
                     onIncrementLabel={`${multiplier}\u03C3`}
                     onDecrementLabel={`${multiplier}\u03C3`}
+                    width={'18em'}
                     />
                   <p style={styles.thresholds}>
                     {`Charge Threshold is ${roundToDigits((aggregate.belowMean - chargeThreshold)/aggregate.belowStdDev, 2)} x \u03C3 below the mean`}
@@ -257,6 +259,7 @@ const InsightsDisplay = ({match}) => {
                     onDecrement={onDecrementDischargeThreshold}
                     onIncrementLabel={`${multiplier}\u03C3`}
                     onDecrementLabel={`${multiplier}\u03C3`}
+                    width={'18em'}
                     />
                   <p style={styles.thresholds}>
                     {`Discharge Threshold is ${roundToDigits((dischargeThreshold -aggregate.aboveMean)/aggregate.aboveStdDev, 2)} x \u03C3 above the mean`}
@@ -269,6 +272,7 @@ const InsightsDisplay = ({match}) => {
                   disabled={loading}
                   type="success"
                   onClick={getRevenue}
+                  width={'8em'}
                   />
               </div>
             </div>
@@ -291,7 +295,7 @@ const InsightsDisplay = ({match}) => {
               disabled={loading}
               type="success"
               onClick={getRevenueSurface}
-              overrideStyles={{margin: 0}}
+              width={'8em'}
               />
           </div>
         </div>
@@ -352,4 +356,4 @@ const styles = {
   },
 }
 
-export default InsightsDisplay
+export default DevelopmentPlatform

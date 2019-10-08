@@ -8,6 +8,7 @@ import ProjectRoi from '../containers/ProjectRoi'
 import ProjectDashboard from '../containers/ProjectDashboard'
 import HistoricalDisplay from '../containers/HistoricalDisplay'
 import InsightsDisplay from '../containers/InsightsDisplay'
+import DevelopmentPlatform from '../containers/DevelopmentPlatform'
 
 const ProjectTools = ({match}) => (
 
@@ -35,6 +36,10 @@ const ProjectTools = ({match}) => (
     <Route
       path={`${match.path}/insights/:projectId`}
       component={InsightsDisplay}
+    />
+    <Route
+      path={`${match.path}/dev/:projectId`}
+      component={DevelopmentPlatform}
     />
   </React.Fragment>
 )

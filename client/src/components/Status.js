@@ -103,7 +103,7 @@ const styles = {
   prices: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '1.5em 0 0',
+    padding: '1em 0 0',
   },
   followingSection: {
     padding: '0 0 0 2em',
