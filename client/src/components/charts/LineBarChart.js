@@ -31,6 +31,8 @@ import { colors } from '../../config/styles'
 import {
   formatMillis,
   findRelevantKeys,
+  roundToDigits,
+  formatDollars,
 } from '../../utils'
 
 const LineBarChart = React.memo(({
@@ -65,7 +67,7 @@ const LineBarChart = React.memo(({
     <ResponsiveContainer width={'100%'} aspect={aspect}>
       <ComposedChart
         data={overThreshold}
-        margin={{top: 20, right: 0, left: 0, bottom: 0}}>
+        margin={{top: 10, right: 0, left: 10, bottom: 0}}>
         <XAxis
           dataKey="timestamp"
           tickFormatter={millis => formatMillis(millis, timeZone, twelveHourFormat)}
@@ -75,14 +77,16 @@ const LineBarChart = React.memo(({
           tickCount={10}
           minTickGap={5}
           allowDecimals={false}
-          padding={{ top: 20 }}
+          padding={{ top: 10}}
+          tickFormatter={ val => formatDollars(val)}
           />
         <YAxis
           yAxisId="right"
           orientation="right"
           tickCount={5}
-          padding={{ top: 20 }}
+          padding={{ top: 10}}
           domain={[-3, 3]}
+          tickFormatter={ val => roundToDigits(val, 2)}
           />
         <CartesianGrid strokeDasharray="3 3"/>
         <Tooltip
