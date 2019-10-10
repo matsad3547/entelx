@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState} from 'react'
 import { withRouter } from 'react-router'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
@@ -13,11 +13,12 @@ import MapMarkerRenderer from '../components/map/MapMarkerRenderer'
 
 import {
   singleRequest,
-  parseResponse,
 } from '../utils/requestUtils'
 
 import { getBaseUrl } from '../utils/'
 import { defaultHeaders } from '../config'
+
+import { useGetProject } from '../hooks/'
 
 const Project = ({match, history}) => {
 
@@ -29,7 +30,8 @@ const Project = ({match, history}) => {
   const { projectId } = params
 
   const [loading, setLoading] = useState(false)
-  const [project, setProject] = useState(null)
+
+  const [project, loadingProject] = useGetProject(projectId)
 
   const cleanUrl = getBaseUrl(url, 'project', projectId)
 
@@ -53,29 +55,6 @@ const Project = ({match, history}) => {
       })
   }
 
-  const getProject = useCallback(() => {
-
-    setLoading(true)
-
-    const request = {
-      method: 'GET',
-      headers: defaultHeaders,
-    }
-
-    singleRequest(`/project/${projectId}`, request)
-      .then(parseResponse)
-      .then( res => {
-        setProject(res[0])
-        setLoading(false)
-      })
-      .catch( err => {
-        setLoading(false)
-        console.error(`There was an error retrieving your project: ${err}`)
-      })
-  }, [projectId])
-
-  useEffect( () => getProject(), [getProject])
-
   return (
     <ProjectPageTemplate
       title={project ? `${project.name} - Home` : 'Project Home'}
@@ -83,7 +62,7 @@ const Project = ({match, history}) => {
       id={projectId}
       >
       <div style={styles.root}>
-        { loading && <Loading message={''} />}
+        { (loading || loadingProject) && <Loading message={''} />}
 
         <div style={styles.project}>
           <div style={styles.header}>
@@ -117,6 +96,7 @@ const Project = ({match, history}) => {
               value={'DELETE PROJECT'}
               type="danger"
               onClick={onDelete}
+              width={'12em'}
               />
           </div>
         </div>
@@ -155,13 +135,13 @@ const styles = {
     padding: '0 1em 2em',
   },
   specs: {
-    padding: '0 2em',
+    padding: '0 2em 1em',
   },
   latLng: {
     display: 'inline-flex',
     alignItems: 'baseline',
     justifyContent: 'space-between',
-    width: '22em',
+    width: '24em',
   },
   button: {
     padding: '0 1em',

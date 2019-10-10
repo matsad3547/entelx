@@ -12,11 +12,13 @@ const checkStatus = res => {
   throw error
 }
 
-const catchErrorsWithMessage = (msg, fn) => (...args) =>
+const catchErrorsWithMessage = (msg, fn, shouldThrow = true) => (...args) =>
   fn(...args)
   .catch(err => {
     console.error(`${msg}:`, err)
-    throw err
+    if(shouldThrow) {
+      throw err
+    }
     // Uncomment to log errors as .txt files
     // if (process.env.NODE_ENV === 'development') {
     //   const now = moment()

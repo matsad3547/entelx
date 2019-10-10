@@ -21,7 +21,7 @@ const getPriceAggregateData = (
     FROM price_with_mvg_avg
     WHERE timestamp BETWEEN ? AND ?
     GROUP BY node_id`, [startMillis, endMillis])
-  .then( res => convertObj(res[0][0]))
+  .then( res => convertObj(res[0][0]) )
   .catch( err => console.error(`Error getting the price aggregate data from ${startMillis} to ${endMillis}:`, err))
 
 module.exports = getPriceAggregateData

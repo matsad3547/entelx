@@ -22,29 +22,29 @@ const getHistoricalData = async (req, res) => {
 
   const {
     nodeId,
-    lat,
-    lng,
-    timeZone,
-    power,
-    energy,
-    name,
+    // lat,
+    // lng,
+    // timeZone,
+    // power,
+    // energy,
+    // name,
   } = project
 
-  const [node] = await readTableRows('node', {id: nodeId})
+  // const [node] = await readTableRows('node', {id: nodeId})
 
   const timeseries = await readTableRowsWhereBtw('price_with_score', {nodeId,}, 'timestamp', [startMillis, endMillis])
 
   return res.status(200).json({
     timeseries,
-    config: {
-      projectName: name,
-      power,
-      energy,
-      lat,
-      lng,
-      timeZone,
-      node,
-    }
+    // config: {
+    //   projectName: name,
+    //   power,
+    //   energy,
+    //   lat,
+    //   lng,
+    //   timeZone,
+    //   node,
+    // }
   })
 
   // TODO save this function - it syncs timeseries data

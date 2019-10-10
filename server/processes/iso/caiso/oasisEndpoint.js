@@ -43,7 +43,7 @@ const oasisEndpoint = (
 
           if(error !== undefined) {
             console.timeEnd(`CAISO ${url} request`)
-            reject(error['m:ERR_DESC']._text)
+            reject(`CAISO Oasis request ${url} failed:`, error['m:ERR_DESC']._text)
           }
           else {
             const parser = getParser(query)
@@ -63,7 +63,7 @@ const oasisEndpoint = (
     )
     .on('error', err => {
       console.timeEnd(`CAISO ${url} request`)
-      reject(err)
+      reject(`CAISO Oasis request ${url} failed:`, err)
     })
 })
 

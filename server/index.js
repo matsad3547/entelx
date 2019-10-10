@@ -71,11 +71,12 @@ app.post('/user/login', login)
 app.get('/dashboard/:id/config', getDashboardConfig)
 app.get('/dashboard/:id/data', getDashboardData)
 
+//general
 app.get('/nodes', getNodes)
+app.get('/get_project/:id', getProjectById)
 
 //project page
 app.post('/project/create', createNewProject)
-app.get('/project/:id', getProjectById)
 app.delete('/project/:id', deleteProjectById)
 
 // historical

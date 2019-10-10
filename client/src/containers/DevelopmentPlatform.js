@@ -33,6 +33,8 @@ import {
   defaultHeaders,
 } from '../config/'
 
+import { useGetProject } from '../hooks/'
+
 const DevelopmentPlatform = ({match}) => {
 
   const {
@@ -53,6 +55,7 @@ const DevelopmentPlatform = ({match}) => {
     .subtract(7, 'days')
 
   // const incrementsArr = Object.keys(timeIncrements)
+  const [project, loadingProject] = useGetProject(projectId)
 
   const [startTime] = useState(oneWeekAgo)
   const [endTime] = useState(now)
@@ -67,7 +70,7 @@ const DevelopmentPlatform = ({match}) => {
   const [loading, setLoading] = useState(false)
   const [revenueSurface, setRevenueSurface] = useState(null)
   const [aggregate, setAggregate] = useState(null)
-  const [config, setConfig] = useState(null)
+  // const [config, setConfig] = useState(null)
   const [revenue, setRevenue] = useState(0)
 
   const onIncrement = (value, increment) => value + increment
@@ -154,17 +157,16 @@ const DevelopmentPlatform = ({match}) => {
     try {
       const res = await singleRequest('/insights/', request)
 
-      const parsed = await res.json()
+      const { aggregate } = await res.json()
 
-      setConfig(parsed.config)
-      setAggregate(parsed.aggregate)
+      setAggregate(aggregate)
 
       const {
         belowMean,
         belowStdDev,
         aboveMean,
         aboveStdDev,
-      } = parsed.aggregate
+      } = aggregate
 
       setChargeThreshold(belowMean)
       setChargeStdDev(belowStdDev)
@@ -221,7 +223,7 @@ const DevelopmentPlatform = ({match}) => {
       baseUrl={cleanUrl}
       id={projectId}
       >
-      { loading && <Loading message={''} />}
+      { (loading || loadingProject) && <Loading message={''} />}
       <DashboardSection
         headerContent={'Test Charge and Discharge Thresholds'}>
         {
@@ -235,10 +237,10 @@ const DevelopmentPlatform = ({match}) => {
               <div style={styles.controls}>
                 <div>
                   <ValueControl
-                    value={chargeThreshold || (config && config.chargeThreshold)}
+                    value={chargeThreshold || (project && project.chargeThreshold)}
                     format={formatDollars}
                     title="Charge Threshold"
-                    disabled={config && !config.chargeThreshold}
+                    disabled={project && !project.chargeThreshold}
                     onIncrement={onIncrementChargeThreshold}
                     onDecrement={onDecrementChargeThreshold}
                     onIncrementLabel={`${multiplier}\u03C3`}
@@ -251,10 +253,10 @@ const DevelopmentPlatform = ({match}) => {
                 </div>
                 <div>
                   <ValueControl
-                    value={dischargeThreshold || (config && config.dischargeThreshold)}
+                    value={dischargeThreshold || (project && project.dischargeThreshold)}
                     format={formatDollars}
                     title="Discharge Threshold"
-                    disabled={config && !config.dischargeThreshold}
+                    disabled={project && !project.dischargeThreshold}
                     onIncrement={onIncrementDischargeThreshold}
                     onDecrement={onDecrementDischargeThreshold}
                     onIncrementLabel={`${multiplier}\u03C3`}

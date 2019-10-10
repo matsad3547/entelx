@@ -1,12 +1,18 @@
 const { readTableRows } = require('../db/')
 
-const getProjectById = (req, res) => {
+const getProjectById = async (req, res, next) => {
 
   const { id } = req.params
 
-  return readTableRows('project', {id,})
-    .then( project => project ? res.status(200).json(project) : res.sendStatus(404) )
-    .catch( err => console.error(`Error at getProjectById: ${err}`) )
+  try {
+    const [project] = await readTableRows('project', {id,})
+
+    return project ? res.status(200).json(project) : res.sendStatus(404)
+  }
+  catch (err) {
+    console.error(`Error at getProjectById: ${err}`)
+    next(err)
+  }
 }
 
 module.exports = getProjectById

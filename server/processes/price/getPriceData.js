@@ -18,7 +18,7 @@ const getPriceData = async (
     params,
   } = getPriceRequest(nodeData)
 
-  const priceData = await catchErrorsWithMessage(`There was an error getting data from ${startMillis} to ${endMillis}`, req)(...params, startMillis, endMillis, name)
+  const priceData = await catchErrorsWithMessage(`There was an error getting price data from ${startMillis} to ${endMillis}`, req)(...params, startMillis, endMillis, name)
 
   return priceData.map( priceDataPoint => ({
       ...priceDataPoint,
