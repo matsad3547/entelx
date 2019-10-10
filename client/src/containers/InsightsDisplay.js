@@ -25,6 +25,8 @@ import {
   defaultHeaders,
 } from '../config/'
 
+import { useGetProject } from '../hooks/'
+
 const InsightsDisplay = ({match}) => {
 
   const {
@@ -43,11 +45,12 @@ const InsightsDisplay = ({match}) => {
   const oneWeekAgo = now.clone()
     .subtract(7, 'days')
 
+  const [project, loadingProject] = useGetProject(projectId)
+
   const [startTime, setStartTime] = useState(oneWeekAgo)
   const [endTime, setEndTime] = useState(now)
   const [loading, setLoading] = useState(false)
   const [aggregate, setAggregate] = useState(null)
-  const [config, setConfig] = useState(null)
 
   const getData = useCallback( async () => {
 
@@ -71,10 +74,9 @@ const InsightsDisplay = ({match}) => {
     try {
       const res = await singleRequest('/insights/', request)
 
-      const parsed = await res.json()
+      const { aggregate } = await res.json()
 
-      setAggregate(parsed.aggregate)
-      setConfig(parsed.config)
+      setAggregate(aggregate)
     }
     catch (err) {
       console.error(`There was an error retrieving your project: ${err}`)
@@ -91,11 +93,11 @@ const InsightsDisplay = ({match}) => {
   return (
 
     <ProjectPageTemplate
-      title={config ? `${config.projectName} - Insights` : 'Project Data Insights'}
+      title={project ? `${project.name} - Insights` : 'Project Data Insights'}
       baseUrl={cleanUrl}
       id={projectId}
       >
-      { loading && <Loading message={''} />}
+      { (loading || loadingProject) && <Loading message={''} />}
       <div style={styles.columns}>
         <DashboardSection headerContent={'Values for Potential Charging'}>
           <div style={styles.specs}>
@@ -129,7 +131,7 @@ const InsightsDisplay = ({match}) => {
       <DashboardSection
         headerContent={'Select Time Range'}>
         {
-          config &&
+          project &&
           <div style={styles.dateControl}>
             <DateRangeControl
               setStartTime={setStartTime}
@@ -137,7 +139,7 @@ const InsightsDisplay = ({match}) => {
               startTime={startTime}
               endTime={endTime}
               projectId={projectId}
-              timeZone={config.timeZone}
+              timeZone={project.timeZone}
               />
             <div style={styles.button}>
               <Button

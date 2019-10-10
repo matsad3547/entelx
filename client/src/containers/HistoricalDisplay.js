@@ -22,6 +22,8 @@ import {
 
 import { defaultHeaders } from '../config/'
 
+import { useGetProject } from '../hooks/'
+
 const HistoricalDisplay = ({match}) => {
 
   const {
@@ -40,12 +42,12 @@ const HistoricalDisplay = ({match}) => {
   const oneWeekAgo = now.clone()
     .subtract(7, 'days')
 
+  const [project, loadingProject] = useGetProject(projectId)
+
   const [startTime, setStartTime] = useState(oneWeekAgo)
   const [endTime, setEndTime] = useState(now)
   const [loading, setLoading] = useState(false)
   const [timeseries, setTimeseries] = useState(null)
-  // const [aggregate, setAggregate] = useState(null)
-  const [config, setConfig] = useState(null)
   const [includeWeather, setIncludeWeather] = useState(false)
 
   const onSetIncludeWeather = e => setIncludeWeather(e.target.value === 'true')
@@ -74,11 +76,9 @@ const HistoricalDisplay = ({match}) => {
 
       const res = await singleRequest('/historical/', request)
 
-      const parsed = await res.json()
+      const { timeseries } = await res.json()
 
-      setConfig(parsed.config)
-
-      setTimeseries(parsed.timeseries)
+      setTimeseries(timeseries)
     }
     catch (err) {
       console.error(`There was an error retrieving historical data for your project: ${err}`)
@@ -95,25 +95,25 @@ const HistoricalDisplay = ({match}) => {
   return (
 
     <ProjectPageTemplate
-      title={config ? `${config.projectName} - Historical` : 'Project Historical Analysis'}
+      title={project ? `${project.name} - Historical` : 'Project Historical Analysis'}
       baseUrl={cleanUrl}
       id={projectId}
       >
-      { loading && <Loading message={''} />}
+      { (loading || loadingProject) && <Loading message={''} />}
       {
-        (timeseries && config) &&
+        (timeseries && project) &&
         <div>
           <DashboardSection headerContent={'Historical Data'}>
             <DataTimeRangeDisplay
               message="Data from"
               startMillis={timeseries[0].timestamp}
               endMillis={timeseries[timeseries.length - 1].timestamp}
-              timeZone={config.timeZone}
+              timeZone={project.timeZone}
               />
             <LineBarChart
               barKey={'lmp'}
               data={timeseries}
-              timeZone={config.timeZone}
+              timeZone={project.timeZone}
               aspect={4}
               useBrush={true}
               />
@@ -127,7 +127,7 @@ const HistoricalDisplay = ({match}) => {
                 startTime={startTime}
                 endTime={endTime}
                 projectId={projectId}
-                timeZone={config.timeZone}
+                timeZone={project.timeZone}
                 />
               <div style={styles.request}>
                 <div style={styles.include}>

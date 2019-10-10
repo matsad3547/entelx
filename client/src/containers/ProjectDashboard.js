@@ -65,7 +65,7 @@ JS Docs - insta documentation
   return (
 
     <ProjectPageTemplate
-      title={project ? `${project.projectName} - Dashboard` : 'Project Dashboard'}
+      title={project ? `${project.name} - Dashboard` : 'Project Dashboard'}
       baseUrl={cleanUrl}
       id={projectId}
       >
