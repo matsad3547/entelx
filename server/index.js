@@ -68,7 +68,6 @@ app.post('/user/create', createUser)
 app.post('/user/login', login)
 
 //dashboard
-app.get('/dashboard/:id/config', getDashboardConfig)
 app.get('/dashboard/:id/data', getDashboardData)
 
 //general

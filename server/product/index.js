@@ -1,4 +1,3 @@
-const getDashboardConfig = require('./getDashboardConfig')
 const getDashboardData = require('./getDashboardData')
 const getHistoricalData = require('./getHistoricalData')
 const getMinDate = require('./getMinDate')
@@ -8,7 +7,6 @@ const getRevenueSurface = require('./getRevenueSurface')
 const getRevenueByThresholds = require('./getRevenueByThresholds')
 
 module.exports = {
-  getDashboardConfig,
   getDashboardData,
   getHistoricalData,
   setProjectData,

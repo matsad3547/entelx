@@ -16,46 +16,46 @@ const CurrentWeatherDisplay = ({ weather, timeZone }) => (
     { weather ?
       <DashboardSectionContent>
         <div>
-        <DataTimeDisplay
-          message="Data as of"
-          millis={weather.time * 1000}
-          timeZone={timeZone}
-          />
-        <WeatherIcon
-          icon={weather.icon}
-          style={styles.icon}
-          />
-      </div>
-      <div>
-        <Label content="Current Temperature"/>
-        <DataDisplay content={`${roundToDigits(weather.temperature, 1)}°F`}/>
-      </div>
-      <div>
-        <Label content="Cloud Cover"/>
-        <DataDisplay content={`${roundToDigits(weather.cloudCover * 100, 0)} %`}/>
-      </div>
-      <div>
-        <Label content="Wind"/>
-        <DataDisplay content={`${roundToDigits(weather.windSpeed, 1)} mph gusting to ${roundToDigits(weather.windGust, 1)} mph, bearing ${weather.windBearing}°`}/>
-      </div>
-      {
-        weather.nearestStormDistance > 0 &&
-        <div>
-          <Label content="Nearest Storm"/>
-          <DataDisplay content={`${weather.nearestStormDistance} mi bearing ${weather.nearestStormBearing}°`}/>
+          <DataTimeDisplay
+            message="Data as of"
+            millis={weather.time * 1000}
+            timeZone={timeZone}
+            />
+          <WeatherIcon
+            icon={weather.icon}
+            style={styles.icon}
+            />
         </div>
-      }
-      <div style={styles.linkContainer}>
-        <a
-          style={styles.ds}
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://darksky.net/poweredby/">
-          Powered by Dark Sky
-        </a>
-      </div>
-    </DashboardSectionContent> :
-    <p>Weather data is not currently available</p>
+        <div style={styles.dataDisplay}>
+          <Label content="Current Temperature"/>
+          <DataDisplay content={`${roundToDigits(weather.temperature, 1)}°F`}/>
+        </div>
+        <div style={styles.dataDisplay}>
+          <Label content="Cloud Cover"/>
+          <DataDisplay content={`${roundToDigits(weather.cloudCover * 100, 0)} %`}/>
+        </div>
+        <div style={styles.dataDisplay}>
+          <Label content="Wind"/>
+          <DataDisplay content={`${roundToDigits(weather.windSpeed, 1)} mph gusting to ${roundToDigits(weather.windGust, 1)} mph, bearing ${weather.windBearing}°`}/>
+        </div>
+        {
+          weather.nearestStormDistance > 0 &&
+          <div style={styles.dataDisplay}>
+            <Label content="Nearest Storm"/>
+            <DataDisplay content={`${weather.nearestStormDistance} mi bearing ${weather.nearestStormBearing}°`}/>
+          </div>
+        }
+        <div style={styles.linkContainer}>
+          <a
+            style={styles.ds}
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://darksky.net/poweredby/">
+            Powered by Dark Sky
+          </a>
+        </div>
+      </DashboardSectionContent> :
+      <p>Weather data is not currently available</p>
     }
   </DashboardSection>
 )
@@ -67,13 +67,16 @@ const styles = {
   },
   icon: {
     height: '5em',
-    padding: '0 0 1em',
+    padding: '1em 0',
   },
   ds: {
     color: '#0BA8F7',
     textDecoration: 'none',
     fontSize: '.8em',
     textAlign: 'right',
+  },
+  dataDisplay: {
+    padding: '0 1em 0',
   }
 }
 

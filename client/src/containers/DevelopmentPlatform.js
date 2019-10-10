@@ -54,7 +54,6 @@ const DevelopmentPlatform = ({match}) => {
   const oneWeekAgo = now.clone()
     .subtract(7, 'days')
 
-  // const incrementsArr = Object.keys(timeIncrements)
   const [project, loadingProject] = useGetProject(projectId)
 
   const [startTime] = useState(oneWeekAgo)
@@ -70,7 +69,6 @@ const DevelopmentPlatform = ({match}) => {
   const [loading, setLoading] = useState(false)
   const [revenueSurface, setRevenueSurface] = useState(null)
   const [aggregate, setAggregate] = useState(null)
-  // const [config, setConfig] = useState(null)
   const [revenue, setRevenue] = useState(0)
 
   const onIncrement = (value, increment) => value + increment

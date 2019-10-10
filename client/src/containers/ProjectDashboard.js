@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 
 import ProjectPageTemplate from '../components/ProjectPageTemplate'
 import CurrentWeatherDisplay from '../components/CurrentWeatherDisplay'
@@ -11,12 +11,7 @@ import { useConnectToServerSideEvent } from '../hooks/'
 
 import { getBaseUrl } from '../utils/'
 
-import {
-  singleRequest,
-  parseResponse,
-} from '../utils/requestUtils'
-
-import { defaultHeaders } from '../config/'
+import { useGetProject } from '../hooks/'
 
 const ProjectDashboard = ({match}) => {
 
@@ -29,13 +24,13 @@ const ProjectDashboard = ({match}) => {
 
   const cleanUrl = getBaseUrl(url, 'dashboard', projectId)
 
-  const [loading, setLoading] = useState(false)
+  const [project, loadingProject] = useGetProject(projectId)
+
   const [weather, setWeather] = useState(null)
   const [prices, setPrices] = useState(null)
   const [revenue, setRevenue] = useState(null)
   const [charge, setCharge] = useState(null)
   const [status, setStatus] = useState('standby')
-  const [config, setConfig] = useState(null)
 
 /**
 JS Docs - insta documentation
@@ -43,32 +38,6 @@ JS Docs - insta documentation
 * @param {object} config
 * @param {lat: Number}
 */
-
-  const getInitDashboard = useCallback( async () => {
-
-    setLoading(true)
-
-    const request = {
-      method: 'GET',
-      headers: defaultHeaders,
-    }
-
-    try {
-      const res = await singleRequest(`/dashboard/${projectId}/config`, request)
-
-      const parsed = await parseResponse(res)
-
-      setConfig(parsed.config)
-
-    }
-    catch (err) {
-      console.error(`There was an error retrieving your project: ${err}`)
-
-    }
-    finally {
-      setLoading(false)
-    }
-  }, [projectId])
 
   const handleData = useCallback( e => {
     e.preventDefault()
@@ -91,25 +60,19 @@ JS Docs - insta documentation
 
   useConnectToServerSideEvent(sseRoute, handleData)
 
-  useEffect( () => {
-    getInitDashboard()
-  }, []) //eslint-disable-line react-hooks/exhaustive-deps
-
   const hasPrices = prices && prices.length > 0
-
-  const dataLoaded = loading && !hasPrices
 
   return (
 
     <ProjectPageTemplate
-      title={config ? `${config.projectName} - Dashboard` : 'Project Dashboard'}
+      title={project ? `${project.projectName} - Dashboard` : 'Project Dashboard'}
       baseUrl={cleanUrl}
       id={projectId}
       >
-      { dataLoaded && <Loading message={''} />}
+      { (!hasPrices || loadingProject) && <Loading message={''} />}
       <div style={styles.root}>
         <Status
-          config={config}
+          config={project}
           prices={prices}
           charge={charge}
           revenue={revenue}
@@ -117,23 +80,23 @@ JS Docs - insta documentation
           />
         <DashboardSection headerContent={'Last Hour'}>
         {
-          (hasPrices && config) ?
+          (hasPrices && project) ?
             <LineBarChart
               barKey={'lmp'}
-              negBarThreshold={config.chargeThreshold}
-              posBarThreshold={config.dischargeThreshold}
+              negBarThreshold={project.chargeThreshold}
+              posBarThreshold={project.dischargeThreshold}
               data={prices}
-              timeZone={config.timeZone}
+              timeZone={project.timeZone}
               aspect={4}
               /> :
             <p style={styles.noData}>Data for the last hour is not currently available</p>
         }
         </DashboardSection>
         {
-          config &&
+          project &&
           <CurrentWeatherDisplay
             weather={weather}
-            timeZone={config.timeZone}
+            timeZone={project.timeZone}
             />
         }
       </div>
