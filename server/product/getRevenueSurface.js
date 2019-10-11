@@ -39,7 +39,7 @@ const getRevenueSurface = async (req, res) => {
     chargeBuffer,
   }
 
-  const aggregate = await getPriceAggregateData(startMillis, endMillis)
+  const aggregate = await getPriceAggregateData(startMillis, endMillis, nodeId)
 
   const {
     aboveStdDev,

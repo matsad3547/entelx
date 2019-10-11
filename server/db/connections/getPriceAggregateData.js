@@ -4,6 +4,7 @@ const { convertObj } = require('../utils/').conversions
 const getPriceAggregateData = (
   startMillis,
   endMillis,
+  nodeId,
 ) => knex.raw(
     `SELECT
       node_id,
@@ -21,7 +22,11 @@ const getPriceAggregateData = (
     FROM price_with_mvg_avg
     WHERE timestamp BETWEEN ? AND ?
     GROUP BY node_id`, [startMillis, endMillis])
-  .then( res => convertObj(res[0][0]) )
+  .then( res => {
+    const [key] = Object.keys(res[0]).filter( k => res[0][k].node_id === nodeId )
+    
+    return convertObj(res[0][key])
+  })
   .catch( err => console.error(`Error getting the price aggregate data from ${startMillis} to ${endMillis}:`, err))
 
 module.exports = getPriceAggregateData

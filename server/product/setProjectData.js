@@ -9,6 +9,7 @@ const {
   updateTableRow,
   createTableRows,
   deleteTableRowsWhereNot,
+  getPriceAggregateData,
 } = require('../db/')
 
 const {
@@ -49,9 +50,18 @@ const setProjectData = async (node, project) => {
     chargeBuffer,
   }
 
+  await createTableRows('price', prices)
+
+  const initAggregate = await getPriceAggregateData(startMillis, endMillis, node.id)
+
+  const data = {
+    timeSeries: prices,
+    aggregate: initAggregate,
+  }
+
   const {
     aggregate,
-  } = calculateDerivedData(prices, 'lmp', options)
+  } = calculateDerivedData(data, 'lmp', options)
 
   const {
     mean,
@@ -78,10 +88,6 @@ const setProjectData = async (node, project) => {
       deleteTableRowsWhereNot(
         'price',
         {nodeId: node.id}
-      ),
-      createTableRows(
-        'price',
-        prices
       ),
     ].map( p => p.catch(handleMultiPromiseError) )
   )

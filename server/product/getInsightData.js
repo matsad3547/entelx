@@ -1,4 +1,5 @@
 const {
+  readTableRows,
   getPriceAggregateData,
 } = require('../db/')
 
@@ -7,17 +8,14 @@ const getInsightData = async (req, res) => {
   const {
     startMillis,
     endMillis,
-    // id,
+    id,
   } = req.body
 
+  const [project] = await readTableRows('project', {id,})
 
-  // TODO node id will eventually be needed to select the insights from the correct node
+  const { nodeId } = project
 
-  // const [project] = await readTableRows('project', {id,})
-  //
-  // const { nodeId } = project
-
-  const aggregate = await getPriceAggregateData(startMillis, endMillis)
+  const aggregate = await getPriceAggregateData(startMillis, endMillis, nodeId)
 
   return res.status(200).json({
     aggregate,

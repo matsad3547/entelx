@@ -18,7 +18,6 @@ const {
 } = require('./user/')
 
 const {
-  getDashboardConfig,
   getDashboardData,
   getHistoricalData,
   getInsightData,

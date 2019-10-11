@@ -42,6 +42,7 @@ const Demo = ({ match }) => (
               value={'CREATE PROJECT'}
               type="primary"
               overrideStyles={styles.button}
+              width={'12em'}
               />
           </DisableableLink>
         </div>

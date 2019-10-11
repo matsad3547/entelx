@@ -15,7 +15,6 @@ const { writeToFile } = require('./fileUtils')
 
 const {
   calculateDerivedData,
-  calculateScoreData,
   findRevenueAndCharge,
   getCenteredValuesArr,
   getTwoDimensionalArray,
@@ -39,7 +38,6 @@ module.exports = {
   handleMultiPromiseError,
   writeToFile,
   calculateDerivedData,
-  calculateScoreData,
   findRevenueAndCharge,
   findClosest,
   setExitListeners,

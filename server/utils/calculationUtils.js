@@ -4,16 +4,8 @@ const { fiveMinsAsHour } = require('../config/')
 
 // TODO mvgAvg Change utils to use a `mean` value from the `aggregate` portion of the data instead of `mvgAvg` that is added to the `timeSeries`
 
-// TODO mvgAvg utils that use `mvgAvg`:
-// 1. calculateScore
-
-const composeData = (...fns) => (timeSeries, key, options) => {
-  const res = {
-    timeSeries,
-    aggregate: {},
-  }
-  return fns.reduce( (v, f) => f(v, key, options), res)
-}
+// TODO Allow for init `aggregate` values
+const composeData = (...fns) => (data, key, options) => fns.reduce( (v, f) => f(v, key, options), data)
 
 const getSum = (a, b) => a + b
 
@@ -37,61 +29,6 @@ const calculateMean = (data, key) => {
       ...data.aggregate,
       mean: getMean(data.timeSeries.map( ts => ts[key])),
     }
-  }
-}
-
-// TODO Delete - replaced
-const calculateMovingAverage = (data, key, options) => {
-
-  const { period } = options
-
-  const { timeSeries } = data
-
-  const calculation = timeSeries.reduce( (arr, d, i) => timeSeries[i - 1] ?
-  [
-    ...arr,
-    {
-      ...d,
-      timestamp: d.timestamp,
-      [key]: d[key],
-      mvgAvg: timeSeries
-        .slice(Math.max(0, i - (period - 1)), i + 1)
-        .reduce( ([sum, n], obj, i, arr) =>
-          i !== (arr.length - 1) ?
-          [sum + obj[key], n + 1] :
-          (sum + obj[key])/(n + 1)
-          , [0, 0]),
-    }
-  ] : arr, [])
-
-  return {
-    ...data,
-    timeSeries: calculation,
-  }
-}
-
-// TODO Delete - replaced
-const calculateScore = (data, key) => {
-
-  const { timeSeries } = data
-
-  const calculation = timeSeries.map( (d, i) => {
-    let score = (d[key] - d.mvgAvg) / d.mvgAvg
-
-    if(score > 9990) {
-      console.log(`Calculated score is out of range: ${score} from data ${JSON.stringify(d)}`)
-      score = 9990
-    }
-
-    return {
-      ...d,
-      score,
-    }
-  })
-
-  return {
-    ...data,
-    timeSeries: calculation,
   }
 }
 
@@ -183,6 +120,7 @@ const findMinMax = (data, key) => {
   }
 }
 
+//takes timeSeries with score
 const findInflections = (data, key) => {
 
   const {
@@ -454,25 +392,15 @@ const getCenteredValuesArr = (center, increment, distance) => {
 
 const getTwoDimensionalArray = (xArr, yArr) => xArr.flatMap( xVal => yArr.map( yVal => [xVal, yVal]))
 
-const calculateScoreData = composeData(
-  calculateMovingAverage,
-  calculateScore,
-)
-
 const calculateDerivedData = composeData(
   calculateMean,
   findInflections,
-  findStdDev,
-  findUpperAndLowerValues,
   findThresholds,
 )
 
 module.exports = {
   composeData,
-  calculateMovingAverage,
-  calculateScore,
   calculateArbitrage,
-  calculateScoreData,
   findMinMax,
   findInflections,
   findRevenueAndCharge,
