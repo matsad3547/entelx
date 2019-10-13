@@ -19,30 +19,35 @@ const ProjectNav = ({
   match,
 }) => {
 
-  // const env = process.env.NODE_ENV
+  const env = process.env.NODE_ENV
 
   const location = getLocation(match.url, baseUrl, id)
 
-  const buttons = [
+  const tools = [
     {
       link: 'project',
       label: 'Project Home',
+      envTest: true,
     },
     {
       link: 'dashboard',
       label: 'Project Dashboard',
+      envTest: true,
     },
     {
       link: 'historical',
       label: 'Historical',
+      envTest: true,
     },
     {
       link: 'insights',
       label: 'Insights',
+      envTest: true,
     },
     {
       link: 'dev',
       label: 'Development',
+      envTest: env === 'development',
     }
     // {
     //   link: 'roi',
@@ -54,13 +59,13 @@ const ProjectNav = ({
 
     <ul style={styles}>
       {
-        buttons.map( (b, i) => <NavButton
+        tools.filter( tool => tool.envTest ).map( (t, i) => <NavButton
           key={`nav-button${i}`}
           baseUrl={baseUrl}
-          link={b.link}
+          link={t.link}
           id={id}
-          label={b.label}
-          current={location === b.link}
+          label={t.label}
+          current={location === t.link}
           />
         )
       }
