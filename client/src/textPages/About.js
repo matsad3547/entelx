@@ -1,6 +1,6 @@
 import React from 'react'
 
-import PublicPageTemplate from './PublicPageTemplate'
+import PublicPageTemplate from '../components/PublicPageTemplate'
 
 const About = () => (
 
