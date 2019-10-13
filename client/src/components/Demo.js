@@ -33,7 +33,7 @@ const Demo = ({ match }) => (
             <p>Specify the power, energy capacity, and round trip efficiency of your battery or other storage technology.</p>
           </li>
           <li>
-            <p>Create the project to get access to try out the Project Dashboard and Historical data visualizer.</p>
+            <p>Create the project to get access to the Project Dashboard, Historical data visualizer, and Insights page for requesting statistical data about prices on the selected node.</p>
           </li>
         </ul>
         <div style={styles.link}>

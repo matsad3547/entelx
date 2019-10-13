@@ -46,7 +46,10 @@ Button.propTypes = {
   type: PropTypes.oneOf(Object.keys(buttons)).isRequired,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
-  overrideStyles: PropTypes.object,
+  width: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
 }
 
 export default Button
