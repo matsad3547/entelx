@@ -38,8 +38,7 @@ const oasisEndpoint = (
         .then( strJson => JSON.parse(strJson))
         .then( json => {
 
-          const error = json['m:OASISReport'] &&
-            json['m:OASISReport']['m:MessagePayload']['m:RTO']['m:ERROR']
+          const error = json['m:OASISReport'] && json['m:OASISReport']['m:MessagePayload']['m:RTO']['m:ERROR']
 
           if(error !== undefined) {
             console.timeEnd(`CAISO ${url} request`)
