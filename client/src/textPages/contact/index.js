@@ -1,8 +1,8 @@
 import React from 'react'
 
-import PublicPageTemplate from '../components/PublicPageTemplate'
+import PublicPageTemplate from '../../components/PublicPageTemplate'
 
-import { colors } from '../config/styles'
+import { colors } from '../../config/styles'
 
 const Contact = () => (
 

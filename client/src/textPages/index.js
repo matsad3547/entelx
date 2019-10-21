@@ -1,3 +1,5 @@
-import About from './about/About'
+import About from './about/'
+import Contact from './contact/'
 
 export { About }
+export { Contact }
