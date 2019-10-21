@@ -1,5 +1,9 @@
-## Entelx
-### Accelerating Energy Intelligence
+_Accelerating Energy Intelligence_  
+Entelx is a data intelligence platform. Using locational marginal price data from pricing nodes,
+
+Monitor the charge status and revenue of a storage project. Examine data periods with the Historical data visualizer.  The Insights tool permits a deeper dive into data selectable by time period.  
+
+Try out the demo
 
 
 

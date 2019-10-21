@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import Home from './components/Home'
 import Demo from './components/Demo'
 import Contact from './textPages/Contact'
-import About from './textPages/About'
+import {About} from './textPages/'
 import NavBar from './components/NavBar'
 
 import SystemAdmin from './containers/SystemAdmin'
