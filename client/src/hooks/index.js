@@ -7,3 +7,7 @@ export {
 export {
   useInterpolateValues,
 } from './uiHooks'
+
+export {
+  useGetMd
+} from './textPageHooks'
