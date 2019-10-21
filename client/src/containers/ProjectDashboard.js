@@ -69,7 +69,7 @@ JS Docs - insta documentation
       baseUrl={cleanUrl}
       id={projectId}
       >
-      { (!hasPrices || loadingProject) && <Loading message={''} />}
+      { loadingProject && <Loading message={''} />}
       <div style={styles.root}>
         <Status
           config={project}
