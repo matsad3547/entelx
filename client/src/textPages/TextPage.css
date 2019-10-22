@@ -1,6 +1,7 @@
 :root {
   --text: #363D38;
   --middle-green: #00872D;
+  --deep-green: #046D27;
 }
 
 /* h1 {
@@ -17,6 +18,7 @@ h3 {
 
 h4 {
   font-size: 1.333em;
+  padding: .5em 0;
 }
 
 h5 {
