@@ -2,7 +2,7 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 
 import PublicPageTemplate from '../../components/PublicPageTemplate'
-import Header2 from '../../components/Header2'
+import Header3 from '../../components/Header3'
 
 import { useGetMd } from '../../hooks/'
 
@@ -20,13 +20,12 @@ const About = () => {
       title={'About'}
       >
       <div style={styles.root}>
-        <Header2 content="Entelx" />
+        <Header3 content="Entelx" />
         <ReactMarkdown source={aboutMd} />
       </div>
     </PublicPageTemplate>
   )
 }
-
 
 const styles = {
   root: {
