@@ -21,9 +21,7 @@ While this project has some ambitious aims, it is at a very early stage of devel
 
 I look forward to further developing the product including finding additional data streams for calculating other energy storage revenue streams relating to frequency regulation, peak shaving, avoided costs,
 
-Beyond developing a product, this project is also a showcase for my frontend development skills and testing ideas about architecture, design, and UI/UX.
-
-Further, it continues to be a vehicle for professional development. To get to the current state, I've had to learn about backend development, databases, dev-ops, product design, and data science.   
+Beyond developing a product, this project is also a showcase for my frontend development skills and testing ideas about architecture, design, and UI/UX. Further, it continues to be a vehicle for professional development. To get to the current state, I've had to learn about backend development, databases, dev-ops, product design, and data science.   
 
 #### About Me
 My name is Matt Sadauckas and I am trying to find a role to play in the transition to sustainable energy.  I've had an interest in climate change, energy, and sustainability for quite a while and I changed careers to software development three years ago from manufacturing in part to develop a better skillset for this arena.  

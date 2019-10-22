@@ -77,14 +77,14 @@ const LineBarChart = React.memo(({
           tickCount={10}
           minTickGap={5}
           allowDecimals={false}
-          padding={{ top: 10}}
+          padding={{ top: 10, bottom: 10}}
           tickFormatter={ val => formatDollars(val)}
           />
         <YAxis
           yAxisId="right"
           orientation="right"
           tickCount={5}
-          padding={{ top: 10}}
+          padding={{ top: 10, bottom: 10}}
           domain={[-3, 3]}
           tickFormatter={ val => roundToDigits(val, 2)}
           />
