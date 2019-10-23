@@ -40,4 +40,5 @@ I have no formal training in renewables specifically, but I do have some in math
 
 I also have a lot of experience building things.  I come from a machine design and manufacturing engineering background and that experience is very helpful in my software development career.  I do mostly frontend development by trade, but I'm very interested in data science, UI/UX, and backend development.
 
-If you have questions, comments, or feedback good, bad, or otherwise, I would love to hear from you - contact information is [here](./contact).
+
+This I've been thinking about this project since even before I transitioned to software development.  Like most side projects, it has been a pain in my ass and maybe a good indication that I suffer from a serious case of hubris.  If you have questions, comments, or feedback good, bad, or otherwise, I would love to hear from you - contact information is [here](./contact).
