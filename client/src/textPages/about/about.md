@@ -1,6 +1,6 @@
 _Accelerating Energy Intelligence_  
 
-One of the greatest roadblocks to further renewable development is essentially a problem of coordination and data:
+Among the many roadblocks to continued, large-scale renewable energy development is essentially a problem of the juncture of economics and data:
 * How can solar and wind energy find markets when resources are abundant?
 * Where are the best places to site renewable generation or storage assets?
 * What would the ROI be for a storage project of a given size, power, and location?
@@ -17,15 +17,13 @@ To try out these tools, select [Demo](./demo) and create a project.  The current
 
 #### About this Project
 
-While this project has some ambitious aims, it is at a very early stage of development. Data streams are currently limited locational marginal pricing and weather and the two streams are not well coordinated.  The insights available and algorithms used are very rudimentary.  It is very much a work in progress!
+While this project has some ambitious aims, it is still at a very early stage of development. Data streams are currently limited locational marginal pricing and weather and the two streams are not well coordinated.  The insights available and algorithms used are very rudimentary.  It is very much a work in progress!
 
 I look forward to further developing the product including finding additional data streams for calculating other energy storage revenue streams relating to frequency regulation, peak shaving, avoided costs,
 
 Beyond developing a product, this project is also a showcase for my frontend development skills and for testing ideas about architecture, design, and UI/UX.
 
-It is vehicle for professional development. I've had to move far beyond any formal training to learn about backend development, databases, dev-ops, product design, and data science.
-
-**Entelx** is built almost entirely with Javascript:
+It is also vehicle for professional development. I've had to move far beyond any formal training to learn about backend development, databases, dev-ops, product design, and data science. While there is also a tiny bit of Python, **Entelx** is built almost entirely with Javascript:
 * Node back end
 * React front end
 * MySql databases
