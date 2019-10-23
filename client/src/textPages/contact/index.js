@@ -25,7 +25,6 @@ const Contact = () => {
   )
 }
 
-
 const styles = {
   root: {
     padding: '0 1em',

@@ -25,7 +25,7 @@ h5 {
   font-size: 1em;
 }
 
-p, ul, ol {
+p, ul, ol, li, {
   color: var(--text);
 }
 
