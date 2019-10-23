@@ -17,11 +17,23 @@ To try out these tools, select [Demo](./demo) and create a project.  The current
 
 #### About this Project
 
-While this project has some ambitious aims, it is at a very early stage of development. Data streams are currently limited locational marginal pricing and weather the two streams are not well coordinated.  The insights available and algorithms used are very rudimentary.  It is very much a work in progress!
+While this project has some ambitious aims, it is at a very early stage of development. Data streams are currently limited locational marginal pricing and weather and the two streams are not well coordinated.  The insights available and algorithms used are very rudimentary.  It is very much a work in progress!
 
 I look forward to further developing the product including finding additional data streams for calculating other energy storage revenue streams relating to frequency regulation, peak shaving, avoided costs,
 
-Beyond developing a product, this project is also a showcase for my frontend development skills and testing ideas about architecture, design, and UI/UX. Further, it continues to be a vehicle for professional development. To get to the current state, I've had to learn about backend development, databases, dev-ops, product design, and data science.   
+Beyond developing a product, this project is also a showcase for my frontend development skills and for testing ideas about architecture, design, and UI/UX.
+
+It is vehicle for professional development. I've had to move far beyond any formal training to learn about backend development, databases, dev-ops, product design, and data science.
+
+**Entelx** is built almost entirely with Javascript:
+* Node back end
+* React front end
+* MySql databases
+* knex database interfaces
+* Recharts and D3 for charting
+* Mapbox for maps
+
+The code is hosted on [Github](https://github.com/matsad3547/entelx).
 
 #### About Me
 My name is Matt Sadauckas and I am trying to find a role to play in the transition to sustainable energy.  I've had an interest in climate change, energy, and sustainability for quite a while and I changed careers to software development three years ago from manufacturing in part to develop a better skillset for this arena.  

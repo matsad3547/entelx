@@ -63,6 +63,8 @@ const LineBarChart = React.memo(({
     return includeScore ? [...agg, entry] : [...agg, {...remaining}]
   }, [])
 
+  const yAxisPadding = { top: 10, bottom: 10}
+
   return (
     <ResponsiveContainer width={'100%'} aspect={aspect}>
       <ComposedChart
@@ -77,14 +79,14 @@ const LineBarChart = React.memo(({
           tickCount={10}
           minTickGap={5}
           allowDecimals={false}
-          padding={{ top: 10, bottom: 10}}
+          padding={yAxisPadding}
           tickFormatter={ val => formatDollars(val)}
           />
         <YAxis
           yAxisId="right"
           orientation="right"
           tickCount={5}
-          padding={{ top: 10, bottom: 10}}
+          padding={yAxisPadding}
           domain={[-3, 3]}
           tickFormatter={ val => roundToDigits(val, 2)}
           />
