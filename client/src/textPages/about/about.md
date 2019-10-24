@@ -1,6 +1,6 @@
 _Accelerating Energy Intelligence_  
 
-Among the many roadblocks to continued, large-scale renewable energy development is essentially a problem of the juncture of economics and data:
+Among the many roadblocks to the mass deployment of renewable energy are issues at the juncture of economics and data:
 * How can solar and wind energy find markets when resources are abundant?
 * Where are the best places to site renewable generation or storage assets?
 * What would the ROI be for a storage project of a given size, power, and location?
@@ -34,11 +34,10 @@ It is also vehicle for professional development. I've had to move far beyond any
 The code is hosted on [Github](https://github.com/matsad3547/entelx).
 
 #### About Me
-My name is Matt Sadauckas and I am trying to find a role to play in the transition to sustainable energy.  I've had an interest in climate change, energy, and sustainability for quite a while and I changed careers to software development three years ago from manufacturing in part to develop a better skillset for this arena.  
+My name is Matt Sadauckas and I want to find a role to play in the transition to sustainable energy.  I've had an interest in climate change, energy, and sustainability for quite a while and I changed careers from manufacturing to software development three years ago in part to develop a better skillset for this arena.  
 
 I have no formal training in renewables specifically, but I do have some in math, physics, and engineering.  I also read as many renewables industry related articles and listen to as many podcasts related to the industry as possible.  
 
 I also have a lot of experience building things.  I come from a machine design and manufacturing engineering background and that experience is very helpful in my software development career.  I do mostly frontend development by trade, but I'm very interested in data science, UI/UX, and backend development.
 
-
-This I've been thinking about this project since even before I transitioned to software development.  Like most side projects, it has been a pain in my ass and maybe a good indication that I suffer from a serious case of hubris.  If you have questions, comments, or feedback good, bad, or otherwise, I would love to hear from you - contact information is [here](./contact).
+This I've been thinking about this project since even before I transitioned to software development.  Like most side projects, this one has progressed in fits and starts with motivation and worries of hubris.  I have not been able to give it up, so I've just kept working on it.  If you have questions, comments, or feedback good, bad, or otherwise, I would love to hear from you - contact information is [here](./contact).
