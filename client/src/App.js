@@ -3,8 +3,10 @@ import { Route } from 'react-router-dom'
 
 import Home from './components/Home'
 import Demo from './components/Demo'
-import Contact from './components/Contact'
-import About from './components/About'
+import { 
+  About,
+  Contact,
+} from './textPages/'
 import NavBar from './components/NavBar'
 
 import SystemAdmin from './containers/SystemAdmin'

@@ -39,13 +39,13 @@ const getDashboardData = async (req, res) => {
 
   res.sseSetup()
 
-  await getData(res, project)
+  await catchErrorsWithMessage('There was an error getting initial dashboard data', getData)(res, project)
 
   timeout = setTimeout( async () => {
 
-    await getData(res, project)
+    await catchErrorsWithMessage('There was an error getting dashboard data', getData)(res, project)
 
-    interval = setInterval( () => getData(res, project), fiveMinutesMillis)
+    interval = setInterval( async () => await catchErrorsWithMessage('There was an error getting dashboard data', getData)(res, project), fiveMinutesMillis)
   }, firstUpdate)
 
   req.on('close', () => {
@@ -76,11 +76,12 @@ const getData = async (res, projectSpecs) => {
   const data = await Promise.all([
       getCurrentWeather(lat, lng),
       readTableRowsWhereBtw('price_with_score', {nodeId,}, 'timestamp', [startMillis, endMillis]),
-      readTableRows('project', {id,})
     ].map( p => p.catch(handleMultiPromiseError) )
   )
 
-  const [weather, prices, [project]] = data
+  const [weather, prices] = data
+
+  const [project] = await readTableRows('project', {id,})
 
   return res.sseSend({
     weather,
