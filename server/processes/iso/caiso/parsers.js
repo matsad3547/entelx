@@ -1,9 +1,8 @@
+const moment = require('moment-timezone')
+
 const {
   caisoDataItems,
-  caisoTZ,
 } = require('./config')
-
-const { tsToMillis } = require('../../../utils')
 
 const parsePriceData = (query, data) => {
   const reportItems = data.OASISReport.MessagePayload.RTO.REPORT_ITEM
@@ -12,8 +11,9 @@ const parsePriceData = (query, data) => {
   .map( rd => {
     const dataItem = rd.DATA_ITEM._text
     const dataItemFormat = caisoDataItems[query][dataItem]
+
     return {
-      timestamp: tsToMillis(rd.INTERVAL_START_GMT._text, caisoTZ),
+      timestamp: moment(rd.INTERVAL_START_GMT._text).valueOf(),
       [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
     }
   })
