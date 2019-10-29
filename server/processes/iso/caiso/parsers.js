@@ -1,4 +1,5 @@
 const moment = require('moment-timezone')
+const { utcFormat } = require('../../../config/')
 
 const {
   caisoDataItems,
@@ -13,11 +14,19 @@ const parsePriceData = (query, data) => {
     const dataItemFormat = caisoDataItems[query][dataItem]
 
     return {
-      timestamp: moment(rd.INTERVAL_START_GMT._text).valueOf(),
+      timestamp: moment(rd.INTERVAL_START_GMT._text).format(utcFormat),
       [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
     }
   })
-  .sort( (a, b) => a.timestamp - b.timestamp )
+  .sort( (a, b) => {
+    if(moment(a.timestamp).isBefore(b.timestamp)) {
+      return -1
+    }
+    else if (moment(a.timestamp).isAfter(b.timestamp)) {
+      return 1
+    }
+    return 0
+  })
   .reduce( (acc, next) => {
     const lastItemIndex = acc.length - 1
     const accHasContent = acc.length > 0

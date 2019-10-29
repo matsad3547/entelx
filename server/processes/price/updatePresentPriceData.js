@@ -40,6 +40,7 @@
   } = node
 
   let mostRecent = await getMaxTimeStamp(id)
+  //TODO add `valueOf` to get unix value once DB is converted
 
   let firstUpdateTimeout, continuousTimeout, firstUpdate
 
