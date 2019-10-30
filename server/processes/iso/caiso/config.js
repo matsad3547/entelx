@@ -4,22 +4,22 @@ const priceRequests = [
   'PRC_INTVL_LMP',
 ]
 
-const apNodeTypes = [
-  'POD',
-  'AG',
-  'CPZ',
-  'ASR',
-  'ASP',
-  'EPZ',
-  'SPZ',
-  'DASP',
-  'DEPZ',
-  'TH',
-  'DPZ',
-  'DCA',
-  'CASP',
-  'EIMT'
-]
+// const apNodeTypes = [
+//   'POD',
+//   'AG',
+//   'CPZ',
+//   'ASR',
+//   'ASP',
+//   'EPZ',
+//   'SPZ',
+//   'DASP',
+//   'DEPZ',
+//   'TH',
+//   'DPZ',
+//   'DCA',
+//   'CASP',
+//   'EIMT'
+// ]
 
 const atlasRequests = [
   'ATL_APNODE&APnode_type=ALL', //ap nodes do not correspond with location nodes
