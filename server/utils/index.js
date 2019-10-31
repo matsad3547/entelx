@@ -2,6 +2,7 @@ const {
   millisToSeconds,
   tsToMillis,
   getUpdateTimeout,
+  getDBDatetime,
 } = require('./dateTimeUtils')
 
 const {
@@ -45,4 +46,5 @@ module.exports = {
   getMinTimeStamp,
   getCenteredValuesArr,
   getTwoDimensionalArray,
+  getDBDatetime,
 }

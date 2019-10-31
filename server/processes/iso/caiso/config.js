@@ -1,5 +1,7 @@
 const { tsToMillis } = require('../../../utils/')
 
+const { utcTZ } = require('../../../config/')
+
 const priceRequests = [
   'PRC_INTVL_LMP',
 ]
@@ -36,8 +38,6 @@ const atlasRequests = [
   'ATL_CBNODE', //3113 Items - These nodes correspond to the locational nodes
   'ATL_ITC_SP',
 ]
-
-const caisoTZ = 'Etc/GMT'
 
 const caisoDataItems = {
   'PRC_INTVL_LMP': {
@@ -77,11 +77,11 @@ const caisoDataItems = {
     },
     'INTERVAL_START_GMT': {
       key: 'start',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
     'INTERVAL_END_GMT': {
       key: 'end',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
   },
   'ATL_APNODE&APnode_type=ALL': {
@@ -99,11 +99,11 @@ const caisoDataItems = {
     },
     'START_DATE_GMT': {
       key: 'start_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
     'END_DATE_GMT': {
       key: 'end_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
   },
   'ATL_LAP': {
@@ -117,11 +117,11 @@ const caisoDataItems = {
     },
     'START_DATE_GMT': {
       key: 'start_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
     'END_DATE_GMT': {
       key: 'end_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
   },
   'ATL_HUB': {
@@ -131,11 +131,11 @@ const caisoDataItems = {
     },
     'START_DATE_GMT': {
       key: 'start_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
     'END_DATE_GMT': {
       key: 'end_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
   },
   'ATL_CBNODE': {
@@ -149,11 +149,11 @@ const caisoDataItems = {
     },
     'START_DATE_GMT': {
       key: 'start_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
     'END_DATE_GMT': {
       key: 'end_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
   },
   'ATL_RUC_ZONE_MAP': {
@@ -167,11 +167,11 @@ const caisoDataItems = {
     },
     'START_DATE_GMT': {
       key: 'start_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
     'END_DATE_GMT': {
       key: 'end_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
   },
   'ATL_TAC_AREA_MAP': {
@@ -185,11 +185,11 @@ const caisoDataItems = {
     },
     'START_DATE_GMT': {
       key: 'start_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
     'END_DATE_GMT': {
       key: 'end_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
   },
   'ATL_TIEPOINT': {
@@ -207,11 +207,11 @@ const caisoDataItems = {
     },
     'START_DATE_GMT': {
       key: 'start_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
     'END_DATE_GMT': {
       key: 'end_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
   },
   'ATL_TI': {
@@ -233,11 +233,11 @@ const caisoDataItems = {
     },
     'START_DATE_GMT': {
       key: 'start_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
     'END_DATE_GMT': {
       key: 'end_date',
-      format: val => tsToMillis(val, caisoTZ),
+      format: val => tsToMillis(val, utcTZ),
     },
   },
 }
@@ -245,7 +245,6 @@ const caisoDataItems = {
 const caisoFormat = 'YYYYMMDDTHH:mm[-0000]'
 
 module.exports = {
-  caisoTZ,
   caisoDataItems,
   caisoFormat,
   priceRequests,

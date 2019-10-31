@@ -1,6 +1,9 @@
 const moment = require('moment-timezone')
 
-const { fiveMinutesMillis } = require('../config/')
+const {
+  fiveMinutesMillis,
+  utcTZ,
+} = require('../config/')
 
 const millisToSeconds = millis => Math.round(millis / 1000)
 
@@ -13,8 +16,13 @@ const getUpdateTimeout = mostRecentTimestamp => {
   return fiveMinutesMillis - ((nowMillis - mostRecentTimestamp) % fiveMinutesMillis) + (1000)
 }
 
+const getDBDatetime = isoString => {
+  return moment.tz(isoString, utcTZ).format('YYYY-MM-DD HH:mm:ss.SSS')
+}
+
 module.exports = {
   millisToSeconds,
   tsToMillis,
   getUpdateTimeout,
+  getDBDatetime,
 }

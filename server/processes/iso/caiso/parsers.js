@@ -1,5 +1,4 @@
 const moment = require('moment-timezone')
-const { utcFormat } = require('../../../config/')
 
 const {
   caisoDataItems,
@@ -14,7 +13,7 @@ const parsePriceData = (query, data) => {
     const dataItemFormat = caisoDataItems[query][dataItem]
 
     return {
-      timestamp: moment(rd.INTERVAL_START_GMT._text).format(utcFormat),
+      timestamp: moment(rd.INTERVAL_START_GMT._text).toISOString(),
       [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
     }
   })

@@ -1,25 +1,13 @@
-const { getUpdateTimeout } = require('../dateTimeUtils')
+const {
+  getDBDatetime,
+} = require('../dateTimeUtils')
 
-const nowMillis = 1564632060000
-
-jest.mock('moment-timezone', () => () => ({
-    valueOf: () => 1564632060000
-  })
-)
-
-describe('getUpdateTimeout', () => {
-
-  test('should return 1 minute and one second when given a time 4 minutes ago', () => {
-    const mostRecentTimestamp = nowMillis - (4 * 60 * 1000)
-    const expected = 61000
-    const actual = getUpdateTimeout(mostRecentTimestamp)
-    expect(actual).toEqual(expected)
-  })
-
-  test('should return 1 minute and one second when given a time 24 minutes ago', () => {
-    const mostRecentTimestamp = nowMillis - (24 * 60 * 1000)
-    const expected = 61000
-    const actual = getUpdateTimeout(mostRecentTimestamp)
+describe('getDBDatetime', () => {
+  test('should return a useful datetime string', () => {
+    const isoString = '2019-10-07T14:40:00.000Z'
+    const actual = getDBDatetime(isoString)
+    // "YYYY-MM-DD HH:mm:ss"
+    const expected = '2019-10-07 14:40:00.000'
     expect(actual).toEqual(expected)
   })
 })
