@@ -25,5 +25,6 @@ module.exports = {
   },
   wrapIdentifier: value => camelToSnake(value),
   postProcessResponse: result => Array.isArray(result) ? result.map(row => convertObj(row)) : convertObj(result),
-  debug: process.env.NODE_ENV === 'production',
+  // debug: process.env.NODE_ENV === 'production',
+  debug: true,
 }
