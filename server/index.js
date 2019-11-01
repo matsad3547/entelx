@@ -78,10 +78,10 @@ app.post('/project', createNewProject)
 app.delete('/project/:id', deleteProjectById)
 
 // historical
-app.get('/historical_data/:id/:startMillis/:endMillis/:includeWeather', getHistoricalData)
+app.get('/historical/:id/:startMillis/:endMillis/:includeWeather', getHistoricalData)
 
 //insights
-app.post('/insights_data/', getInsightData)
+app.post('/insights/', getInsightData)
 
 //development
 app.post('/revenue_by_thresholds/', getRevenueByThresholds)

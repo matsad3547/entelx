@@ -34,5 +34,8 @@ module.exports = {
       return next()
     }
   },
+  // TODO Try these rather than type casting
+  // timezone: 'UTC',
+  // dateStrings: true,
   debug: process.env.NODE_ENV === 'production',
 }
