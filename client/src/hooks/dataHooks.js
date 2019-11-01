@@ -25,7 +25,7 @@ export const useGetProject = (projectId) => {
     }
 
     try {
-      const res = await singleRequest(`/get_project/${projectId}`, request)
+      const res = await singleRequest(`/project_data/${projectId}`, request)
 
       const project = await res.json()
       setProject(project)
@@ -78,7 +78,7 @@ export const useMinDate = (projectId) => {
     setMinDate(moment(minDateMillis))
   }, [])
 
-  const sseRoute = `/get_min_date/${projectId}`
+  const sseRoute = `/min_date/${projectId}`
 
   useConnectToServerSideEvent(sseRoute, handleData)
 

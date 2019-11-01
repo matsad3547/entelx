@@ -56,7 +56,7 @@ JS Docs - insta documentation
     setStatus(status)
   }, [])
 
-  const sseRoute = `/dashboard/${projectId}/data`
+  const sseRoute = `/dashboard_data/${projectId}`
 
   useConnectToServerSideEvent(sseRoute, handleData)
 

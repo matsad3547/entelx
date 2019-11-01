@@ -44,7 +44,7 @@ const Project = ({match, history}) => {
       headers: defaultHeaders,
     }
 
-    singleRequest(`/project/${projectId}`, request)
+    singleRequest(`/project_data/${projectId}`, request)
       .then( res => {
         setLoading(false)
         history.push(`${cleanUrl}`)

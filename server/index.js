@@ -67,29 +67,28 @@ app.post('/user/create', createUser)
 app.post('/user/login', login)
 
 //dashboard
-app.get('/dashboard/:id/data', getDashboardData)
+app.get('/dashboard_data/:id/', getDashboardData)
 
 //general
 app.get('/nodes', getNodes)
-app.get('/get_project/:id', getProjectById)
 
-//project page
-app.post('/project/create', createNewProject)
+//project
+app.get('/project_data/:id', getProjectById)
+app.post('/project', createNewProject)
 app.delete('/project/:id', deleteProjectById)
 
 // historical
-app.post('/historical/', getHistoricalData)
-app.get('/historical/:id/min_date', getMinDate)
+app.get('/historical_data/:id/:startMillis/:endMillis/:includeWeather', getHistoricalData)
 
 //insights
-app.post('/insights/', getInsightData)
+app.post('/insights_data/', getInsightData)
 
 //development
-app.post('/get_revenue_by_thresholds/', getRevenueByThresholds)
-app.post('/get_revenue_surface/', getRevenueSurface)
+app.post('/revenue_by_thresholds/', getRevenueByThresholds)
+app.post('/revenue_surface/', getRevenueSurface)
 
 //generic
-app.get('/get_min_date/:id', getMinDate)
+app.get('/min_date/:id', getMinDate)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/public')))

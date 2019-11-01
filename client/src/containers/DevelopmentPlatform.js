@@ -119,7 +119,7 @@ const DevelopmentPlatform = ({match}) => {
     setLoading(true)
 
     try {
-      const res = await singleRequest('/get_revenue_surface/', request)
+      const res = await singleRequest('/revenue_surface/', request)
 
       const parsed = await res.json()
 
@@ -196,7 +196,7 @@ const DevelopmentPlatform = ({match}) => {
     setLoading(true)
 
     try {
-      const res = await singleRequest('/get_revenue_by_thresholds/', request)
+      const res = await singleRequest('/revenue_by_thresholds/', request)
 
       const parsed = await res.json()
 

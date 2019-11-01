@@ -66,7 +66,7 @@ const HistoricalDisplay = ({match}) => {
     }
 
     const request = {
-      method: 'POST',
+      method: 'GET',
       headers: defaultHeaders,
       body: JSON.stringify(body)
     }
@@ -74,7 +74,7 @@ const HistoricalDisplay = ({match}) => {
     try {
       setLoading(true)
 
-      const res = await singleRequest('/historical/', request)
+      const res = await singleRequest(`/historical/${projectId}/${startMillis}/${endMillis}/${includeWeather}`, request)
 
       const { timeseries } = await res.json()
 

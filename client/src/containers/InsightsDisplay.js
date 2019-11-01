@@ -72,7 +72,7 @@ const InsightsDisplay = ({match}) => {
     setLoading(true)
 
     try {
-      const res = await singleRequest('/insights/', request)
+      const res = await singleRequest('/insights_data/', request)
 
       const { aggregate } = await res.json()
 

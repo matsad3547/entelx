@@ -16,7 +16,7 @@ const getHistoricalData = async (req, res) => {
     startMillis,
     id,
     // includeWeather, TODO Make this work
-  } = req.body
+  } = req.params
 
   const [project] = await readTableRows('project', {id,})
 
