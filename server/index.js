@@ -73,7 +73,7 @@ app.get('/dashboard_data/:id/', getDashboardData)
 app.get('/nodes', getNodes)
 
 //project
-app.get('/project_data/:id', getProjectById)
+app.get('/project/:id', getProjectById)
 app.post('/project', createNewProject)
 app.delete('/project/:id', deleteProjectById)
 

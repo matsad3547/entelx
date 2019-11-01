@@ -25,7 +25,7 @@ export const useGetProject = (projectId) => {
     }
 
     try {
-      const res = await singleRequest(`/project_data/${projectId}`, request)
+      const res = await singleRequest(`/project/${projectId}`, request)
 
       const project = await res.json()
       setProject(project)
