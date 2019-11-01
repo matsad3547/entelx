@@ -1,3 +1,7 @@
+const moment = require('moment-timezone')
+
+const { gtmTZ } = require('../../config/')
+
 const snakeToCamel = snakeStr => snakeStr.toLowerCase()
   .replace(/(_\w)/g, m => m[1].toUpperCase())
 
@@ -10,8 +14,13 @@ const convertObj = snakeObj => typeof snakeObj === 'object' ? Object
       [snakeToCamel(k)]: snakeObj[k]
     }), {}) : snakeObj
 
+const getISOFromDB = dbDatetime => {
+  return moment.tz(dbDatetime, gtmTZ).toISOString()
+}
+
 module.exports = {
   snakeToCamel,
   camelToSnake,
   convertObj,
+  getISOFromDB,
 }

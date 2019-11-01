@@ -1,6 +1,6 @@
 const utcFormat = 'YYYY-MM-DDTHH:mm:ss.sss[Z]'
 
-const utcTZ = 'Etc/GMT'
+const gtmTZ = 'Etc/GMT'
 
 const dayOf5Mins = (24 * 60) / 5
 
@@ -24,5 +24,5 @@ module.exports = {
   fiveMinsAsHour,
   sixMonthMillis,
   threeWeeksMillis,
-  utcTZ,
+  gtmTZ,
 }

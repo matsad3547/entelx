@@ -1,8 +1,8 @@
 const moment = require('moment-timezone')
 
-const {
-  caisoDataItems,
-} = require('./config')
+const { getDBDatetime } = require('../../../utils/')
+
+const { caisoDataItems } = require('./config')
 
 const parsePriceData = (query, data) => {
   const reportItems = data.OASISReport.MessagePayload.RTO.REPORT_ITEM
@@ -13,7 +13,7 @@ const parsePriceData = (query, data) => {
     const dataItemFormat = caisoDataItems[query][dataItem]
 
     return {
-      timestamp: moment(rd.INTERVAL_START_GMT._text).toISOString(),
+      timestamp: getDBDatetime(moment(rd.INTERVAL_START_GMT._text).toISOString()),
       [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
     }
   })

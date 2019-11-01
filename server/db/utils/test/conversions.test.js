@@ -2,6 +2,7 @@ const {
   snakeToCamel,
   camelToSnake,
   convertObj,
+  getISOFromDB,
 } = require('../conversions')
 
 describe('snakeToCamel', () => {
@@ -80,6 +81,16 @@ describe('convertObj', () => {
     const input = 16
     const expected = 16
     const actual = convertObj(input)
+    expect(actual).toEqual(expected)
+  })
+})
+
+describe('getISOFromDB', () => {
+  test('should return a useful datetime string', () => {
+    const dbDatetime = '2019-10-07 14:40:00.000'
+    const actual = getISOFromDB(dbDatetime)
+    // "YYYY-MM-DD HH:mm:ss"
+    const expected = '2019-10-07T14:40:00.000Z'
     expect(actual).toEqual(expected)
   })
 })
