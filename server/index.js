@@ -78,7 +78,7 @@ app.post('/project', createNewProject)
 app.delete('/project/:id', deleteProjectById)
 
 // historical
-app.get('/historical/:id/:startMillis/:endMillis/:includeWeather', getHistoricalData)
+app.get('/historical/:id/:startDate/:endDate/:includeWeather', getHistoricalData)
 
 //insights
 app.post('/insights/', getInsightData)

@@ -7,7 +7,7 @@ import {
   barDataFormat,
 } from '../../config/chart'
 
-import { formatMillis } from '../../utils/'
+import { formatDate } from '../../utils/'
 
 const formats = {
   ...lineDataFormat,
@@ -24,7 +24,7 @@ const CustomTooltip = ({
   active &&
     <div style={styles.root}>
       <p style={styles.date}>
-        {formatMillis(label, timeZone, monthDayTimeFormat)}
+        {formatDate(label, timeZone, monthDayTimeFormat)}
       </p>
       { payload.map( (obj, i) =>
         <p

@@ -4,10 +4,15 @@ import moment from 'moment-timezone'
 
 import { monthDayTimeFormat } from '../config/'
 
-const DataTimeRangeDisplay = ({message, startMillis, endMillis, timeZone}) => (
+const DataTimeRangeDisplay = ({
+  message,
+  startDate,
+  endDate,
+  timeZone
+}) => (
 
   <p style={styles}>
-    {`${message} ${moment(startMillis).tz(timeZone).format(monthDayTimeFormat)} to ${moment(endMillis).tz(timeZone).format(monthDayTimeFormat)}`}
+    {`${message} ${moment(startDate).tz(timeZone).format(monthDayTimeFormat)} to ${moment(endDate).tz(timeZone).format(monthDayTimeFormat)}`}
   </p>
 )
 
@@ -19,8 +24,8 @@ const styles = {
 
 DataTimeRangeDisplay.propTypes = {
   message: PropTypes.string.isRequired,
-  startMillis: PropTypes.number.isRequired,
-  endMillis: PropTypes.number.isRequired,
+  startDate: PropTypes.string.isRequired, //iso string
+  endDate: PropTypes.string.isRequired, //iso string
   timeZone: PropTypes.string.isRequired,
 }
 

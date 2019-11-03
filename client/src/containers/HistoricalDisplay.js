@@ -54,27 +54,19 @@ const HistoricalDisplay = ({match}) => {
 
   const getData = useCallback( async () => {
 
-    const startMillis = startTime.valueOf()
+    const startDate = startTime.toISOString()
 
-    const endMillis = endTime.valueOf()
-
-    const body = {
-      id: projectId,
-      endMillis,
-      startMillis,
-      includeWeather,
-    }
+    const endDate = endTime.toISOString()
 
     const request = {
       method: 'GET',
       headers: defaultHeaders,
-      body: JSON.stringify(body)
     }
 
     try {
       setLoading(true)
 
-      const res = await singleRequest(`/historical/${projectId}/${startMillis}/${endMillis}/${includeWeather}`, request)
+      const res = await singleRequest(`/historical/${projectId}/${startDate}/${endDate}/${includeWeather}`, request)
 
       const { timeseries } = await res.json()
 
@@ -106,8 +98,8 @@ const HistoricalDisplay = ({match}) => {
           <DashboardSection headerContent={'Historical Data'}>
             <DataTimeRangeDisplay
               message="Data from"
-              startMillis={timeseries[0].timestamp}
-              endMillis={timeseries[timeseries.length - 1].timestamp}
+              startDate={timeseries[0].timestamp}
+              endDate={timeseries[timeseries.length - 1].timestamp}
               timeZone={project.timeZone}
               />
             <LineBarChart

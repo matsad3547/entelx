@@ -7,7 +7,7 @@ export function fieldOnchange(e){
   })
 }
 
-export const formatMillis = (millis, tz, format) => moment.tz(millis, tz).format(format)
+export const formatDate = (isoString, tz, format) => moment.tz(isoString, tz).format(format)
 
 export const findRelevantKeys = data => data.reduce( (arr, d) => {
   Object.keys(d).forEach( k => arr = !arr.includes(k) && k !== 'timestamp' ? [...arr, k] : arr )

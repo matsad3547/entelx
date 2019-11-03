@@ -4,6 +4,8 @@ const {
   readTableRows,
   readTableRowsWhereBtw,
 } = require('../db/')
+
+const { getDBDatetime } = require('../utils/')
 //
 // const {
 //   aggregateHistoricalWeather,
@@ -12,8 +14,8 @@ const {
 const getHistoricalData = async (req, res) => {
 
   const {
-    endMillis,
-    startMillis,
+    endDate,
+    startDate,
     id,
     // includeWeather, TODO Make this work
   } = req.params
@@ -24,7 +26,9 @@ const getHistoricalData = async (req, res) => {
     nodeId,
   } = project
 
-  const timeseries = await readTableRowsWhereBtw('price_with_score', {nodeId,}, 'timestamp', [startMillis, endMillis])
+  const datetimes = [startDate, endDate].map( isoString => getDBDatetime(isoString) )
+
+  const timeseries = await readTableRowsWhereBtw('price_with_score', {nodeId,}, 'timestamp', datetimes)
 
   return res.status(200).json({
     timeseries,

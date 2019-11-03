@@ -1,5 +1,7 @@
 ( async () => {
 
+  const moment = require('moment-timezone')
+
   const {
     setExitListeners,
     catchErrorsWithMessage,
@@ -8,8 +10,6 @@
   } = require('../../utils/')
 
   const {
-    oneMinuteMillis,
-    sixMonthMillis,
     threeWeeksMillis,
   } = require('../../config/')
 
@@ -38,27 +38,30 @@
 
   const mostRecent = await getMaxTimeStamp(id)
 
-  const sixMonthsAgoMillis = mostRecent - sixMonthMillis
+  const sixMonthsAgo = moment(mostRecent).subtract(6, 'months')
 
-  let endMillis = oldest - oneMinuteMillis
+  let endMillis = moment(oldest).subtract(1, 'minute').valueOf()
 
   const [nodeData] = await readTableRows('node', {id,})
 
   const pid = process.pid
 
   const update = async () => {
+
     const startMillis = endMillis - threeWeeksMillis
-    console.log(`updating past prices from ${startMillis} to ${endMillis}`);
+
+    console.log(`updating past prices from ${moment(startMillis).format()} to ${moment(endMillis).format()}`);
 
     await catchErrorsWithMessage('There was an error getting past update data', pastPriceDataUpdater, false)(startMillis, endMillis, nodeData)
 
     oldest = await getMinTimeStamp(id)
 
-    if (oldest < sixMonthsAgoMillis) {
+    if (moment(oldest).isBefore(sixMonthsAgo)) {
       exitPastPriceUpdates()
     }
     else {
-      endMillis = oldest - oneMinuteMillis
+      endMillis = moment(oldest).subtract(1, 'minute').valueOf()
+
       update()
     }
   }
