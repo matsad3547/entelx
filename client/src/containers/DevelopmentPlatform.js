@@ -135,25 +135,18 @@ const DevelopmentPlatform = ({match}) => {
 
   const getData = useCallback( async () => {
 
-    const startMillis = startTime.valueOf()
-    const endMillis = endTime.valueOf()
-
-    const body = {
-      id: projectId,
-      endMillis,
-      startMillis,
-    }
+    const startDate = startTime.toISOString()
+    const endDate = endTime.toISOString()
 
     const request = {
-      method: 'POST',
+      method: 'GET',
       headers: defaultHeaders,
-      body: JSON.stringify(body)
     }
 
     setLoading(true)
 
     try {
-      const res = await singleRequest('/insights/', request)
+      const res = await singleRequest(`/insights/${projectId}/${startDate}/${endDate}`, request)
 
       const { aggregate } = await res.json()
 

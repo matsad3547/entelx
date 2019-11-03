@@ -1,17 +1,16 @@
 const knex = require('../knex')
-const moment = require('moment-timezone')
 
 const { convertObj } = require('../utils/').conversions
 const { getDBDatetime } = require('../../utils/')
 
 const getPriceAggregateData = (
-  startMillis,
-  endMillis,
+  startDate,
+  endDate,
   nodeId,
 ) => {
 
-  const startDatetime = getDBDatetime(moment(startMillis).toISOString())
-  const endDatetime = getDBDatetime(moment(endMillis).toISOString())
+  const startDatetime = getDBDatetime(startDate)
+  const endDatetime = getDBDatetime(endDate)
 
   return knex.raw(
     `SELECT

@@ -6,9 +6,9 @@ import { monthDayTimeFormat } from '../config/'
 
 const DataTimeDisplay = ({message, millis, timeZone}) => (
 
-  <p style={styles}>
+  <div style={styles}>
     {`${message} ${moment(millis).tz(timeZone).format(monthDayTimeFormat)}`}
-  </p>
+  </div>
 )
 
 const styles = {

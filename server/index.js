@@ -81,7 +81,7 @@ app.delete('/project/:id', deleteProjectById)
 app.get('/historical/:id/:startDate/:endDate/:includeWeather', getHistoricalData)
 
 //insights
-app.post('/insights/', getInsightData)
+app.get('/insights/:id/:startDate/:endDate', getInsightData)
 
 //development
 app.post('/revenue_by_thresholds/', getRevenueByThresholds)

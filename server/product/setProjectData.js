@@ -33,11 +33,11 @@ const setProjectData = async (node, project) => {
   } = project
 
   const numDays = 21
-  const now = moment().tz(timeZone)
-  const endMillis = now.valueOf() + (5 * 60 * 1000)
-  const startMillis = now.clone()
-                      .subtract(numDays, 'days')
-                      .valueOf()
+  const end = moment().tz(timeZone)
+  const start = end.clone().subtract(numDays, 'days')
+
+  const endMillis = end.valueOf() + (5 * 60 * 1000)
+  const startMillis = start.valueOf()
 
   const prices = await catchErrorsWithMessage(`There was an error getting present price data from ${startMillis} to ${endMillis}`, getPriceData)(startMillis, endMillis, node)
 
@@ -52,7 +52,7 @@ const setProjectData = async (node, project) => {
 
   await createTableRows('price', prices)
 
-  const initAggregate = await getPriceAggregateData(startMillis, endMillis, node.id)
+  const initAggregate = await getPriceAggregateData(start.toISOString(), end.toISOString(), node.id)
 
   const data = {
     timeSeries: prices,
