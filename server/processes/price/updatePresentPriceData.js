@@ -11,12 +11,13 @@
 
   const {
     fiveMinutesMillis,
-    sixMonthMillis,
-    oneMinuteMillis,
+    // sixMonthMillis,
+    // oneMinuteMillis,
   } = require('../../config/')
 
   const {
     getFiveMinutesFromNow,
+    getDBDatetime,
   } = require('./utils/')
 
   const {
@@ -40,7 +41,6 @@
   } = node
 
   let mostRecent = await getMaxTimeStamp(id)
-  //TODO add `valueOf` to get unix value once DB is converted
 
   let firstUpdateTimeout, continuousTimeout, firstUpdate
 
@@ -58,13 +58,16 @@
     console.log(`starting price data update at ${now}`)
 
     let endMillis = getFiveMinutesFromNow(now)
-    let startMillis = mostRecent + oneMinuteMillis
+    let startMillis = moment(mostRecent).add(1, 'minute').valueOf()
+    // let startMillis = mostRecent + oneMinuteMillis
 
     const [project] = await readTableRows('project', {id: projectId})
 
-    const newest = await catchErrorsWithMessage('There was an error getting the initial price update', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
+    await catchErrorsWithMessage('There was an error getting the initial price update', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
 
-    let nextTimeoutMillis = getUpdateTimeout(newest)
+    mostRecent = await getMaxTimeStamp(id)
+
+    let nextTimeoutMillis = getUpdateTimeout(mostRecent)
 
     const getPriceDataOnInterval = (timeoutMillis = fiveMinutesMillis) => {
       continuousTimeout = setTimeout( async () => {
@@ -74,22 +77,34 @@
         mostRecent = await getMaxTimeStamp(id)
 
         endMillis = getFiveMinutesFromNow(now)
-        startMillis = mostRecent + oneMinuteMillis
+        startMillis = moment(mostRecent).add(1, 'minute').valueOf()
+        // startMillis = mostRecent + oneMinuteMillis
 
         const [project] = await readTableRows('project', {id: projectId})
 
-        console.log(`periodic price data update at ${now}`)
+        console.log(`periodic price data update at ${now.format()}`)
 
-        const newest = await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
+        await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
 
-        if (!isNaN(newest)) {
-          nextTimeoutMillis = getUpdateTimeout(newest)
+        mostRecent = await getMaxTimeStamp(id)
 
-          await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
-        }
-        else {
-          nextTimeoutMillis = fiveMinutesMillis - (30 * 1000)
-        }
+        nextTimeoutMillis = getUpdateTimeout(mostRecent)
+
+        const sixMonthsAgo = moment(mostRecent).subtract(6, 'month').toISOString()
+
+        await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, getDBDatetime(sixMonthsAgo)])
+
+
+        // const newest = await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
+        //
+        // if (!isNaN(newest)) {
+        //   nextTimeoutMillis = getUpdateTimeout(newest)
+        //
+        //   await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
+        // }
+        // else {
+        //   nextTimeoutMillis = fiveMinutesMillis - (30 * 1000)
+        // }
 
         getPriceDataOnInterval(nextTimeoutMillis)
       }, timeoutMillis)
