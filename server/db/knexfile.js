@@ -3,7 +3,6 @@ require('dotenv').config({path: '../../.env'})
 const {
   convertObj,
   camelToSnake,
-  getISOFromDB,
 } = require('./utils/').conversions
 
 module.exports = {
@@ -26,16 +25,7 @@ module.exports = {
   },
   wrapIdentifier: value => camelToSnake(value),
   postProcessResponse: result => Array.isArray(result) ? result.map(row => convertObj(row)) : convertObj(result),
-  typeCast: (field, next) => {
-    if (field.type === 'DATETIME') {
-      return getISOFromDB(field.string())
-    }
-    else {
-      return next()
-    }
-  },
-  // TODO Try these rather than type casting
-  // timezone: 'UTC',
-  // dateStrings: true,
+  timezone: 'UTC',
+  dateStrings: true,
   debug: process.env.NODE_ENV === 'production',
 }

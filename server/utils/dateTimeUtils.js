@@ -13,13 +13,20 @@ const tsToMillis = (ts, tz) => moment.tz(ts, tz).valueOf()
 const getUpdateTimeout = mostRecentTimestamp => {
   const mostRecentUnix = moment(mostRecentTimestamp).valueOf()
 
-  const nowMillis = moment().valueOf()
+  const nowUnix = moment().valueOf()
 
-  return fiveMinutesMillis - ((nowMillis - mostRecentUnix) % fiveMinutesMillis) + (1000)
+  console.log('mostRecentUnix:', mostRecentUnix, 'nowUnix:', nowUnix);
+
+  return getRemainderMillis(mostRecentUnix, nowUnix, fiveMinutesMillis) + 1000
 }
 
 const getDBDatetime = isoString => {
   return moment.tz(isoString, gtmTZ).format(dbDatetimeFormat)
+}
+
+const getRemainderMillis = (tsUnix, nowUnix, intervalMillis) => {
+
+  return intervalMillis - (Math.abs(nowUnix - tsUnix) % fiveMinutesMillis)
 }
 
 module.exports = {
@@ -27,4 +34,5 @@ module.exports = {
   tsToMillis,
   getUpdateTimeout,
   getDBDatetime,
+  getRemainderMillis,
 }

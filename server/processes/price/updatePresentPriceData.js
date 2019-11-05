@@ -7,6 +7,7 @@
     getUpdateTimeout,
     catchErrorsWithMessage,
     getMaxTimeStamp,
+    getDBDatetime,
   } = require('../../utils/')
 
   const {
@@ -17,7 +18,6 @@
 
   const {
     getFiveMinutesFromNow,
-    getDBDatetime,
   } = require('./utils/')
 
   const {
