@@ -67,7 +67,7 @@ app.post('/user/create', createUser)
 app.post('/user/login', login)
 
 //dashboard
-app.get('/dashboard_data/:id/', getDashboardData)
+app.get('/dashboard/:id/', getDashboardData)
 
 //general
 app.get('/nodes', getNodes)

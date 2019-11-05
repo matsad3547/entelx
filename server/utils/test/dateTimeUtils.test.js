@@ -38,15 +38,14 @@ describe('getRemainderMillis', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should not return values larger than the interval ', () => {
-    console.log('fiveMinutesMillis:', fiveMinutesMillis);
-    const tsUnix = 1572949800000
-    const nowUnix = 1572924804604
+  test('should return the interval if the timestamp is after the current value', () => {
+
+    const tsUnix = 1572971100000
+    const nowUnix = 1572970954599
     const intervalMillis = fiveMinutesMillis
 
     const actual = getRemainderMillis(tsUnix, nowUnix, intervalMillis)
-    const expected = 97000
+    const expected = fiveMinutesMillis
     expect(actual).toEqual(expected)
   })
-
 })

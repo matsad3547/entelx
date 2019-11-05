@@ -5,15 +5,17 @@ const { fiveMinutesMillis } = require('../config/')
 const { getCurrentWeather } = require('../processes/')
 
 const {
-  catchErrorsWithMessage,
-  getMaxTimeStamp,
-  handleMultiPromiseError,
-} = require('../utils/')
-
-const {
   readTableRows,
   readTableRowsWhereBtw,
+  findMax,
 } = require('../db/')
+
+const {
+  catchErrorsWithMessage,
+  // getMaxTimeStamp,
+  handleMultiPromiseError,
+  getDBDatetime,
+} = require('../utils/')
 
 const getDashboardData = async (req, res) => {
 
@@ -21,21 +23,24 @@ const getDashboardData = async (req, res) => {
 
   let interval, timeout
 
-  console.log('Running get dashboard at', Date.now() )
+  console.log('Opening dashboard data connection at', moment().format() )
 
   const [project] = await catchErrorsWithMessage(`There was an error getting project data for project ${id}`, readTableRows)('project', {id,})
 
   const {
     nodeId,
-    // charge,
-    // revenue,
   } = project
 
-  const mostRecent = await getMaxTimeStamp(nodeId)
+  const max = await catchErrorsWithMessage(`There was an error finding the max timestamp associated with node ${nodeId}`, findMax)('price', 'timestamp', {nodeId,})
+
+  const mostRecent = max[0]['max(timestamp)']
+  // const mostRecent = await getMaxTimeStamp(nodeId)
+
+  const mostRecentUnix = moment(mostRecent).valueOf()
 
   const start = moment().valueOf()
 
-  const firstUpdate = fiveMinutesMillis - (start - mostRecent) + (2 * 1000)
+  const firstUpdate = fiveMinutesMillis - (start - mostRecentUnix) + (2 * 1000)
 
   res.sseSetup()
 
@@ -66,16 +71,20 @@ const getData = async (res, projectSpecs) => {
   } = projectSpecs
 
   const now = moment()
-  const endMillis = now.valueOf()
-  const startMillis = now.clone()
+  const end = now.toISOString()
+  const start = now.clone()
     .subtract(1, 'hour')
-    .valueOf()
+    .toISOString()
 
-  console.log('refreshing dashboard data at', endMillis)
+  console.log('refreshing dashboard data at', now.format())
+
+  const datetimes = [start, end].map( iso => getDBDatetime(iso))
+
+  console.log('date times:', datetimes);
 
   const data = await Promise.all([
       getCurrentWeather(lat, lng),
-      readTableRowsWhereBtw('price_with_score', {nodeId,}, 'timestamp', [startMillis, endMillis]),
+      readTableRowsWhereBtw('price_with_score', {nodeId,}, 'timestamp', datetimes),
     ].map( p => p.catch(handleMultiPromiseError) )
   )
 

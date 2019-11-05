@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment-timezone'
 
 import Label from '../components/Label'
 import DashboardSection from '../components/DashboardSection'
@@ -10,55 +11,58 @@ import DataTimeDisplay from '../components/DataTimeDisplay'
 
 import { roundToDigits } from '../utils/'
 
-const CurrentWeatherDisplay = ({ weather, timeZone }) => (
+const CurrentWeatherDisplay = ({ weather, timeZone }) => {
 
-  <DashboardSection headerContent="Weather">
-    { weather ?
-      <DashboardSectionContent>
-        <div>
-          <DataTimeDisplay
-            message="Data as of"
-            millis={weather.time * 1000}
-            timeZone={timeZone}
-            />
-          <WeatherIcon
-            icon={weather.icon}
-            style={styles.icon}
-            />
-        </div>
-        <div style={styles.dataDisplay}>
-          <Label content="Current Temperature"/>
-          <DataDisplay content={`${roundToDigits(weather.temperature, 1)}°F`}/>
-        </div>
-        <div style={styles.dataDisplay}>
-          <Label content="Cloud Cover"/>
-          <DataDisplay content={`${roundToDigits(weather.cloudCover * 100, 0)} %`}/>
-        </div>
-        <div style={styles.dataDisplay}>
-          <Label content="Wind"/>
-          <DataDisplay content={`${roundToDigits(weather.windSpeed, 1)} mph gusting to ${roundToDigits(weather.windGust, 1)} mph, bearing ${weather.windBearing}°`}/>
-        </div>
-        {
-          weather.nearestStormDistance > 0 &&
-          <div style={styles.dataDisplay}>
-            <Label content="Nearest Storm"/>
-            <DataDisplay content={`${weather.nearestStormDistance} mi bearing ${weather.nearestStormBearing}°`}/>
+  return (
+
+    <DashboardSection headerContent="Weather">
+      { weather ?
+        <DashboardSectionContent>
+          <div>
+            <DataTimeDisplay
+              message="Data as of"
+              isoString={moment(weather.time * 1000).toISOString()}
+              timeZone={timeZone}
+              />
+            <WeatherIcon
+              icon={weather.icon}
+              style={styles.icon}
+              />
           </div>
-        }
-        <div style={styles.linkContainer}>
-          <a
-            style={styles.ds}
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://darksky.net/poweredby/">
-            Powered by Dark Sky
-          </a>
-        </div>
-      </DashboardSectionContent> :
-      <p>Weather data is not currently available</p>
-    }
-  </DashboardSection>
-)
+          <div style={styles.dataDisplay}>
+            <Label content="Current Temperature"/>
+            <DataDisplay content={`${roundToDigits(weather.temperature, 1)}°F`}/>
+          </div>
+          <div style={styles.dataDisplay}>
+            <Label content="Cloud Cover"/>
+            <DataDisplay content={`${roundToDigits(weather.cloudCover * 100, 0)} %`}/>
+          </div>
+          <div style={styles.dataDisplay}>
+            <Label content="Wind"/>
+            <DataDisplay content={`${roundToDigits(weather.windSpeed, 1)} mph gusting to ${roundToDigits(weather.windGust, 1)} mph, bearing ${weather.windBearing}°`}/>
+          </div>
+          {
+            weather.nearestStormDistance > 0 &&
+            <div style={styles.dataDisplay}>
+              <Label content="Nearest Storm"/>
+              <DataDisplay content={`${weather.nearestStormDistance} mi bearing ${weather.nearestStormBearing}°`}/>
+            </div>
+          }
+          <div style={styles.linkContainer}>
+            <a
+              style={styles.ds}
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://darksky.net/poweredby/">
+              Powered by Dark Sky
+            </a>
+          </div>
+        </DashboardSectionContent> :
+        <p>Weather data is not currently available</p>
+      }
+    </DashboardSection>
+  )
+}
 
 const styles = {
   linkContainer: {

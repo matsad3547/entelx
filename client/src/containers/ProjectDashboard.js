@@ -49,6 +49,8 @@ JS Docs - insta documentation
       status,
     } = JSON.parse(e.data)
 
+    console.log('prices???', prices);
+
     setWeather(weather)
     setPrices(prices)
     setRevenue(revenue)
@@ -56,7 +58,7 @@ JS Docs - insta documentation
     setStatus(status)
   }, [])
 
-  const sseRoute = `/dashboard_data/${projectId}`
+  const sseRoute = `/dashboard/${projectId}`
 
   useConnectToServerSideEvent(sseRoute, handleData)
 
