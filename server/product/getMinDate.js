@@ -32,9 +32,9 @@ const getData = async (res, nodeId) => {
 
   const minRes = await catchErrorsWithMessage(`There was an error finding the minimum timestamp associated with node ${nodeId}`, findMin)('price', 'timestamp', {nodeId,})
 
-  const minDateMillis = minRes[0]['min(timestamp)']
+  const minDatetime = minRes[0]['min(timestamp)']
 
-  return res.sseSend({minDateMillis,})
+  return res.sseSend({minDatetime,})
 }
 
 module.exports = getMinDate

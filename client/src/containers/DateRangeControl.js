@@ -64,7 +64,7 @@ const DateRangeControl = ({
     <div style={styles.root}>
       <DataTimeDisplay
         message="Earliest data currently available is from"
-        millis={minDate.valueOf()}
+        isoString={minDate}
         timeZone={timeZone}
         />
       <div style={styles.controls}>
