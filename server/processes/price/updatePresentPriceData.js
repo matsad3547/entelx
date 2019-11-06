@@ -12,8 +12,6 @@
 
   const {
     fiveMinutesMillis,
-    // sixMonthMillis,
-    // oneMinuteMillis,
   } = require('../../config/')
 
   const {
@@ -55,11 +53,10 @@
   firstUpdateTimeout = setTimeout( async () => {
     let now = moment()
 
-    console.log(`starting price data update at ${now}`)
+    console.log(`Starting price data update at ${now.format()}`)
 
     let endMillis = getFiveMinutesFromNow(now)
     let startMillis = moment(mostRecent).add(1, 'minute').valueOf()
-    // let startMillis = mostRecent + oneMinuteMillis
 
     const [project] = await readTableRows('project', {id: projectId})
 
@@ -78,11 +75,10 @@
 
         endMillis = getFiveMinutesFromNow(now)
         startMillis = moment(mostRecent).add(1, 'minute').valueOf()
-        // startMillis = mostRecent + oneMinuteMillis
 
         const [project] = await readTableRows('project', {id: projectId})
 
-        console.log(`periodic price data update at ${now.format()}`)
+        console.log(`Periodic price data update at ${now.format()}`)
 
         await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
 
@@ -93,18 +89,6 @@
         const sixMonthsAgo = moment(mostRecent).subtract(6, 'month').toISOString()
 
         await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, getDBDatetime(sixMonthsAgo)])
-
-
-        // const newest = await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
-        //
-        // if (!isNaN(newest)) {
-        //   nextTimeoutMillis = getUpdateTimeout(newest)
-        //
-        //   await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, newest - sixMonthMillis])
-        // }
-        // else {
-        //   nextTimeoutMillis = fiveMinutesMillis - (30 * 1000)
-        // }
 
         getPriceDataOnInterval(nextTimeoutMillis)
       }, timeoutMillis)

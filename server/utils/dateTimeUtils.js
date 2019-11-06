@@ -15,8 +15,6 @@ const getUpdateTimeout = mostRecentTimestamp => {
 
   const nowUnix = moment().valueOf()
 
-  console.log('mostRecentUnix:', mostRecentUnix, 'nowUnix:', nowUnix);
-
   return getRemainderMillis(mostRecentUnix, nowUnix, fiveMinutesMillis) + 1000
 }
 
