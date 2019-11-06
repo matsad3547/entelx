@@ -12,7 +12,6 @@ const {
 
 const {
   catchErrorsWithMessage,
-  // getMaxTimeStamp,
   handleMultiPromiseError,
   getDBDatetime,
 } = require('../utils/')
@@ -34,7 +33,6 @@ const getDashboardData = async (req, res) => {
   const max = await catchErrorsWithMessage(`There was an error finding the max timestamp associated with node ${nodeId}`, findMax)('price', 'timestamp', {nodeId,})
 
   const mostRecent = max[0]['max(timestamp)']
-  // const mostRecent = await getMaxTimeStamp(nodeId)
 
   console.log('most recent:', mostRecent, typeof mostRecent);
 
@@ -81,8 +79,6 @@ const getData = async (res, projectSpecs) => {
   console.log('refreshing dashboard data at', now.format())
 
   const datetimes = [start, end].map( iso => getDBDatetime(iso))
-
-  // console.log('date times:', datetimes);
 
   const data = await Promise.all([
       getCurrentWeather(lat, lng),

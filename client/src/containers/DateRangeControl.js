@@ -41,7 +41,7 @@ const DateRangeControl = ({
 
     const decremented = onDecrement(startTime)
 
-    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone())
+    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(moment.tz(minDate, timeZone))
   }
 
   const onIncrementEndTime = () => {

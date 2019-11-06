@@ -49,8 +49,6 @@ JS Docs - insta documentation
       status,
     } = JSON.parse(e.data)
 
-    console.log('prices???', prices);
-
     setWeather(weather)
     setPrices(prices)
     setRevenue(revenue)

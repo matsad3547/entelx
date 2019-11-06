@@ -131,11 +131,12 @@ const HistoricalDisplay = ({match}) => {
                     onChange={onSetIncludeWeather}
                     />
                   <Button
-                    value="Get Data"
+                    value="GET DATA"
                     disabled={loading}
                     type="success"
                     onClick={getData}
                     overrideStyles={styles.button}
+                    width={'8em'}
                     />
                 </div>
               </div>
