@@ -34,6 +34,7 @@ const {
 
 const {
   getNodes,
+  runTest,
 } = require('./processes/')
 
 const app = express()
@@ -89,6 +90,8 @@ app.post('/revenue_surface/', getRevenueSurface)
 
 //generic
 app.get('/min_date/:id', getMinDate)
+
+app.get('/test/:nodeId', runTest)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/public')))

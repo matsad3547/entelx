@@ -36,6 +36,8 @@ const getDashboardData = async (req, res) => {
   const mostRecent = max[0]['max(timestamp)']
   // const mostRecent = await getMaxTimeStamp(nodeId)
 
+  console.log('most recent:', mostRecent, typeof mostRecent);
+
   const mostRecentUnix = moment(mostRecent).valueOf()
 
   const start = moment().valueOf()
@@ -80,7 +82,7 @@ const getData = async (res, projectSpecs) => {
 
   const datetimes = [start, end].map( iso => getDBDatetime(iso))
 
-  console.log('date times:', datetimes);
+  // console.log('date times:', datetimes);
 
   const data = await Promise.all([
       getCurrentWeather(lat, lng),

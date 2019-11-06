@@ -10,6 +10,8 @@ const {
 
 const getNodes = require('./getNodes')
 
+const runTest = require('./runTest')
+
 // const demoProcess = require('./demoProcess')
 
 module.exports = {
@@ -19,4 +21,5 @@ module.exports = {
   getNodes,
   getPriceData,
   launchPriceUpdates,
+  runTest,
 }

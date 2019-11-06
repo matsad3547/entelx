@@ -2,7 +2,7 @@ const moment = require('moment-timezone')
 
 const {
   fiveMinutesMillis,
-  gtmTZ,
+  gmtTZ,
   dbDatetimeFormat,
 } = require('../config/')
 
@@ -21,7 +21,7 @@ const getUpdateTimeout = mostRecentTimestamp => {
 }
 
 const getDBDatetime = isoString => {
-  return moment.tz(isoString, gtmTZ).format(dbDatetimeFormat)
+  return moment.tz(isoString, gmtTZ).format(dbDatetimeFormat)
 }
 
 const getRemainderMillis = (tsUnix, nowUnix, intervalMillis) => {

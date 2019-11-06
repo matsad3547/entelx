@@ -136,11 +136,11 @@ const InsightsDisplay = ({match}) => {
               />
             <div style={styles.button}>
               <Button
-                value="Get Insights"
+                value="GET INSIGHTS"
                 disabled={loading}
                 type="success"
                 onClick={getData}
-                width={'8em'}
+                width={'10em'}
                 />
             </div>
           </div>

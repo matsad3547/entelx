@@ -172,6 +172,32 @@ const DevelopmentPlatform = ({match}) => {
     }
   }, [startTime, endTime, projectId])
 
+  const getTest = useCallback( async () => {
+
+    console.log('project:', project);
+
+    const request = {
+      method: 'GET',
+      headers: defaultHeaders,
+    }
+
+    setLoading(true)
+
+    try {
+      const res = await singleRequest(`/test/${project.nodeId}`, request)
+
+      const response = await res.json()
+
+      console.log('test response:', response);
+    }
+    catch (err) {
+      console.error(`There was an error running the test function: ${err}`)
+    }
+    finally {
+      setLoading(false)
+    }
+  }, [project])
+
   const getRevenue = useCallback( async () => {
 
     const body = {
@@ -291,6 +317,15 @@ const DevelopmentPlatform = ({match}) => {
               width={'8em'}
               />
           </div>
+        </div>
+        <div style={styles.button}>
+          <Button
+            value="TEST"
+            disabled={loading}
+            type="danger"
+            onClick={getTest}
+            width={'8em'}
+            />
         </div>
       </DashboardSection>
     </ProjectPageTemplate>

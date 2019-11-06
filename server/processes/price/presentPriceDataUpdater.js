@@ -14,6 +14,8 @@ const presentPriceDataUpdater = async (
 
   const prices = await catchErrorsWithMessage(`There was an error getting present price data from ${startMillis} to ${endMillis}`, getPriceData)(startMillis, endMillis, nodeData)
 
+  console.log('!!!prices:', prices);
+
   await catchErrorsWithMessage(`There was an error adding rows for data from ${startMillis} to ${endMillis}`, createTableRows)('price', prices)
 
   const data = {

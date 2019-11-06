@@ -3,6 +3,7 @@ require('dotenv').config({path: '../../.env'})
 const {
   convertObj,
   camelToSnake,
+  datetimeToIso,
 } = require('./utils/').conversions
 
 module.exports = {
@@ -12,6 +13,15 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST || '',
+    timezone: 'UTC',
+    typeCast: function(field, next) {
+      if (field.type === 'DATETIME') {
+        return datetimeToIso(field.string())
+      }
+      else {
+        return next();
+      }
+    },
   },
   migrations: {
     directory: './migrations',
@@ -25,7 +35,5 @@ module.exports = {
   },
   wrapIdentifier: value => camelToSnake(value),
   postProcessResponse: result => Array.isArray(result) ? result.map(row => convertObj(row)) : convertObj(result),
-  timezone: 'UTC',
-  dateStrings: true,
   debug: process.env.NODE_ENV === 'production',
 }

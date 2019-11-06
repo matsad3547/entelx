@@ -38,14 +38,14 @@ describe('getRemainderMillis', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should return the interval if the timestamp is after the current value', () => {
-
-    const tsUnix = 1572971100000
-    const nowUnix = 1572970954599
-    const intervalMillis = fiveMinutesMillis
-
-    const actual = getRemainderMillis(tsUnix, nowUnix, intervalMillis)
-    const expected = fiveMinutesMillis
-    expect(actual).toEqual(expected)
-  })
+  // test('should return the interval if the timestamp is after the current value', () => {
+  //
+  //   const tsUnix = 1572971100000
+  //   const nowUnix = 1572970954599
+  //   const intervalMillis = fiveMinutesMillis
+  //
+  //   const actual = getRemainderMillis(tsUnix, nowUnix, intervalMillis)
+  //   const expected = fiveMinutesMillis
+  //   expect(actual).toEqual(expected)
+  // })
 })
