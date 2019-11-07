@@ -6,16 +6,16 @@ const {
 const getInsightData = async (req, res) => {
 
   const {
-    startMillis,
-    endMillis,
+    startDate,
+    endDate,
     id,
-  } = req.body
+  } = req.params
 
   const [project] = await readTableRows('project', {id,})
 
   const { nodeId } = project
 
-  const aggregate = await getPriceAggregateData(startMillis, endMillis, nodeId)
+  const aggregate = await getPriceAggregateData(startDate, endDate, nodeId)
 
   return res.status(200).json({
     aggregate,

@@ -2,6 +2,7 @@ const {
   findMax,
   findMin,
 } = require('../db/')
+
 const { catchErrorsWithMessage } = require('./requestUtils')
 
 const exitSignals = [

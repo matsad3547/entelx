@@ -1,9 +1,11 @@
-const {
-  caisoDataItems,
-  caisoTZ,
-} = require('./config')
+const moment = require('moment-timezone')
 
-const { tsToMillis } = require('../../../utils')
+const {
+  dbDatetimeFormat,
+  gmtTZ,
+} = require('../../../config/')
+
+const { caisoDataItems } = require('./config')
 
 const parsePriceData = (query, data) => {
   const reportItems = data.OASISReport.MessagePayload.RTO.REPORT_ITEM
@@ -12,12 +14,23 @@ const parsePriceData = (query, data) => {
   .map( rd => {
     const dataItem = rd.DATA_ITEM._text
     const dataItemFormat = caisoDataItems[query][dataItem]
+
+    // console.log('raw ts:', rd.INTERVAL_START_GMT._text, 'parsed:', moment(rd.INTERVAL_START_GMT._text).format(dbDatetimeFormat), 'with tz:', moment.tz(rd.INTERVAL_START_GMT._text, gmtTZ).format(dbDatetimeFormat));
+
     return {
-      timestamp: tsToMillis(rd.INTERVAL_START_GMT._text, caisoTZ),
+      timestamp: moment.tz(rd.INTERVAL_START_GMT._text, gmtTZ).format(dbDatetimeFormat),
       [dataItemFormat.key]: dataItemFormat.format(rd.VALUE._text),
     }
   })
-  .sort( (a, b) => a.timestamp - b.timestamp )
+  .sort( (a, b) => {
+    if(moment(a.timestamp).isBefore(b.timestamp)) {
+      return -1
+    }
+    else if (moment(a.timestamp).isAfter(b.timestamp)) {
+      return 1
+    }
+    return 0
+  })
   .reduce( (acc, next) => {
     const lastItemIndex = acc.length - 1
     const accHasContent = acc.length > 0

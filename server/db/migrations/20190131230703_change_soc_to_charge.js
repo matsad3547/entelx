@@ -1,14 +1,20 @@
 
-exports.up = function(knex, Promise) {
+exports.up = knex => {
   return knex.schema.table('project', t => {
-    t.dropColumn('soc')
+     knex.schema.hasColumn('project', 'soc').then( exists => exists && t.dropColumn('soc'))
   })
   .then( () => knex.schema.table('project', t => {
-      t.decimal('charge', 6, 3)
+    knex.schema.hasColumn('project', 'soc').then( exists => !exists && t.decimal('charge', 6, 3))
     })
   )
 };
 
-exports.down = function(knex, Promise) {
-
+exports.down = knex => {
+  return knex.schema.table('project', t => {
+     knex.schema.hasColumn('project', 'charge').then( exists => exists && t.dropColumn('charge'))
+  })
+  .then( () => knex.schema.table('project', t => {
+    knex.schema.hasColumn('project', 'soc').then( exists => !exists && t.decimal('soc', 3, 3))
+    })
+  )
 };

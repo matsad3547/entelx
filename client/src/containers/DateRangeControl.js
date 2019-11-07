@@ -41,7 +41,7 @@ const DateRangeControl = ({
 
     const decremented = onDecrement(startTime)
 
-    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(minDate.clone())
+    decremented.isAfter(minDate) ? setStartTime(decremented) : setStartTime(moment.tz(minDate, timeZone))
   }
 
   const onIncrementEndTime = () => {
@@ -64,7 +64,7 @@ const DateRangeControl = ({
     <div style={styles.root}>
       <DataTimeDisplay
         message="Earliest data currently available is from"
-        millis={minDate.valueOf()}
+        isoString={minDate}
         timeZone={timeZone}
         />
       <div style={styles.controls}>

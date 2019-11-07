@@ -37,12 +37,12 @@ const oasisEndpoint = (
         .then( str => convert.xml2json(str, xmlOptions) )
         .then( strJson => JSON.parse(strJson))
         .then( json => {
-
           const error = json['m:OASISReport'] && json['m:OASISReport']['m:MessagePayload']['m:RTO']['m:ERROR']
 
           if(error !== undefined) {
             console.timeEnd(`CAISO ${url} request`)
-            reject(`CAISO Oasis request ${url} failed with Oasis error:`, error['m:ERR_DESC']._text)
+            const errorMsg = `Code ${error['m:ERR_CODE']._text}: ${error['m:ERR_DESC']._text}`
+            reject(`CAISO Oasis request ${url} failed with Oasis error: ${errorMsg}`)
           }
           else {
             const parser = getParser(query)
@@ -53,7 +53,8 @@ const oasisEndpoint = (
             }
             catch (err) {
               console.log('OASIS response:', json)
-              reject(`There was an issue parsing data in the Oasis request from ${query}:`, err)
+              const errorMsg = `There was an error parsing data for CAISO Oasis request ${url}: ${err.toString()}`
+              reject(errorMsg)
             }
             finally {
               console.timeEnd(`CAISO ${url} request`)

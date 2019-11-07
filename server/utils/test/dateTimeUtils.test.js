@@ -1,25 +1,40 @@
-const { getUpdateTimeout } = require('../dateTimeUtils')
+const {
+  getDBDatetime,
+  getRemainderMillis,
+} = require('../dateTimeUtils')
 
-const nowMillis = 1564632060000
+const { fiveMinutesMillis } = require('../../config/')
 
-jest.mock('moment-timezone', () => () => ({
-    valueOf: () => 1564632060000
+describe('getDBDatetime', () => {
+  test('should return a useful datetime string', () => {
+    const isoString = '2019-10-07T14:40:00.000Z'
+    const actual = getDBDatetime(isoString)
+    // "YYYY-MM-DD HH:mm:ss"
+    const expected = '2019-10-07 14:40:00.000'
+    expect(actual).toEqual(expected)
   })
-)
+})
 
-describe('getUpdateTimeout', () => {
+// Presume the first stamp is on the interval
+describe('getRemainderMillis', () => {
 
-  test('should return 1 minute and one second when given a time 4 minutes ago', () => {
-    const mostRecentTimestamp = nowMillis - (4 * 60 * 1000)
-    const expected = 61000
-    const actual = getUpdateTimeout(mostRecentTimestamp)
+  test('should return the number of millis from the current time to the next instance of an interval', () => {
+    const tsUnix = 1572920100000
+    const nowUnix = 1572920203931
+    const intervalMillis = fiveMinutesMillis
+
+    const actual = getRemainderMillis(tsUnix, nowUnix, intervalMillis)
+    const expected = 196069
     expect(actual).toEqual(expected)
   })
 
-  test('should return 1 minute and one second when given a time 24 minutes ago', () => {
-    const mostRecentTimestamp = nowMillis - (24 * 60 * 1000)
-    const expected = 61000
-    const actual = getUpdateTimeout(mostRecentTimestamp)
+  test('should return the number of millis from the current time to the next instance of an interval even if that difference is larger than the interval ', () => {
+    const tsUnix = 1572910100000
+    const nowUnix = 1572920203000
+    const intervalMillis = fiveMinutesMillis
+
+    const actual = getRemainderMillis(tsUnix, nowUnix, intervalMillis)
+    const expected = 97000
     expect(actual).toEqual(expected)
   })
 })

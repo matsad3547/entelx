@@ -29,7 +29,7 @@ import { lineDataFormat } from '../../config/chart'
 import { colors } from '../../config/styles'
 
 import {
-  formatMillis,
+  formatDate,
   findRelevantKeys,
   roundToDigits,
   formatDollars,
@@ -72,7 +72,7 @@ const LineBarChart = React.memo(({
         margin={{top: 10, right: 0, left: 10, bottom: 0}}>
         <XAxis
           dataKey="timestamp"
-          tickFormatter={millis => formatMillis(millis, timeZone, twelveHourFormat)}
+          tickFormatter={isoString => formatDate(isoString, timeZone, twelveHourFormat)}
           />
         <YAxis
           yAxisId="left"
@@ -123,7 +123,7 @@ const LineBarChart = React.memo(({
         <Brush
           dataKey="timestamp"
           height={30} stroke={colors.lightGreen}
-          tickFormatter={millis => formatMillis(millis, timeZone, monthDayTimeFormat)}
+          tickFormatter={isoString => formatDate(isoString, timeZone, monthDayTimeFormat)}
           endIndex={0}
         />
       }
@@ -164,7 +164,7 @@ LineBarChart.propTypes = {
     lmp: PropTypes.number,
     mvgAvg: PropTypes.number,
     score: PropTypes.number,
-    timestamp: PropTypes.number,
+    timestamp: PropTypes.string, //iso string
   })).isRequired,
   barKey: PropTypes.string.isRequired,
   posBarThreshold: PropTypes.number,

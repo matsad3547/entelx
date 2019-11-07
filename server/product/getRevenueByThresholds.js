@@ -5,7 +5,10 @@ const {
   readTableRowsWhereBtw,
 } = require('../db/')
 
-const { findRevenueAndCharge } = require('../utils/')
+const {
+  findRevenueAndCharge,
+  getDBDatetime,
+} = require('../utils/')
 
 const getRevenueByThresholds = async (req, res) => {
 
@@ -13,7 +16,7 @@ const getRevenueByThresholds = async (req, res) => {
     chargeThreshold,
     dischargeThreshold,
     id,
-  } = req.body
+  } = req.params
 
   const [project] = await readTableRows('project', {id,})
 
@@ -26,14 +29,15 @@ const getRevenueByThresholds = async (req, res) => {
     chargeBuffer,
   } = project
 
-  const getNow = () => moment()
-
-  const endMillis = getNow().valueOf()
-  const startMillis = getNow().clone()
+  const now = moment()
+  const end = now.toISOString()
+  const start = now.clone()
     .subtract(7, 'days')
-    .valueOf()
+    .toISOString()
 
-  const timeSeries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis])
+  const datetimes = [start, end].map( iso => getDBDatetime(iso))
+
+  const timeSeries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', datetimes)
 
   const batterySpecs = {
     power,

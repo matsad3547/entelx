@@ -40,7 +40,7 @@ DateControl.propTypes = {
   date: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  timeZone: PropTypes.string.isRequired, //timeZone
+  timeZone: PropTypes.string.isRequired,
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
 }

@@ -101,25 +101,18 @@ const DevelopmentPlatform = ({match}) => {
 
   const getRevenueSurface = useCallback( async () => {
 
-    const startMillis = startTime.valueOf()
-    const endMillis = endTime.valueOf()
-
-    const body = {
-      id: projectId,
-      endMillis,
-      startMillis,
-    }
+    const startDate = startTime.toISOString()
+    const endDate = endTime.toISOString()
 
     const request = {
-      method: 'POST',
+      method: 'GET',
       headers: defaultHeaders,
-      body: JSON.stringify(body)
     }
 
     setLoading(true)
 
     try {
-      const res = await singleRequest('/get_revenue_surface/', request)
+      const res = await singleRequest(`/revenue_surface/${projectId}/${startDate}/${endDate}`, request)
 
       const parsed = await res.json()
 
@@ -135,25 +128,18 @@ const DevelopmentPlatform = ({match}) => {
 
   const getData = useCallback( async () => {
 
-    const startMillis = startTime.valueOf()
-    const endMillis = endTime.valueOf()
-
-    const body = {
-      id: projectId,
-      endMillis,
-      startMillis,
-    }
+    const startDate = startTime.toISOString()
+    const endDate = endTime.toISOString()
 
     const request = {
-      method: 'POST',
+      method: 'GET',
       headers: defaultHeaders,
-      body: JSON.stringify(body)
     }
 
     setLoading(true)
 
     try {
-      const res = await singleRequest('/insights/', request)
+      const res = await singleRequest(`/insights/${projectId}/${startDate}/${endDate}`, request)
 
       const { aggregate } = await res.json()
 
@@ -179,24 +165,43 @@ const DevelopmentPlatform = ({match}) => {
     }
   }, [startTime, endTime, projectId])
 
-  const getRevenue = useCallback( async () => {
+  const getTest = useCallback( async () => {
 
-    const body = {
-      id: projectId,
-      chargeThreshold,
-      dischargeThreshold,
-    }
+    console.log('project:', project);
 
     const request = {
-      method: 'POST',
+      method: 'GET',
       headers: defaultHeaders,
-      body: JSON.stringify(body)
     }
 
     setLoading(true)
 
     try {
-      const res = await singleRequest('/get_revenue_by_thresholds/', request)
+      const res = await singleRequest(`/test/${project.nodeId}`, request)
+
+      const response = await res.json()
+
+      console.log('test response:', response);
+    }
+    catch (err) {
+      console.error(`There was an error running the test function: ${err}`)
+    }
+    finally {
+      setLoading(false)
+    }
+  }, [project])
+
+  const getRevenue = useCallback( async () => {
+
+    const request = {
+      method: 'GET',
+      headers: defaultHeaders,
+    }
+
+    setLoading(true)
+
+    try {
+      const res = await singleRequest(`/revenue_by_thresholds/${projectId}/${chargeThreshold}/${dischargeThreshold}`, request)
 
       const parsed = await res.json()
 
@@ -268,11 +273,11 @@ const DevelopmentPlatform = ({match}) => {
               </div>
               <div style={styles.button}>
                 <Button
-                  value="Get Revenue"
+                  value="GET REVENUE"
                   disabled={loading}
                   type="success"
                   onClick={getRevenue}
-                  width={'8em'}
+                  width={'10em'}
                   />
               </div>
             </div>
@@ -291,13 +296,22 @@ const DevelopmentPlatform = ({match}) => {
           }
           <div style={styles.button}>
             <Button
-              value="Show Chart"
+              value="SHOW CHART"
               disabled={loading}
               type="success"
               onClick={getRevenueSurface}
-              width={'8em'}
+              width={'10em'}
               />
           </div>
+        </div>
+        <div style={styles.button}>
+          <Button
+            value="TEST"
+            disabled={loading}
+            type="danger"
+            onClick={getTest}
+            width={'8em'}
+            />
         </div>
       </DashboardSection>
     </ProjectPageTemplate>

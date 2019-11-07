@@ -35,7 +35,7 @@ const Status = ({
             timestamp &&
             <DataTimeDisplay
               message="Data as of"
-              millis={timestamp}
+              isoString={timestamp}
               timeZone={config.timeZone}
               />
           }
@@ -119,7 +119,7 @@ Status.propTypes = {
       lmp: PropTypes.number,
       mvgAvg: PropTypes.number,
       score: PropTypes.number,
-      timestamp: PropTypes.number,
+      timestamp: PropTypes.string,
     })
   ),
   charge: PropTypes.number,

@@ -31,7 +31,10 @@ const createProject = async (data, res, next) => {
   const {
     lat,
     lng,
+    name,
   } = data
+
+  console.log(`Creating the ${name} project...`);
 
   // TODO Get timezone from this way: https://www.mapbox.com/help/create-a-timezone-finder-with-mapbox-tilequery-api/
   const timeZone = 'America/Los_Angeles'

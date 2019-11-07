@@ -107,13 +107,13 @@ describe('parsePriceData()', () => {
     expect(actual).toEqual(expected)
   })
 
-  test('should return an array with 12 items, where the value of the `timestamp` is a number', () => {
+  test('should return an array with 12 items, where the value of the `timestamp` is a date string', () => {
     const query = 'PRC_INTVL_LMP'
     const data = lmp1Hour
     const expected = new Array(12).fill(true)
     const arr = parsePriceData(query, data)
     const actual = arr.map( obj =>
-      typeof obj.timestamp === 'number'
+      typeof obj.timestamp === 'string'
     )
     expect(actual).toEqual(expected)
   })

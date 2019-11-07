@@ -26,6 +26,7 @@
     "jest": "^21.2.1",
     "jest-css-modules-transform": "^2.0.2",
     "jest-svg-transformer": "^1.0.0",
+    "markdown-loader-jest": "^0.1.1",
     "nodemon": "^1.12.1"
   },
   "scripts": {
@@ -35,14 +36,14 @@
     "test": "NODE_ENV=test jest --watch",
     "build-client": "cd client/ && yarn build && cp -rf ./build/* ../server/public/ && cd ../",
     "install-project": "yarn && cd client && yarn && cd ../server && yarn && cd ../"
-
   },
   "jest": {
     "moduleNameMapper": null,
     "transform": {
       "^.+\\.jsx?$": "babel-jest",
       "^.+\\.svg$": "jest-svg-transformer",
-      ".+\\.(css|styl|less|sass|scss)$": "<rootDir>/node_modules/jest-css-modules-transform"
+      ".+\\.(css|styl|less|sass|scss)$": "<rootDir>/node_modules/jest-css-modules-transform",
+      "^.+\\.md?$": "markdown-loader-jest"
     }
   }
 }

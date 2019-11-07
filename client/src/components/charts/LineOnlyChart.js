@@ -20,7 +20,7 @@ import {
 } from '../../config/'
 
 import {
-  formatMillis,
+  formatDate,
   findRelevantKeys,
 } from '../../utils'
 
@@ -37,7 +37,7 @@ const LineOnlyChart = ({data, tz}) => {
       margin={{top: 0, right: 0, left: 0, bottom: 0}}>
       <XAxis
         dataKey="timestamp"
-        tickFormatter={millis => formatMillis(millis, tz, monthDayTimeFormat)}
+        tickFormatter={isoString => formatDate(isoString, tz, monthDayTimeFormat)}
         />
       <YAxis/>
       <CartesianGrid strokeDasharray="3 3"/>

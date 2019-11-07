@@ -25,7 +25,7 @@ export const useGetProject = (projectId) => {
     }
 
     try {
-      const res = await singleRequest(`/get_project/${projectId}`, request)
+      const res = await singleRequest(`/project/${projectId}`, request)
 
       const project = await res.json()
       setProject(project)
@@ -65,20 +65,20 @@ export const useConnectToServerSideEvent = (route, handleData) => useEffect( () 
   }
 }, [route, handleData])
 
-export const useMinDate = (projectId) => {
+export const useMinDate = projectId => {
 
   const oneWeekAgo = moment()
     .subtract(7, 'days')
 
-  const [minDate, setMinDate] = useState(oneWeekAgo)
+  const [minDate, setMinDate] = useState(oneWeekAgo.toISOString())
 
   const handleData = useCallback( e => {
     e.preventDefault()
-    const {minDateMillis} = JSON.parse(e.data)
-    setMinDate(moment(minDateMillis))
+    const {minDatetime} = JSON.parse(e.data)
+    setMinDate(minDatetime)
   }, [])
 
-  const sseRoute = `/get_min_date/${projectId}`
+  const sseRoute = `/min_date/${projectId}`
 
   useConnectToServerSideEvent(sseRoute, handleData)
 

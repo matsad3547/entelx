@@ -1,7 +1,8 @@
 const moment = require('moment-timezone')
 
+const { utcTZ } = require('../../../config/')
+
 const {
-  caisoTZ,
   caisoFormat,
   priceRequests,
   atlasRequests,
@@ -13,8 +14,8 @@ const {
 } = require('./parsers')
 
 const getDateString = (startMillis, endMillis) => {
-  const startDate = moment.tz(startMillis, caisoTZ).format(caisoFormat)
-  const endDate = moment.tz(endMillis, caisoTZ).format(caisoFormat)
+  const startDate = moment.tz(startMillis, utcTZ).format(caisoFormat)
+  const endDate = moment.tz(endMillis, utcTZ).format(caisoFormat)
   return `&startdatetime=${startDate}&enddatetime=${endDate}`
 }
 

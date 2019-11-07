@@ -34,6 +34,7 @@ const {
 
 const {
   getNodes,
+  runTest,
 } = require('./processes/')
 
 const app = express()
@@ -67,29 +68,30 @@ app.post('/user/create', createUser)
 app.post('/user/login', login)
 
 //dashboard
-app.get('/dashboard/:id/data', getDashboardData)
+app.get('/dashboard/:id/', getDashboardData)
 
 //general
 app.get('/nodes', getNodes)
-app.get('/get_project/:id', getProjectById)
 
-//project page
-app.post('/project/create', createNewProject)
+//project
+app.get('/project/:id', getProjectById)
+app.post('/project', createNewProject)
 app.delete('/project/:id', deleteProjectById)
 
 // historical
-app.post('/historical/', getHistoricalData)
-app.get('/historical/:id/min_date', getMinDate)
+app.get('/historical/:id/:startDate/:endDate/:includeWeather', getHistoricalData)
 
 //insights
-app.post('/insights/', getInsightData)
+app.get('/insights/:id/:startDate/:endDate', getInsightData)
 
 //development
-app.post('/get_revenue_by_thresholds/', getRevenueByThresholds)
-app.post('/get_revenue_surface/', getRevenueSurface)
+app.get('/revenue_by_thresholds/:id/:chargeThreshold/:dischargeThreshold', getRevenueByThresholds)
+app.get('/revenue_surface/:id/:startDate/:endDate', getRevenueSurface)
 
 //generic
-app.get('/get_min_date/:id', getMinDate)
+app.get('/min_date/:id', getMinDate)
+
+app.get('/test/:nodeId', runTest)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/public')))

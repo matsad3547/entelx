@@ -1,5 +1,9 @@
 const utcFormat = 'YYYY-MM-DDTHH:mm:ss.sss[Z]'
 
+const dbDatetimeFormat = 'YYYY-MM-DD HH:mm:ss.SSS'
+
+const gmtTZ = 'Etc/GMT'
+
 const dayOf5Mins = (24 * 60) / 5
 
 const fiveMinsAsHour = 5 / 60
@@ -22,4 +26,6 @@ module.exports = {
   fiveMinsAsHour,
   sixMonthMillis,
   threeWeeksMillis,
+  gmtTZ,
+  dbDatetimeFormat,
 }
