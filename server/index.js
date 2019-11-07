@@ -85,8 +85,8 @@ app.get('/historical/:id/:startDate/:endDate/:includeWeather', getHistoricalData
 app.get('/insights/:id/:startDate/:endDate', getInsightData)
 
 //development
-app.post('/revenue_by_thresholds/', getRevenueByThresholds)
-app.post('/revenue_surface/', getRevenueSurface)
+app.get('/revenue_by_thresholds/:id/:chargeThreshold/:dischargeThreshold', getRevenueByThresholds)
+app.get('/revenue_surface/:id/:startDate/:endDate', getRevenueSurface)
 
 //generic
 app.get('/min_date/:id', getMinDate)

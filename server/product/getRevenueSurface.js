@@ -8,15 +8,16 @@ const {
   getCenteredValuesArr,
   getTwoDimensionalArray,
   findRevenueAndCharge,
+  getDBDatetime,
 } = require('../utils/')
 
 const getRevenueSurface = async (req, res) => {
 
   const {
-    startMillis,
-    endMillis,
+    startDate,
+    endDate,
     id,
-  } = req.body
+  } = req.params
 
   const [project] = await readTableRows('project', {id,})
 
@@ -29,7 +30,9 @@ const getRevenueSurface = async (req, res) => {
     chargeBuffer,
   } = project
 
-  const timeSeries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', [startMillis, endMillis])
+  const datetimes = [startDate, endDate].map( iso => getDBDatetime(iso))
+
+  const timeSeries = await readTableRowsWhereBtw('price', {nodeId,}, 'timestamp', datetimes)
 
   const options = {
     power,
@@ -39,7 +42,7 @@ const getRevenueSurface = async (req, res) => {
     chargeBuffer,
   }
 
-  const aggregate = await getPriceAggregateData(startMillis, endMillis, nodeId)
+  const aggregate = await getPriceAggregateData(startDate, endDate, nodeId)
 
   const {
     aboveStdDev,

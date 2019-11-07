@@ -101,25 +101,18 @@ const DevelopmentPlatform = ({match}) => {
 
   const getRevenueSurface = useCallback( async () => {
 
-    const startMillis = startTime.valueOf()
-    const endMillis = endTime.valueOf()
-
-    const body = {
-      id: projectId,
-      endMillis,
-      startMillis,
-    }
+    const startDate = startTime.toISOString()
+    const endDate = endTime.toISOString()
 
     const request = {
-      method: 'POST',
+      method: 'GET',
       headers: defaultHeaders,
-      body: JSON.stringify(body)
     }
 
     setLoading(true)
 
     try {
-      const res = await singleRequest('/revenue_surface/', request)
+      const res = await singleRequest(`/revenue_surface/${projectId}/${startDate}/${endDate}`, request)
 
       const parsed = await res.json()
 
@@ -200,22 +193,15 @@ const DevelopmentPlatform = ({match}) => {
 
   const getRevenue = useCallback( async () => {
 
-    const body = {
-      id: projectId,
-      chargeThreshold,
-      dischargeThreshold,
-    }
-
     const request = {
-      method: 'POST',
+      method: 'GET',
       headers: defaultHeaders,
-      body: JSON.stringify(body)
     }
 
     setLoading(true)
 
     try {
-      const res = await singleRequest('/revenue_by_thresholds/', request)
+      const res = await singleRequest(`/revenue_by_thresholds/${projectId}/${chargeThreshold}/${dischargeThreshold}`, request)
 
       const parsed = await res.json()
 

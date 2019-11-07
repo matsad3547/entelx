@@ -7,7 +7,7 @@ const {
 
 const {
   findRevenueAndCharge,
-  getDBDatetime, 
+  getDBDatetime,
 } = require('../utils/')
 
 const getRevenueByThresholds = async (req, res) => {
@@ -16,7 +16,7 @@ const getRevenueByThresholds = async (req, res) => {
     chargeThreshold,
     dischargeThreshold,
     id,
-  } = req.body
+  } = req.params
 
   const [project] = await readTableRows('project', {id,})
 
