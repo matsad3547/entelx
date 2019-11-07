@@ -287,11 +287,11 @@ const DevelopmentPlatform = ({match}) => {
               </div>
               <div style={styles.button}>
                 <Button
-                  value="Get Revenue"
+                  value="GET REVENUE"
                   disabled={loading}
                   type="success"
                   onClick={getRevenue}
-                  width={'8em'}
+                  width={'10em'}
                   />
               </div>
             </div>
@@ -310,11 +310,11 @@ const DevelopmentPlatform = ({match}) => {
           }
           <div style={styles.button}>
             <Button
-              value="Show Chart"
+              value="SHOW CHART"
               disabled={loading}
               type="success"
               onClick={getRevenueSurface}
-              width={'8em'}
+              width={'10em'}
               />
           </div>
         </div>

@@ -24,7 +24,9 @@ const getDBDatetime = isoString => {
 
 const getRemainderMillis = (tsUnix, nowUnix, intervalMillis) => {
 
-  return intervalMillis - (Math.abs(nowUnix - tsUnix) % fiveMinutesMillis)
+  console.log('now:', nowUnix, 'timestamp:', tsUnix);
+
+  return intervalMillis - ((nowUnix - tsUnix) % fiveMinutesMillis)
 }
 
 module.exports = {

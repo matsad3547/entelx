@@ -34,8 +34,6 @@ const getDashboardData = async (req, res) => {
 
   const mostRecent = max[0]['max(timestamp)']
 
-  console.log('most recent:', mostRecent, typeof mostRecent);
-
   const mostRecentUnix = moment(mostRecent).valueOf()
 
   const start = moment().valueOf()

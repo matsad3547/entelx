@@ -73,7 +73,7 @@
 
         mostRecent = await getMaxTimeStamp(id)
 
-        endMillis = getFiveMinutesFromNow(now)
+        endMillis = getFiveMinutesFromNow(now) + (10 * 1000)
         startMillis = moment(mostRecent).add(1, 'minute').valueOf()
 
         const [project] = await readTableRows('project', {id: projectId})
@@ -89,6 +89,8 @@
         const sixMonthsAgo = moment(mostRecent).subtract(6, 'month').toISOString()
 
         await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, getDBDatetime(sixMonthsAgo)])
+
+        console.log('most recent:', mostRecent, 'next time out millis:', nextTimeoutMillis);
 
         getPriceDataOnInterval(nextTimeoutMillis)
       }, timeoutMillis)
