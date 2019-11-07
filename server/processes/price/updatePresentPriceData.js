@@ -90,8 +90,6 @@
 
         await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, getDBDatetime(sixMonthsAgo)])
 
-        console.log('most recent:', mostRecent, 'next time out millis:', nextTimeoutMillis);
-
         getPriceDataOnInterval(nextTimeoutMillis)
       }, timeoutMillis)
     }
