@@ -81,7 +81,7 @@
   process.on('SIGUSR2', () => true )
 
   const cleanUp = code => {
-    console.log(`exiting "updatePastPriceData" for ${name}\n exit code: ${code}` )
+    console.log(`Exiting "updatePastPriceData" for ${name}\n exit code: ${code}` )
   }
 
   process.on('exit', cleanUp)

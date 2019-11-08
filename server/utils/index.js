@@ -20,6 +20,7 @@ const {
   findRevenueAndCharge,
   getCenteredValuesArr,
   getTwoDimensionalArray,
+  findThresholds,
 } = require('./calculationUtils')
 
 const { findClosest } = require('./geoUtils')
@@ -41,6 +42,7 @@ module.exports = {
   writeToFile,
   calculateDerivedData,
   findRevenueAndCharge,
+  findThresholds,
   findClosest,
   setExitListeners,
   getMaxTimeStamp,
