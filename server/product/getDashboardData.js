@@ -74,7 +74,7 @@ const getData = async (res, projectSpecs) => {
     .subtract(1, 'hour')
     .toISOString()
 
-  console.log('refreshing dashboard data at', now.format())
+  console.log('Refreshing dashboard data at', now.format())
 
   const datetimes = [start, end].map( iso => getDBDatetime(iso))
 
@@ -94,6 +94,8 @@ const getData = async (res, projectSpecs) => {
     revenue: project.revenue,
     charge: project.charge,
     status: project.status,
+    chargeThreshold: project.chargeThreshold,
+    dischargeThreshold: project.dischargeThreshold,
   })
 }
 

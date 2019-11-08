@@ -3,13 +3,13 @@ const moment = require('moment')
 
 const updateThresholds = () => {
 
-  console.log('Starting thresholds update...');
-
   const now = moment()
   const end = now.toISOString()
   const start = now.clone()
     .subtract(5, 'days')
     .toISOString()
+
+  console.log(`Starting thresholds update at ${now.format()}...`);
 
   const args = JSON.stringify({start, end})
 
