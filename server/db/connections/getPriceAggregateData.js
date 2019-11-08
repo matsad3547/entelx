@@ -1,16 +1,12 @@
 const knex = require('../knex')
 
 const { convertObj } = require('../utils/').conversions
-const { getDBDatetime } = require('../../utils/')
 
 const getPriceAggregateData = (
-  startDate,
-  endDate,
+  startDatetime,
+  endDatetime,
   nodeId,
 ) => {
-
-  const startDatetime = getDBDatetime(startDate)
-  const endDatetime = getDBDatetime(endDate)
 
   return knex.raw(
     `SELECT

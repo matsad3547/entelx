@@ -16,8 +16,6 @@
 
   console.time('Update project thresholds')
 
-  const pid = process.pid
-
   const args = JSON.parse(process.argv[2])
 
   const {
@@ -29,51 +27,57 @@
 
   const projects = await catchErrorsWithMessage('There was an error getting all projects for updating thresholds', readTableRows)('project', {})
 
-  projects.forEach( async project => {
+  await Promise.all(projects.map( async project => {
 
-    const {
-      id,
-      nodeId,
-      name,
-      power,
-      energy,
-      rte,
-      dischargeBuffer,
-      chargeBuffer,
-    } = project
+      const {
+        id,
+        nodeId,
+        name,
+        power,
+        energy,
+        rte,
+        dischargeBuffer,
+        chargeBuffer,
+      } = project
 
-    console.time(`Update thresholds for project ${name}`)
+      console.time(`Update thresholds for project ${name}`)
 
-    const options = {
-      power,
-      energy,
-      rte,
-      dischargeBuffer,
-      chargeBuffer,
-    }
+      const options = {
+        power,
+        energy,
+        rte,
+        dischargeBuffer,
+        chargeBuffer,
+      }
 
-    const prices = await catchErrorsWithMessage(`There was an error getting price data for project ${id}`, readTableRowsWhereBtw)('price_with_score', {nodeId,}, 'timestamp', datetimes)
+      const prices = await catchErrorsWithMessage(`There was an error getting price data for project ${id}`, readTableRowsWhereBtw)('price_with_score', {nodeId,}, 'timestamp', datetimes)
 
-    const initAggregate = await catchErrorsWithMessage(`There was an error getting price data for project ${id}`, getPriceAggregateData)(start, end, nodeId)
+      const [
+        startDatetime,
+        endDatetime,
+      ] = datetimes
 
-    const data = {
-      timeSeries: prices,
-      aggregate: initAggregate,
-    }
+      const initAggregate = await catchErrorsWithMessage(`There was an error getting price data for project ${id}`, getPriceAggregateData)(startDatetime, endDatetime, nodeId)
 
-    const { aggregate } = findThresholds(data, 'lmp', options)
+      const data = {
+        timeSeries: prices,
+        aggregate: initAggregate,
+      }
 
-    const {
-      chargeThreshold,
-      dischargeThreshold,
-    } = aggregate
+      const { aggregate } = findThresholds(data, 'lmp', options)
 
-    await catchErrorsWithMessage(`There was an error updating thresholds for project ${id}`, updateTableRow)('project', {id, }, {chargeThreshold, dischargeThreshold})
+      const {
+        chargeThreshold,
+        dischargeThreshold,
+      } = aggregate
 
-    console.timeEnd(`Update thresholds for project ${name}`)
-  })
+      console.log('new thresholds:', chargeThreshold, dischargeThreshold);
 
-  process.kill(pid)
+      await catchErrorsWithMessage(`There was an error updating thresholds for project ${id}`, updateTableRow)('project', {id, }, {chargeThreshold, dischargeThreshold})
+
+      console.timeEnd(`Update thresholds for project ${name}`)
+    })
+  )
 
   setExitListeners()
 
@@ -86,4 +90,6 @@
   }
 
   process.on('exit', cleanUp)
+
+  process.exit(0)
 })()
