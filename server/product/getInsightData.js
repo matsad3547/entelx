@@ -3,6 +3,8 @@ const {
   getPriceAggregateData,
 } = require('../db/')
 
+const { getDBDatetime } = require('../utils/')
+
 const getInsightData = async (req, res) => {
 
   const {
@@ -15,7 +17,9 @@ const getInsightData = async (req, res) => {
 
   const { nodeId } = project
 
-  const aggregate = await getPriceAggregateData(startDate, endDate, nodeId)
+  const [startDatetime, endDatetime] = [startDate, endDate].map( iso => getDBDatetime(iso))
+
+  const aggregate = await getPriceAggregateData(startDatetime, endDatetime, nodeId)
 
   return res.status(200).json({
     aggregate,

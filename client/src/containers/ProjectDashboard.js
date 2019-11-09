@@ -30,6 +30,8 @@ const ProjectDashboard = ({match}) => {
   const [prices, setPrices] = useState(null)
   const [revenue, setRevenue] = useState(null)
   const [charge, setCharge] = useState(null)
+  const [chargeThreshold, setChargeThreshold] = useState(null)
+  const [dischargeThreshold, setDischargeThreshold] = useState(null)
   const [status, setStatus] = useState('standby')
 
 /**
@@ -47,6 +49,8 @@ JS Docs - insta documentation
       revenue,
       charge,
       status,
+      chargeThreshold,
+      dischargeThreshold,
     } = JSON.parse(e.data)
 
     setWeather(weather)
@@ -54,6 +58,8 @@ JS Docs - insta documentation
     setRevenue(revenue)
     setCharge(charge)
     setStatus(status)
+    setChargeThreshold(chargeThreshold)
+    setDischargeThreshold(dischargeThreshold)
   }, [])
 
   const sseRoute = `/dashboard/${projectId}`
@@ -72,7 +78,11 @@ JS Docs - insta documentation
       { loadingProject && <Loading message={''} />}
       <div style={styles.root}>
         <Status
-          config={project}
+          config={{
+            ...project,
+            chargeThreshold,
+            dischargeThreshold,
+          }}
           prices={prices}
           charge={charge}
           revenue={revenue}
@@ -83,8 +93,8 @@ JS Docs - insta documentation
           (hasPrices && project) ?
             <LineBarChart
               barKey={'lmp'}
-              negBarThreshold={project.chargeThreshold}
-              posBarThreshold={project.dischargeThreshold}
+              negBarThreshold={chargeThreshold}
+              posBarThreshold={dischargeThreshold}
               data={prices}
               timeZone={project.timeZone}
               aspect={4}

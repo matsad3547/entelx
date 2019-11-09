@@ -16,6 +16,7 @@ const {
   calculateDerivedData,
   catchErrorsWithMessage,
   handleMultiPromiseError,
+  getDBDatetime,
 } = require('../utils/')
 
 const { dayOf5Mins } = require('../config/')
@@ -32,7 +33,7 @@ const setProjectData = async (node, project) => {
     chargeBuffer,
   } = project
 
-  const numDays = 21
+  const numDays = 7
   const end = moment().tz(timeZone)
   const start = end.clone().subtract(numDays, 'days')
 
@@ -52,7 +53,9 @@ const setProjectData = async (node, project) => {
 
   await createTableRows('price', prices)
 
-  const initAggregate = await getPriceAggregateData(start.toISOString(), end.toISOString(), node.id)
+  const [startDatetime, endDatetime] = [start.toISOString(), end.toISOString()].map( iso => getDBDatetime(iso))
+
+  const initAggregate = await getPriceAggregateData(startDatetime, endDatetime, node.id)
 
   const data = {
     timeSeries: prices,

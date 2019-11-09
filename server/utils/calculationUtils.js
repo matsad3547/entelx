@@ -2,8 +2,6 @@ const d3 = require('d3-array')
 // const fmin = require('fmin')
 const { fiveMinsAsHour } = require('../config/')
 
-// TODO mvgAvg Change utils to use a `mean` value from the `aggregate` portion of the data instead of `mvgAvg` that is added to the `timeSeries`
-
 // TODO Allow for init `aggregate` values
 const composeData = (...fns) => (data, key, options) => fns.reduce( (v, f) => f(v, key, options), data)
 

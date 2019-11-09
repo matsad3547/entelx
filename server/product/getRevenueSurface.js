@@ -42,7 +42,9 @@ const getRevenueSurface = async (req, res) => {
     chargeBuffer,
   }
 
-  const aggregate = await getPriceAggregateData(startDate, endDate, nodeId)
+  const [startDatetime, endDatetime] = [startDate, endDate].map( iso => getDBDatetime(iso))
+
+  const aggregate = await getPriceAggregateData(startDatetime, endDatetime, nodeId)
 
   const {
     aboveStdDev,

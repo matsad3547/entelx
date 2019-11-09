@@ -37,6 +37,8 @@ const {
   runTest,
 } = require('./processes/')
 
+require('./jobs/')
+
 const app = express()
 
 app.set('port', process.env.PORT || 5000)
