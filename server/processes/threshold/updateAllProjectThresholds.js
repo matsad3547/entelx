@@ -71,8 +71,6 @@
         dischargeThreshold,
       } = aggregate
 
-      console.log('new thresholds:', chargeThreshold, dischargeThreshold);
-
       await catchErrorsWithMessage(`There was an error updating thresholds for project ${id}`, updateTableRow)('project', {id, }, {chargeThreshold, dischargeThreshold})
 
       console.timeEnd(`Update thresholds for project ${name}`)
