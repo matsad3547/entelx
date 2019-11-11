@@ -1,8 +1,57 @@
-.spinner {
-  animation: logo-spin infinite 20s linear;
+:root {
+  --bright-green: #23B253;
+  --middle-green: #00872D;
+  --deep-green: #046D27;
 }
 
-@keyframes logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.spinner {
+  position: absolute;
+  top: 40vh;
+  left: 40vw;
+}
+
+.spinner .e {
+  fill: #fff;
+}
+
+.spinner .status-bottom {
+  fill: var(--bright-green);
+  animation: animate-bottom 1s cubic-bezier(.25, 0, 0, 1) infinite;
+}
+
+.spinner .status-middle {
+  fill: var(--bright-green);
+  animation: animate-middle 1s cubic-bezier(.50, 0, 0, 1) infinite;
+}
+
+.spinner .status-top {
+  fill: var(--bright-green);
+  animation: animate-top 1s cubic-bezier(.75, 0, 0, 1) infinite;
+}
+
+@keyframes animate-bottom {
+  0% {
+    fill: var(--deep-green);
+  }
+  100% {
+    fill: var(--bright-green);
+  }
+}
+
+@keyframes animate-middle {
+  0% {
+    fill: var(--deep-green);
+  }
+  100% {
+    fill: var(--bright-green);
+  }
+}
+
+@keyframes animate-top {
+  0% {
+    fill: var(--deep-green);
+  }
+  100% {
+    fill: var(--bright-green);
+  }
 }

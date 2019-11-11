@@ -6,6 +6,7 @@ import Header3 from './Header3'
 import Header4 from './Header4'
 import Overlay from './Overlay'
 import Footer from './Footer'
+import Logo from './logo/'
 import ReverseGradientBackground from './ReverseGradientBackground'
 
 import { colors } from '../config/styles'
@@ -28,7 +29,9 @@ const Home = () => (
           ...styles.logo,
           ...styles.logoText,
         }}>
-        <p>sweet-ass logo</p>
+        <Logo
+          height={'9.5em'}
+          />
         <Header1
           content={companyName}
           />
@@ -170,7 +173,7 @@ const styles = {
   },
   footerLinks: {
     gridRowStart: 'row6'
-  }
+  },
 }
 
 export default Home

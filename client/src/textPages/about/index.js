@@ -19,7 +19,7 @@ const About = () => {
     <PublicPageTemplate
       title={'About'}
       >
-      <div style={styles.root}>
+      <div style={styles.root} className="text-page">
         <Header3 content="Entelx" />
         <ReactMarkdown source={aboutMd} />
       </div>
