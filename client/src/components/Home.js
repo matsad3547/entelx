@@ -33,7 +33,7 @@ const Home = () => (
           height={'9.5em'}
           />
         <Header1
-          content="Entelx"
+          content={companyName}
           />
         <Header4
           content={'Accelerating Energy Intelligence'}

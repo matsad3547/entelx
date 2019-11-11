@@ -10,7 +10,6 @@ const Loading = ({message}) => (
     style={styles.main}
     >
     <div style={styles.overlay}></div>
-    {/*<img src={logo} className="spinner" alt="logo" style={styles.logo}/>*/}
     <Logo height={'9.5em'} className="spinner"/>
     <div style={styles.message}>{message}</div>
   </div>
