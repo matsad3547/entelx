@@ -76,8 +76,7 @@ JS Docs - insta documentation
       id={projectId}
       >
 
-      {/*{ loadingProject && <Loading message={''} />}*/}
-      { true && <Loading message={''} />}
+      { loadingProject && <Loading message={''} />}
       <div style={styles.root}>
         <Status
           config={{
