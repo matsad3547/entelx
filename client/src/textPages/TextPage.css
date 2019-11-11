@@ -12,41 +12,41 @@ h2 {
   font-size: 2.369em;
 } */
 
-h3 {
+.text-page h3 {
   font-size: 1.777em;
 }
 
-h4 {
+.text-page h4 {
   font-size: 1.333em;
   padding: .5em 0;
 }
 
-h5 {
+.text-page h5 {
   font-size: 1em;
 }
 
-p, ul, ol, li, {
+.text-page p, ul, ol, li, {
   color: var(--text);
 }
 
-em {
+.text-page em {
   padding: .5em 0;
 }
 
-p {
+.text-page p {
   line-height: 1.5em;
   padding: .5em 1em;
 }
 
-ul {
+.text-page ul {
   padding: .5em 2.5em;
 }
 
-li {
+.text-page li {
   line-height: 1.5em;
 }
 
-a {
+.text-page a {
   text-decoration: none;
   color: var(--middle-green);
   font-weight: bold;

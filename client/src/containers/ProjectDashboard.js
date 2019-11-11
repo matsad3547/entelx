@@ -75,7 +75,9 @@ JS Docs - insta documentation
       baseUrl={cleanUrl}
       id={projectId}
       >
-      { loadingProject && <Loading message={''} />}
+
+      {/*{ loadingProject && <Loading message={''} />}*/}
+      { true && <Loading message={''} />}
       <div style={styles.root}>
         <Status
           config={{

@@ -1,16 +1,17 @@
 import React from 'react'
-import logo from './logo.svg'
+import Logo from '../logo/'
 import './Loading.css'
 
 import { colors } from '../../config/styles'
 
 const Loading = ({message}) => (
-  
+
   <div
     style={styles.main}
     >
     <div style={styles.overlay}></div>
-    <img src={logo} className="spinner" alt="logo" style={styles.logo}/>
+    {/*<img src={logo} className="spinner" alt="logo" style={styles.logo}/>*/}
+    <Logo height={'9.5em'} className="spinner"/>
     <div style={styles.message}>{message}</div>
   </div>
 )

@@ -1,8 +1,53 @@
-.spinner {
-  animation: logo-spin infinite 20s linear;
+:root {
+  --brightGreen: #23B253;
+  --middle-green: #00872D;
+  --deep-green: #046D27;
 }
 
-@keyframes logo-spin {
+.spinner {
+  position: absolute;
+  top: 40vh;
+  left: 40vw;
+  /* animation: logo-spin infinite 20s linear; */
+}
+
+.spinner .cls-1 {
+  fill: #fff;
+}
+
+.spinner .cls-2 {
+  /* fill: var(--bright-green); */
+  fill: #23B253;
+  /* animation: animate-bottom infinite 5s; */
+}
+
+.spinner .cls-3 {
+  /* fill: var(--middle-green); */
+  fill: #00872D;
+  /* animation: animate-middle infinite 5s; */
+}
+
+.spinner .cls-4 {
+  /* fill: var(--deep-green); */
+  fill: #046D27;
+  /* animation: animate-middle infinite 5s; */
+}
+
+
+
+/* @keyframes logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+} */
+
+@@keyframes animate-bottom {
+  0% {
+    fill: var(--middle-green);
+  }
+  50% {
+    fill: var(--deep-green);
+  }
+  100% {
+    fill: var(--bright-green);
+  }
 }

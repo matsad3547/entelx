@@ -18,7 +18,7 @@ const Contact = () => {
     <PublicPageTemplate
       title={'Contact'}
       >
-      <div style={styles.root}>
+      <div style={styles.root} className="text-page">
         <ReactMarkdown source={contactMd} />
       </div>
     </PublicPageTemplate>
