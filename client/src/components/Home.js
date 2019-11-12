@@ -20,11 +20,9 @@ const Home = () => (
       <img
         style={styles.logoImg}
         alt="solar panels"
-        src="/images/solarPanels1.jpeg"
+        src="/images/solarPanels1wo.jpg"
         />
-      <Overlay
-        addlStyles={styles.logo}
-        />
+
       <div style={{
           ...styles.logo,
           ...styles.logoText,
@@ -42,11 +40,9 @@ const Home = () => (
       <img
         style={styles.sub1Img}
         alt="wind turbines"
-        src="/images/windTurbines3.jpeg"
+        src="/images/windTurbines3wo.jpg"
         />
-      <Overlay
-        addlStyles={styles.sub1}
-        />
+
       <div style={{
           ...styles.sub1,
           ...styles.subText,
