@@ -49,7 +49,7 @@ const ProjectPageHeader = ({
   }, [checkScroll])
 
   const switchStyles = isCompact ? {
-    height: 120,
+    height: 110,
   } : {
     height: 2,
   }

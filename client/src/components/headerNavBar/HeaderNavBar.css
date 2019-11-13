@@ -1,0 +1,21 @@
+.header-nav {
+  text-align: right;
+}
+.header-nav > .nav {
+  box-sizing: border-box;
+  display: inline-flex;
+  width: 20em;
+  justify-content: space-between;
+  padding: 1em 3em;
+}
+
+@media (max-width: 750px) {
+  .header-nav {
+    text-align: center;
+  }
+  .header-nav > .nav {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

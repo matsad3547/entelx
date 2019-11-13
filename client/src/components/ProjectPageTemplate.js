@@ -11,16 +11,28 @@ const ProjectPageTemplate = ({
   showMenu = true,
 }) => (
 
-  <div>
+  <React.Fragment>
     <ProjectPageHeader
       title={title}
       baseUrl={baseUrl}
       id={id}
       showMenu={showMenu}
       />
-    {children}
-  </div>
+    <div style={styles.root}>
+      <div></div>
+      <div>
+        {children}
+      </div>
+    </div>
+  </React.Fragment>
 )
+
+const styles = {
+  root: {
+    display: 'grid',
+    gridTemplateColumns: 'auto 90% auto',
+  }
+}
 
 ProjectPageTemplate.propTypes = {
   baseUrl: PropTypes.string.isRequired,

@@ -3,11 +3,11 @@ import { Route } from 'react-router-dom'
 
 import Home from './components/Home'
 import Demo from './components/Demo'
-import { 
+import {
   About,
   Contact,
 } from './textPages/'
-import NavBar from './components/NavBar'
+import HeaderNavBar from './components/headerNavBar/'
 
 import SystemAdmin from './containers/SystemAdmin'
 
@@ -16,7 +16,7 @@ import './App.css'
 const App = () => (
 
   <div style={styles.root}>
-    <NavBar />
+    <HeaderNavBar />
     <React.Fragment>
       <Route
         exact path="/"
