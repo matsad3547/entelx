@@ -100,6 +100,7 @@ const styles = {
   controls: {
     display: 'flex',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
 }
 

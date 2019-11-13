@@ -159,6 +159,7 @@ const styles = {
     flexDirection: 'rows',
     justifyContent: 'space-between',
     maxWidth: '60em',
+    flexWrap: 'wrap',
   },
   dateControl: {
     padding: '0 0 0 1em',

@@ -22,7 +22,7 @@ const DashboardSection = ({
 const styles = {
   root: {
     textAlign: 'left',
-    padding: '0 3em 1em',
+    padding: '0 0 2em',
   },
   header: {
     padding: '0 0 .5em',

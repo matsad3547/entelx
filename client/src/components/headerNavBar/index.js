@@ -21,16 +21,4 @@ const HeaderNavBar = () => (
   </div>
 )
 
-// const styles = {
-//   root: {
-//     textAlign: 'right',
-//   },
-//   nav: {
-//     display: 'inline-flex',
-//     width: '13em',
-//     justifyContent: 'space-between',
-//     padding: '1em 3em',
-//   },
-// }
-
 export default HeaderNavBar
