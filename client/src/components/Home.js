@@ -16,14 +16,7 @@ const Home = () => (
 
   <div>
     <div style={styles.root}>
-
-      {/*<img
-        style={styles.logoImg}
-        alt="solar panels"
-        src="/images/solarPanels1wo.jpg"
-        />*/}
-
-      <div style={styles.logo}>
+      <div style={styles.primary}>
         <Logo
           height={'9.5em'}
           />
@@ -35,23 +28,18 @@ const Home = () => (
           />
       </div>
 
-      {/*<img
-        style={styles.sub1Img}
-        alt="wind turbines"
-        src="/images/windTurbines3wo.jpg"
-        />*/}
-
-      <div style={{
-          ...styles.sub1,
-          ...styles.subText,
-        }}>
-        <Header2
-          content={'Renewable energy has arrived...'}
-          />
-        <Header2
-          content={'But the transition to sustainable energy must move faster'}
-          />
+      <div style={styles.secondary}>
+        <div></div>
+        <div style={styles.secondaryText}>
+          <Header2
+            content={'Renewable energy has arrived...'}
+            />
+          <Header2
+            content={'But the transition to sustainable energy must move faster'}
+            />
+        </div>
       </div>
+
       <ReverseGradientBackground
         addlStyles={styles.banner}
         />
@@ -91,25 +79,40 @@ const styles = {
     // gridTemplateColumns: '[leftCol1] 22% [leftCol2] 22% [centerMargin] 10% [rightCol1] 22% [rightCol2] auto [end]',
     // gridTemplateRows: '[row1] auto [ws1] 75px [row2] auto [ws2] 50px [row3] auto [row4] auto [row5] auto [ws5] 50px',
   },
-  logo: {
-    background: 'url("/images/solarPanels1wo.jpg") no-repeat center',
+  primary: {
+    background: 'url("/images/solarPanels1wo.jpg") no-repeat left top',
     backgroundSize: 'cover',
     color: '#fff',
-    padding: '4rem 2rem',
+    padding: '0 0 2rem 2rem',
+    height: '36em',
     display: 'grid',
-    gridTemplateRows: 'repeat(auto-fit, minmax(240px, 1fr))',
-    alignItems: 'left',
-    // gridColumn: 'leftCol1 / centerMargin',
-    // gridRowStart: 'row1',
+    gridTemplateRows: 'auto 4em 2em',
+    gridRowGap: '.6em',
+    justifyContent: 'flex-start',
+    justifyItems: 'flex-start',
+    alignItems: 'flex-end',
   },
-  logoText: {
-    // color: '#fff',
+  secondary: {
+    color: '#fff',
+    background: 'url("/images/windTurbines3wo.jpg") no-repeat right top',
+    backgroundSize: 'cover',
+    marginTop: '6em',
+    height: '30em',
+    padding: '2em',
+    display: 'grid',
+    alignItems: 'flex-end',
+    gridTemplateColumns: 'auto 20em',
     // zIndex: 2,
     // alignSelf: 'end',
     // padding: '4em',
     // // padding: '2em 3em',
     // justifySelf: 'start',
     // textAlign: 'left',
+  },
+  secondaryText: {
+    textAlign: 'right',
+    lineHeight: 1.4,
+    color: '#fff',
   },
   logoImg: {
     minWidth: '100vw',
@@ -130,13 +133,7 @@ const styles = {
     height: '70vh',
     objectFit: 'cover',
   },
-  subText: {
-    textAlign: 'right',
-    alignSelf: 'end',
-    padding: '2em 3em',
-    zIndex: 2,
-    color: '#fff',
-  },
+
   banner: {
     gridColumn: 'leftCol1 / end',
     gridRowStart: 'row3',
