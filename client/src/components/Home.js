@@ -4,7 +4,6 @@ import Header1 from './Header1'
 import Header2 from './Header2'
 import Header3 from './Header3'
 import Header4 from './Header4'
-import Overlay from './Overlay'
 import Footer from './Footer'
 import Logo from './logo/'
 import ReverseGradientBackground from './ReverseGradientBackground'
@@ -17,16 +16,14 @@ const Home = () => (
 
   <div>
     <div style={styles.root}>
-      <img
+
+      {/*<img
         style={styles.logoImg}
         alt="solar panels"
         src="/images/solarPanels1wo.jpg"
-        />
+        />*/}
 
-      <div style={{
-          ...styles.logo,
-          ...styles.logoText,
-        }}>
+      <div style={styles.logo}>
         <Logo
           height={'9.5em'}
           />
@@ -37,11 +34,12 @@ const Home = () => (
           content={'Accelerating Energy Intelligence'}
           />
       </div>
-      <img
+
+      {/*<img
         style={styles.sub1Img}
         alt="wind turbines"
         src="/images/windTurbines3wo.jpg"
-        />
+        />*/}
 
       <div style={{
           ...styles.sub1,
@@ -89,25 +87,32 @@ const Home = () => (
 
 const styles = {
   root: {
-    display: 'grid',
-    gridTemplateColumns: '[leftCol1] 22% [leftCol2] 22% [centerMargin] 10% [rightCol1] 22% [rightCol2] auto [end]',
-    gridTemplateRows: '[row1] auto [ws1] 75px [row2] auto [ws2] 50px [row3] auto [row4] auto [row5] auto [ws5] 50px',
+    // display: 'grid',
+    // gridTemplateColumns: '[leftCol1] 22% [leftCol2] 22% [centerMargin] 10% [rightCol1] 22% [rightCol2] auto [end]',
+    // gridTemplateRows: '[row1] auto [ws1] 75px [row2] auto [ws2] 50px [row3] auto [row4] auto [row5] auto [ws5] 50px',
   },
   logo: {
-    gridColumn: 'leftCol1 / centerMargin',
-    gridRowStart: 'row1',
+    background: 'url("/images/solarPanels1wo.jpg") no-repeat center',
+    backgroundSize: 'cover',
+    color: '#fff',
+    padding: '4rem 2rem',
+    display: 'grid',
+    gridTemplateRows: 'repeat(auto-fit, minmax(240px, 1fr))',
+    alignItems: 'left',
+    // gridColumn: 'leftCol1 / centerMargin',
+    // gridRowStart: 'row1',
   },
   logoText: {
-    color: '#fff',
-    zIndex: 2,
-    alignSelf: 'end',
-    padding: '4em',
-    // padding: '2em 3em',
-    justifySelf: 'start',
-    textAlign: 'left',
+    // color: '#fff',
+    // zIndex: 2,
+    // alignSelf: 'end',
+    // padding: '4em',
+    // // padding: '2em 3em',
+    // justifySelf: 'start',
+    // textAlign: 'left',
   },
   logoImg: {
-    width: '100%',
+    minWidth: '100vw',
     gridColumn: 'leftCol1 / end',
     gridRowStart: 'row1',
     height: '85vh',
@@ -119,12 +124,11 @@ const styles = {
     gridRowStart: 'row2',
   },
   sub1Img: {
-    width: '100%',
+    minWidth: '100vw',
     gridColumn: 'leftCol1 / end',
     gridRowStart: 'row2',
     height: '70vh',
     objectFit: 'cover',
-    objectPosition: '100% 50%',
   },
   subText: {
     textAlign: 'right',
