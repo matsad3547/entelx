@@ -123,19 +123,20 @@ const Project = ({match, history}) => {
 const styles = {
   root: {
     display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   project: {
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'left',
-    padding: '0 1em',
     flex: '1 1 48%',
   },
   header: {
-    padding: '0 1em 2em',
+    padding: '0 0 2em',
   },
   specs: {
-    padding: '0 2em 1em',
+    padding: '0 1em 2em',
   },
   latLng: {
     display: 'inline-flex',
@@ -144,7 +145,7 @@ const styles = {
     width: '24em',
   },
   button: {
-    padding: '0 1em',
+    padding: '0 1em 1em',
   },
   map: {
     height: '100%',
@@ -153,7 +154,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     boxSizing: 'border-box',
-    padding: '0 2em',
     height: '30em',
     flex: '1 1 48%',
   },
