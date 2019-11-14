@@ -29,7 +29,7 @@ const styles = {
   message: {
     color: colors.white,
     position: 'relative',
-    bottom: '72vh',
+    bottom: '34vh',
   }
 }
 

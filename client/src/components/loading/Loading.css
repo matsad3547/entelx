@@ -6,8 +6,10 @@
 
 .spinner {
   position: absolute;
-  top: 40vh;
-  left: 40vw;
+  left: 50%;
+  margin-left: -86px;
+  top: 50%;
+  margin-top: -66px;
 }
 
 .spinner .e {
