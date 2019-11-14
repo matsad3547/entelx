@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 
 import Home from './components/Home'
-import Demo from './components/Demo'
+import Demo from './containers/Demo'
 import {
   About,
   Contact,

@@ -78,7 +78,7 @@ app.get('/nodes', getNodes)
 
 //project
 app.get('/project/:id', getProjectById)
-app.get('/project/', getDemoProject)
+app.get('/projects/', getDemoProject)
 
 app.post('/project', createNewProject)
 app.delete('/project/:id', deleteProjectById)
