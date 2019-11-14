@@ -145,7 +145,7 @@ const styles = {
     width: '24em',
   },
   button: {
-    padding: '0 1em 1em',
+    padding: '0 1em 2em',
   },
   map: {
     height: '100%',

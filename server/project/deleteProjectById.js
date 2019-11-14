@@ -3,31 +3,45 @@ const {
   readTableRows,
 } = require('../db/')
 
-const deleteProjectById = (req, res) => {
+const {
+  catchErrorsWithMessage,
+} = require('../utils/')
+
+const deleteProjectById = async (req, res) => {
 
   const { id } = req.params
 
-  return readTableRows('project', {id,})
-    .then( project => {
+  const [project] = await catchErrorsWithMessage('There was an error getting previous project data', readTableRows)('project', {type: 'demo', id: id})
 
-      const {
-        presentUpdatePid,
-        pastUpdatePid,
-      } = project[0]
+  const success = await deleteProject(project)
 
-      const handleError = err => console.error(`Error ending process ${presentUpdatePid} or ${pastUpdatePid}:`, err)
-
-      try {
-        presentUpdatePid && process.kill(presentUpdatePid)
-        pastUpdatePid && process.kill(pastUpdatePid)
-      }
-      catch (e) {
-        handleError(e)
-      }
-      return deleteTableRows('project', {id,})
-        .then( ({success}) => success ? res.sendStatus(200) : res.sendStatus(404) )
-        .catch( err => console.error(`Error at deleteProjectById: ${err}`) )
-    })
+  success ? res.sendStatus(200) : res.sendStatus(400)
 }
 
-module.exports = deleteProjectById
+const deleteProject = async project => {
+
+  const {
+    presentUpdatePid,
+    pastUpdatePid,
+    id,
+  } = project
+
+  const handleError = err => console.error(`Error ending process ${presentUpdatePid} or ${pastUpdatePid}:`, err)
+
+  try {
+    presentUpdatePid && process.kill(presentUpdatePid)
+    pastUpdatePid && process.kill(pastUpdatePid)
+  }
+  catch (e) {
+    handleError(e)
+  }
+
+  const {success} = await catchErrorsWithMessage('There was an error getting previous project data', deleteTableRows)('project', {id,})
+
+  return success
+}
+
+module.exports = {
+  deleteProjectById,
+  deleteProject,
+}

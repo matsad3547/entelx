@@ -1,14 +1,16 @@
 const {
   findByLatLng,
+  readTableRows,
   createTableRow,
   updateTableRow,
-  deleteTableRows,
 } = require('../db/')
 
 const {
   findClosest,
   catchErrorsWithMessage,
 } = require('../utils/')
+
+const { deleteProject } = require('./deleteProjectById')
 
 const { setProjectData } = require('../product/')
 
@@ -17,7 +19,11 @@ const createNewProject = async (req, res, next) => {
   // TODO add validation for request here
   if(type === 'demo') {
     //just want to have just one demo project at a time
-    await catchErrorsWithMessage('There was an error deleting previous project data', deleteTableRows)('project', {type: 'demo'})
+    const [project] = await catchErrorsWithMessage('There was an error getting previous project data', readTableRows)('project', {type: 'demo'})
+
+    if (project){
+      await deleteProject(project)
+    }
   }
   return createProject(req.body, res, next)
     .catch(err => {
