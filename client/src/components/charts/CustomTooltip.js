@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { monthDayTimeFormat } from '../../config/'
+import { monthDayTimeFormat, dOWDateTimeFormat} from '../../config/'
 
 import {
   lineDataFormat,
@@ -24,7 +24,7 @@ const CustomTooltip = ({
   active &&
     <div style={styles.root}>
       <p style={styles.date}>
-        {formatDate(label, timeZone, monthDayTimeFormat)}
+        {formatDate(label, timeZone, dOWDateTimeFormat)}
       </p>
       { payload.map( (obj, i) =>
         <p

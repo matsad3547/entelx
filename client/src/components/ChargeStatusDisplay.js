@@ -80,9 +80,15 @@ const ChargeStatusDisplay = ({
   }
   else {
     return (
-      <p>Status data is not currently available</p>
+      <p style={styles.noStatus}>Status data is not currently available</p>
     )
   }
+}
+
+const styles = {
+  noStatus: {
+    padding: '.5em 0',
+  },
 }
 
 ChargeStatusDisplay.propTypes = {
