@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { monthDayTimeFormat, dOWDateTimeFormat} from '../../config/'
+import { dOWDateTimeFormat} from '../../config/'
 
 import {
   lineDataFormat,

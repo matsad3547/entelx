@@ -57,7 +57,7 @@
         endDatetime,
       ] = datetimes
 
-      const initAggregate = await catchErrorsWithMessage(`There was an error getting price data for project ${id}`, getPriceAggregateData)(startDatetime, endDatetime, nodeId)
+      const initAggregate = await  getPriceAggregateData(startDatetime, endDatetime, nodeId) 
 
       const data = {
         timeSeries: prices,
