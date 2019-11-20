@@ -66,6 +66,7 @@ const getData = async (res, projectSpecs) => {
     lat,
     lng,
     nodeId,
+    timeZone,
   } = projectSpecs
 
   const now = moment()
@@ -74,7 +75,7 @@ const getData = async (res, projectSpecs) => {
     .subtract(1, 'hour')
     .toISOString()
 
-  console.log('Refreshing dashboard data at', now.format())
+  console.log('Refreshing dashboard data at', moment.tz(now, timeZone).format())
 
   const datetimes = [start, end].map( iso => getDBDatetime(iso))
 
