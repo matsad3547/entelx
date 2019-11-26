@@ -5,13 +5,17 @@ const {
 
 const { catchErrorsWithMessage } = require('../utils/')
 
-const getMinDate = async (req, res) => {
+const getMinDate = async (req, res, next) => {
 
   const { id } = req.params
 
   let interval
 
-  const [project] = await catchErrorsWithMessage(`There was an error getting project data for project ${id}`, readTableRows)('project', {id,})
+  const [project] = await readTableRows('project', {id,})
+
+  if (!project) {
+    next(`Project ${id} is no longer available`)
+  }
 
   const { nodeId } = project
 

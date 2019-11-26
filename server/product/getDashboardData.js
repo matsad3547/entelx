@@ -16,7 +16,7 @@ const {
   getDBDatetime,
 } = require('../utils/')
 
-const getDashboardData = async (req, res) => {
+const getDashboardData = async (req, res, next) => {
 
   const { id } = req.params
 
@@ -24,7 +24,11 @@ const getDashboardData = async (req, res) => {
 
   console.log('Opening dashboard data connection at', moment().format() )
 
-  const [project] = await catchErrorsWithMessage(`There was an error getting project data for project ${id}`, readTableRows)('project', {id,})
+  const [project] = await readTableRows('project', {id,})
+
+  if (!project) {
+    next(`Project ${id} is no longer available`)
+  }
 
   const {
     nodeId,
