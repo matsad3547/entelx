@@ -31,9 +31,9 @@ const Project = ({match, history}) => {
 
   const [loading, setLoading] = useState(false)
 
-  const [project, loadingProject] = useGetProject(projectId)
-
   const cleanUrl = getBaseUrl(url, 'project', projectId)
+
+  const [project, loadingProject] = useGetProject(projectId, cleanUrl)
 
   const onDelete = () => {
 

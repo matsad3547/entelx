@@ -54,7 +54,7 @@ const DevelopmentPlatform = ({match}) => {
   const oneWeekAgo = now.clone()
     .subtract(7, 'days')
 
-  const [project, loadingProject] = useGetProject(projectId)
+  const [project, loadingProject] = useGetProject(projectId, cleanUrl)
 
   const [startTime] = useState(oneWeekAgo)
   const [endTime] = useState(now)

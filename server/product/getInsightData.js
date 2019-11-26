@@ -5,7 +5,7 @@ const {
 
 const { getDBDatetime } = require('../utils/')
 
-const getInsightData = async (req, res) => {
+const getInsightData = async (req, res, next) => {
 
   const {
     startDate,
@@ -14,6 +14,10 @@ const getInsightData = async (req, res) => {
   } = req.params
 
   const [project] = await readTableRows('project', {id,})
+
+  if (!project) {
+    next(`Project ${id} is no longer available`)
+  }
 
   const { nodeId } = project
 

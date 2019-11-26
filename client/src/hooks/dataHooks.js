@@ -4,16 +4,20 @@ import {
   useCallback,
 } from 'react'
 
+import { useHistory } from 'react-router-dom'
+
 import moment from 'moment-timezone'
 
 import { defaultHeaders } from '../config'
 
 import { singleRequest } from '../utils/requestUtils'
 
-export const useGetProject = (projectId) => {
+export const useGetProject = (projectId, origin) => {
 
   const [project, setProject] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  let history = useHistory()
 
   const getProject = useCallback( async () => {
 
@@ -32,11 +36,12 @@ export const useGetProject = (projectId) => {
     }
     catch (err) {
       console.error(`There was an error retrieving your project: ${err}`)
+      history.push(origin)
     }
     finally {
-      setLoading(false)
+      setLoading (false)
     }
-  }, [projectId])
+  }, [projectId, history, origin])
 
   useEffect( () => {
     getProject()
