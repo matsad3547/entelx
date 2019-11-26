@@ -16,7 +16,7 @@ const getInsightData = async (req, res, next) => {
   const [project] = await readTableRows('project', {id,})
 
   if (!project) {
-    next(`Project ${id} is no longer available`)
+    return next(`Project ${id} is no longer available`)
   }
 
   const { nodeId } = project
