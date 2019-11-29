@@ -11,7 +11,7 @@ const { getDBDatetime } = require('../utils/')
 //   aggregateHistoricalWeather,
 // } = require('../processes/')
 
-const getHistoricalData = async (req, res) => {
+const getHistoricalData = async (req, res, next) => {
 
   const {
     endDate,
@@ -21,6 +21,10 @@ const getHistoricalData = async (req, res) => {
   } = req.params
 
   const [project] = await readTableRows('project', {id,})
+
+  if (!project) {
+    return next(`Project ${id} is no longer available`)
+  }
 
   const {
     nodeId,

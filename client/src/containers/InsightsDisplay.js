@@ -45,7 +45,7 @@ const InsightsDisplay = ({match}) => {
   const oneWeekAgo = now.clone()
     .subtract(7, 'days')
 
-  const [project, loadingProject] = useGetProject(projectId)
+  const [project, loadingProject] = useGetProject(projectId, cleanUrl)
 
   const [startTime, setStartTime] = useState(oneWeekAgo)
   const [endTime, setEndTime] = useState(now)
@@ -72,7 +72,7 @@ const InsightsDisplay = ({match}) => {
       setAggregate(aggregate)
     }
     catch (err) {
-      console.error(`There was an error retrieving your project: ${err}`)
+      console.error(`There was an error getting project insight data: ${err}`)
     }
     finally {
       setLoading(false)

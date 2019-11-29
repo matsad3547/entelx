@@ -24,7 +24,7 @@ const ProjectDashboard = ({match}) => {
 
   const cleanUrl = getBaseUrl(url, 'dashboard', projectId)
 
-  const [project, loadingProject] = useGetProject(projectId)
+  const [project, loadingProject] = useGetProject(projectId, cleanUrl)
 
   const [weather, setWeather] = useState(null)
   const [prices, setPrices] = useState(null)

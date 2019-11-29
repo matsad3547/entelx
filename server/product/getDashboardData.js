@@ -16,7 +16,7 @@ const {
   getDBDatetime,
 } = require('../utils/')
 
-const getDashboardData = async (req, res) => {
+const getDashboardData = async (req, res, next) => {
 
   const { id } = req.params
 
@@ -24,7 +24,11 @@ const getDashboardData = async (req, res) => {
 
   console.log('Opening dashboard data connection at', moment().format() )
 
-  const [project] = await catchErrorsWithMessage(`There was an error getting project data for project ${id}`, readTableRows)('project', {id,})
+  const [project] = await readTableRows('project', {id,})
+
+  if (!project) {
+    return next(`Project ${id} is no longer available`)
+  }
 
   const {
     nodeId,
@@ -66,6 +70,7 @@ const getData = async (res, projectSpecs) => {
     lat,
     lng,
     nodeId,
+    timeZone,
   } = projectSpecs
 
   const now = moment()
@@ -74,7 +79,7 @@ const getData = async (res, projectSpecs) => {
     .subtract(1, 'hour')
     .toISOString()
 
-  console.log('Refreshing dashboard data at', now.format())
+  console.log('Refreshing dashboard data at', moment.tz(now, timeZone).format())
 
   const datetimes = [start, end].map( iso => getDBDatetime(iso))
 
