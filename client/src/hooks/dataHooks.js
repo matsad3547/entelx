@@ -39,7 +39,7 @@ export const useGetProject = (projectId, origin) => {
       history.push(origin)
     }
     finally {
-      setLoading (false)
+      setLoading(false)
     }
   }, [projectId, history, origin])
 

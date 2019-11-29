@@ -47,8 +47,6 @@ const InsightsDisplay = ({match}) => {
 
   const [project, loadingProject] = useGetProject(projectId, cleanUrl)
 
-  console.log( {loadingProject});
-
   const [startTime, setStartTime] = useState(oneWeekAgo)
   const [endTime, setEndTime] = useState(now)
   const [loading, setLoading] = useState(false)
@@ -74,7 +72,6 @@ const InsightsDisplay = ({match}) => {
       setAggregate(aggregate)
     }
     catch (err) {
-
       console.error(`There was an error getting project insight data: ${err}`)
     }
     finally {
