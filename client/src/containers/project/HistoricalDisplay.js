@@ -12,13 +12,11 @@ import DataTimeRangeDisplay from '../../components/DataTimeRangeDisplay'
 
 import DateRangeControl from '../DateRangeControl'
 
-import { getBaseUrl } from '../../utils/'
-
-import { roundMomentToMinutes } from '../../utils/dateTimeUtils'
-
 import {
+  getBaseUrl,
+  roundMomentToMinutes,
   singleRequest,
-} from '../../utils/requestUtils'
+} from '../../utils/'
 
 import { defaultHeaders } from '../../config/'
 

@@ -15,18 +15,16 @@ import Label from '../../components/Label'
 import DataDisplay from '../../components/DataDisplay'
 import ThreeDimensionalChart from '../../components/charts/ThreeDimensionalChart'
 
-import {
-  getBaseUrl,
-  roundToDigits,
-} from '../../utils/'
-
-import { singleRequest } from '../../utils/requestUtils'
-
 // import {timeIncrements} from '../config/'
 //
 // import { useConnectToServerSideEvent } from '../hooks/'
 
-import { formatDollars } from '../../utils/'
+import {
+  formatDollars,
+  singleRequest,
+  getBaseUrl,
+  roundToDigits,
+} from '../../utils/'
 
 import {
   blankDollars,

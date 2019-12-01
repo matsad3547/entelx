@@ -8,7 +8,7 @@ import Loading from '../components/loading/'
 import {
   singleRequest,
   // parseResponse,
-} from '../utils/requestUtils'
+} from '../utils/'
 
 // import { setField } from '../utils/'
 

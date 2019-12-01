@@ -1,9 +1,11 @@
 import {
   findRelevantKeys,
   roundToDigits,
+} from '../generalUtils'
+import {
   getBaseUrl,
   getLocation,
-} from '../index'
+} from '../urlUtils'
 
 test('findRelevantKeys', () => {
   const data = [

@@ -8,7 +8,7 @@ import Button from '../components/button/'
 
 import { defaultHeaders } from '../config'
 
-import { singleRequest } from '../utils/requestUtils'
+import { singleRequest } from '../utils/'
 
 const Demo = ({ match }) => {
 

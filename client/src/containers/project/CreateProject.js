@@ -23,14 +23,10 @@ import {
 import {
   singleRequest,
   parseResponse,
-} from '../../utils/requestUtils'
-
-import {
   roundToDigits,
   setField,
+  getBaseUrl,
 } from '../../utils/'
-
-import { getBaseUrl } from '../../utils/'
 
 const CreateProject = ({
   match,

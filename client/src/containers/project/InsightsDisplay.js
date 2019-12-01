@@ -12,13 +12,10 @@ import DateRangeControl from '../DateRangeControl'
 
 import {
   getBaseUrl,
+  singleRequest,
+  formatDollars,
+  roundMomentToMinutes,
 } from '../../utils/'
-
-import { singleRequest } from '../../utils/requestUtils'
-
-import { formatDollars } from '../../utils/'
-
-import { roundMomentToMinutes } from '../../utils/dateTimeUtils'
 
 import {
   blankDollars,

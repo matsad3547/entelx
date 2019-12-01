@@ -12,10 +12,10 @@ import MapMarkerRenderer from '../../components/map/MapMarkerRenderer'
 import {Map} from '../map/'
 
 import {
+  getBaseUrl,
   singleRequest,
-} from '../../utils/requestUtils'
+} from '../../utils/'
 
-import { getBaseUrl } from '../../utils/'
 import { defaultHeaders } from '../../config'
 
 import { useGetProject } from '../../hooks/'
