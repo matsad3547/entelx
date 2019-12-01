@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { withRouter } from 'react-router'
 
-import ProjectPageTemplate from '../../components/ProjectPageTemplate'
+import ProjectPageTemplate from '../../components/projectPageTemplate/'
 import Header4 from '../../components/Header4'
 import Label from '../../components/Label'
 import DataDisplay from '../../components/DataDisplay'

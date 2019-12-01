@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 
-import ProjectPageTemplate from '../../components/ProjectPageTemplate'
+import ProjectPageTemplate from '../../components/projectPageTemplate/'
 import Loading from '../../components/loading/'
 
 import { useConnectToServerSideEvent } from '../../hooks/'

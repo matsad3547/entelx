@@ -15,7 +15,7 @@ import LabeledInput from '../../components/LabeledInput'
 import Header4 from '../../components/Header4'
 import Button from '../../components/button/'
 import Loading from '../../components/loading/'
-import ProjectPageTemplate from '../../components/ProjectPageTemplate'
+import ProjectPageTemplate from '../../components/projectPageTemplate/'
 
 import {
   colors,

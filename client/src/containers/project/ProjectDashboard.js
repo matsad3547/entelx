@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 
-import ProjectPageTemplate from '../../components/ProjectPageTemplate'
+import ProjectPageTemplate from '../../components/projectPageTemplate/'
 import CurrentWeatherDisplay from '../../components/CurrentWeatherDisplay'
 import Status from '../../components/Status'
 import Loading from '../../components/loading/'

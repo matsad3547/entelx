@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
 
-import ProjectPageTemplate from '../../components/ProjectPageTemplate'
+import ProjectPageTemplate from '../../components/projectPageTemplate/'
 import Loading from '../../components/loading/'
 import DashboardSection from '../../components/DashboardSection'
 import Label from '../../components/Label'

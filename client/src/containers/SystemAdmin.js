@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import ProjectPageTemplate from '../components/ProjectPageTemplate'
+import ProjectPageTemplate from '../components/projectPageTemplate/'
 
 import Button from '../components/button/'
 import Loading from '../components/loading/'

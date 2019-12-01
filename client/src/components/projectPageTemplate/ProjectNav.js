@@ -2,16 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 
-import NavButton from './navButton/'
+import NavButton from '../navButton/'
 
 import {
   colors,
   boxShadow,
-} from '../config/'
+} from '../../config/'
 
 import {
   getLocation
-} from '../utils/'
+} from '../../utils/'
 
 const ProjectNav = ({
   baseUrl,

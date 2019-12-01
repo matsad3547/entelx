@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
-import GradientBackground from './GradientBackground'
-import Header3 from './Header3'
+import GradientBackground from '../GradientBackground'
+import Header3 from '../Header3'
+
 import ProjectMenu from './ProjectMenu'
 
 import {
   colors,
   boxShadow,
-} from '../config/'
+} from '../../config/'
 
 const ProjectPageHeader = ({
   title,
