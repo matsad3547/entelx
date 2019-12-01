@@ -1,28 +1,28 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
 
-import ProjectPageTemplate from '../components/ProjectPageTemplate'
-import Loading from '../components/loading/'
-import Button from '../components/button/'
-import LineBarChart from '../components/charts/LineBarChart'
-import DashboardSection from '../components/DashboardSection'
-import LabeledCheckbox from '../components/LabeledCheckbox'
+import ProjectPageTemplate from '../../components/ProjectPageTemplate'
+import Loading from '../../components/loading/'
+import Button from '../../components/button/'
+import LineBarChart from '../../components/charts/LineBarChart'
+import DashboardSection from '../../components/DashboardSection'
+import LabeledCheckbox from '../../components/LabeledCheckbox'
 
-import DataTimeRangeDisplay from '../components/DataTimeRangeDisplay'
+import DataTimeRangeDisplay from '../../components/DataTimeRangeDisplay'
 
-import DateRangeControl from './DateRangeControl'
+import DateRangeControl from '../DateRangeControl'
 
-import { getBaseUrl } from '../utils/'
+import { getBaseUrl } from '../../utils/'
 
-import { roundMomentToMinutes } from '../utils/dateTimeUtils'
+import { roundMomentToMinutes } from '../../utils/dateTimeUtils'
 
 import {
   singleRequest,
-} from '../utils/requestUtils'
+} from '../../utils/requestUtils'
 
-import { defaultHeaders } from '../config/'
+import { defaultHeaders } from '../../config/'
 
-import { useGetProject } from '../hooks/'
+import { useGetProject } from '../../hooks/'
 
 const HistoricalDisplay = ({match}) => {
 

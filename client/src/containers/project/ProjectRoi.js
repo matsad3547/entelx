@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from 'react'
 
-import ProjectPageTemplate from '../components/ProjectPageTemplate'
-import Loading from '../components/loading/'
+import ProjectPageTemplate from '../../components/ProjectPageTemplate'
+import Loading from '../../components/loading/'
 
-import { useConnectToServerSideEvent } from '../hooks/'
+import { useConnectToServerSideEvent } from '../../hooks/'
 
-import { getBaseUrl } from '../utils/'
+import { getBaseUrl } from '../../utils/'
 
 const ProjectRoi = ({match}) => {
 

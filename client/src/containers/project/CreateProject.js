@@ -1,35 +1,36 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router'
 
-import Map from './map/Map'
+import {
+  MapNodeRenderer,
+  Map,
+} from '../map/'
 
-import MapNodeRenderer from './map/MapNodeRenderer'
+import MapMarkerRenderer from '../../components/map/MapMarkerRenderer'
+import MapISOAreaRenderer from '../../components/map/MapISOAreaRenderer'
 
-import MapMarkerRenderer from '../components/map/MapMarkerRenderer'
-import MapISOAreaRenderer from '../components/map/MapISOAreaRenderer'
-
-import LabeledInput from '../components/LabeledInput'
-import Header4 from '../components/Header4'
-import Button from '../components/button/'
-import Loading from '../components/loading/'
-import ProjectPageTemplate from '../components/ProjectPageTemplate'
+import LabeledInput from '../../components/LabeledInput'
+import Header4 from '../../components/Header4'
+import Button from '../../components/button/'
+import Loading from '../../components/loading/'
+import ProjectPageTemplate from '../../components/ProjectPageTemplate'
 
 import {
   colors,
   fontSize,
-} from '../config/styles'
+} from '../../config/styles'
 
 import {
   singleRequest,
   parseResponse,
-} from '../utils/requestUtils'
+} from '../../utils/requestUtils'
 
 import {
   roundToDigits,
   setField,
-} from '../utils/'
+} from '../../utils/'
 
-import { getBaseUrl } from '../utils/'
+import { getBaseUrl } from '../../utils/'
 
 const CreateProject = ({
   match,

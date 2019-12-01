@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Route } from 'react-router-dom'
 
-import CreateProject from '../containers/CreateProject'
+import CreateProject from './CreateProject'
 import ProjectHome from './ProjectHome'
 import ProjectRoi from './ProjectRoi'
 import ProjectDashboard from './ProjectDashboard'
