@@ -21,6 +21,17 @@ import {
   trendColors,
 } from './styles'
 
+import {
+  companyName,
+  defaultHeaders,
+  blankDollars,
+} from './general'
+
+import {
+  lineDataFormat,
+  barDataFormat,
+} from './chart'
+
 export {
   utcFormat,
   dayMonthYearTimeFormat,
@@ -36,4 +47,9 @@ export {
   buttons,
   boxShadow,
   trendColors,
+  companyName,
+  defaultHeaders,
+  blankDollars,
+  lineDataFormat,
+  barDataFormat,
 }

@@ -7,7 +7,7 @@ import Label from '../../components/Label'
 import DataDisplay from '../../components/DataDisplay'
 import Button from '../../components/button/'
 import Loading from '../../components/loading/'
-import MapMarkerRenderer from '../../components/map/MapMarkerRenderer'
+import {MapMarkerRenderer} from '../../components/map/'
 
 import {Map} from '../map/'
 

@@ -6,8 +6,10 @@ import {
   Map,
 } from '../map/'
 
-import MapMarkerRenderer from '../../components/map/MapMarkerRenderer'
-import MapISOAreaRenderer from '../../components/map/MapISOAreaRenderer'
+import {
+  MapMarkerRenderer,
+  MapISOAreaRenderer,
+} from '../../components/map/'
 
 import LabeledInput from '../../components/LabeledInput'
 import Header4 from '../../components/Header4'
