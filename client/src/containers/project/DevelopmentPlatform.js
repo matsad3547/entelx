@@ -13,7 +13,7 @@ import ValueControl from '../../components/ValueControl'
 
 import Label from '../../components/Label'
 import DataDisplay from '../../components/DataDisplay'
-import ThreeDimensionalChart from '../../components/charts/ThreeDimensionalChart'
+import {ThreeDimensionalChart} from '../../components/charts/'
 
 // import {timeIncrements} from '../config/'
 //

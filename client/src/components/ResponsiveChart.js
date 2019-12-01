@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 
 import DashboardSection from './DashboardSection'
-import LineBarChart from './charts/LineBarChart'
+import {LineBarChart} from './charts/'
 
 const ResponsiveChart = ({
   header,

@@ -5,7 +5,7 @@ import CurrentWeatherDisplay from '../../components/CurrentWeatherDisplay'
 import Status from '../../components/Status'
 import Loading from '../../components/loading/'
 import DashboardSection from '../../components/DashboardSection'
-import LineBarChart from '../../components/charts/LineBarChart'
+import {LineBarChart} from '../../components/charts/'
 
 import {
   useConnectToServerSideEvent,

@@ -4,7 +4,7 @@ import moment from 'moment-timezone'
 import ProjectPageTemplate from '../../components/ProjectPageTemplate'
 import Loading from '../../components/loading/'
 import Button from '../../components/button/'
-import LineBarChart from '../../components/charts/LineBarChart'
+import {LineBarChart} from '../../components/charts/'
 import DashboardSection from '../../components/DashboardSection'
 import LabeledCheckbox from '../../components/LabeledCheckbox'
 
