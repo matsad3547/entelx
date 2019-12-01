@@ -20,7 +20,7 @@ import { defaultHeaders } from '../config'
 
 import { useGetProject } from '../hooks/'
 
-const Project = ({match, history}) => {
+const ProjectHome = ({match, history}) => {
 
   const {
     url,
@@ -159,4 +159,4 @@ const styles = {
   },
 }
 
-export default withRouter(Project)
+export default withRouter(ProjectHome)

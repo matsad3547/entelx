@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react'
 
 import PublicPageTemplate from '../components/PublicPageTemplate'
-import ProjectTools from '../components/ProjectTools'
+import Project from './project/'
 import Header3 from '../components/Header3'
 import DisableableLink from '../components/DisableableLink'
 import Button from '../components/button/'
@@ -99,7 +99,7 @@ const Demo = ({ match }) => {
           }
         </div>
       }
-      <ProjectTools match={match}/>
+      <Project match={match}/>
     </PublicPageTemplate>
   )
 }

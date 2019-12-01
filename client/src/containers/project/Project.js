@@ -3,14 +3,14 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 
 import CreateProject from '../containers/CreateProject'
-import Project from '../containers/Project'
-import ProjectRoi from '../containers/ProjectRoi'
-import ProjectDashboard from '../containers/ProjectDashboard'
-import HistoricalDisplay from '../containers/HistoricalDisplay'
-import InsightsDisplay from '../containers/InsightsDisplay'
-import DevelopmentPlatform from '../containers/DevelopmentPlatform'
+import ProjectHome from './ProjectHome'
+import ProjectRoi from './ProjectRoi'
+import ProjectDashboard from './ProjectDashboard'
+import HistoricalDisplay from './HistoricalDisplay'
+import InsightsDisplay from './InsightsDisplay'
+import DevelopmentPlatform from './DevelopmentPlatform'
 
-const ProjectTools = ({match}) => (
+const Project = ({match}) => (
 
   <React.Fragment>
     <Route
@@ -19,7 +19,7 @@ const ProjectTools = ({match}) => (
     />
     <Route
       path={`${match.path}/project/:projectId`}
-      component={Project}
+      component={ProjectHome}
     />
     <Route
       path={`${match.path}/roi/:projectId`}
@@ -44,4 +44,4 @@ const ProjectTools = ({match}) => (
   </React.Fragment>
 )
 
-export default ProjectTools
+export default Project
