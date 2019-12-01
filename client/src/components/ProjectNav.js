@@ -7,7 +7,7 @@ import NavButton from './navButton/'
 import {
   colors,
   boxShadow,
-} from '../config/styles'
+} from '../config/'
 
 import {
   getLocation

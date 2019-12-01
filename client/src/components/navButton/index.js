@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import './NavButton.css'
 
-import { colors } from '../../config/styles'
+import { colors } from '../../config/'
 
 const NavButton = ({
   baseUrl,

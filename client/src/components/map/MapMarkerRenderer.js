@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
-import { colors } from '../../config/styles'
+import { colors } from '../../config/'
 
 const MapMarkerRenderer = ({
   map,

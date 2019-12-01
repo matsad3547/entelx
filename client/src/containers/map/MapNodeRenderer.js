@@ -10,9 +10,8 @@ import {
 import {
   nodeColors,
   colors,
-} from '../../config/styles'
-
-import { defaultHeaders } from '../../config/'
+  defaultHeaders,
+} from '../../config/'
 
 const MapNodeRenderer = ({ map }) => {
 

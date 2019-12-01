@@ -18,7 +18,7 @@ import ProjectPageTemplate from '../../components/ProjectPageTemplate'
 import {
   colors,
   fontSize,
-} from '../../config/styles'
+} from '../../config/'
 
 import {
   singleRequest,

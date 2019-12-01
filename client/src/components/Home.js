@@ -7,7 +7,7 @@ import Header4 from './Header4'
 import Footer from './Footer'
 import Logo from './logo/'
 
-import { colors } from '../config/styles'
+import { colors } from '../config/'
 
 import { companyName } from '../config/'
 

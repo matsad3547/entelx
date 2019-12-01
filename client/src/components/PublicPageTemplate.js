@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Footer from './Footer'
 import PublicPageHeader from './PublicPageHeader'
-import { colors } from '../config/styles'
+import { colors } from '../config/'
 
 const PublicPageTemplate = ({title, children}) => (
 

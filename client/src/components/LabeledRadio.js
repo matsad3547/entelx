@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {
   fontSize,
   colors,
-} from '../config/styles'
+} from '../config/'
 
 import { labelStyle } from './Label'
 

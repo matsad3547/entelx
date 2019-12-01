@@ -22,11 +22,9 @@ import CustomLegend from './CustomLegend'
 import {
   twelveHourFormat,
   monthDayTimeFormat,
+  lineDataFormat,
+  colors,
 } from '../../config/'
-
-import { lineDataFormat } from '../../config/chart'
-
-import { colors } from '../../config/styles'
 
 import {
   formatDate,

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { buttons } from '../../config/styles'
+import { buttons } from '../../config/'
 
 const Button = ({
   value,

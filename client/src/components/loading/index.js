@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from '../logo/'
 import './Loading.css'
 
-import { colors } from '../../config/styles'
+import { colors } from '../../config/'
 
 const Loading = ({message}) => (
 

@@ -8,7 +8,7 @@ import ProjectMenu from './ProjectMenu'
 import {
   colors,
   boxShadow,
-} from '../config/styles'
+} from '../config/'
 
 const ProjectPageHeader = ({
   title,

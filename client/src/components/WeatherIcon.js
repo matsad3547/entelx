@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { colors } from '../config/styles'
+import { colors } from '../config/'
 
 const Skycons = require('skycons')(window)
 

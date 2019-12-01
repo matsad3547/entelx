@@ -5,11 +5,9 @@ import {
 import PropTypes from 'prop-types'
 
 import {
-  isoColors
-} from '../../config/styles'
-import {
+  isoColors,
   isoLayerSources,
-} from '../../config/map'
+} from '../../config/'
 
 const MapISOAreaRenderer = ({
   map,

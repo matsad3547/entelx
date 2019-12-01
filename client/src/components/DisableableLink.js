@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { colors } from '../config/styles'
+import { colors } from '../config/'
 
 const DisableableLink = ({
   to,
