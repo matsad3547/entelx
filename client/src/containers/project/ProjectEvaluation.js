@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import moment from 'moment-timezone'
 
-import LineBarChart from '../components/charts/LineBarChart'
+import {LineBarChart} from '../components/charts/'
 import DateControl from '../components/DateControl'
 import Button from '../components/Button'
 import Loading from '../components/loading/'

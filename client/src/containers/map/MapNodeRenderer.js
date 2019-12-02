@@ -5,14 +5,13 @@ import mapboxgl from 'mapbox-gl'
 
 import {
   singleRequest,
-} from '../../utils/requestUtils'
+} from '../../utils/'
 
 import {
   nodeColors,
   colors,
-} from '../../config/styles'
-
-import { defaultHeaders } from '../../config/'
+  defaultHeaders,
+} from '../../config/'
 
 const MapNodeRenderer = ({ map }) => {
 

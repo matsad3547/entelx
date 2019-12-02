@@ -1,33 +1,55 @@
-export const companyName = 'Entelx'
-export const utcFormat = 'YYYY-MM-DDTHH:mm:ss.sss[Z]'
+import {
+  utcFormat,
+  dayMonthYearTimeFormat,
+  monthDayTimeFormat,
+  twelveHourFormat,
+  dOWDateTimeFormat,
+  timeIncrements,
+} from './dateTimeFormats'
 
-export const dayMonthYearTimeFormat = 'ddd, MMM Do YYYY, h:mm A'
-export const monthDayTimeFormat = 'M/D h:mm A'
-export const twelveHourFormat = 'h:mm A'
-export const dOWDateTimeFormat = 'ddd, M/D h:mm A'
+import {
+  isoLayerSources,
+} from './map'
 
-export const blankDollars = '$-.--'
+import {
+  fontSize,
+  colors,
+  nodeColors,
+  isoColors,
+  buttons,
+  boxShadow,
+  trendColors,
+} from './styles'
 
-export const timeIncrements = {
-  hour: {
-    label: 'Hour',
-    value: 'hour',
-  },
-  day: {
-    label: 'Day',
-    value: 'day',
-  },
-  week: {
-    label: 'Week',
-    value: 'week',
-  },
-  month: {
-    label: 'Month',
-    value: 'month',
-  },
-}
+import {
+  companyName,
+  defaultHeaders,
+  blankDollars,
+} from './general'
 
-export const defaultHeaders = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
+import {
+  lineDataFormat,
+  barDataFormat,
+} from './chart'
+
+export {
+  utcFormat,
+  dayMonthYearTimeFormat,
+  monthDayTimeFormat,
+  twelveHourFormat,
+  dOWDateTimeFormat,
+  timeIncrements,
+  isoLayerSources,
+  fontSize,
+  colors,
+  nodeColors,
+  isoColors,
+  buttons,
+  boxShadow,
+  trendColors,
+  companyName,
+  defaultHeaders,
+  blankDollars,
+  lineDataFormat,
+  barDataFormat,
 }

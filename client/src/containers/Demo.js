@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useCallback} from 'react'
 
 import PublicPageTemplate from '../components/PublicPageTemplate'
-import ProjectTools from '../components/ProjectTools'
+import Project from './project/'
 import Header3 from '../components/Header3'
 import DisableableLink from '../components/DisableableLink'
 import Button from '../components/button/'
 
 import { defaultHeaders } from '../config'
 
-import { singleRequest } from '../utils/requestUtils'
+import { singleRequest } from '../utils/'
 
 const Demo = ({ match }) => {
 
@@ -99,7 +99,7 @@ const Demo = ({ match }) => {
           }
         </div>
       }
-      <ProjectTools match={match}/>
+      <Project match={match}/>
     </PublicPageTemplate>
   )
 }

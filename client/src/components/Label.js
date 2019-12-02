@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { fontSize } from '../config/styles'
+import { fontSize } from '../config/'
 
 const Label = ({ content }) => (
 

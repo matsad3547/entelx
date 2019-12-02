@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { roundToDigits } from '../utils/'
 
-import { colors } from '../config/styles'
+import { colors } from '../config/'
 
 const getPriceDescription = (diff, charge, discharge) => {
 

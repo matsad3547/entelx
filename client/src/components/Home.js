@@ -5,9 +5,9 @@ import Header2 from './Header2'
 import Header3 from './Header3'
 import Header4 from './Header4'
 import Footer from './Footer'
-import Logo from './logo/'
+import Logo from './Logo'
 
-import { colors } from '../config/styles'
+import { colors } from '../config/'
 
 import { companyName } from '../config/'
 

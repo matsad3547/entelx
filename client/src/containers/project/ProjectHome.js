@@ -1,26 +1,26 @@
 import React, {useState} from 'react'
 import { withRouter } from 'react-router'
 
-import ProjectPageTemplate from '../components/ProjectPageTemplate'
-import Header4 from '../components/Header4'
-import Label from '../components/Label'
-import DataDisplay from '../components/DataDisplay'
-import Button from '../components/button/'
-import Loading from '../components/loading/'
+import ProjectPageTemplate from '../../components/projectPageTemplate/'
+import Header4 from '../../components/Header4'
+import Label from '../../components/Label'
+import DataDisplay from '../../components/DataDisplay'
+import Button from '../../components/button/'
+import Loading from '../../components/loading/'
+import {MapMarkerRenderer} from '../../components/map/'
 
-import Map from './map/Map'
-import MapMarkerRenderer from '../components/map/MapMarkerRenderer'
+import {Map} from '../map/'
 
 import {
+  getBaseUrl,
   singleRequest,
-} from '../utils/requestUtils'
+} from '../../utils/'
 
-import { getBaseUrl } from '../utils/'
-import { defaultHeaders } from '../config'
+import { defaultHeaders } from '../../config'
 
-import { useGetProject } from '../hooks/'
+import { useGetProject } from '../../hooks/'
 
-const Project = ({match, history}) => {
+const ProjectHome = ({match, history}) => {
 
   const {
     url,
@@ -159,4 +159,4 @@ const styles = {
   },
 }
 
-export default withRouter(Project)
+export default withRouter(ProjectHome)

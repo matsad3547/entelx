@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import moment from 'moment-timezone'
 
-import LineOnlyChart from '../components/charts/LineOnlyChart'
+import {LineOnlyChart} from '../components/charts/'
 import DateControl from '../components/DateControl'
 import Button from '../components/Button'
 import Loading from '../components/loading/'

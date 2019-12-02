@@ -1,39 +1,37 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
 
-import ProjectPageTemplate from '../components/ProjectPageTemplate'
-import Loading from '../components/loading/'
-import Button from '../components/button/'
-import DashboardSection from '../components/DashboardSection'
+import ProjectPageTemplate from '../../components/projectPageTemplate/'
+import Loading from '../../components/loading/'
+import Button from '../../components/button/'
+import DashboardSection from '../../components/DashboardSection'
 // import DateControl from '../components/DateControl'
 // import TimeIncrementSelect from '../components/TimeIncrementSelect'
 // import LabeledCheckbox from '../components/LabeledCheckbox'
 // import DataTimeDisplay from '../components/DataTimeDisplay'
-import ValueControl from '../components/ValueControl'
+import ValueControl from '../../components/ValueControl'
 
-import Label from '../components/Label'
-import DataDisplay from '../components/DataDisplay'
-import ThreeDimensionalChart from '../components/charts/ThreeDimensionalChart'
-
-import {
-  getBaseUrl,
-  roundToDigits,
-} from '../utils/'
-
-import { singleRequest } from '../utils/requestUtils'
+import Label from '../../components/Label'
+import DataDisplay from '../../components/DataDisplay'
+import {ThreeDimensionalChart} from '../../components/charts/'
 
 // import {timeIncrements} from '../config/'
 //
 // import { useConnectToServerSideEvent } from '../hooks/'
 
-import { formatDollars } from '../utils/'
+import {
+  formatDollars,
+  singleRequest,
+  getBaseUrl,
+  roundToDigits,
+} from '../../utils/'
 
 import {
   blankDollars,
   defaultHeaders,
-} from '../config/'
+} from '../../config/'
 
-import { useGetProject } from '../hooks/'
+import { useGetProject } from '../../hooks/'
 
 const DevelopmentPlatform = ({match}) => {
 

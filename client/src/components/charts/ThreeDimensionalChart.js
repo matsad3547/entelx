@@ -3,7 +3,7 @@ import { _3d } from 'd3-3d'
 import React, {useRef, useEffect} from 'react'
 // import PropTypes from 'prop-types'
 
-import { colors } from '../../config/styles'
+import { colors } from '../../config/'
 
 const ThreeDimensionalChart = ({
   data,

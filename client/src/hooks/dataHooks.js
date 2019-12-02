@@ -10,7 +10,7 @@ import moment from 'moment-timezone'
 
 import { defaultHeaders } from '../config'
 
-import { singleRequest } from '../utils/requestUtils'
+import { singleRequest } from '../utils/'
 
 export const useGetProject = (projectId, origin) => {
 

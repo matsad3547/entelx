@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import GradientBackground from './GradientBackground'
 import Header2 from './Header2'
 
-import { colors } from '../config/styles'
+import { colors } from '../config/'
 
 const PublicPageHeader = ({title}) => (
 

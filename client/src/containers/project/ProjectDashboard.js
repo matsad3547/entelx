@@ -1,17 +1,18 @@
 import React, { useState, useCallback } from 'react'
 
-import ProjectPageTemplate from '../components/ProjectPageTemplate'
-import CurrentWeatherDisplay from '../components/CurrentWeatherDisplay'
-import Status from '../components/Status'
-import Loading from '../components/loading/'
-import DashboardSection from '../components/DashboardSection'
-import LineBarChart from '../components/charts/LineBarChart'
+import ProjectPageTemplate from '../../components/projectPageTemplate/'
+import CurrentWeatherDisplay from '../../components/CurrentWeatherDisplay'
+import Status from '../../components/Status'
+import Loading from '../../components/loading/'
+import DashboardSection from '../../components/DashboardSection'
+import {LineBarChart} from '../../components/charts/'
 
-import { useConnectToServerSideEvent } from '../hooks/'
+import {
+  useConnectToServerSideEvent,
+  useGetProject,
+} from '../../hooks/'
 
-import { getBaseUrl } from '../utils/'
-
-import { useGetProject } from '../hooks/'
+import { getBaseUrl } from '../../utils/'
 
 const ProjectDashboard = ({match}) => {
 

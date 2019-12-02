@@ -1,31 +1,28 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
 
-import ProjectPageTemplate from '../components/ProjectPageTemplate'
-import Loading from '../components/loading/'
-import DashboardSection from '../components/DashboardSection'
-import Label from '../components/Label'
-import DataDisplay from '../components/DataDisplay'
-import Button from '../components/button/'
+import ProjectPageTemplate from '../../components/projectPageTemplate/'
+import Loading from '../../components/loading/'
+import DashboardSection from '../../components/DashboardSection'
+import Label from '../../components/Label'
+import DataDisplay from '../../components/DataDisplay'
+import Button from '../../components/button/'
 
-import DateRangeControl from './DateRangeControl'
+import DateRangeControl from '../DateRangeControl'
 
 import {
   getBaseUrl,
-} from '../utils/'
-
-import { singleRequest } from '../utils/requestUtils'
-
-import { formatDollars } from '../utils/'
-
-import { roundMomentToMinutes } from '../utils/dateTimeUtils'
+  singleRequest,
+  formatDollars,
+  roundMomentToMinutes,
+} from '../../utils/'
 
 import {
   blankDollars,
   defaultHeaders,
-} from '../config/'
+} from '../../config/'
 
-import { useGetProject } from '../hooks/'
+import { useGetProject } from '../../hooks/'
 
 const InsightsDisplay = ({match}) => {
 

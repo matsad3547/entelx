@@ -6,7 +6,7 @@ import DateControl from '../components/DateControl'
 import TimeIncrementSelect from '../components/TimeIncrementSelect'
 import DataTimeDisplay from '../components/DataTimeDisplay'
 
-import { roundMomentToMinutes } from '../utils/dateTimeUtils'
+import { roundMomentToMinutes } from '../utils/'
 
 import { timeIncrements } from '../config/'
 
