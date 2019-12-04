@@ -15,6 +15,7 @@ export const colors = {
   gray: '#838383',
   darkGray: '#3D3D3D',
   white: '#fff',
+  veryLightGreen: '#ADDDBD',
   lightGreen: '#90DDAA',
   brightGreen: '#23B253', //hsb(140 80 70)
   middleGreen: '#00872D',

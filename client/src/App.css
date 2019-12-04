@@ -1,3 +1,13 @@
+:root {
+  --very-light-green: #ADDDBD;
+  --light-green: #90DDAA;
+  --bright-green: #23B253;
+  --middle-green: #00872D;
+  --deep-green: #046D27;
+  --gray: #838383;
+  --light-gray: #e2e2e2;
+}
+
 * {
   margin: 0;
   padding: 0;

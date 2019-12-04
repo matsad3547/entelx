@@ -1,0 +1,21 @@
+.entelxTab {
+  font-size: 1.2em;
+  width: 8em;
+  line-height: 3em;
+  color: var(--gray);
+  text-decoration: none;
+}
+
+.entelxTab:hover {
+  color: var(--middle-green);
+  background: var(--very-light-green);
+}
+
+.activeTab {
+  color: var(--middle-green);
+  border-bottom: 2px solid var(--middle-green);
+}
+
+.tabClicked {
+  background: var(--light-green);
+}
