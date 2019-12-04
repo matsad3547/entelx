@@ -50,7 +50,7 @@ const ProjectPageHeader = ({
   }, [checkScroll])
 
   const switchStyles = isCompact ? {
-    height: 110,
+    height: 90,
   } : {
     height: 2,
   }
@@ -104,7 +104,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
-    gridTemplateRows: '[row1] minmax(4em, max-content) [ws1] 3em',
+    gridTemplateRows: '[row1] minmax(4em, max-content) [ws1] 2em',
   },
   compactRoot: {
     display: 'block',

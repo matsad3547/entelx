@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InsightsOverview = () => {
+const Overview = () => {
 
   return (
     <div>
@@ -9,4 +9,4 @@ const InsightsOverview = () => {
   )
 }
 
-export default InsightsOverview
+export default Overview
