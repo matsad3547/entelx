@@ -16,6 +16,6 @@
   border-bottom: 2px solid var(--middle-green);
 }
 
-.tabClicked {
-  background: var(--light-green);
+.tabClicked  {
+  background: var(--light-green) !important;
 }

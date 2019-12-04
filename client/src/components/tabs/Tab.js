@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
+
+import { useAddClassOnClick } from '../../hooks/'
 
 import './Tab.css'
 
@@ -9,14 +11,15 @@ const Tab = ({
   label,
 }) => {
 
-  // const element = document.getElementById(`tab-${path}`);
-  // element.classList.add('tabClicked');
+  const tab = useRef(null)
+
+  useAddClassOnClick(tab)
 
   return (
 
     <NavLink
       exact
-      id={`tab-${path}`}
+      ref={tab}
       to={path}
       activeClassName="activeTab" className="entelxTab"
       >

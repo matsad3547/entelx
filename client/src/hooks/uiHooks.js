@@ -59,3 +59,16 @@ export const useInterpolateValues = (value, seconds) => {
 
   return displayVal
 }
+
+export const useAddClassOnClick = ref => {
+  const handleClick = e => {
+    if (ref.current && ref.current.contains(e.target)) {
+      ref.current.classList.add('tabClicked')
+    }
+  }
+
+  useEffect( () => {
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  })
+}

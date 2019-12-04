@@ -6,6 +6,7 @@ export {
 
 export {
   useInterpolateValues,
+  useAddClassOnClick,
 } from './uiHooks'
 
 export {
