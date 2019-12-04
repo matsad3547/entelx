@@ -60,16 +60,26 @@ export const useInterpolateValues = (value, seconds) => {
   return displayVal
 }
 
-export const useAddClassOnClick = ref => {
-  const handleClick = e => {
+export const useAddClassOnClick = (ref, className) => {
+  const handleMouseDown = e => {
     if (ref.current && ref.current.contains(e.target)) {
-      ref.current.classList.add('tabClicked')
+      ref.current.classList.add(className)
+    }
+  }
+
+  const handleMouseUp = () => {
+    if (ref.current) {
+      ref.current.classList.remove(className)
     }
   }
 
   useEffect( () => {
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
+    document.addEventListener('mousedown', handleMouseDown)
+    document.addEventListener('mouseup', handleMouseUp)
+    return () => {
+      document.removeEventListener('mousedown', handleMouseDown)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
   })
 }
 

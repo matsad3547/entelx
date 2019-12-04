@@ -13,7 +13,7 @@ const Tab = ({
 
   const tab = useRef(null)
 
-  useAddClassOnClick(tab)
+  useAddClassOnClick(tab, 'tabClicked')
 
   return (
 
