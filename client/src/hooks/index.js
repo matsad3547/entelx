@@ -7,6 +7,7 @@ export {
 export {
   useInterpolateValues,
   useAddClassOnClick,
+  useHandleOutsideClick,
 } from './uiHooks'
 
 export {

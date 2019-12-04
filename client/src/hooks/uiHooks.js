@@ -72,3 +72,16 @@ export const useAddClassOnClick = ref => {
     return () => document.removeEventListener('mousedown', handleClick)
   })
 }
+
+export const useHandleOutsideClick = (ref, onClick) => {
+  const handleOutsideClick = e => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      onClick()
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
+  })
+}
