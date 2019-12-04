@@ -18,17 +18,6 @@ const ProjectMenu = ({
 
   useHandleOutsideClick(menuRef, onOutsideClick)
 
-  // const handleOutsideClick = e => {
-  //   if (menuRef.current && !menuRef.current.contains(e.target)) {
-  //     setDisplay(false)
-  //   }
-  // }
-  //
-  // useEffect(() => {
-  //   document.addEventListener('mousedown', handleOutsideClick)
-  //   return () => document.removeEventListener('mousedown', handleOutsideClick)
-  // })
-
   const showMenu = () => display ? setDisplay(false) : setDisplay(true)
 
   return (
