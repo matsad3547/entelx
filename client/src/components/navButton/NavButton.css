@@ -1,5 +1,11 @@
+:root {
+  --light-green: #90DDAA;
+  --deep-green: #046D27;
+  --light-gray: #e2e2e2;
+}
+
 .navButton:hover {
-  background: #e2e2e2;  /* lightGray */
+  background: var(--light-gray);
 }
 
 .navButton {
@@ -8,7 +14,7 @@
 }
 
 .current, .current:hover {
-  background: #90DDAA;
-  color: #046D27;
+  background: var(--light-green);
+  color: var(--deep-green);
   cursor: not-allowed;
 }
