@@ -48,11 +48,17 @@ const Insights = ({match}) => {
       <Switch>
         <Route
           exact path={`${path}/`}
-          component={Overview}
+          render={({match}) => <Overview
+            match={match}
+            projectId={projectId}
+          />}
         />
         <Route
           path={`${path}/aggregates`}
-          component={Aggregates}
+          render={({match}) => <Aggregates
+            match={match}
+            projectId={projectId}
+          />}
         />
       </Switch>
     </ProjectPageTemplate>
