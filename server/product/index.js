@@ -5,6 +5,7 @@ const setProjectData = require('./setProjectData')
 const getInsightData = require('./getInsightData')
 const getRevenueSurface = require('./getRevenueSurface')
 const getRevenueByThresholds = require('./getRevenueByThresholds')
+const getPriceRanges = require('./getPriceRanges')
 
 module.exports = {
   getDashboardData,
@@ -14,4 +15,5 @@ module.exports = {
   getInsightData,
   getRevenueSurface,
   getRevenueByThresholds,
+  getPriceRanges,
 }

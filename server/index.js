@@ -24,6 +24,7 @@ const {
   getMinDate,
   getRevenueByThresholds,
   getRevenueSurface,
+  getPriceRanges,
 } = require('./product/')
 
 const {
@@ -88,6 +89,7 @@ app.get('/historical/:id/:startDate/:endDate/:includeWeather', getHistoricalData
 
 //insights
 app.get('/insights/:id/:startDate/:endDate', getInsightData)
+app.get('/price_ranges/:id/:startDate/:endDate', getPriceRanges)
 
 //development
 app.get('/revenue_by_thresholds/:id/:chargeThreshold/:dischargeThreshold', getRevenueByThresholds)

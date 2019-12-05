@@ -10,6 +10,7 @@ const deleteTableRows = require('./deleteTableRows')
 const deleteTableRowsWhereNot = require('./deleteTableRowsWhereNot')
 const deleteTableRowsWhereBtw = require('./deleteTableRowsWhereBtw')
 const getPriceAggregateData = require('./getPriceAggregateData')
+const getPriceRangeData = require('./getPriceRangeData')
 
 module.exports = {
   findByLatLng,
@@ -24,4 +25,5 @@ module.exports = {
   deleteTableRowsWhereNot,
   deleteTableRowsWhereBtw,
   getPriceAggregateData,
+  getPriceRangeData,
 }

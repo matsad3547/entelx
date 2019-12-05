@@ -6,6 +6,7 @@ import Tabs from '../../components/tabs/'
 
 import Overview from './Overview'
 import Aggregates from './Aggregates'
+import PriceRanges from './PriceRanges'
 import Probabilities from './Probabilities'
 
 import {
@@ -38,6 +39,10 @@ const Insights = ({match}) => {
       label: 'Aggregates',
     },
     {
+      path: `${url}/price_ranges`,
+      label: 'Price Ranges',
+    },
+    {
       path: `${url}/probabilities`,
       label: 'Probabilities',
     },
@@ -61,6 +66,13 @@ const Insights = ({match}) => {
         <Route
           path={`${path}/aggregates`}
           render={({match}) => <Aggregates
+            match={match}
+            projectId={projectId}
+          />}
+        />
+        <Route
+          path={`${path}/price_ranges`}
+          render={({match}) => <PriceRanges
             match={match}
             projectId={projectId}
           />}

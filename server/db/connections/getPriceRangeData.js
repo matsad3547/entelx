@@ -16,7 +16,10 @@ const getPriceRangeData = async (
       FROM price_with_mvg_avg
       WHERE timestamp BETWEEN ? AND ? AND node_id = ?`, [startDatetime, endDatetime, nodeId])
 
-    const [aboveStdDev, belowStdDev] = convertObj(deviationsRes[0][0])
+    const {
+      aboveStdDev,
+      belowStdDev,
+    } = convertObj(deviationsRes[0][0])
 
     console.log({aboveStdDev}, {belowStdDev});
   }
