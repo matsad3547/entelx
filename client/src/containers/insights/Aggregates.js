@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
 
-// import ProjectPageTemplate from '../../components/projectPageTemplate/'
-// import Loading from '../../components/loading/'
 import DashboardSection from '../../components/DashboardSection'
 import Label from '../../components/Label'
 import DataDisplay from '../../components/DataDisplay'
@@ -14,6 +12,7 @@ import {
   getBaseUrl,
   singleRequest,
   formatDollars,
+  formatPercentage,
   roundMomentToMinutes,
 } from '../../utils/'
 
@@ -30,8 +29,6 @@ const Aggregates = ({
 }) => {
 
   const { url } = match
-  //
-  // const { projectId } = params
 
   const cleanUrl = getBaseUrl(url, 'insights', projectId)
 
@@ -41,7 +38,7 @@ const Aggregates = ({
 
   const oneWeekAgo = now.clone()
     .subtract(7, 'days')
-  //
+
   const [project] = useGetProject(projectId, cleanUrl)
 
   const [startTime, setStartTime] = useState(oneWeekAgo)
@@ -88,6 +85,8 @@ const Aggregates = ({
           <div style={styles.specs}>
             <Label content="Number of Events"/>
             <DataDisplay content={`${aggregate ? aggregate.belowN : 0}`}/>
+            <Label content="Proportion of Events"/>
+            <DataDisplay content={`${aggregate ? formatPercentage(aggregate.belowN/aggregate.total) : '--%'}`}/>
             <Label content="Average Price"/>
             <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMean) : blankDollars}`}/>
             <Label content="Lowest Price"/>
@@ -102,6 +101,8 @@ const Aggregates = ({
           <div style={styles.specs}>
             <Label content="Number of Events"/>
             <DataDisplay content={`${aggregate ? aggregate.aboveN : 0}`}/>
+            <Label content="Proportion of Events"/>
+            <DataDisplay content={`${aggregate ? formatPercentage(aggregate.aboveN/aggregate.total) : '--%'}`}/>
             <Label content="Average Price"/>
             <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMean) : blankDollars}`}/>
             <Label content="Lowest Price"/>

@@ -21,3 +21,5 @@ export const setField = (e, stateFunction) => {
 }
 
 export const formatDollars = number => `$${roundToDigits(number, 2).toFixed(2)}`
+
+export const formatPercentage = (number, decimals = 0) => `${roundToDigits(number * 100, 2).toFixed(decimals)}%`
