@@ -23,10 +23,10 @@ const getPriceRanges = async (req, res, next) => {
 
   const [startDatetime, endDatetime] = [startDate, endDate].map( iso => getDBDatetime(iso))
 
-  const priceRanges = await getPriceRangeData(startDatetime, endDatetime, nodeId)
+  const priceRangeData = await getPriceRangeData(startDatetime, endDatetime, nodeId)
 
   return res.status(200).json({
-    priceRanges,
+    priceRangeData,
   })
 }
 

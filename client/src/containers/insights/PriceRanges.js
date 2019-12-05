@@ -61,9 +61,11 @@ const PriceRanges = ({
     try {
       const res = await singleRequest(`/price_ranges/${projectId}/${startDate}/${endDate}`, request)
 
-      const { ranges } = await res.json()
+      const { priceRangeData } = await res.json()
 
-      setPriceRanges(ranges)
+      console.log('response?', priceRangeData);
+
+      setPriceRanges(priceRangeData)
     }
     catch (err) {
       console.error(`There was an error getting project insight data: ${err}`)
