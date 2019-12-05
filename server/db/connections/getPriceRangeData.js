@@ -4,8 +4,7 @@ const { convertObj } = require('../utils/').conversions
 
 const {stdDevSelections} = require('../queries')
 
-const getPriceRangesSelectionString = (aboveStdDev, belowStdDev) => {
-  return `
+const getPriceRangesSelectionString = (aboveStdDev, belowStdDev) => `
   SUM(CASE WHEN lmp BETWEEN mvg_avg + ${aboveStdDev} AND mvg_avg + 2 * ${aboveStdDev} THEN 1 ELSE 0 END) AS above_one_sigma,
   SUM(CASE WHEN lmp BETWEEN mvg_avg + 2 * ${aboveStdDev} AND mvg_avg + 3 * ${aboveStdDev} THEN 1 ELSE 0 END) AS above_two_sigma,
   SUM(CASE WHEN lmp > mvg_avg + 3 * ${aboveStdDev} THEN 1 ELSE 0 END) AS above_three_sigma,
@@ -13,7 +12,6 @@ const getPriceRangesSelectionString = (aboveStdDev, belowStdDev) => {
   SUM(CASE WHEN lmp BETWEEN mvg_avg - (3 * ${belowStdDev}) AND mvg_avg - (2 * ${belowStdDev}) THEN 1 ELSE 0 END) AS below_two_sigma,
   SUM(CASE WHEN lmp < mvg_avg - (3 * ${belowStdDev}) THEN 1 ELSE 0 END) AS below_three_sigma
   `
-}
 
 const getPriceRangeData = async (
   startDatetime,
