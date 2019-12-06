@@ -83,3 +83,12 @@ export const trendColors = [
   '#78C3FB',
   '#03CEA4',
 ]
+
+export const rangeColors = [
+  '#009FCC',
+  '#0BB6E5',
+  '#18C3F2',
+  '#41D873',
+  '#28CC5F',
+  '#00B23B',
+]

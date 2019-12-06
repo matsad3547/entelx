@@ -5,6 +5,7 @@ import DashboardSection from '../../components/DashboardSection'
 import Label from '../../components/Label'
 import DataDisplay from '../../components/DataDisplay'
 import Button from '../../components/button/'
+import {GenericBarChart} from '../../components/charts/'
 
 import DateRangeControl from '../DateRangeControl'
 
@@ -19,6 +20,7 @@ import {
 import {
   blankDollars,
   defaultHeaders,
+  rangeColors,
 } from '../../config/'
 
 import { useGetProject } from '../../hooks/'
@@ -79,24 +81,66 @@ const PriceRanges = ({
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
+  const priceRangeChartData = priceRanges && Object.keys(priceRanges).filter( key => key !== 'belowStdDev' && key !== 'aboveStdDev').map( key => {
+    switch (key) {
+      case 'belowThreeSigma':
+        return {
+          label: 'Below 3\u03C3',
+          value: priceRanges.belowThreeSigma,
+          color: rangeColors[0],
+          order: 0,
+        }
+      case 'belowTwoSigma':
+        return {
+          label: 'Below 2\u03C3',
+          value: priceRanges.belowTwoSigma,
+          color: rangeColors[1],
+          order: 1,
+        }
+      case 'belowOneSigma':
+        return {
+          label: 'Below 1\u03C3',
+          value: priceRanges.belowOneSigma,
+          color: rangeColors[2],
+          order: 2,
+        }
+      case 'aboveOneSigma':
+        return {
+          label: 'Above 1\u03C3',
+          value: priceRanges.aboveOneSigma,
+          color: rangeColors[3],
+          order: 3,
+        }
+      case 'aboveTwoSigma':
+        return {
+          label: 'Above 2\u03C3',
+          value: priceRanges.aboveTwoSigma,
+          color: rangeColors[4],
+          order: 4,
+        }
+      case 'aboveThreeSigma':
+        return {
+          label: 'Above 3\u03C3',
+          value: priceRanges.aboveThreeSigma,
+          color: rangeColors[5],
+          order: 5,
+        }
+      default:
+        return {}
+    }
+  }).sort( (a, b) => a.order - b.order )
+
   return (
 
     <div style={styles.root}>
       <DashboardSection headerContent="Price Ranges">
-        <div style={styles.specs}>
-          {/*<Label content="Number of Events"/>
-          <DataDisplay content={`${aggregate ? aggregate.belowN : 0}`}/>
-          <Label content="Proportion of Events"/>
-          <DataDisplay content={`${aggregate ? formatPercentage(aggregate.belowPercentage) : '--%'}`}/>
-          <Label content="Average Price"/>
-          <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMean) : blankDollars}`}/>
-          <Label content="Lowest Price"/>
-          <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMin) : blankDollars}`}/>
-          <Label content="Highest Price"/>
-          <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMax) : blankDollars}`}/>
-          <Label content="Standard Deviation"/>
-          <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowStdDev) : blankDollars}`}/>*/}
-        </div>
+        {
+          (project && priceRangeChartData) &&
+          <GenericBarChart
+            data={priceRangeChartData}
+            timeZone={project.timeZone}
+            />
+        }
       </DashboardSection>
       <DashboardSection headerContent="Deviation Values">
         <div style={styles.deviation}>
