@@ -12,7 +12,7 @@ import {
   getBaseUrl,
   singleRequest,
   formatDollars,
-  formatPercentage,
+  // formatPercentage,
   roundMomentToMinutes,
 } from '../../utils/'
 
@@ -82,7 +82,7 @@ const PriceRanges = ({
   return (
 
     <div style={styles.root}>
-      <DashboardSection headerContent={'Values for Potential Charging'}>
+      <DashboardSection headerContent="Price Ranges">
         <div style={styles.specs}>
           {/*<Label content="Number of Events"/>
           <DataDisplay content={`${aggregate ? aggregate.belowN : 0}`}/>
@@ -96,6 +96,18 @@ const PriceRanges = ({
           <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMax) : blankDollars}`}/>
           <Label content="Standard Deviation"/>
           <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowStdDev) : blankDollars}`}/>*/}
+        </div>
+      </DashboardSection>
+      <DashboardSection headerContent="Deviation Values">
+        <div style={styles.deviation}>
+          <div>
+            <Label content="Standard Deviation for Charge Events"/>
+            <DataDisplay content={`${priceRanges ? formatDollars(priceRanges.belowStdDev) : blankDollars}`}/>
+          </div>
+          <div>
+            <Label content="Standard Deviation for Discharge Events"/>
+            <DataDisplay content={`${priceRanges ? formatDollars(priceRanges.aboveStdDev) : blankDollars}`}/>
+          </div>
         </div>
       </DashboardSection>
       <DashboardSection
@@ -131,8 +143,10 @@ const styles = {
   root: {
     padding: '2em 0',
   },
-  specs: {
-    padding: '0 2em',
+  deviation: {
+    padding: '0 1em 0',
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   columns: {
     display: 'flex',

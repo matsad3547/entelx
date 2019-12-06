@@ -2,8 +2,8 @@ import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
 
 import DashboardSection from '../../components/DashboardSection'
-import Label from '../../components/Label'
-import DataDisplay from '../../components/DataDisplay'
+// import Label from '../../components/Label'
+// import DataDisplay from '../../components/DataDisplay'
 import Button from '../../components/button/'
 
 import DateRangeControl from '../DateRangeControl'
@@ -11,13 +11,13 @@ import DateRangeControl from '../DateRangeControl'
 import {
   getBaseUrl,
   singleRequest,
-  formatDollars,
-  formatPercentage,
+  // formatDollars,
+  // formatPercentage,
   roundMomentToMinutes,
 } from '../../utils/'
 
 import {
-  blankDollars,
+  // blankDollars,
   defaultHeaders,
 } from '../../config/'
 
