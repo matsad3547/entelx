@@ -93,7 +93,7 @@ const HistoricalDisplay = ({match}) => {
       { (loading || loadingProject) && <Loading message={''} />}
       {
         (timeseries && project) &&
-        <div>
+        <div style={styles.root}>
           <DashboardSection headerContent={'Historical Data by Date Range'}>
             <DataTimeRangeDisplay
               message="Data from"
@@ -147,11 +147,9 @@ const HistoricalDisplay = ({match}) => {
 }
 
 const styles = {
-  // controls: {
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   justifyContent: 'space-between',
-  // },
+  root: {
+    marginBottom: '6em',
+  },
   controls: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -166,10 +164,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-end',
-    // width: '22em',
-    // display: 'inline-flex',
-    // justifyContent: 'space-between',
-    // padding: '2em 0 0',
   },
   getData: {
     margin: '.5em 0 0 1.5em',
@@ -177,5 +171,3 @@ const styles = {
 }
 
 export default HistoricalDisplay
-
-// xRefLines={aggregate.inflections}

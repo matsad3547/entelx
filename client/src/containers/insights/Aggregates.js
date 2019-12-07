@@ -147,6 +147,7 @@ const Aggregates = ({
 const styles = {
   root: {
     padding: '2em 0',
+    marginBottom: '5em',
   },
   specs: {
     padding: '0 2em',
