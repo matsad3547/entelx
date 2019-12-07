@@ -133,11 +133,11 @@ const Aggregates = ({
             />
         }
         <Button
-          value="GET INSIGHTS"
+          value="GET AGGREGATES"
           disabled={loading}
           type="success"
           onClick={getData}
-          width={'10em'}
+          width={'12em'}
           />
       </div>
     </div>
