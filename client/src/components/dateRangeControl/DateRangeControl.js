@@ -13,6 +13,8 @@ import {
   useHandleOutsideClick,
 } from '../../hooks/'
 
+import './DateRangeControl.css'
+
 const DateRangeControl = ({
   setStartTime,
   setEndTime,
@@ -69,9 +71,6 @@ const styles = {
     lineHeight: '2em',
   },
   dateRange: {
-    textAlign: 'left',
-    width: '50em',
-    padding: '0 0 1em',
     cursor: 'pointer',
   },
   drs: {
