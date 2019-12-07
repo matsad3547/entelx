@@ -82,7 +82,43 @@ const Aggregates = ({
 
     <div style={styles.root}>
       <DashboardSection
-        headerContent={'Select Time Range'}>
+        headerContent={'Aggregates by Date Range'}>
+        <div style={styles.columns}>
+          <DashboardSection headerContent={'Values for Potential Charging'}>
+            <div style={styles.specs}>
+              <Label content="Number of Events"/>
+              <DataDisplay content={`${aggregate ? aggregate.belowN : 0}`}/>
+              <Label content="Proportion of Events"/>
+              <DataDisplay content={`${aggregate ? formatPercentage(aggregate.belowPercentage) : '--%'}`}/>
+              <Label content="Average Price"/>
+              <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMean) : blankDollars}`}/>
+              <Label content="Lowest Price"/>
+              <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMin) : blankDollars}`}/>
+              <Label content="Highest Price"/>
+              <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMax) : blankDollars}`}/>
+              <Label content="Standard Deviation"/>
+              <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowStdDev) : blankDollars}`}/>
+            </div>
+          </DashboardSection>
+          <DashboardSection headerContent={'Values for Potential Discharging'}>
+            <div style={styles.specs}>
+              <Label content="Number of Events"/>
+              <DataDisplay content={`${aggregate ? aggregate.aboveN : 0}`}/>
+              <Label content="Proportion of Events"/>
+              <DataDisplay content={`${aggregate ? formatPercentage(aggregate.aboveP) : '--%'}`}/>
+              <Label content="Average Price"/>
+              <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMean) : blankDollars}`}/>
+              <Label content="Lowest Price"/>
+              <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMin) : blankDollars}`}/>
+              <Label content="Highest Price"/>
+              <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMax) : blankDollars}`}/>
+              <Label content="Standard Deviation"/>
+              <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveStdDev) : blankDollars}`}/>
+            </div>
+          </DashboardSection>
+        </div>
+      </DashboardSection>
+      <div style={styles.controls}>
         {
           project &&
           <DateRangeControl
@@ -96,43 +132,6 @@ const Aggregates = ({
             setDisplayDRS={setDisplayDRS}
             />
         }
-      </DashboardSection>
-      <div style={styles.columns}>
-        <DashboardSection headerContent={'Values for Potential Charging'}>
-          <div style={styles.specs}>
-            <Label content="Number of Events"/>
-            <DataDisplay content={`${aggregate ? aggregate.belowN : 0}`}/>
-            <Label content="Proportion of Events"/>
-            <DataDisplay content={`${aggregate ? formatPercentage(aggregate.belowPercentage) : '--%'}`}/>
-            <Label content="Average Price"/>
-            <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMean) : blankDollars}`}/>
-            <Label content="Lowest Price"/>
-            <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMin) : blankDollars}`}/>
-            <Label content="Highest Price"/>
-            <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowMax) : blankDollars}`}/>
-            <Label content="Standard Deviation"/>
-            <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowStdDev) : blankDollars}`}/>
-          </div>
-        </DashboardSection>
-        <DashboardSection headerContent={'Values for Potential Discharging'}>
-          <div style={styles.specs}>
-            <Label content="Number of Events"/>
-            <DataDisplay content={`${aggregate ? aggregate.aboveN : 0}`}/>
-            <Label content="Proportion of Events"/>
-            <DataDisplay content={`${aggregate ? formatPercentage(aggregate.aboveP) : '--%'}`}/>
-            <Label content="Average Price"/>
-            <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMean) : blankDollars}`}/>
-            <Label content="Lowest Price"/>
-            <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMin) : blankDollars}`}/>
-            <Label content="Highest Price"/>
-            <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMax) : blankDollars}`}/>
-            <Label content="Standard Deviation"/>
-            <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveStdDev) : blankDollars}`}/>
-          </div>
-        </DashboardSection>
-      </div>
-
-      <div style={styles.button}>
         <Button
           value="GET INSIGHTS"
           disabled={loading}
@@ -158,14 +157,16 @@ const styles = {
     justifyContent: 'space-between',
     maxWidth: '60em',
     flexWrap: 'wrap',
+    padding: '1em 0 0 1em'
   },
   dateControl: {
     padding: '0 0 0 1em',
   },
-  button: {
+  controls: {
     display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '.5em 0',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    padding: '0 0 1em',
   },
 }
 

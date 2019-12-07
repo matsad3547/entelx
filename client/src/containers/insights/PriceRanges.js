@@ -130,7 +130,7 @@ const PriceRanges = ({
 
   return (
     <div style={styles.root}>
-      <DashboardSection headerContent="Price Ranges by Period">
+      <DashboardSection headerContent="Price Ranges by Date Range">
         {
           (project && priceRangeChartData) &&
           <GenericBarChart

@@ -78,10 +78,12 @@ const Aggregates = ({
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
+  console.log({probabilities});
+
   return (
 
     <div style={styles.root}>
-      <DashboardSection headerContent={'Values for Potential Charging'}>
+      <DashboardSection headerContent={'Price Probabilities by Date Range'}>
         <div style={styles.specs}>
           {/*<Label content="Number of Events"/>
           <DataDisplay content={`${aggregate ? aggregate.belowN : 0}`}/>
@@ -97,33 +99,28 @@ const Aggregates = ({
           <DataDisplay content={`${aggregate ? formatDollars(aggregate.belowStdDev) : blankDollars}`}/>*/}
         </div>
       </DashboardSection>
-      <DashboardSection
-        headerContent={'Select Time Range'}>
+      <div style={styles.controls}>
         {
           project &&
-          <div style={styles.dateControl}>
-            <DateRangeControl
-              setStartTime={setStartTime}
-              setEndTime={setEndTime}
-              startTime={startTime}
-              endTime={endTime}
-              projectId={projectId}
-              timeZone={project.timeZone}
-              displayDRS={displayDRS}
-              setDisplayDRS={setDisplayDRS}
-              />
-            <div style={styles.button}>
-              <Button
-                value="GET INSIGHTS"
-                disabled={loading}
-                type="success"
-                onClick={getData}
-                width={'10em'}
-                />
-            </div>
-          </div>
+          <DateRangeControl
+            setStartTime={setStartTime}
+            setEndTime={setEndTime}
+            startTime={startTime}
+            endTime={endTime}
+            projectId={projectId}
+            timeZone={project.timeZone}
+            displayDRS={displayDRS}
+            setDisplayDRS={setDisplayDRS}
+            />
         }
-      </DashboardSection>
+        <Button
+          value="GET PROBABILITIES"
+          disabled={loading}
+          type="success"
+          onClick={getData}
+          width={'12em'}
+          />
+      </div>
     </div>
   )
 }
@@ -142,13 +139,11 @@ const styles = {
     maxWidth: '60em',
     flexWrap: 'wrap',
   },
-  dateControl: {
-    padding: '0 0 0 1em',
-  },
-  button: {
+  controls: {
     display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '.5em 0',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    padding: '0 0 1em',
   },
 }
 
