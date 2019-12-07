@@ -181,6 +181,7 @@ const PriceRanges = ({
 const styles = {
   root: {
     padding: '2em 0',
+    marginBottom: '3em',
   },
   deviation: {
     padding: '0 1em 0',
