@@ -20,7 +20,7 @@ const {
 const {
   getDashboardData,
   getHistoricalData,
-  getInsightData,
+  getAggregateData,
   getMinDate,
   getRevenueByThresholds,
   getRevenueSurface,
@@ -88,7 +88,7 @@ app.delete('/project/:id', deleteProjectById)
 app.get('/historical/:id/:startDate/:endDate/:includeWeather', getHistoricalData)
 
 //insights
-app.get('/insights/:id/:startDate/:endDate', getInsightData)
+app.get('/aggregates/:id/:startDate/:endDate', getAggregateData)
 app.get('/price_ranges/:id/:startDate/:endDate', getPriceRanges)
 
 //development

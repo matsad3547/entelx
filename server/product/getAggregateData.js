@@ -5,7 +5,7 @@ const {
 
 const { getDBDatetime } = require('../utils/')
 
-const getInsightData = async (req, res, next) => {
+const getAggregateData = async (req, res, next) => {
 
   const {
     startDate,
@@ -30,4 +30,4 @@ const getInsightData = async (req, res, next) => {
   })
 }
 
-module.exports = getInsightData
+module.exports = getAggregateData

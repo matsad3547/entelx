@@ -36,12 +36,12 @@ const Aggregates = ({
 
   const now = getNow()
 
-  const oneWeekAgo = now.clone()
-    .subtract(7, 'days')
+  const past = now.clone()
+    .subtract(3, 'month')
 
   const [project] = useGetProject(projectId, cleanUrl)
 
-  const [startTime, setStartTime] = useState(oneWeekAgo)
+  const [startTime, setStartTime] = useState(past)
   const [endTime, setEndTime] = useState(now)
   const [displayDRS, setDisplayDRS] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -60,7 +60,7 @@ const Aggregates = ({
     setLoading(true)
 
     try {
-      const res = await singleRequest(`/insights/${projectId}/${startDate}/${endDate}`, request)
+      const res = await singleRequest(`/aggregates/${projectId}/${startDate}/${endDate}`, request)
 
       const { aggregate } = await res.json()
 
@@ -105,7 +105,7 @@ const Aggregates = ({
               <Label content="Number of Events"/>
               <DataDisplay content={`${aggregate ? aggregate.aboveN : 0}`}/>
               <Label content="Proportion of Events"/>
-              <DataDisplay content={`${aggregate ? formatPercentage(aggregate.aboveP) : '--%'}`}/>
+              <DataDisplay content={`${aggregate ? formatPercentage(aggregate.abovePercentage) : '--%'}`}/>
               <Label content="Average Price"/>
               <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMean) : blankDollars}`}/>
               <Label content="Lowest Price"/>

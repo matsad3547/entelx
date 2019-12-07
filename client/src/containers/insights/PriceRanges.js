@@ -38,7 +38,7 @@ const PriceRanges = ({
   const now = getNow()
 
   const past = now.clone()
-    .subtract(1, 'month')
+    .subtract(3, 'month')
 
   const [project] = useGetProject(projectId, cleanUrl)
 
