@@ -107,15 +107,17 @@ const DateRangeSelector = ({
             />
         </div>
       </div>
-      <TimeIncrementSelect
-        onSelect={onTimeIncrementSelect}
-        selected={timeIncrement}
-        />
-      <DataTimeDisplay
-        message="Earliest data currently available is from"
-        isoString={minDate}
-        timeZone={timeZone}
-        />
+      <div style={styles.increments}>
+        <TimeIncrementSelect
+          onSelect={onTimeIncrementSelect}
+          selected={timeIncrement}
+          />
+        <DataTimeDisplay
+          message="Earliest data currently available is from"
+          isoString={minDate}
+          timeZone={timeZone}
+          />
+      </div>
     </div>
   )
 }
@@ -146,6 +148,9 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '0 .5em .5em',
+  },
+  increments: {
+    padding: '0 .5em',
   },
 }
 
