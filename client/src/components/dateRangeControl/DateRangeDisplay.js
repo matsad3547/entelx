@@ -41,6 +41,7 @@ const styles = {
     display: 'inline-flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
+    padding: '0 .5em',
   },
   dateDisplay: {
     display: 'inline-flex',
