@@ -12,22 +12,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-// import CustomTooltip from './CustomTooltip'
 import BarChartTooltip from './BarChartTooltip'
-
-import {
-  // twelveHourFormat,
-  // monthDayTimeFormat,
-  // lineDataFormat,
-  // colors,
-} from '../../config/'
-
-import {
-  // formatDate,
-  // findRelevantKeys,
-  // roundToDigits,
-  // formatDollars,
-} from '../../utils'
 
 const GenericBarChart = React.memo(({
   data,

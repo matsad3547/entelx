@@ -13,7 +13,6 @@ import {
   getBaseUrl,
   singleRequest,
   formatDollars,
-  // formatPercentage,
   roundMomentToMinutes,
 } from '../../utils/'
 
@@ -64,8 +63,6 @@ const PriceRanges = ({
       const res = await singleRequest(`/price_ranges/${projectId}/${startDate}/${endDate}`, request)
 
       const { priceRangeData } = await res.json()
-
-      console.log('response?', priceRangeData);
 
       setPriceRanges(priceRangeData)
     }
@@ -133,7 +130,7 @@ const PriceRanges = ({
   return (
 
     <div style={styles.root}>
-      <DashboardSection headerContent="Price Ranges">
+      <DashboardSection headerContent="Price Ranges by Period">
         {
           (project && priceRangeChartData) &&
           <GenericBarChart
@@ -169,11 +166,11 @@ const PriceRanges = ({
               />
             <div style={styles.button}>
               <Button
-                value="GET INSIGHTS"
+                value="GET PRICE RANGES"
                 disabled={loading}
                 type="success"
                 onClick={getData}
-                width={'10em'}
+                width={'12em'}
                 />
             </div>
           </div>
