@@ -34,11 +34,7 @@ const DateRangeControl = ({
   timeZone = 'America/Los_Angeles',
 }) => {
 
-  const showDRSelection = () => {
-    console.log('clicking showDRSelection');
-    displayDRS ? setDisplayDRS(false) : setDisplayDRS(true)
-  }
-  // const showDRSelection = () => displayDRS ? setDisplayDRS(false) : setDisplayDRS(true)
+  const showDRSelection = () => displayDRS ? setDisplayDRS(false) : setDisplayDRS(true)
 
   const timeSelectionRef = useRef(null)
 
@@ -88,27 +84,7 @@ const DateRangeControl = ({
   const formatDate = date => moment.tz(date, timeZone).format(dayMonthYearTimeFormat)
 
   return (
-    <React.Fragment>
-      <div
-        onClick={showDRSelection}
-        className="startAndEndDates"
-        style={styles.root}>
-        <div
-          style={styles.startAndEnd} >
-          <div>
-            <div style={styles.dateDisplay}>
-              <Label content="Start Time"/>
-              <DataDisplay content={formatDate(startTime)}/>
-            </div>
-          </div>
-          <div>
-            <div style={styles.dateDisplay}>
-              <Label content="End Time"/>
-              <DataDisplay content={formatDate(endTime)}/>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div style={styles.root}>
       {
         displayDRS &&
         <div
@@ -164,12 +140,35 @@ const DateRangeControl = ({
             />
         </div>
       }
-    </React.Fragment>
+      <div
+        onClick={showDRSelection}
+        className="startAndEndDates"
+        style={styles.dateRange}>
+        <div
+          style={styles.startAndEnd} >
+          <div>
+            <div style={styles.dateDisplay}>
+              <Label content="Start Time"/>
+              <DataDisplay content={formatDate(startTime)}/>
+            </div>
+          </div>
+          <div>
+            <div style={styles.dateDisplay}>
+              <Label content="End Time"/>
+              <DataDisplay content={formatDate(endTime)}/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
 const styles = {
   root: {
+    position: 'relative',
+  },
+  dateRange: {
     textAlign: 'left',
     width: '50em',
     padding: '0 0 1.5em',
@@ -182,8 +181,8 @@ const styles = {
     boxShadow,
     padding: '1em',
     position: 'absolute',
-    left: '3.5em',
-    bottom: '-25em',
+    left: '-1em',
+    top: '-1em',
     zIndex: 2,
   },
   startAndEnd: {

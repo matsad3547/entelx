@@ -81,6 +81,22 @@ const Aggregates = ({
   return (
 
     <div style={styles.root}>
+      <DashboardSection
+        headerContent={'Select Time Range'}>
+        {
+          project &&
+          <DateRangeControl
+            setStartTime={setStartTime}
+            setEndTime={setEndTime}
+            startTime={startTime}
+            endTime={endTime}
+            projectId={projectId}
+            timeZone={project.timeZone}
+            displayDRS={displayDRS}
+            setDisplayDRS={setDisplayDRS}
+            />
+        }
+      </DashboardSection>
       <div style={styles.columns}>
         <DashboardSection headerContent={'Values for Potential Charging'}>
           <div style={styles.specs}>
@@ -115,33 +131,16 @@ const Aggregates = ({
           </div>
         </DashboardSection>
       </div>
-      <DashboardSection
-        headerContent={'Select Time Range'}>
-        {
-          project &&
-          <div style={styles.dateControl}>
-            <DateRangeControl
-              setStartTime={setStartTime}
-              setEndTime={setEndTime}
-              startTime={startTime}
-              endTime={endTime}
-              projectId={projectId}
-              timeZone={project.timeZone}
-              displayDRS={displayDRS}
-              setDisplayDRS={setDisplayDRS}
-              />
-            <div style={styles.button}>
-              <Button
-                value="GET INSIGHTS"
-                disabled={loading}
-                type="success"
-                onClick={getData}
-                width={'10em'}
-                />
-            </div>
-          </div>
-        }
-      </DashboardSection>
+
+      <div style={styles.button}>
+        <Button
+          value="GET INSIGHTS"
+          disabled={loading}
+          type="success"
+          onClick={getData}
+          width={'10em'}
+          />
+      </div>
     </div>
   )
 }
