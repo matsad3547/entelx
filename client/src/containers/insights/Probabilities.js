@@ -6,7 +6,7 @@ import DashboardSection from '../../components/DashboardSection'
 // import DataDisplay from '../../components/DataDisplay'
 import Button from '../../components/button/'
 
-import DateRangeControl from '../DateRangeControl'
+import DateRangeControl from '../../components/dateRangeControl/'
 
 import {
   getBaseUrl,

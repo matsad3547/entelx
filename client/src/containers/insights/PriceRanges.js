@@ -7,7 +7,7 @@ import DataDisplay from '../../components/DataDisplay'
 import Button from '../../components/button/'
 import {GenericBarChart} from '../../components/charts/'
 
-import DateRangeControl from '../DateRangeControl'
+import DateRangeControl from '../../components/dateRangeControl/'
 
 import {
   getBaseUrl,
@@ -130,6 +130,17 @@ const PriceRanges = ({
   return (
 
     <div style={styles.root}>
+      {
+        project &&
+        <DateRangeControl
+          setStartTime={setStartTime}
+          setEndTime={setEndTime}
+          startTime={startTime}
+          endTime={endTime}
+          projectId={projectId}
+          timeZone={project.timeZone}
+          />
+      }
       <DashboardSection headerContent="Price Ranges by Period">
         {
           (project && priceRangeChartData) &&
@@ -150,8 +161,17 @@ const PriceRanges = ({
             <DataDisplay content={`${priceRanges ? formatDollars(priceRanges.aboveStdDev) : blankDollars}`}/>
           </div>
         </div>
+        <div style={styles.button}>
+          <Button
+            value="GET PRICE RANGES"
+            disabled={loading}
+            type="success"
+            onClick={getData}
+            width={'12em'}
+            />
+        </div>
       </DashboardSection>
-      <DashboardSection
+      {/*<DashboardSection
         headerContent={'Select Time Range'}>
         {
           project &&
@@ -175,7 +195,7 @@ const PriceRanges = ({
             </div>
           </div>
         }
-      </DashboardSection>
+      </DashboardSection>*/}
     </div>
   )
 }

@@ -72,7 +72,6 @@ const styles = {
   background: colors.white,
   width: '13em',
   padding: '.5em 1em',
-  borderRight: `1px solid ${colors.gray}`,
   boxShadow,
   display: 'flex',
   flexDirection: 'column',

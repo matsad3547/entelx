@@ -10,7 +10,7 @@ import LabeledCheckbox from '../../components/LabeledCheckbox'
 
 import DataTimeRangeDisplay from '../../components/DataTimeRangeDisplay'
 
-import DateRangeControl from '../DateRangeControl'
+import DateRangeControl from '../../components/dateRangeControl/'
 
 import {
   getBaseUrl,

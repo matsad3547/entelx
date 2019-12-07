@@ -1,9 +1,9 @@
 import React from 'react'
 
-import LabeledRadio from '../components/LabeledRadio'
-import Label from './Label'
+import LabeledRadio from '../LabeledRadio'
+import Label from '../Label'
 
-import {timeIncrements} from '../config/'
+import {timeIncrements} from '../../config/'
 
 const TimeIncrementSelect = ({
   onSelect,
@@ -45,7 +45,6 @@ const styles = {
   },
   radios: {
     display: 'flex',
-    // flexDirection: 'column',
     padding: '0 0 0 .5em',
   },
 }

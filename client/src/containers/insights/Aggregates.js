@@ -6,7 +6,7 @@ import Label from '../../components/Label'
 import DataDisplay from '../../components/DataDisplay'
 import Button from '../../components/button/'
 
-import DateRangeControl from '../DateRangeControl'
+import DateRangeControl from '../../components/dateRangeControl/'
 
 import {
   getBaseUrl,
@@ -102,7 +102,7 @@ const Aggregates = ({
             <Label content="Number of Events"/>
             <DataDisplay content={`${aggregate ? aggregate.aboveN : 0}`}/>
             <Label content="Proportion of Events"/>
-            <DataDisplay content={`${aggregate ? formatPercentage(aggregate.abovePercentage) : '--%'}`}/>
+            <DataDisplay content={`${aggregate ? formatPercentage(aggregate.aboveP) : '--%'}`}/>
             <Label content="Average Price"/>
             <DataDisplay content={`${aggregate ? formatDollars(aggregate.aboveMean) : blankDollars}`}/>
             <Label content="Lowest Price"/>
