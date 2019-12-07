@@ -43,6 +43,7 @@ const Aggregates = ({
 
   const [startTime, setStartTime] = useState(oneWeekAgo)
   const [endTime, setEndTime] = useState(now)
+  const [displayDRS, setDisplayDRS] = useState(false)
   const [loading, setLoading] = useState(false)
   const [aggregate, setAggregate] = useState(null)
 
@@ -126,6 +127,8 @@ const Aggregates = ({
               endTime={endTime}
               projectId={projectId}
               timeZone={project.timeZone}
+              displayDRS={displayDRS}
+              setDisplayDRS={setDisplayDRS}
               />
             <div style={styles.button}>
               <Button

@@ -44,6 +44,7 @@ const HistoricalDisplay = ({match}) => {
 
   const [startTime, setStartTime] = useState(oneWeekAgo)
   const [endTime, setEndTime] = useState(now)
+  const [displayDRS, setDisplayDRS] = useState(false)
   const [loading, setLoading] = useState(false)
   const [timeseries, setTimeseries] = useState(null)
   const [includeWeather, setIncludeWeather] = useState(false)
@@ -118,6 +119,8 @@ const HistoricalDisplay = ({match}) => {
                 endTime={endTime}
                 projectId={projectId}
                 timeZone={project.timeZone}
+                displayDRS={displayDRS}
+                setDisplayDRS={setDisplayDRS}
                 />
               <div style={styles.request}>
                 <div style={styles.include}>

@@ -44,6 +44,7 @@ const PriceRanges = ({
 
   const [startTime, setStartTime] = useState(oneWeekAgo)
   const [endTime, setEndTime] = useState(now)
+  const [displayDRS, setDisplayDRS] = useState(false)
   const [loading, setLoading] = useState(false)
   const [priceRanges, setPriceRanges] = useState(null)
 
@@ -127,6 +128,8 @@ const PriceRanges = ({
     }
   }).sort( (a, b) => a.order - b.order )
 
+  console.log({displayDRS});
+
   return (
 
     <div style={styles.root}>
@@ -139,6 +142,8 @@ const PriceRanges = ({
           endTime={endTime}
           projectId={projectId}
           timeZone={project.timeZone}
+          displayDRS={displayDRS}
+          setDisplayDRS={setDisplayDRS}
           />
       }
       <DashboardSection headerContent="Price Ranges by Period">
@@ -171,31 +176,6 @@ const PriceRanges = ({
             />
         </div>
       </DashboardSection>
-      {/*<DashboardSection
-        headerContent={'Select Time Range'}>
-        {
-          project &&
-          <div style={styles.dateControl}>
-            <DateRangeControl
-              setStartTime={setStartTime}
-              setEndTime={setEndTime}
-              startTime={startTime}
-              endTime={endTime}
-              projectId={projectId}
-              timeZone={project.timeZone}
-              />
-            <div style={styles.button}>
-              <Button
-                value="GET PRICE RANGES"
-                disabled={loading}
-                type="success"
-                onClick={getData}
-                width={'12em'}
-                />
-            </div>
-          </div>
-        }
-      </DashboardSection>*/}
     </div>
   )
 }
