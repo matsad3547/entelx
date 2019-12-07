@@ -11,7 +11,7 @@ import {
   Legend,
 } from 'recharts'
 
-import CustomTooltip from './CustomTooltip'
+import TimeseriesTooltip from './TimeseriesTooltip'
 import CustomLegend from './CustomLegend'
 
 import {
@@ -43,7 +43,7 @@ const LineOnlyChart = ({data, tz}) => {
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip
         content={
-          <CustomTooltip
+          <TimeseriesTooltip
             tz={tz}
           />
       }/>

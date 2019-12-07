@@ -9,12 +9,11 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts'
 
-import CustomTooltip from './CustomTooltip'
-import CustomLegend from './CustomLegend'
+// import CustomTooltip from './CustomTooltip'
+import BarChartTooltip from './BarChartTooltip'
 
 import {
   // twelveHourFormat,
@@ -36,23 +35,6 @@ const GenericBarChart = React.memo(({
   aspect = 3,
 }) => {
 
-  // const dataTypes = findRelevantKeys(data)
-  //                     .filter( d => Object.keys(lineDataFormat).includes(d) )
-  //
-  // const overThreshold = data.reduce( (agg, entry) => {
-  //   const isScorePositive = entry.score > 0
-  //
-  //   const includeScore = isScorePositive ?
-  //     entry[barKey] > posBarThreshold : entry[barKey] < negBarThreshold
-  //
-  //     const {
-  //       score,
-  //       ...remaining
-  //     } = entry
-  //
-  //   return includeScore ? [...agg, entry] : [...agg, {...remaining}]
-  // }, [])
-
   const yAxisPadding = { top: 10, bottom: 10}
 
   return (
@@ -71,9 +53,7 @@ const GenericBarChart = React.memo(({
         <CartesianGrid strokeDasharray="3 3"/>
         <Tooltip
           content={
-            <CustomTooltip
-              timeZone={timeZone}
-              />
+            <BarChartTooltip />
           }
           />
         <Bar
@@ -87,16 +67,10 @@ const GenericBarChart = React.memo(({
               fill={entry.color}
               key={`bar-${i}`}
               />
-          )
-        }
-      </Bar>
-
-      <Legend
-        content={
-          <CustomLegend />
-      }
-      />
-  </BarChart>
+            )
+          }
+        </Bar>
+      </BarChart>
     </ResponsiveContainer>
   )
 })

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import LegendTile from './LegendTile'
+
 import {
   lineDataFormat,
   barDataFormat,
@@ -12,25 +14,23 @@ const formats = {
   ...barDataFormat,
 }
 
-const CustomLegend = ({ payload }) => (
+const CustomLegend = ({ payload }) => {
 
-  <div style={styles.root}>
-    {
-      payload.map( (p, i) =>
+  return (
+
+    <div style={styles.root}>
+      {
+        payload.map( (p, i) =>
         <div
           style={styles.dataType}
           key={`legend-${i}`}
-        >
-          {formats[p.value].label}: <div style={getLegendTileStyles(p.color)}/>
+          >
+          {formats[p.value].label}: <LegendTile color={p.color}/>
         </div>
-    )}
-  </div>
-)
-
-const getLegendTileStyles = color => ({
-  ...styles.legendTile,
-  background: color,
-})
+      )}
+    </div>
+  )
+}
 
 const styles = {
   root: {
@@ -43,11 +43,6 @@ const styles = {
     padding: '.3em',
     display: 'inline-flex',
     alignItems: 'baseline',
-  },
-  legendTile: {
-    margin: '0 12px 0 6px',
-    width: 20,
-    height: 10,
   },
 }
 
