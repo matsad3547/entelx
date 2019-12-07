@@ -3,16 +3,15 @@ import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 
 import DataTimeDisplay from '../DataTimeDisplay'
-import Label from '../Label'
-import DataDisplay from '../DataDisplay'
+import Header4 from '../Header4'
 import Button from '../button/'
 
 import TimeIncrementSelect from './TimeIncrementSelect'
+import DateRangeDisplay from './DateRangeDisplay'
 
 import { roundMomentToMinutes } from '../../utils/'
 
 import {
-  dayMonthYearTimeFormat,
   timeIncrements,
   colors,
   boxShadow,
@@ -81,8 +80,6 @@ const DateRangeControl = ({
 
   const minDate = useMinDate(projectId)
 
-  const formatDate = date => moment.tz(date, timeZone).format(dayMonthYearTimeFormat)
-
   return (
     <div style={styles.root}>
       {
@@ -90,43 +87,39 @@ const DateRangeControl = ({
         <div
           ref={timeSelectionRef}
           style={styles.drs} >
+          <div style={styles.header}>
+            <Header4 content="Select Date Range"/>
+          </div>
+          <DateRangeDisplay
+            startTime={startTime}
+            endTime={endTime}
+            timeZone={timeZone}
+            />
           <div
-            style={styles.startAndEnd} >
-            <div>
-              <div style={styles.dateDisplay}>
-                <Label content="Start Time"/>
-                <DataDisplay content={formatDate(startTime)}/>
-              </div>
-              <div style={styles.buttons}>
-                <Button
-                  value={`- ${timeIncrements[timeIncrement].label}`}
-                  type="primary"
-                  onClick={onDecrementStartTime}
-                  />
-                <Button
-                  value={`+ ${timeIncrements[timeIncrement].label}`}
-                  type="primary"
-                  onClick={onIncrementStartTime}
-                  />
-              </div>
+            style={styles.controls} >
+            <div style={styles.buttons}>
+              <Button
+                value={`- ${timeIncrements[timeIncrement].label}`}
+                type="primary"
+                onClick={onDecrementStartTime}
+                />
+              <Button
+                value={`+ ${timeIncrements[timeIncrement].label}`}
+                type="primary"
+                onClick={onIncrementStartTime}
+                />
             </div>
-            <div>
-              <div style={styles.dateDisplay}>
-                <Label content="End Time"/>
-                <DataDisplay content={formatDate(endTime)}/>
-              </div>
-              <div style={styles.buttons}>
-                <Button
-                  value={`- ${timeIncrements[timeIncrement].label}`}
-                  type="primary"
-                  onClick={onDecrementEndTime}
-                  />
-                <Button
-                  value={`+ ${timeIncrements[timeIncrement].label}`}
-                  type="primary"
-                  onClick={onIncrementEndTime}
-                  />
-              </div>
+            <div style={styles.buttons}>
+              <Button
+                value={`- ${timeIncrements[timeIncrement].label}`}
+                type="primary"
+                onClick={onDecrementEndTime}
+                />
+              <Button
+                value={`+ ${timeIncrements[timeIncrement].label}`}
+                type="primary"
+                onClick={onIncrementEndTime}
+                />
             </div>
           </div>
           <TimeIncrementSelect
@@ -144,21 +137,11 @@ const DateRangeControl = ({
         onClick={showDRSelection}
         className="startAndEndDates"
         style={styles.dateRange}>
-        <div
-          style={styles.startAndEnd} >
-          <div>
-            <div style={styles.dateDisplay}>
-              <Label content="Start Time"/>
-              <DataDisplay content={formatDate(startTime)}/>
-            </div>
-          </div>
-          <div>
-            <div style={styles.dateDisplay}>
-              <Label content="End Time"/>
-              <DataDisplay content={formatDate(endTime)}/>
-            </div>
-          </div>
-        </div>
+        <DateRangeDisplay
+          startTime={startTime}
+          endTime={endTime}
+          timeZone={timeZone}
+          />
       </div>
     </div>
   )
@@ -168,35 +151,35 @@ const styles = {
   root: {
     position: 'relative',
   },
+  header: {
+    lineHeight: '2em',
+  },
   dateRange: {
     textAlign: 'left',
     width: '50em',
-    padding: '0 0 1.5em',
+    padding: '0 0 1em',
     cursor: 'pointer',
   },
   drs: {
+    boxSizing: 'border-box',
     textAlign: 'left',
     background: colors.white,
-    width: '50em',
+    width: '52em',
     boxShadow,
     padding: '1em',
     position: 'absolute',
     left: '-1em',
-    top: '-1em',
+    top: '-3em',
     zIndex: 2,
   },
-  startAndEnd: {
+  controls: {
     width: '100%',
     display: 'inline-flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
   },
-  dateDisplay: {
-    display: 'inline-flex',
-    alignItems: 'baseline',
-  },
   buttons: {
-    width: '24vw',
+    width: '18em',
     display: 'flex',
     justifyContent: 'space-between',
     padding: '0 .5em .5em',

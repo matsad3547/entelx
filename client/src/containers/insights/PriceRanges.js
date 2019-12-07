@@ -37,12 +37,12 @@ const PriceRanges = ({
 
   const now = getNow()
 
-  const oneWeekAgo = now.clone()
-    .subtract(7, 'days')
+  const past = now.clone()
+    .subtract(1, 'month')
 
   const [project] = useGetProject(projectId, cleanUrl)
 
-  const [startTime, setStartTime] = useState(oneWeekAgo)
+  const [startTime, setStartTime] = useState(past)
   const [endTime, setEndTime] = useState(now)
   const [displayDRS, setDisplayDRS] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -128,33 +128,40 @@ const PriceRanges = ({
     }
   }).sort( (a, b) => a.order - b.order )
 
-  console.log({displayDRS});
-
   return (
-
     <div style={styles.root}>
-      {
-        project &&
-        <DateRangeControl
-          setStartTime={setStartTime}
-          setEndTime={setEndTime}
-          startTime={startTime}
-          endTime={endTime}
-          projectId={projectId}
-          timeZone={project.timeZone}
-          displayDRS={displayDRS}
-          setDisplayDRS={setDisplayDRS}
-          />
-      }
       <DashboardSection headerContent="Price Ranges by Period">
         {
           (project && priceRangeChartData) &&
           <GenericBarChart
             data={priceRangeChartData}
             timeZone={project.timeZone}
+            aspect={4}
             />
         }
       </DashboardSection>
+      <div style={styles.controls}>
+        {
+          project &&
+          <DateRangeControl
+            setStartTime={setStartTime}
+            setEndTime={setEndTime}
+            startTime={startTime}
+            endTime={endTime}
+            projectId={projectId}
+            timeZone={project.timeZone}
+            displayDRS={displayDRS}
+            setDisplayDRS={setDisplayDRS}
+            />
+        }
+        <Button
+          value="GET PRICE RANGES"
+          disabled={loading}
+          type="success"
+          onClick={getData}
+          width={'12em'}
+          />
+      </div>
       <DashboardSection headerContent="Deviation Values">
         <div style={styles.deviation}>
           <div>
@@ -165,15 +172,6 @@ const PriceRanges = ({
             <Label content="Standard Deviation for Discharge Events"/>
             <DataDisplay content={`${priceRanges ? formatDollars(priceRanges.aboveStdDev) : blankDollars}`}/>
           </div>
-        </div>
-        <div style={styles.button}>
-          <Button
-            value="GET PRICE RANGES"
-            disabled={loading}
-            type="success"
-            onClick={getData}
-            width={'12em'}
-            />
         </div>
       </DashboardSection>
     </div>
@@ -199,10 +197,11 @@ const styles = {
   dateControl: {
     padding: '0 0 0 1em',
   },
-  button: {
+  controls: {
     display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '.5em 0',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    padding: '0 0 1em',
   },
 }
 
