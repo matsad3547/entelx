@@ -11,7 +11,13 @@ const Tabs = ({
 
   return (
     <div style={styles.root}>
-      {values.map( (value, i) => <Tab path={value.path} label={value.label} key={`tab-${value.label}-${i}`} />)}
+      {values.map( (value, i) =>
+        <Tab
+          path={value.path}
+          label={value.label}
+          key={`tab-${value.label}-${i}`}
+          />
+      )}
     </div>
   )
 }
