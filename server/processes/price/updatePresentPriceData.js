@@ -80,7 +80,14 @@
 
         console.log(`Periodic price data update at ${now.format()}`)
 
-        await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
+        // await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
+        try {
+          await presentPriceDataUpdater(startMillis, endMillis, nodeData, project)
+        }
+        catch (err) {
+          console.error('There was an error getting periodic price updates:', err)
+          setTimeout( () => console.log('Retry periodic price data update after error'), 30 * 1000)
+        }
 
         mostRecent = await getMaxTimeStamp(id)
 

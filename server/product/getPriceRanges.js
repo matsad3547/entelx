@@ -27,8 +27,6 @@ const getPriceRanges = async (req, res, next) => {
 
   const priceRangeData = await getPriceRangeData(startDatetime, endDatetime, nodeId)
 
-  console.log({priceRangeData});
-
   return res.status(200).json({
     priceRangeData,
   })
