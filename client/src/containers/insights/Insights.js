@@ -7,7 +7,7 @@ import Tabs from '../../components/tabs/'
 import Overview from './Overview'
 import Aggregates from './Aggregates'
 import PriceRanges from './PriceRanges'
-// import Probabilities from './Probabilities'
+// import Probabilities froms './Probabilities'
 
 import {
   getBaseUrl,

@@ -8,7 +8,6 @@ import ProjectRoi from './ProjectRoi'
 import ProjectDashboard from './ProjectDashboard'
 import HistoricalDisplay from './HistoricalDisplay'
 import Insights from '../insights/'
-// import InsightsDisplay from './InsightsDisplay'
 import DevelopmentPlatform from './DevelopmentPlatform'
 
 const Project = ({match}) => (
