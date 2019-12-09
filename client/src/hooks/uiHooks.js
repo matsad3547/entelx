@@ -2,6 +2,7 @@ import {
   useEffect,
   useState,
   useRef,
+  useCallback,
 } from 'react'
 
 export const useInterpolateValues = (value, seconds) => {
@@ -94,4 +95,23 @@ export const useHandleOutsideClick = (ref, onClick) => {
     document.addEventListener('mousedown', handleOutsideClick)
     return () => document.removeEventListener('mousedown', handleOutsideClick)
   })
+}
+
+export const useScrollPosition = ref => {
+  const [position, setPosition] = useState(null)
+
+  const checkScroll = useCallback(e => {
+    if (ref.current) {
+      const pos = ref.current.getBoundingClientRect().top
+      setPosition(pos)
+    }
+  }, [ref])
+
+  useEffect(() => {
+    checkScroll()
+    document.addEventListener('scroll', checkScroll)
+    return () => document.removeEventListener('scroll', checkScroll)
+  }, [checkScroll])
+
+  return position
 }
