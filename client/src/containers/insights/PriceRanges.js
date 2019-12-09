@@ -102,26 +102,40 @@ const PriceRanges = ({
           color: rangeColors[2],
           order: 2,
         }
+      case 'withinOneSigmaBelow':
+        return {
+          label: 'Within 1\u03C3 Below',
+          value: priceRanges.withinOneSigmaBelow,
+          color: rangeColors[3],
+          order: 3,
+        }
+      case 'withinOneSigmaAbove':
+        return {
+          label: 'Within 1\u03C3 Above',
+          value: priceRanges.withinOneSigmaAbove,
+          color: rangeColors[4],
+          order: 4,
+        }
       case 'aboveOneSigma':
         return {
           label: 'Above 1\u03C3',
           value: priceRanges.aboveOneSigma,
-          color: rangeColors[3],
-          order: 3,
+          color: rangeColors[5],
+          order: 5,
         }
       case 'aboveTwoSigma':
         return {
           label: 'Above 2\u03C3',
           value: priceRanges.aboveTwoSigma,
-          color: rangeColors[4],
-          order: 4,
+          color: rangeColors[6],
+          order: 6,
         }
       case 'aboveThreeSigma':
         return {
           label: 'Above 3\u03C3',
           value: priceRanges.aboveThreeSigma,
-          color: rangeColors[5],
-          order: 5,
+          color: rangeColors[7],
+          order: 7,
         }
       default:
         return {}

@@ -88,7 +88,9 @@ export const rangeColors = [
   '#009FCC',
   '#0BB6E5',
   '#30C8F2',
-  '#41D873',
-  '#28CC5F',
+  '#60D2F2',
+  '#4BD87A',
+  '#2BD865',
+  '#14CC51',
   '#00B23B',
 ]
