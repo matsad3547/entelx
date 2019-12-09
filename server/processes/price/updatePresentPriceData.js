@@ -86,9 +86,9 @@
 
         nextTimeoutMillis = getUpdateTimeout(mostRecent)
 
-        const sixMonthsAgo = moment(mostRecent).subtract(6, 'month').toISOString()
+        const oldestAllowed = moment(mostRecent).subtract(1, 'year').toISOString()
 
-        await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, getDBDatetime(sixMonthsAgo)])
+        await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, getDBDatetime(oldestAllowed)])
 
         getPriceDataOnInterval(nextTimeoutMillis)
       }, timeoutMillis)
