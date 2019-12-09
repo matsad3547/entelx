@@ -1,7 +1,7 @@
 
 exports.up = async knex => {
   await knex.schema.table('price', t => {
-    t.dropColumn('timestamp_temp')
+    t.dropColumn('timestamp')
   })
 
   await knex.schema.table('price', t => {
@@ -15,6 +15,6 @@ exports.down = async knex => {
   })
 
   await knex.schema.table('price', t => {
-    t.datetime('timestamp_temp')
+    t.bigInteger('timestamp')
   })
 };

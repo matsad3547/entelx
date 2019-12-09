@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     t.dropColumn('timestamp')
   })
   .then( () => knex.schema.table('price', t => {
-      t.bigInteger('timestamp').notNullable
+      t.bigInteger('timestamp').notNullable()
     })
   )
 };

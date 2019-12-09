@@ -25,6 +25,7 @@ module.exports = {
   },
   migrations: {
     directory: './migrations',
+    stub: './migrations/template.js',
   },
   seeds: {
     directory: './seeds',

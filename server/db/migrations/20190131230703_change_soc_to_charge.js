@@ -1,10 +1,10 @@
 
 exports.up = knex => {
   return knex.schema.table('project', t => {
-     knex.schema.hasColumn('project', 'soc').then( exists => exists && t.dropColumn('soc'))
+     t.dropColumn('soc')
   })
   .then( () => knex.schema.table('project', t => {
-    knex.schema.hasColumn('project', 'soc').then( exists => !exists && t.decimal('charge', 6, 3))
+    t.decimal('charge', 6, 3)
     })
   )
 };
