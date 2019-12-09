@@ -78,11 +78,6 @@ const setProjectData = async (node, project) => {
 
   await Promise.all([
       updateTableRow(
-        'node',
-        {id: node.id},
-        {currentAvg: mean },
-      ),
-      updateTableRow(
         'project',
         {id, },
         {
