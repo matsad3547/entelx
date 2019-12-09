@@ -5,6 +5,7 @@ import {
 
 import {
   formatDollars,
+  formatPercentage,
   setField,
   roundToDigits,
   findRelevantKeys,
@@ -25,6 +26,7 @@ export {
   getBaseUrl,
   getLocation,
   formatDollars,
+  formatPercentage,
   setField,
   roundToDigits,
   findRelevantKeys,

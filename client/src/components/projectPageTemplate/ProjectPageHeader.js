@@ -11,6 +11,8 @@ import {
   boxShadow,
 } from '../../config/'
 
+import {useScrollPosition} from '../../hooks/'
+
 const ProjectPageHeader = ({
   title,
   baseUrl,
@@ -18,18 +20,10 @@ const ProjectPageHeader = ({
   showMenu,
 }) => {
 
-  const [position, setPosition] = useState(null)
+  const headerRef = useRef(null)
 
+  const position = useScrollPosition(headerRef)
   const isCompact = position < 0
-
-  const header = useRef(null)
-
-  const checkScroll = useCallback(e => {
-    if (header.current) {
-      const pos = header.current.getBoundingClientRect().top
-      setPosition(pos)
-    }
-  }, [])
 
   const setFontSize = () => {
     if( position >= - 40 && position < 0) {
@@ -43,14 +37,8 @@ const ProjectPageHeader = ({
     }
   }
 
-  useEffect(() => {
-    checkScroll()
-    document.addEventListener('scroll', checkScroll)
-    return () => document.removeEventListener('scroll', checkScroll)
-  }, [checkScroll])
-
   const switchStyles = isCompact ? {
-    height: 110,
+    height: 90,
   } : {
     height: 2,
   }
@@ -76,7 +64,7 @@ const ProjectPageHeader = ({
 
   return (
     <div>
-      <div ref={header} style={switchStyles}></div>
+      <div ref={headerRef} style={switchStyles}></div>
       <div
         style={rootStyles}
         >
@@ -104,7 +92,7 @@ const styles = {
   root: {
     display: 'grid',
     gridTemplateColumns: '[leftCol] auto [centerMargin] 6% [rightCol] 45% [end]',
-    gridTemplateRows: '[row1] minmax(4em, max-content) [ws1] 3em',
+    gridTemplateRows: '[row1] minmax(4em, max-content) [ws1] 2em',
   },
   compactRoot: {
     display: 'block',

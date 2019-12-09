@@ -1,14 +1,19 @@
-.navButton:hover {
-  background: #e2e2e2;  /* lightGray */
-}
-
 .navButton {
   background: #fff;
   cursor: pointer;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.2em;
+  width: 100%;
+  line-height: 3em;
 }
 
-.current, .current:hover {
-  background: #90DDAA;
-  color: #046D27;
+.navButton:hover {
+  background: var(--light-gray);
+}
+
+.currentButton, .currentButton:hover {
+  background: var(--light-green);
+  color: var(--deep-green);
   cursor: not-allowed;
 }

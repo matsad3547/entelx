@@ -7,7 +7,8 @@ import ProjectHome from './ProjectHome'
 import ProjectRoi from './ProjectRoi'
 import ProjectDashboard from './ProjectDashboard'
 import HistoricalDisplay from './HistoricalDisplay'
-import InsightsDisplay from './InsightsDisplay'
+import Insights from '../insights/'
+// import InsightsDisplay from './InsightsDisplay'
 import DevelopmentPlatform from './DevelopmentPlatform'
 
 const Project = ({match}) => (
@@ -35,7 +36,7 @@ const Project = ({match}) => (
     />
     <Route
       path={`${match.path}/insights/:projectId`}
-      component={InsightsDisplay}
+      component={Insights}
     />
     <Route
       path={`${match.path}/dev/:projectId`}

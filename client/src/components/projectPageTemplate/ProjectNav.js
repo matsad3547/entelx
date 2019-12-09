@@ -9,10 +9,6 @@ import {
   boxShadow,
 } from '../../config/'
 
-import {
-  getLocation
-} from '../../utils/'
-
 const ProjectNav = ({
   baseUrl,
   id,
@@ -20,8 +16,6 @@ const ProjectNav = ({
 }) => {
 
   const env = process.env.NODE_ENV
-
-  const location = getLocation(match.url, baseUrl, id)
 
   const tools = [
     {
@@ -65,7 +59,6 @@ const ProjectNav = ({
           link={t.link}
           id={id}
           label={t.label}
-          current={location === t.link}
           />
         )
       }
@@ -79,8 +72,9 @@ const styles = {
   background: colors.white,
   width: '13em',
   padding: '.5em 1em',
-  borderRight: `1px solid ${colors.gray}`,
   boxShadow,
+  display: 'flex',
+  flexDirection: 'column',
 }
 
 ProjectNav.propTypes = {

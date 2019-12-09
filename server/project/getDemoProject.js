@@ -1,4 +1,4 @@
-const { readTableRows } = require('../db/')
+const { readTableRows } = require('../db/').connections
 
 const getDemoProject = async (req, res, next) => {
 

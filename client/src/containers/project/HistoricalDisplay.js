@@ -10,7 +10,7 @@ import LabeledCheckbox from '../../components/LabeledCheckbox'
 
 import DataTimeRangeDisplay from '../../components/DataTimeRangeDisplay'
 
-import DateRangeControl from '../DateRangeControl'
+import DateRangeControl from '../../components/dateRangeControl/'
 
 import {
   getBaseUrl,
@@ -44,6 +44,7 @@ const HistoricalDisplay = ({match}) => {
 
   const [startTime, setStartTime] = useState(oneWeekAgo)
   const [endTime, setEndTime] = useState(now)
+  const [displayDRS, setDisplayDRS] = useState(false)
   const [loading, setLoading] = useState(false)
   const [timeseries, setTimeseries] = useState(null)
   const [includeWeather, setIncludeWeather] = useState(false)
@@ -92,8 +93,8 @@ const HistoricalDisplay = ({match}) => {
       { (loading || loadingProject) && <Loading message={''} />}
       {
         (timeseries && project) &&
-        <div>
-          <DashboardSection headerContent={'Historical Data'}>
+        <div style={styles.root}>
+          <DashboardSection headerContent={'Historical Data by Date Range'}>
             <DataTimeRangeDisplay
               message="Data from"
               startDate={timeseries[0].timestamp}
@@ -104,42 +105,41 @@ const HistoricalDisplay = ({match}) => {
               barKey={'lmp'}
               data={timeseries}
               timeZone={project.timeZone}
-              aspect={4}
+              aspect={3.8}
               useBrush={true}
               />
           </DashboardSection>
-          <DashboardSection
-            headerContent={'Select Time Range'}>
-            <div style={styles.controls}>
-              <DateRangeControl
-                setStartTime={setStartTime}
-                setEndTime={setEndTime}
-                startTime={startTime}
-                endTime={endTime}
-                projectId={projectId}
-                timeZone={project.timeZone}
-                />
-              <div style={styles.request}>
-                <div style={styles.include}>
-                  <LabeledCheckbox
-                    name={'include-weather'}
-                    label="Include Weather"
-                    value={!includeWeather}
-                    checked={includeWeather}
-                    onChange={onSetIncludeWeather}
-                    />
-                  <Button
-                    value="GET DATA"
-                    disabled={loading}
-                    type="success"
-                    onClick={getData}
-                    overrideStyles={styles.button}
-                    width={'8em'}
-                    />
-                </div>
+          <div style={styles.controls}>
+            <DateRangeControl
+              setStartTime={setStartTime}
+              setEndTime={setEndTime}
+              startTime={startTime}
+              endTime={endTime}
+              projectId={projectId}
+              timeZone={project.timeZone}
+              displayDRS={displayDRS}
+              setDisplayDRS={setDisplayDRS}
+              />
+            <div style={styles.request}>
+              <div style={styles.include}>
+                <LabeledCheckbox
+                  name={'include-weather'}
+                  label="Include Weather"
+                  value={!includeWeather}
+                  checked={includeWeather}
+                  onChange={onSetIncludeWeather}
+                  />
+                <Button
+                  value="GET DATA"
+                  disabled={loading}
+                  type="success"
+                  onClick={getData}
+                  overrideStyles={styles.button}
+                  width={'8em'}
+                  />
               </div>
             </div>
-          </DashboardSection>
+          </div>
         </div>
       }
     </ProjectPageTemplate>
@@ -147,20 +147,23 @@ const HistoricalDisplay = ({match}) => {
 }
 
 const styles = {
+  root: {
+    marginBottom: '6em',
+  },
   controls: {
     display: 'flex',
-    flexDirection: 'column',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    padding: '0 0 1em',
   },
   request: {
     display: 'flex',
     justifyContent: 'flex-end',
   },
   include: {
-    width: '22em',
-    display: 'inline-flex',
-    justifyContent: 'space-between',
-    padding: '2em 0 0',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
   },
   getData: {
     margin: '.5em 0 0 1.5em',
@@ -168,5 +171,3 @@ const styles = {
 }
 
 export default HistoricalDisplay
-
-// xRefLines={aggregate.inflections}

@@ -16,7 +16,7 @@
   const {
     readTableRows,
     updateTableRow,
-  } = require('../../db/')
+  } = require('../../db/').connections
 
   const pastPriceDataUpdater = require('./pastPriceDataUpdater')
 
@@ -38,7 +38,7 @@
 
   const mostRecent = await getMaxTimeStamp(id)
 
-  const sixMonthsAgo = moment(mostRecent).subtract(6, 'months')
+  const oldestAllowed = moment(mostRecent).subtract(1, 'year')
 
   let endMillis = moment(oldest).subtract(1, 'minute').valueOf()
 
@@ -56,7 +56,7 @@
 
     oldest = await getMinTimeStamp(id)
 
-    if (moment(oldest).isBefore(sixMonthsAgo)) {
+    if (moment(oldest).isBefore(oldestAllowed)) {
       exitPastPriceUpdates()
     }
     else {

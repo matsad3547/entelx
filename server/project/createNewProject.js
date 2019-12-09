@@ -3,7 +3,7 @@ const {
   readTableRows,
   createTableRow,
   updateTableRow,
-} = require('../db/')
+} = require('../db/').connections
 
 const {
   findClosest,

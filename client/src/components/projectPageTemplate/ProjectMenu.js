@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import ProjectNav from './ProjectNav'
+
+import { useHandleOutsideClick } from '../../hooks/'
 
 const ProjectMenu = ({
   baseUrl,
@@ -12,16 +14,9 @@ const ProjectMenu = ({
 
   const menuRef = useRef(null)
 
-  const handleOutsideClick = e => {
-    if (menuRef.current && !menuRef.current.contains(e.target)) {
-      setDisplay(false)
-    }
-  }
+  const onOutsideClick = () => setDisplay(false)
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick)
-    return () => document.removeEventListener('mousedown', handleOutsideClick)
-  })
+  useHandleOutsideClick(menuRef, onOutsideClick)
 
   const showMenu = () => display ? setDisplay(false) : setDisplay(true)
 

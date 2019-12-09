@@ -6,6 +6,9 @@ export {
 
 export {
   useInterpolateValues,
+  useAddClassOnClick,
+  useHandleOutsideClick,
+  useScrollPosition,
 } from './uiHooks'
 
 export {

@@ -22,7 +22,7 @@
     readTableRows,
     updateTableRow,
     deleteTableRowsWhereBtw,
-  } = require('../../db/')
+  } = require('../../db/').connections
 
   const presentPriceDataUpdater = require('./presentPriceDataUpdater')
 
@@ -80,15 +80,22 @@
 
         console.log(`Periodic price data update at ${now.format()}`)
 
-        await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
+        // await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
+        try {
+          await presentPriceDataUpdater(startMillis, endMillis, nodeData, project)
+        }
+        catch (err) {
+          console.error('There was an error getting periodic price updates:', err)
+          setTimeout( () => console.log('Retry periodic price data update after error'), 30 * 1000)
+        }
 
         mostRecent = await getMaxTimeStamp(id)
 
         nextTimeoutMillis = getUpdateTimeout(mostRecent)
 
-        const sixMonthsAgo = moment(mostRecent).subtract(6, 'month').toISOString()
+        const oldestAllowed = moment(mostRecent).subtract(1, 'year').toISOString()
 
-        await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, getDBDatetime(sixMonthsAgo)])
+        await catchErrorsWithMessage('There was an error deleting data older than 6 months', deleteTableRowsWhereBtw, false)('price', {nodeId: id}, 'timestamp', [0, getDBDatetime(oldestAllowed)])
 
         getPriceDataOnInterval(nextTimeoutMillis)
       }, timeoutMillis)

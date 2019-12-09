@@ -8,7 +8,7 @@ const {
   readTableRows,
   readTableRowsWhereBtw,
   findMax,
-} = require('../db/')
+} = require('../db/').connections
 
 const {
   catchErrorsWithMessage,

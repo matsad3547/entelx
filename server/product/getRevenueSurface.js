@@ -1,8 +1,10 @@
 const {
   readTableRows,
   readTableRowsWhereBtw,
+} = require('../db/').connections
+const {
   getPriceAggregateData,
-} = require('../db/')
+} = require('../db/').queries
 
 const {
   getCenteredValuesArr,

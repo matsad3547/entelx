@@ -15,6 +15,7 @@ export const colors = {
   gray: '#838383',
   darkGray: '#3D3D3D',
   white: '#fff',
+  veryLightGreen: '#ADDDBD',
   lightGreen: '#90DDAA',
   brightGreen: '#23B253', //hsb(140 80 70)
   middleGreen: '#00872D',
@@ -81,4 +82,15 @@ export const trendColors = [
   '#89A6FB',
   '#78C3FB',
   '#03CEA4',
+]
+
+export const rangeColors = [
+  '#009FCC',
+  '#0BB6E5',
+  '#30C8F2',
+  '#60D2F2',
+  '#4BD87A',
+  '#2BD865',
+  '#14CC51',
+  '#00B23B',
 ]

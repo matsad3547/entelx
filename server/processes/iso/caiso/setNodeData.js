@@ -1,4 +1,4 @@
-const { createTableRows } = require('../../../db/')
+const { createTableRows } = require('../../../db/').connections
 const getNodeLocations = require('./getNodeLocations')
 
 // to run from the console:

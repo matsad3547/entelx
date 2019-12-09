@@ -3,7 +3,7 @@ const moment = require('moment')
 const {
   readTableRows,
   readTableRowsWhereBtw,
-} = require('../db/')
+} = require('../db/').connections
 
 const {
   findRevenueAndCharge,

@@ -19,6 +19,7 @@ import {
   buttons,
   boxShadow,
   trendColors,
+  rangeColors,
 } from './styles'
 
 import {
@@ -47,6 +48,7 @@ export {
   buttons,
   boxShadow,
   trendColors,
+  rangeColors,
   companyName,
   defaultHeaders,
   blankDollars,

@@ -14,7 +14,7 @@ const formats = {
   ...barDataFormat,
 }
 
-const CustomTooltip = ({
+const TimeseriesTooltip = ({
   payload,
   label,
   active,
@@ -57,4 +57,4 @@ const styles = {
   },
 }
 
-export default CustomTooltip
+export default TimeseriesTooltip

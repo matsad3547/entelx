@@ -16,7 +16,7 @@ import {
   Brush,
 } from 'recharts'
 
-import CustomTooltip from './CustomTooltip'
+import TimeseriesTooltip from './TimeseriesTooltip'
 import CustomLegend from './CustomLegend'
 
 import {
@@ -91,7 +91,7 @@ const LineBarChart = React.memo(({
         <CartesianGrid strokeDasharray="3 3"/>
         <Tooltip
           content={
-            <CustomTooltip
+            <TimeseriesTooltip
               timeZone={timeZone}
               />
           }

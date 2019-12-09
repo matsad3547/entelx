@@ -1,6 +1,6 @@
 const { catchErrorsWithMessage } = require('../utils/')
 
-const { findMax } = require('../db/')
+const { findMax } = require('../db/').connections
 
 const runTest = async (req, res) => {
 

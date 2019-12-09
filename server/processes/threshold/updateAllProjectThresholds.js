@@ -10,9 +10,12 @@
   const {
     readTableRows,
     readTableRowsWhereBtw,
-    getPriceAggregateData,
     updateTableRow,
-  } = require('../../db/')
+  } = require('../../db/').connections
+
+  const {
+    getPriceAggregateData,
+  } = require('../../db/').queries
 
   console.time('Update project thresholds')
 
@@ -57,7 +60,7 @@
         endDatetime,
       ] = datetimes
 
-      const initAggregate = await  getPriceAggregateData(startDatetime, endDatetime, nodeId) 
+      const initAggregate = await  getPriceAggregateData(startDatetime, endDatetime, nodeId)
 
       const data = {
         timeSeries: prices,

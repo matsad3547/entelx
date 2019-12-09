@@ -2,6 +2,7 @@ import {
   useEffect,
   useState,
   useRef,
+  useCallback,
 } from 'react'
 
 export const useInterpolateValues = (value, seconds) => {
@@ -58,4 +59,59 @@ export const useInterpolateValues = (value, seconds) => {
   }, [value, seconds])
 
   return displayVal
+}
+
+export const useAddClassOnClick = (ref, className) => {
+  const handleMouseDown = e => {
+    if (ref.current && ref.current.contains(e.target)) {
+      ref.current.classList.add(className)
+    }
+  }
+
+  const handleMouseUp = () => {
+    if (ref.current) {
+      ref.current.classList.remove(className)
+    }
+  }
+
+  useEffect( () => {
+    document.addEventListener('mousedown', handleMouseDown)
+    document.addEventListener('mouseup', handleMouseUp)
+    return () => {
+      document.removeEventListener('mousedown', handleMouseDown)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+  })
+}
+
+export const useHandleOutsideClick = (ref, onClick) => {
+  const handleOutsideClick = e => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      onClick()
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
+  })
+}
+
+export const useScrollPosition = ref => {
+  const [position, setPosition] = useState(null)
+
+  const checkScroll = useCallback(e => {
+    if (ref.current) {
+      const pos = ref.current.getBoundingClientRect().top
+      setPosition(pos)
+    }
+  }, [ref])
+
+  useEffect(() => {
+    checkScroll()
+    document.addEventListener('scroll', checkScroll)
+    return () => document.removeEventListener('scroll', checkScroll)
+  }, [checkScroll])
+
+  return position
 }

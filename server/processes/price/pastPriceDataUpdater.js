@@ -1,6 +1,6 @@
 const getPriceData = require('./getPriceData')
 
-const { createTableRows } = require('../../db/')
+const { createTableRows } = require('../../db/').connections
 
 const {
   catchErrorsWithMessage,
