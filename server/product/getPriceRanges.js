@@ -3,6 +3,7 @@ const {
 } = require('../db/').connections
 const {
   getPriceRangeData,
+  getPriceRangeDataBySlice,
 } = require('../db/').queries
 
 const { getDBDatetime } = require('../utils/')
@@ -26,6 +27,10 @@ const getPriceRanges = async (req, res, next) => {
   const [startDatetime, endDatetime] = [startDate, endDate].map( iso => getDBDatetime(iso))
 
   const priceRangeData = await getPriceRangeData(startDatetime, endDatetime, nodeId)
+
+  const priceRangesBySlice = await getPriceRangeDataBySlice(startDatetime, endDatetime, nodeId)
+
+  // console.log({priceRangesBySlice});
 
   return res.status(200).json({
     priceRangeData,
