@@ -2,7 +2,7 @@ const knex = require('../knex')
 
 const { convertObj } = require('../utils/').conversions
 
-const {stdDevSelections} = require('../queries')
+const {stdDevSelections} = require('../queryStrings')
 
 const getPriceRangesSelectionString = (aboveStdDev, belowStdDev) => `
   SUM(CASE WHEN lmp BETWEEN mvg_avg AND mvg_avg + ${aboveStdDev} THEN 1 ELSE 0 END) AS within_one_sigma_above,

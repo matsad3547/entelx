@@ -1,7 +1,7 @@
 const {
   findMax,
   findMin,
-} = require('../db/')
+} = require('../db/').connections
 
 const { catchErrorsWithMessage } = require('./requestUtils')
 

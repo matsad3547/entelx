@@ -1,9 +1,7 @@
-const {
-  aggregatesSelection,
-  stdDevSelections, 
-} = require('./aggregateQueries')
+const getPriceAggregateData = require('./getPriceAggregateData')
+const getPriceRangeData = require('./getPriceRangeData')
 
 module.exports = {
-  aggregatesSelection,
-  stdDevSelections,
+  getPriceAggregateData,
+  getPriceRangeData,
 }

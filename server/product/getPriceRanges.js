@@ -1,7 +1,9 @@
 const {
   readTableRows,
+} = require('../db/').connections
+const {
   getPriceRangeData,
-} = require('../db/')
+} = require('../db/').queries
 
 const { getDBDatetime } = require('../utils/')
 

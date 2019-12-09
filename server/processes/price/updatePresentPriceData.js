@@ -22,7 +22,7 @@
     readTableRows,
     updateTableRow,
     deleteTableRowsWhereBtw,
-  } = require('../../db/')
+  } = require('../../db/').connections
 
   const presentPriceDataUpdater = require('./presentPriceDataUpdater')
 

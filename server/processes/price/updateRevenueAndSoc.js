@@ -1,6 +1,6 @@
 const { findRevenueAndCharge } = require('../../utils/')
 
-const { updateTableRow } = require('../../db/')
+const { updateTableRow } = require('../../db/').connections
 
 const updateRevenueAndSoc = (data, key, project) => {
 

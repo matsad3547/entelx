@@ -1,4 +1,4 @@
-const { readTableRows } = require('../db/')
+const { readTableRows } = require('../db/').connections
 
 const processNodes = nodes => nodes.reduce( (obj, node) => ({
     ...obj,

@@ -16,7 +16,7 @@
   const {
     readTableRows,
     updateTableRow,
-  } = require('../../db/')
+  } = require('../../db/').connections
 
   const pastPriceDataUpdater = require('./pastPriceDataUpdater')
 

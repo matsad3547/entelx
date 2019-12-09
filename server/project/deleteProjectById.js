@@ -1,7 +1,7 @@
 const {
   deleteTableRows,
   readTableRows,
-} = require('../db/')
+} = require('../db/').connections
 
 const {
   catchErrorsWithMessage,

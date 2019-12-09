@@ -1,7 +1,7 @@
 const updateRevenueAndSoc = require('./updateRevenueAndSoc')
 const getPriceData = require('./getPriceData')
 
-const { createTableRows } = require('../../db/')
+const { createTableRows } = require('../../db/').connections
 
 const { catchErrorsWithMessage } = require('../../utils/')
 

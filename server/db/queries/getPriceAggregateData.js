@@ -2,7 +2,7 @@ const knex = require('../knex')
 
 const { convertObj } = require('../utils/').conversions
 
-const {aggregatesSelection} = require('../queries')
+const {aggregatesSelection} = require('../queryStrings')
 
 const getPriceAggregateData = async (
   startDatetime,

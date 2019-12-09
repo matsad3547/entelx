@@ -9,8 +9,10 @@ const {
   updateTableRow,
   createTableRows,
   deleteTableRowsWhereNot,
+} = require('../db/').connections
+const {
   getPriceAggregateData,
-} = require('../db/')
+} = require('../db/').queries
 
 const {
   calculateDerivedData,

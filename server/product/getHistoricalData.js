@@ -3,7 +3,7 @@
 const {
   readTableRows,
   readTableRowsWhereBtw,
-} = require('../db/')
+} = require('../db/').connections
 
 const { getDBDatetime } = require('../utils/')
 //
