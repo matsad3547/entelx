@@ -28,7 +28,7 @@ const getPriceRanges = async (req, res, next) => {
 
   const priceRangeData = await getPriceRangeData(startDatetime, endDatetime, nodeId)
 
-  const priceRangesBySlice = await getPriceRangeDataBySlice(startDatetime, endDatetime, nodeId)
+  const priceRangesBySlice = await getPriceRangeDataBySlice(startDatetime, endDatetime, nodeId, 'hour')
 
   // console.log({priceRangesBySlice});
 

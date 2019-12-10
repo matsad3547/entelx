@@ -11,6 +11,8 @@ const getGroupByString = (slice, timeZone) => {
   switch (slice) {
     case 'day':
       return `GROUP BY DAYOFWEEK(CONVERT_TZ(TIMESTAMP, 'UTC', '${timeZone}'))`
+    case 'hour':
+      return `GROUP BY HOUR(CONVERT_TZ(TIMESTAMP, 'UTC', '${timeZone}'))`
 
     default:
       return `GROUP BY DAYOFWEEK(CONVERT_TZ(TIMESTAMP, 'UTC', ${timeZone}))`
