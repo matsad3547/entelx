@@ -1,38 +1,29 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
 
-import DashboardSection from '../../components/DashboardSection'
-import Label from '../../components/Label'
-import DataDisplay from '../../components/DataDisplay'
 import Button from '../../components/button/'
 import {GenericBarChart} from '../../components/charts/'
+
 import DateRangeControl from '../../components/dateRangeControl/'
 
-import PriceRangesByDay from './PriceRangesByDay'
-
 import {
-  getBaseUrl,
   singleRequest,
-  formatDollars,
   roundMomentToMinutes,
 } from '../../utils/'
 
 import {
-  blankDollars,
   defaultHeaders,
   rangeColors,
 } from '../../config/'
 
 import { useGetProject } from '../../hooks/'
 
-const PriceRanges = ({
-  match,
+const PriceRangesByDay = ({
   projectId,
+  cleanUrl,
 }) => {
 
-  const { url } = match
-
-  const cleanUrl = getBaseUrl(url, 'insights', projectId)
+  const slice = 'day'
 
   const getNow = () => roundMomentToMinutes(moment(), 5)
 
@@ -62,11 +53,13 @@ const PriceRanges = ({
     setLoading(true)
 
     try {
-      const res = await singleRequest(`/price_ranges/${projectId}/${startDate}/${endDate}`, request)
+      const res = await singleRequest(`/price_ranges_by_slice/${projectId}/${startDate}/${endDate}/${slice}`, request)
 
-      const { priceRangeData } = await res.json()
+      const { priceRangesBySlice } = await res.json()
 
-      setPriceRanges(priceRangeData)
+      console.log({priceRangesBySlice});
+
+      // setPriceRanges(priceRangeData)
     }
     catch (err) {
       console.error(`There was an error getting project insight data: ${err}`)
@@ -145,7 +138,6 @@ const PriceRanges = ({
 
   return (
     <div style={styles.root}>
-      <DashboardSection headerContent="Overall Price Ranges">
         {
           (project && priceRangeChartData) &&
           <GenericBarChart
@@ -154,7 +146,6 @@ const PriceRanges = ({
             aspect={4}
             />
         }
-      </DashboardSection>
       <div style={styles.controls}>
         {
           project &&
@@ -170,40 +161,13 @@ const PriceRanges = ({
             />
         }
         <Button
-          value="GET PRICE RANGES"
+          value="GET RANGES BY DAY"
           disabled={loading}
           type="success"
           onClick={getData}
           width={'12em'}
           />
       </div>
-      <DashboardSection headerContent="Deviation Values">
-        <div style={styles.deviation}>
-          <div>
-            <Label content="Standard Deviation for Charge Events"/>
-            <DataDisplay content={`${priceRanges ? formatDollars(priceRanges.belowStdDev) : blankDollars}`}/>
-          </div>
-          <div>
-            <Label content="Standard Deviation for Discharge Events"/>
-            <DataDisplay content={`${priceRanges ? formatDollars(priceRanges.aboveStdDev) : blankDollars}`}/>
-          </div>
-        </div>
-      </DashboardSection>
-      <DashboardSection headerContent="Price Ranges by Day">
-        <PriceRangesByDay
-          projectId={projectId}
-          cleanUrl={cleanUrl}
-          />
-      </DashboardSection>
-      <DashboardSection headerContent="Price Ranges by Hour">
-
-      </DashboardSection>
-      <DashboardSection headerContent="Monthly Price Ranges by Hour">
-
-      </DashboardSection>
-      <DashboardSection headerContent="Seasonal Price Ranges by Hour">
-
-      </DashboardSection>
     </div>
   )
 }
@@ -213,11 +177,8 @@ const styles = {
     padding: '2em 0',
     marginBottom: '3em',
   },
-  deviation: {
-    padding: '0 1em 0',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
+
+
   dateControl: {
     padding: '0 0 0 1em',
   },
@@ -229,4 +190,4 @@ const styles = {
   },
 }
 
-export default PriceRanges
+export default PriceRangesByDay

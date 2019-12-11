@@ -46,14 +46,10 @@ const getPriceRangeDataBySlice = async (
       ${getGroupByString(slice, timeZone)}
       `, [startDatetime, endDatetime, nodeId])
 
-    const bySlice = Object.keys(bySliceRes[0]).reduce( (bySliceObj, key) => ({
+    const priceRangesBySlice = Object.keys(bySliceRes[0]).reduce( (bySliceObj, key) => ({
       ...bySliceObj,
       [key]: convertObj(bySliceRes[0][key])
     }), {})
-
-    console.log('by slices:', bySlice );
-
-    const priceRangesBySlice = convertObj(bySliceRes[0][0])
 
     return {
       ...priceRangesBySlice,

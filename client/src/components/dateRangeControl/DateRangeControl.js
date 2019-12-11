@@ -54,8 +54,8 @@ const DateRangeControl = ({
         className="startAndEndDates"
         style={styles.dateRange}>
         <DateRangeDisplay
-          startTime={startTime}
-          endTime={endTime}
+          startTime={startTime.toISOString()}
+          endTime={endTime.toISOString()}
           timeZone={timeZone}
           />
       </div>

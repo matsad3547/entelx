@@ -2,17 +2,18 @@ const {
   readTableRows,
 } = require('../db/').connections
 const {
-  getPriceRangeData,
+  getPriceRangeDataBySlice,
 } = require('../db/').queries
 
 const { getDBDatetime } = require('../utils/')
 
-const getPriceRanges = async (req, res, next) => {
+const getPriceRangesBySlice = async (req, res, next) => {
 
   const {
     startDate,
     endDate,
     id,
+    slice,
   } = req.params
 
   const [project] = await readTableRows('project', {id,})
@@ -21,15 +22,20 @@ const getPriceRanges = async (req, res, next) => {
     return next(`Project ${id} is no longer available`)
   }
 
-  const { nodeId } = project
+  const {
+    nodeId,
+    timeZone,
+  } = project
 
   const [startDatetime, endDatetime] = [startDate, endDate].map( iso => getDBDatetime(iso))
 
-  const priceRangeData = await getPriceRangeData(startDatetime, endDatetime, nodeId)
+  const priceRangesBySlice = await getPriceRangeDataBySlice(startDatetime, endDatetime, nodeId, slice, timeZone)
+
+  console.log({priceRangesBySlice});
 
   return res.status(200).json({
-    priceRangeData,
+    priceRangesBySlice,
   })
 }
 
-module.exports = getPriceRanges
+module.exports = getPriceRangesBySlice

@@ -76,8 +76,8 @@ const DateRangeSelector = ({
         <Header4 content="Select Date Range"/>
       </div>
       <DateRangeDisplay
-        startTime={startTime}
-        endTime={endTime}
+        startTime={startTime.toISOString()}
+        endTime={endTime.toISOString()}
         timeZone={timeZone}
         />
       <div
