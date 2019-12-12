@@ -95,20 +95,21 @@ const PriceRanges = ({
   return (
     <div style={styles.root}>
       <DashboardSection headerContent="Overall Price Ranges">
-        {
-          (project && chartData) &&
-          <GenericBarChart
-            data={chartData}
-            timeZone={project.timeZone}
-            aspect={4}
-            >
-            <Bar
-              yAxisId="left"
-              dataKey="value"
-              fill={'#000'}
+        <div style={styles.chart}>
+          {
+            (project && chartData) &&
+            <GenericBarChart
+              data={chartData}
+              timeZone={project.timeZone}
+              aspect={4}
               >
-              {
-                chartData.map( (entry, i) =>
+              <Bar
+                yAxisId="left"
+                dataKey="value"
+                fill={'#000'}
+                >
+                {
+                  chartData.map( (entry, i) =>
                   <Cell
                     fill={entry.color}
                     key={`bar-${i}`}
@@ -118,6 +119,7 @@ const PriceRanges = ({
             </Bar>
           </GenericBarChart>
         }
+        </div>
       </DashboardSection>
       <div style={styles.controls}>
         {
@@ -159,6 +161,7 @@ const PriceRanges = ({
           <PriceRangesBySlice
             project={project}
             slice="day"
+            buttonLabel="GET RANGES BY DAY"
             />
         }
       </DashboardSection>
@@ -181,6 +184,9 @@ const styles = {
   root: {
     padding: '2em 0',
     marginBottom: '3em',
+  },
+  chart: {
+    padding: '1em 0',
   },
   deviation: {
     padding: '0 1em 0',

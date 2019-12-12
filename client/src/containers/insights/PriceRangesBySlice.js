@@ -29,6 +29,7 @@ const getSliceLabel = (key, slice) => {
 const PriceRangesBySlice = ({
   project,
   slice,
+  buttonLabel,
 }) => {
 
   const rangeKeys = [
@@ -133,7 +134,7 @@ const PriceRangesBySlice = ({
             />
         }
         <Button
-          value="GET RANGES BY DAY"
+          value={buttonLabel}
           disabled={loading}
           type="success"
           onClick={getData}
@@ -146,8 +147,7 @@ const PriceRangesBySlice = ({
 
 const styles = {
   root: {
-    padding: '2em 0',
-    marginBottom: '3em',
+    padding: '1em 0',
   },
   controls: {
     display: 'flex',
