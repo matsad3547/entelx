@@ -1,5 +1,9 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
+import {
+  Cell,
+  Bar,
+} from 'recharts'
 
 import DashboardSection from '../../components/DashboardSection'
 import Label from '../../components/Label'
@@ -152,7 +156,22 @@ const PriceRanges = ({
             data={priceRangeChartData}
             timeZone={project.timeZone}
             aspect={4}
-            />
+            >
+            <Bar
+              yAxisId="left"
+              dataKey="value"
+              fill={'#000'}
+              >
+              {
+                priceRangeChartData.map( (entry, i) =>
+                <Cell
+                  fill={entry.color}
+                  key={`bar-${i}`}
+                  />
+                )
+              }
+            </Bar>
+          </GenericBarChart>
         }
       </DashboardSection>
       <div style={styles.controls}>
