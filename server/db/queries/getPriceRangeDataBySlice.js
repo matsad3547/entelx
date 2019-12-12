@@ -58,7 +58,7 @@ const getPriceRangeDataBySlice = async (
     }
   }
   catch (err) {
-    console.error(`Error getting the price range data for node ${nodeId} from ${startDatetime} to ${endDatetime}:`, err)
+    console.error(`Error getting the price range data by ${slice} for node ${nodeId} from ${startDatetime} to ${endDatetime}:`, err)
   }
 }
 
