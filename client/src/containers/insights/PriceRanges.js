@@ -12,7 +12,7 @@ import Button from '../../components/button/'
 import {GenericBarChart} from '../../components/charts/'
 import DateRangeControl from '../../components/dateRangeControl/'
 
-import PriceRangesByDay from './PriceRangesByDay'
+import PriceRangesBySlice from './PriceRangesBySlice'
 
 import {
   getBaseUrl,
@@ -52,7 +52,7 @@ const PriceRanges = ({
   const [endTime, setEndTime] = useState(now)
   const [displayDRS, setDisplayDRS] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [priceRanges, setPriceRanges] = useState(null)
+  const [rangeData, setRangeData] = useState(null)
 
   const getData = useCallback( async () => {
 
@@ -71,7 +71,7 @@ const PriceRanges = ({
 
       const { priceRangeData } = await res.json()
 
-      setPriceRanges(priceRangeData)
+      setRangeData(priceRangeData)
     }
     catch (err) {
       console.error(`There was an error getting project insight data: ${err}`)
@@ -85,8 +85,8 @@ const PriceRanges = ({
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
-  const priceRangeChartData = priceRanges && Object.keys(priceRanges).filter( key => key !== 'belowStdDev' && key !== 'aboveStdDev').map( key => ({
-      value: priceRanges[key],
+  const chartData = rangeData && Object.keys(rangeData).filter( key => key !== 'belowStdDev' && key !== 'aboveStdDev').map( key => ({
+      value: rangeData[key],
       color: rangeColors[key],
       label: rangeLabels[key],
     })
@@ -96,9 +96,9 @@ const PriceRanges = ({
     <div style={styles.root}>
       <DashboardSection headerContent="Overall Price Ranges">
         {
-          (project && priceRangeChartData) &&
+          (project && chartData) &&
           <GenericBarChart
-            data={priceRangeChartData}
+            data={chartData}
             timeZone={project.timeZone}
             aspect={4}
             >
@@ -108,11 +108,11 @@ const PriceRanges = ({
               fill={'#000'}
               >
               {
-                priceRangeChartData.map( (entry, i) =>
-                <Cell
-                  fill={entry.color}
-                  key={`bar-${i}`}
-                  />
+                chartData.map( (entry, i) =>
+                  <Cell
+                    fill={entry.color}
+                    key={`bar-${i}`}
+                    />
                 )
               }
             </Bar>
@@ -145,19 +145,22 @@ const PriceRanges = ({
         <div style={styles.deviation}>
           <div>
             <Label content="Standard Deviation for Charge Events"/>
-            <DataDisplay content={`${priceRanges ? formatDollars(priceRanges.belowStdDev) : blankDollars}`}/>
+            <DataDisplay content={`${rangeData ? formatDollars(rangeData.belowStdDev) : blankDollars}`}/>
           </div>
           <div>
             <Label content="Standard Deviation for Discharge Events"/>
-            <DataDisplay content={`${priceRanges ? formatDollars(priceRanges.aboveStdDev) : blankDollars}`}/>
+            <DataDisplay content={`${rangeData ? formatDollars(rangeData.aboveStdDev) : blankDollars}`}/>
           </div>
         </div>
       </DashboardSection>
       <DashboardSection headerContent="Price Ranges by Day">
-        <PriceRangesByDay
-          projectId={projectId}
-          cleanUrl={cleanUrl}
-          />
+        {
+          project &&
+          <PriceRangesBySlice
+            project={project}
+            slice="day"
+            />
+        }
       </DashboardSection>
       <DashboardSection headerContent="Price Ranges by Hour">
 
@@ -171,6 +174,8 @@ const PriceRanges = ({
     </div>
   )
 }
+
+
 
 const styles = {
   root: {

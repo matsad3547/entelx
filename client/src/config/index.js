@@ -5,6 +5,7 @@ import {
   twelveHourFormat,
   dOWDateTimeFormat,
   timeIncrements,
+  slices,
 } from './dateTimeFormats'
 
 import {
@@ -41,6 +42,7 @@ export {
   twelveHourFormat,
   dOWDateTimeFormat,
   timeIncrements,
+  slices,
   isoLayerSources,
   fontSize,
   colors,
