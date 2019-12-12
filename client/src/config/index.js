@@ -31,6 +31,7 @@ import {
 import {
   lineDataFormat,
   barDataFormat,
+  rangeLabels,
 } from './chart'
 
 export {
@@ -54,4 +55,5 @@ export {
   blankDollars,
   lineDataFormat,
   barDataFormat,
+  rangeLabels,
 }

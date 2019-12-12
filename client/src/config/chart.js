@@ -54,3 +54,14 @@ export const barDataFormat = {
     format: value => roundToDigits(value, 3),
   }
 }
+
+export const rangeLabels = {
+  belowThreeSigma: 'Below 3\u03C3',
+  belowTwoSigma: 'Below 2\u03C3',
+  belowOneSigma: 'Below 1\u03C3',
+  withinOneSigmaBelow: 'Within 1\u03C3 Below',
+  withinOneSigmaAbove: 'Within 1\u03C3 Above',
+  aboveOneSigma: 'Above 1\u03C3',
+  aboveTwoSigma: 'Above 2\u03C3',
+  aboveThreeSigma: 'Above 3\u03C3',
+}

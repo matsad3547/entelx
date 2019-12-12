@@ -84,13 +84,24 @@ export const trendColors = [
   '#03CEA4',
 ]
 
-export const rangeColors = [
-  '#009FCC',
-  '#0BB6E5',
-  '#30C8F2',
-  '#60D2F2',
-  '#4BD87A',
-  '#2BD865',
-  '#14CC51',
-  '#00B23B',
-]
+// export const rangeColors = [
+//   '#009FCC',
+//   '#0BB6E5',
+//   '#30C8F2',
+//   '#60D2F2',
+//   '#4BD87A',
+//   '#2BD865',
+//   '#14CC51',
+//   '#00B23B',
+// ]
+
+export const rangeColors = {
+  belowThreeSigma: '#00B23B',
+  belowTwoSigma: '#14CC51',
+  belowOneSigma: '#2BD865',
+  withinOneSigmaBelow: '#4BD87A',
+  withinOneSigmaAbove: '#60D2F2',
+  aboveOneSigma: '#30C8F2',
+  aboveTwoSigma: '#0BB6E5',
+  aboveThreeSigma: '#009FCC',
+}

@@ -25,6 +25,7 @@ import {
   blankDollars,
   defaultHeaders,
   rangeColors,
+  rangeLabels,
 } from '../../config/'
 
 import { useGetProject } from '../../hooks/'
@@ -84,68 +85,12 @@ const PriceRanges = ({
     getData()
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
-  const priceRangeChartData = priceRanges && Object.keys(priceRanges).filter( key => key !== 'belowStdDev' && key !== 'aboveStdDev').map( key => {
-    switch (key) {
-      case 'belowThreeSigma':
-        return {
-          label: 'Below 3\u03C3',
-          value: priceRanges.belowThreeSigma,
-          color: rangeColors[0],
-          order: 0,
-        }
-      case 'belowTwoSigma':
-        return {
-          label: 'Below 2\u03C3',
-          value: priceRanges.belowTwoSigma,
-          color: rangeColors[1],
-          order: 1,
-        }
-      case 'belowOneSigma':
-        return {
-          label: 'Below 1\u03C3',
-          value: priceRanges.belowOneSigma,
-          color: rangeColors[2],
-          order: 2,
-        }
-      case 'withinOneSigmaBelow':
-        return {
-          label: 'Within 1\u03C3 Below',
-          value: priceRanges.withinOneSigmaBelow,
-          color: rangeColors[3],
-          order: 3,
-        }
-      case 'withinOneSigmaAbove':
-        return {
-          label: 'Within 1\u03C3 Above',
-          value: priceRanges.withinOneSigmaAbove,
-          color: rangeColors[4],
-          order: 4,
-        }
-      case 'aboveOneSigma':
-        return {
-          label: 'Above 1\u03C3',
-          value: priceRanges.aboveOneSigma,
-          color: rangeColors[5],
-          order: 5,
-        }
-      case 'aboveTwoSigma':
-        return {
-          label: 'Above 2\u03C3',
-          value: priceRanges.aboveTwoSigma,
-          color: rangeColors[6],
-          order: 6,
-        }
-      case 'aboveThreeSigma':
-        return {
-          label: 'Above 3\u03C3',
-          value: priceRanges.aboveThreeSigma,
-          color: rangeColors[7],
-          order: 7,
-        }
-      default:
-        return {}
-    }
-  }).sort( (a, b) => a.order - b.order )
+  const priceRangeChartData = priceRanges && Object.keys(priceRanges).filter( key => key !== 'belowStdDev' && key !== 'aboveStdDev').map( key => ({
+      value: priceRanges[key],
+      color: rangeColors[key],
+      label: rangeLabels[key],
+    })
+  )
 
   return (
     <div style={styles.root}>
