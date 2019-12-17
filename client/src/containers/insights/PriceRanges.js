@@ -24,8 +24,7 @@ import {
 import {
   blankDollars,
   defaultHeaders,
-  rangeColors,
-  rangeLabels,
+  rangeDataFormat,
 } from '../../config/'
 
 import { useGetProject } from '../../hooks/'
@@ -87,8 +86,8 @@ const PriceRanges = ({
 
   const chartData = rangeData && Object.keys(rangeData).filter( key => key !== 'belowStdDev' && key !== 'aboveStdDev').map( key => ({
       value: rangeData[key],
-      color: rangeColors[key],
-      label: rangeLabels[key],
+      color: rangeDataFormat[key].color,
+      label: rangeDataFormat[key].label,
     })
   )
 
@@ -177,8 +176,6 @@ const PriceRanges = ({
     </div>
   )
 }
-
-
 
 const styles = {
   root: {

@@ -20,7 +20,6 @@ import {
   buttons,
   boxShadow,
   trendColors,
-  rangeColors,
 } from './styles'
 
 import {
@@ -32,7 +31,7 @@ import {
 import {
   lineDataFormat,
   barDataFormat,
-  rangeLabels,
+  rangeDataFormat,
 } from './chart'
 
 export {
@@ -51,11 +50,10 @@ export {
   buttons,
   boxShadow,
   trendColors,
-  rangeColors,
   companyName,
   defaultHeaders,
   blankDollars,
   lineDataFormat,
   barDataFormat,
-  rangeLabels,
+  rangeDataFormat,
 }

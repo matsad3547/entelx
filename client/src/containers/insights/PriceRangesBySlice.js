@@ -1,12 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
-import {
-  // Cell,
-  Bar,
-} from 'recharts'
 
 import Button from '../../components/button/'
-import {GenericBarChart} from '../../components/charts/'
+import {GroupedBarChart} from '../../components/charts/'
 
 import DateRangeControl from '../../components/dateRangeControl/'
 
@@ -17,13 +13,12 @@ import {
 
 import {
   defaultHeaders,
-  rangeColors,
-  // rangeLabels,
   slices,
+  rangeDataFormat,
 } from '../../config/'
 
 const getSliceLabel = (key, slice) => {
-  return slices[slice][parseInt(key) + 1].full
+  return slices[slice].values[parseInt(key) + 1].full
 }
 
 const PriceRangesBySlice = ({
@@ -31,17 +26,6 @@ const PriceRangesBySlice = ({
   slice,
   buttonLabel,
 }) => {
-
-  const rangeKeys = [
-    'belowThreeSigma',
-    'belowTwoSigma',
-    'belowOneSigma',
-    'withinOneSigmaBelow',
-    'withinOneSigmaAbove',
-    'aboveOneSigma',
-    'aboveTwoSigma',
-    'aboveThreeSigma',
-  ]
 
   const getNow = () => roundMomentToMinutes(moment(), 5)
 
@@ -103,21 +87,12 @@ const PriceRangesBySlice = ({
     <div style={styles.root}>
         {
           (project && chartData) &&
-          <GenericBarChart
+          <GroupedBarChart
             data={chartData}
+            dataConfig={rangeDataFormat}
             timeZone={project.timeZone}
             aspect={4}
-            >
-            {
-              rangeKeys.map( (rk, i) =>
-              <Bar
-                yAxisId="left"
-                dataKey={rk}
-                key={`by-${slice}-bar-${i}`}
-                fill={rangeColors[rk]}
-                /> )
-            }
-          </GenericBarChart>
+            />
         }
       <div style={styles.controls}>
         {

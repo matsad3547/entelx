@@ -4,7 +4,8 @@ import {
 } from '../utils/'
 
 import {
-  trendColors
+  trendColors,
+  rangeColors,
 } from './styles'
 
 export const lineDataFormat = {
@@ -55,13 +56,37 @@ export const barDataFormat = {
   }
 }
 
-export const rangeLabels = {
-  belowThreeSigma: 'Below 3\u03C3',
-  belowTwoSigma: 'Below 2\u03C3',
-  belowOneSigma: 'Below 1\u03C3',
-  withinOneSigmaBelow: 'Within 1\u03C3 Below',
-  withinOneSigmaAbove: 'Within 1\u03C3 Above',
-  aboveOneSigma: 'Above 1\u03C3',
-  aboveTwoSigma: 'Above 2\u03C3',
-  aboveThreeSigma: 'Above 3\u03C3',
+export const rangeDataFormat = {
+  belowThreeSigma: {
+    label: 'Below 3\u03C3',
+    color: rangeColors[0],
+  },
+  belowTwoSigma:{
+    label: 'Below 2\u03C3',
+    color: rangeColors[1],
+  },
+  belowOneSigma:{
+    label: 'Below 1\u03C3',
+    color: rangeColors[2],
+  },
+  withinOneSigmaBelow:{
+    label: 'Within 1\u03C3 Below',
+    color: rangeColors[3],
+  },
+  withinOneSigmaAbove:{
+    label: 'Within 1\u03C3 Above',
+    color: rangeColors[4],
+  },
+  aboveOneSigma:{
+    label: 'Above 1\u03C3',
+    color: rangeColors[5],
+  },
+  aboveTwoSigma:{
+    label: 'Above 2\u03C3',
+    color: rangeColors[6],
+  },
+  aboveThreeSigma:{
+    label: 'Above 3\u03C3',
+    color: rangeColors[7],
+  },
 }
