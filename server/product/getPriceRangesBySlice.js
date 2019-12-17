@@ -31,6 +31,8 @@ const getPriceRangesBySlice = async (req, res, next) => {
 
   const priceRangesBySlice = await getPriceRangeDataBySlice(startDatetime, endDatetime, nodeId, slice, timeZone)
 
+  console.log({priceRangesBySlice});
+
   return res.status(200).json({
     priceRangesBySlice,
   })
