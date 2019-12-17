@@ -121,7 +121,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
-    padding: '1em 0',
+    padding: '1em 0 0',
   },
 }
 
