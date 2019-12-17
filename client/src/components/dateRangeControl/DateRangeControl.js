@@ -5,11 +5,6 @@ import DateRangeSelector from './DateRangeSelector'
 import DateRangeDisplay from './DateRangeDisplay'
 
 import {
-  colors,
-  boxShadow,
-} from '../../config/'
-
-import {
   useHandleOutsideClick,
 } from '../../hooks/'
 
@@ -66,36 +61,10 @@ const DateRangeControl = ({
 const styles = {
   root: {
     position: 'relative',
-  },
-  header: {
-    lineHeight: '2em',
+    zIndex: -1,
   },
   dateRange: {
     cursor: 'pointer',
-  },
-  drs: {
-    boxSizing: 'border-box',
-    textAlign: 'left',
-    background: colors.white,
-    width: '52em',
-    boxShadow,
-    padding: '1em',
-    position: 'absolute',
-    left: '-1em',
-    top: '-3em',
-    zIndex: 2,
-  },
-  controls: {
-    width: '100%',
-    display: 'inline-flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-  },
-  buttons: {
-    width: '18em',
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '0 .5em .5em',
   },
 }
 

@@ -9,6 +9,7 @@ const GroupedTooltip = ({
   label,
   active,
   timeZone,
+  labelFormatter = label => label,
 }) => {
 
   return (
@@ -16,7 +17,7 @@ const GroupedTooltip = ({
     active &&
     <div style={styles.root}>
       <p style={styles.label}>
-        {label}
+        {labelFormatter(label)}
       </p>
       { payload.map( (obj, i) =>
         <p
