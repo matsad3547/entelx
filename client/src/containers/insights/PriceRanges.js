@@ -173,12 +173,12 @@ const PriceRanges = ({
             />
         }
       </DashboardSection>
-      <DashboardSection headerContent="Monthly Price Ranges by Hour">
+      {/*<DashboardSection headerContent="Monthly Price Ranges by Hour">
 
       </DashboardSection>
       <DashboardSection headerContent="Seasonal Price Ranges by Hour">
 
-      </DashboardSection>
+      </DashboardSection>*/}
     </div>
   )
 }
