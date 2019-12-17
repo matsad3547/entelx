@@ -24,8 +24,6 @@ const GroupedBarChart = React.memo(({
 
   const yAxisPadding = { top: 10, bottom: 10}
 
-  console.log({data});
-
   return (
     <ResponsiveContainer width={'100%'} aspect={aspect}>
       <BarChart

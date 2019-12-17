@@ -4,6 +4,8 @@ import {
   colors,
 } from '../../config/'
 
+import ToolTipDataLine from './ToolTipDataLine'
+
 const GroupedTooltip = ({
   payload,
   label,
@@ -20,21 +22,18 @@ const GroupedTooltip = ({
         {labelFormatter(label)}
       </p>
       { payload.map( (obj, i) =>
-        <p
-          style={styles.data}
+        <ToolTipDataLine
+          label={obj.name}
+          color={obj.fill}
+          value={obj.value}
+          formatter={obj.formatter}
+          unit={obj.unit}
           key={`value-${i}`}
-          >
-          <span style={getDataLabelStyle(obj.fill)}>{`${obj.name}:  `}</span>
-          <strong style={styles.dataValue}>{`${obj.formatter(obj.value)} ${obj.unit || ''}`}</strong>
-        </p>
+          />
       )}
     </div>
   )
 }
-
-const getDataLabelStyle = fill => ({
-  color: fill,
-})
 
 const styles = {
   root: {
@@ -43,19 +42,11 @@ const styles = {
     borderRadius: 5,
     textAlign: 'left',
     padding: 5,
-    position: 'relative',
-    zIndex: 999,
   },
   label: {
     padding: 5,
     fontSize: '1.1em'
   },
-  data: {
-    padding: 5,
-  },
-  dataValue: {
-    color: colors.darkGray,
-  }
 }
 
 export default GroupedTooltip
