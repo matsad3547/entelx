@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 
@@ -27,14 +27,12 @@ const DateRangeSelector = ({
   startTime,
   endTime,
   projectId,
+  timeIncrement,
+  setTimeIncrement,
   timeZone = 'America/Los_Angeles',
 }) => {
 
   const getNow = () => roundMomentToMinutes(moment(), 5)
-
-  const incrementsArr = Object.keys(timeIncrements)
-
-  const [timeIncrement, setTimeIncrement] = useState(incrementsArr[1])
 
   const onIncrement = moment => moment.clone().add(1, timeIncrement)
 

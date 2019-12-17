@@ -6,6 +6,8 @@ import {
 
 import ToolTipDataLine from './ToolTipDataLine'
 
+import './Tooltip.css'
+
 const GroupedTooltip = ({
   payload,
   label,

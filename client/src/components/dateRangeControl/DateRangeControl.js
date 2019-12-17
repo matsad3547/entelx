@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 
 import DateRangeSelector from './DateRangeSelector'
@@ -18,8 +18,11 @@ const DateRangeControl = ({
   projectId,
   displayDRS,
   setDisplayDRS,
+  initTimeIncrement = 'day',
   timeZone = 'America/Los_Angeles',
 }) => {
+
+  const [timeIncrement, setTimeIncrement] = useState(initTimeIncrement)
 
   const showDRSelection = () => displayDRS ? setDisplayDRS(false) : setDisplayDRS(true)
 
@@ -40,6 +43,8 @@ const DateRangeControl = ({
             startTime={startTime}
             endTime={endTime}
             projectId={projectId}
+            timeIncrement={timeIncrement}
+            setTimeIncrement={setTimeIncrement}
             timeZone={timeZone}
             />
         </div>
@@ -61,7 +66,7 @@ const DateRangeControl = ({
 const styles = {
   root: {
     position: 'relative',
-    // zIndex: -1,
+    padding: '0 0 1em',
   },
   dateRange: {
     cursor: 'pointer',

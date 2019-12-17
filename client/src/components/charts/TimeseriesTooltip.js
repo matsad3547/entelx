@@ -43,7 +43,6 @@ const TimeseriesTooltip = ({
   )
 }
 
-
 const styles = {
   root: {
     backgroundColor: '#fff',
