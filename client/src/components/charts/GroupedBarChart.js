@@ -13,6 +13,8 @@ import {
 
 import GroupedTooltip from './GroupedTooltip'
 
+import './Tooltip.css'
+
 const GroupedBarChart = React.memo(({
   data,
   dataConfig,

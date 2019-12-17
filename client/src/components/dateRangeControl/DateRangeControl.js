@@ -61,7 +61,7 @@ const DateRangeControl = ({
 const styles = {
   root: {
     position: 'relative',
-    zIndex: -1,
+    // zIndex: -1,
   },
   dateRange: {
     cursor: 'pointer',

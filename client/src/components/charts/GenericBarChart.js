@@ -25,7 +25,7 @@ const GenericBarChart = React.memo(({
     <ResponsiveContainer width={'100%'} aspect={aspect}>
       <BarChart
         data={data}
-        margin={{top: 10, right: 0, left: 10, bottom: 70}}>
+        margin={{top: 10, right: 0, left: 10, bottom: 0}}>
         <XAxis dataKey="label"/>
         <YAxis
           yAxisId="left"
