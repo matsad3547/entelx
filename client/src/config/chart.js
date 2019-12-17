@@ -60,33 +60,41 @@ export const rangeDataFormat = {
   belowThreeSigma: {
     label: 'Below 3\u03C3',
     color: rangeColors[0],
+    formatter: val => val,
   },
   belowTwoSigma:{
     label: 'Below 2\u03C3',
     color: rangeColors[1],
+    formatter: val => val,
   },
   belowOneSigma:{
     label: 'Below 1\u03C3',
     color: rangeColors[2],
+    formatter: val => val,
   },
   withinOneSigmaBelow:{
     label: 'Within 1\u03C3 Below',
     color: rangeColors[3],
+    formatter: val => val,
   },
   withinOneSigmaAbove:{
     label: 'Within 1\u03C3 Above',
     color: rangeColors[4],
+    formatter: val => val,
   },
   aboveOneSigma:{
     label: 'Above 1\u03C3',
     color: rangeColors[5],
+    formatter: val => val,
   },
   aboveTwoSigma:{
     label: 'Above 2\u03C3',
     color: rangeColors[6],
+    formatter: val => val,
   },
   aboveThreeSigma:{
     label: 'Above 3\u03C3',
     color: rangeColors[7],
+    formatter: val => val,
   },
 }

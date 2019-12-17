@@ -78,10 +78,8 @@ const PriceRangesBySlice = ({
 
   const chartData = rangeData && Object.keys(rangeData).filter( key => key !== 'belowStdDev' && key !== 'aboveStdDev').map( key => ({
     ...rangeData[key],
-    label: getSliceLabel(key, slice)
+    label: getSliceLabel(key, slice),
   }))
-
-  console.log({chartData});
 
   return (
     <div style={styles.root}>

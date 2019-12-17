@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-import BarChartTooltip from './BarChartTooltip'
+import GroupedTooltip from './GroupedTooltip'
 
 const GroupedBarChart = React.memo(({
   data,
@@ -23,6 +23,8 @@ const GroupedBarChart = React.memo(({
   const dataKeys = Object.keys(dataConfig)
 
   const yAxisPadding = { top: 10, bottom: 10}
+
+  console.log({data});
 
   return (
     <ResponsiveContainer width={'100%'} aspect={aspect}>
@@ -39,17 +41,17 @@ const GroupedBarChart = React.memo(({
           />
         <CartesianGrid strokeDasharray="3 3"/>
         <Tooltip
-          content={
-            <BarChartTooltip />
-          }
+          content={<GroupedTooltip />}
           />
           {
             dataKeys.map( (dk, i) =>
             <Bar
               yAxisId="left"
               dataKey={dk}
+              name={dataConfig[dk].label}
               key={`by-${dk}-bar-${i}`}
               fill={dataConfig[dk].color}
+              formatter={dataConfig[dk].formatter}
               /> )
           }
       </BarChart>

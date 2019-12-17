@@ -19,9 +19,11 @@ const TimeseriesTooltip = ({
   label,
   active,
   timeZone,
- }) => (
+}) => {
 
-  active &&
+  return (
+
+    active &&
     <div style={styles.root}>
       <p style={styles.date}>
         {formatDate(label, timeZone, dOWDateTimeFormat)}
@@ -36,13 +38,15 @@ const TimeseriesTooltip = ({
           }
           key={`value-${i}`}
           >
-            {
-              `${formats[obj.name].label}:  ${formats[obj.name].format(obj.value)}${formats[obj.name].unit}`
-            }
-         </p>
+          {
+            `${formats[obj.name].label}:  ${formats[obj.name].format(obj.value)}${formats[obj.name].unit}`
+          }
+        </p>
       )}
     </div>
-)
+  )
+}
+
 
 const styles = {
   root: {
