@@ -77,7 +77,6 @@ const Demo = ({ match }) => {
                 value={'CREATE PROJECT'}
                 type="primary"
                 overrideStyles={styles.button}
-                width={'12em'}
                 />
             </DisableableLink>
           </div>
@@ -91,7 +90,6 @@ const Demo = ({ match }) => {
                     value={'GO TO EXISTING PROJECT'}
                     type="primary"
                     overrideStyles={styles.button}
-                    width={'16em'}
                     />
                 </DisableableLink>
               </div>

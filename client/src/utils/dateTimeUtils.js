@@ -16,7 +16,7 @@ export const getSliceFormatter = slice => {
       return key => moment().month(parseInt(key)).format('MMMM')
 
     case 'hour':
-      return key => moment().hour(parseInt(key)).minute(0).format('H:mmA')
+      return key => moment().hour(parseInt(key)).minute(0).format('h:mmA')
 
     default:
       return key => moment().format()

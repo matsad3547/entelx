@@ -135,7 +135,6 @@ const HistoricalDisplay = ({match}) => {
                   type="success"
                   onClick={getData}
                   overrideStyles={styles.button}
-                  width={'8em'}
                   />
               </div>
             </div>

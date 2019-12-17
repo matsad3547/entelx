@@ -96,7 +96,6 @@ const ProjectHome = ({match, history}) => {
               value={'DELETE PROJECT'}
               type="danger"
               onClick={onDelete}
-              width={'12em'}
               />
           </div>
         </div>

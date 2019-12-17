@@ -139,7 +139,6 @@ const PriceRanges = ({
           disabled={loading}
           type="success"
           onClick={getData}
-          width={'12em'}
           />
       </div>
       <DashboardSection headerContent="Deviation Values">
@@ -165,7 +164,14 @@ const PriceRanges = ({
         }
       </DashboardSection>
       <DashboardSection headerContent="Price Ranges by Hour">
-
+        {
+          project &&
+          <PriceRangesBySlice
+            project={project}
+            slice="hour"
+            buttonLabel="GET RANGES BY HOUR"
+            />
+        }
       </DashboardSection>
       <DashboardSection headerContent="Monthly Price Ranges by Hour">
 
