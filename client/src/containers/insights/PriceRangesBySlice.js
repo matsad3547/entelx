@@ -9,17 +9,13 @@ import DateRangeControl from '../../components/dateRangeControl/'
 import {
   singleRequest,
   roundMomentToMinutes,
+  getSliceFormatter,
 } from '../../utils/'
 
 import {
   defaultHeaders,
-  slices,
   rangeDataFormat,
 } from '../../config/'
-
-const getSliceLabel = (key, slice) => {
-  return slices[slice].values[parseInt(key) + 1].full
-}
 
 const PriceRangesBySlice = ({
   project,
@@ -78,7 +74,7 @@ const PriceRangesBySlice = ({
 
   const chartData = rangeData && Object.keys(rangeData).filter( key => key !== 'belowStdDev' && key !== 'aboveStdDev').map( key => ({
     ...rangeData[key],
-    label: getSliceLabel(key, slice),
+    label: getSliceFormatter(slice)(key),
   }))
 
   return (
