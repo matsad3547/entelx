@@ -1,13 +1,8 @@
-import React, {useRef} from 'react'
+import React, {useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 
 import DateRangeSelector from './DateRangeSelector'
 import DateRangeDisplay from './DateRangeDisplay'
-
-import {
-  colors,
-  boxShadow,
-} from '../../config/'
 
 import {
   useHandleOutsideClick,
@@ -23,8 +18,11 @@ const DateRangeControl = ({
   projectId,
   displayDRS,
   setDisplayDRS,
+  initTimeIncrement = 'day',
   timeZone = 'America/Los_Angeles',
 }) => {
+
+  const [timeIncrement, setTimeIncrement] = useState(initTimeIncrement)
 
   const showDRSelection = () => displayDRS ? setDisplayDRS(false) : setDisplayDRS(true)
 
@@ -45,6 +43,8 @@ const DateRangeControl = ({
             startTime={startTime}
             endTime={endTime}
             projectId={projectId}
+            timeIncrement={timeIncrement}
+            setTimeIncrement={setTimeIncrement}
             timeZone={timeZone}
             />
         </div>
@@ -54,8 +54,8 @@ const DateRangeControl = ({
         className="startAndEndDates"
         style={styles.dateRange}>
         <DateRangeDisplay
-          startTime={startTime}
-          endTime={endTime}
+          startTime={startTime.toISOString()}
+          endTime={endTime.toISOString()}
           timeZone={timeZone}
           />
       </div>
@@ -66,36 +66,10 @@ const DateRangeControl = ({
 const styles = {
   root: {
     position: 'relative',
-  },
-  header: {
-    lineHeight: '2em',
+    padding: '0 0 1em',
   },
   dateRange: {
     cursor: 'pointer',
-  },
-  drs: {
-    boxSizing: 'border-box',
-    textAlign: 'left',
-    background: colors.white,
-    width: '52em',
-    boxShadow,
-    padding: '1em',
-    position: 'absolute',
-    left: '-1em',
-    top: '-3em',
-    zIndex: 2,
-  },
-  controls: {
-    width: '100%',
-    display: 'inline-flex',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-  },
-  buttons: {
-    width: '18em',
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '0 .5em .5em',
   },
 }
 

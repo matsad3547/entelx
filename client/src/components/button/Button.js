@@ -7,14 +7,14 @@ const Button = ({
   value,
   type,
   onClick,
+  width,
   disabled = false,
-  width = '6em'
 }) => {
 
   const getStyles = type => ({
     ...styles.root,
     ...buttons[type],
-    width,
+    width: width ? width : 'fit-content'
   })
 
   return (
@@ -47,9 +47,9 @@ Button.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   width: PropTypes.oneOfType([
-    PropTypes.number,
     PropTypes.string,
-  ]),
+    PropTypes.number,
+  ])
 }
 
 export default Button

@@ -5,6 +5,7 @@ import {
   twelveHourFormat,
   dOWDateTimeFormat,
   timeIncrements,
+  slices,
 } from './dateTimeFormats'
 
 import {
@@ -19,7 +20,6 @@ import {
   buttons,
   boxShadow,
   trendColors,
-  rangeColors,
 } from './styles'
 
 import {
@@ -31,6 +31,7 @@ import {
 import {
   lineDataFormat,
   barDataFormat,
+  rangeDataFormat,
 } from './chart'
 
 export {
@@ -40,6 +41,7 @@ export {
   twelveHourFormat,
   dOWDateTimeFormat,
   timeIncrements,
+  slices,
   isoLayerSources,
   fontSize,
   colors,
@@ -48,10 +50,10 @@ export {
   buttons,
   boxShadow,
   trendColors,
-  rangeColors,
   companyName,
   defaultHeaders,
   blankDollars,
   lineDataFormat,
   barDataFormat,
+  rangeDataFormat,
 }

@@ -25,6 +25,7 @@ const {
   getRevenueByThresholds,
   getRevenueSurface,
   getPriceRanges,
+  getPriceRangesBySlice,
 } = require('./product/')
 
 const {
@@ -90,6 +91,7 @@ app.get('/historical/:id/:startDate/:endDate/:includeWeather', getHistoricalData
 //insights
 app.get('/aggregates/:id/:startDate/:endDate', getAggregateData)
 app.get('/price_ranges/:id/:startDate/:endDate', getPriceRanges)
+app.get('/price_ranges_by_slice/:id/:startDate/:endDate/:slice', getPriceRangesBySlice)
 
 //development
 app.get('/revenue_by_thresholds/:id/:chargeThreshold/:dischargeThreshold', getRevenueByThresholds)

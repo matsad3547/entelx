@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import {
   BarChart,
-  Cell,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -17,6 +15,7 @@ import BarChartTooltip from './BarChartTooltip'
 const GenericBarChart = React.memo(({
   data,
   timeZone,
+  children,
   aspect = 3,
 }) => {
 
@@ -27,7 +26,7 @@ const GenericBarChart = React.memo(({
       <BarChart
         data={data}
         margin={{top: 10, right: 0, left: 10, bottom: 0}}>
-        <XAxis dataKey="label" />
+        <XAxis dataKey="label"/>
         <YAxis
           yAxisId="left"
           tickCount={10}
@@ -41,20 +40,7 @@ const GenericBarChart = React.memo(({
             <BarChartTooltip />
           }
           />
-        <Bar
-          yAxisId="left"
-          dataKey="value"
-          fill={'#000'}
-          >
-          {
-            data.map( (entry, i) =>
-            <Cell
-              fill={entry.color}
-              key={`bar-${i}`}
-              />
-            )
-          }
-        </Bar>
+        {children}
       </BarChart>
     </ResponsiveContainer>
   )

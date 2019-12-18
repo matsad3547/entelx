@@ -20,6 +20,7 @@ import {
 import {
   formatDate,
   roundMomentToMinutes,
+  getSliceFormatter,
 } from './dateTimeUtils'
 
 export {
@@ -35,4 +36,5 @@ export {
   singleRequest,
   formatDate,
   roundMomentToMinutes,
+  getSliceFormatter,
 }

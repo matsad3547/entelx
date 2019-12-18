@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import GradientBackground from '../GradientBackground'
@@ -98,7 +98,7 @@ const styles = {
     display: 'block',
     width: '100%',
     position: 'fixed',
-    zIndex: 2,
+    zIndex: 10,
     top: 0,
     background: 'white',
     boxShadow,

@@ -275,7 +275,6 @@ const DevelopmentPlatform = ({match}) => {
                   disabled={loading}
                   type="success"
                   onClick={getRevenue}
-                  width={'10em'}
                   />
               </div>
             </div>
@@ -298,7 +297,6 @@ const DevelopmentPlatform = ({match}) => {
               disabled={loading}
               type="success"
               onClick={getRevenueSurface}
-              width={'10em'}
               />
           </div>
         </div>
@@ -308,7 +306,6 @@ const DevelopmentPlatform = ({match}) => {
             disabled={loading}
             type="danger"
             onClick={getTest}
-            width={'8em'}
             />
         </div>
       </DashboardSection>

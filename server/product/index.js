@@ -6,6 +6,7 @@ const getAggregateData = require('./getAggregateData')
 const getRevenueSurface = require('./getRevenueSurface')
 const getRevenueByThresholds = require('./getRevenueByThresholds')
 const getPriceRanges = require('./getPriceRanges')
+const getPriceRangesBySlice = require('./getPriceRangesBySlice')
 
 module.exports = {
   getDashboardData,
@@ -16,4 +17,5 @@ module.exports = {
   getRevenueSurface,
   getRevenueByThresholds,
   getPriceRanges,
+  getPriceRangesBySlice,
 }

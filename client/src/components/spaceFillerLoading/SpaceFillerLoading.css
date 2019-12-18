@@ -1,0 +1,53 @@
+.sf-spinner {
+  position: absolute;
+  left: 50%;
+  margin-left: -63px;
+  top: 50%;
+  margin-top: -65px;
+}
+
+.sf-spinner .e {
+  fill: #fff;
+}
+
+.sf-spinner .status-bottom {
+  fill: var(--bright-green);
+  animation: animate-bottom 1s cubic-bezier(.25, 0, 0, 1) infinite;
+}
+
+.sf-spinner .status-middle {
+  fill: var(--bright-green);
+  animation: animate-middle 1s cubic-bezier(.50, 0, 0, 1) infinite;
+}
+
+.sf-spinner .status-top {
+  fill: var(--bright-green);
+  animation: animate-top 1s cubic-bezier(.75, 0, 0, 1) infinite;
+}
+
+@keyframes animate-bottom {
+  0% {
+    fill: var(--deep-green);
+  }
+  100% {
+    fill: var(--bright-green);
+  }
+}
+
+@keyframes animate-middle {
+  0% {
+    fill: var(--deep-green);
+  }
+  100% {
+    fill: var(--bright-green);
+  }
+}
+
+@keyframes animate-top {
+  0% {
+    fill: var(--deep-green);
+  }
+  100% {
+    fill: var(--bright-green);
+  }
+}

@@ -115,3 +115,13 @@ export const useScrollPosition = ref => {
 
   return position
 }
+
+export const useElementWidth = ref => {
+  const [width, setWidth] = useState(0)
+
+  useEffect( () => {
+    setWidth(ref.current.offsetWidth)
+  }, [setWidth, ref])
+
+  return width
+}

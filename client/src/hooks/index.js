@@ -9,6 +9,7 @@ export {
   useAddClassOnClick,
   useHandleOutsideClick,
   useScrollPosition,
+  useElementWidth,
 } from './uiHooks'
 
 export {

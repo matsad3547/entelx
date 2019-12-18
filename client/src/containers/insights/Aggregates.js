@@ -137,7 +137,6 @@ const Aggregates = ({
           disabled={loading}
           type="success"
           onClick={getData}
-          width={'12em'}
           />
       </div>
     </div>
