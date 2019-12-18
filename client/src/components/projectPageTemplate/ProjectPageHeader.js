@@ -98,7 +98,7 @@ const styles = {
     display: 'block',
     width: '100%',
     position: 'fixed',
-    zIndex: 5,
+    zIndex: 10,
     top: 0,
     background: 'white',
     boxShadow,
