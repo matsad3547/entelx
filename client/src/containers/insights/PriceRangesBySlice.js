@@ -1,10 +1,11 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import moment from 'moment-timezone'
+import PropTypes from 'prop-types'
 
 import Button from '../../components/button/'
 import {GroupedBarChart} from '../../components/charts/'
-
 import DateRangeControl from '../../components/dateRangeControl/'
+import SpaceFillerLoading from '../../components/spaceFillerLoading/'
 
 import {
   singleRequest,
@@ -15,6 +16,7 @@ import {
 import {
   defaultHeaders,
   rangeDataFormat,
+  slices,
 } from '../../config/'
 
 const PriceRangesBySlice = ({
@@ -77,15 +79,23 @@ const PriceRangesBySlice = ({
     label: getSliceFormatter(slice)(key),
   }))
 
+  const aspect = 4
+
+  const sliceLabel = slices[slice].label
+
   return (
     <div style={styles.root}>
         {
-          (project && chartData) &&
+          (project && chartData) ?
           <GroupedBarChart
             data={chartData}
             dataConfig={rangeDataFormat}
             timeZone={project.timeZone}
-            aspect={4}
+            aspect={aspect}
+            /> :
+          <SpaceFillerLoading
+            message={`Loading Price Ranges by ${sliceLabel}...`}
+            aspect={aspect}
             />
         }
       <div style={styles.controls}>
@@ -123,6 +133,12 @@ const styles = {
     flexWrap: 'wrap',
     padding: '1em 0 0',
   },
+}
+
+PriceRangesBySlice.propTypes = {
+  project: PropTypes.object.isRequired,
+  slice: PropTypes.string.isRequired,
+  buttonLabel: PropTypes.string.isRequired,
 }
 
 export default PriceRangesBySlice

@@ -4,6 +4,7 @@ import {
   Cell,
   Bar,
 } from 'recharts'
+import PropTypes from 'prop-types'
 
 import DashboardSection from '../../components/DashboardSection'
 import Label from '../../components/Label'
@@ -11,6 +12,7 @@ import DataDisplay from '../../components/DataDisplay'
 import Button from '../../components/button/'
 import {GenericBarChart} from '../../components/charts/'
 import DateRangeControl from '../../components/dateRangeControl/'
+import SpaceFillerLoading from '../../components/spaceFillerLoading/'
 
 import PriceRangesBySlice from './PriceRangesBySlice'
 
@@ -96,7 +98,7 @@ const PriceRanges = ({
       <DashboardSection headerContent="Overall Price Ranges">
         <div style={styles.chart}>
           {
-            (project && chartData) &&
+            (project && chartData) ?
             <GenericBarChart
               data={chartData}
               timeZone={project.timeZone}
@@ -116,7 +118,11 @@ const PriceRanges = ({
                 )
               }
             </Bar>
-          </GenericBarChart>
+          </GenericBarChart> :
+          <SpaceFillerLoading
+            message="Loading Price Ranges..."
+            aspect={4}
+            />
         }
         </div>
       </DashboardSection>
@@ -205,6 +211,10 @@ const styles = {
     flexWrap: 'wrap',
     padding: '0 0 1em',
   },
+}
+
+PriceRanges.propTypes = {
+  projectId: PropTypes.string.isRequired,
 }
 
 export default PriceRanges

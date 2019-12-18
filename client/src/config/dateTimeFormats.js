@@ -24,6 +24,9 @@ export const timeIncrements = {
 }
 
 export const slices = {
+  hour: {
+    label: 'Hour',
+  },
   month: {
     label: 'Month',
     values: {
