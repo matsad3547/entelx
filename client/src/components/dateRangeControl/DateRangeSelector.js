@@ -85,11 +85,13 @@ const DateRangeSelector = ({
             value={`- ${timeIncrements[timeIncrement].label}`}
             type="primary"
             onClick={onDecrementStartTime}
+            width={'6em'}
             />
           <Button
             value={`+ ${timeIncrements[timeIncrement].label}`}
             type="primary"
             onClick={onIncrementStartTime}
+            width={'6em'}
             />
         </div>
         <div style={styles.buttons}>
@@ -97,11 +99,13 @@ const DateRangeSelector = ({
             value={`- ${timeIncrements[timeIncrement].label}`}
             type="primary"
             onClick={onDecrementEndTime}
+            width={'6em'}
             />
           <Button
             value={`+ ${timeIncrements[timeIncrement].label}`}
             type="primary"
             onClick={onIncrementEndTime}
+            width={'6em'}
             />
         </div>
       </div>
