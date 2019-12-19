@@ -8,8 +8,6 @@ const {
 } = require('../queryStrings')
 
 const getGroupByString = (slice, timeZone) => {
-  console.log('slice in group by', slice);
-
   switch (slice) {
     case 'day':
       return `GROUP BY DAYOFWEEK(CONVERT_TZ(TIMESTAMP, 'UTC', '${timeZone}'))`

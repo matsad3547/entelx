@@ -80,7 +80,6 @@
 
         console.log(`Periodic price data update at ${now.format()}`)
 
-        // await catchErrorsWithMessage('There was an error getting periodic price updates', presentPriceDataUpdater, false)(startMillis, endMillis, nodeData, project)
         try {
           await presentPriceDataUpdater(startMillis, endMillis, nodeData, project)
         }
