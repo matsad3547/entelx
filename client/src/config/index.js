@@ -6,6 +6,7 @@ import {
   dOWDateTimeFormat,
   timeIncrements,
   slices,
+  monthDayYearTimeFormat,
 } from './dateTimeFormats'
 
 import {
@@ -42,7 +43,10 @@ export {
   dOWDateTimeFormat,
   timeIncrements,
   slices,
+  monthDayYearTimeFormat,
+
   isoLayerSources,
+
   fontSize,
   colors,
   nodeColors,
@@ -50,9 +54,11 @@ export {
   buttons,
   boxShadow,
   trendColors,
+
   companyName,
   defaultHeaders,
   blankDollars,
+  
   lineDataFormat,
   barDataFormat,
   rangeDataFormat,

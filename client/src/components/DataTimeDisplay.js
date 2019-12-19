@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
 
-import { monthDayTimeFormat } from '../config/'
+import { monthDayYearTimeFormat } from '../config/'
 
 const DataTimeDisplay = ({
   message,
@@ -11,7 +11,7 @@ const DataTimeDisplay = ({
 }) => (
 
   <div style={styles}>
-    {`${message} ${moment(isoString).tz(timeZone).format(monthDayTimeFormat)}`}
+    {`${message} ${moment(isoString).tz(timeZone).format(monthDayYearTimeFormat)}`}
   </div>
 )
 
